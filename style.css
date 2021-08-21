@@ -1,3 +1,29 @@
-h1 {
-    background-color: lightblue;
+html {
+    height: 100%;
+}
+
+h3 {
+    background-color: #ff6961;
+}
+
+body {
+    background-color: #aec6cf;
+    max-width: 50vh;
+    margin: 0 auto;
+}
+
+h3 {
+    color: #FAF8F6;
+}
+
+a {
+    background-color: slategrey;
+    color: snow;
+}
+
+img {
+    position: relative;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%)
 }
