@@ -2,17 +2,23 @@ html {
     height: 100%;
 }
 
-h3 {
-    background-color: #ff6961;
-}
-
 body {
     background-color: #aec6cf;
     max-width: 50vh;
     margin: 0 auto;
 }
 
+h1 {
+    color: #027524;
+    background-color: #688a93;
+    border-bottom: 3px solid #FAF8F6;
+    border-left: 3px solid #FAF8F6;
+    padding-left: 3px;
+    margin-top: 1em;
+}
+
 h3 {
+    background-color: #ff6961;
     color: #FAF8F6;
 }
 
@@ -22,6 +28,7 @@ a {
 }
 
 img {
+    border: 2px solid #77dd77;
     position: relative;
     left: 50%;
     margin-right: -50%;
