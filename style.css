@@ -32,5 +32,13 @@ img {
     position: relative;
     left: 50%;
     margin-right: -50%;
-    transform: translate(-50%)
+    transform: translate(-50%);
+    width: 350px;
+    height: 200px;
+    padding: 20px;
+    background-color: #3A5874;
+}
+
+hr {
+    border-top: 2px solid #FAF8F6;
 }
