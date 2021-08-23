@@ -1,11 +1,16 @@
 html {
     height: 100%;
+    background-color: #3A5874;
 }
 
 body {
     background-color: #aec6cf;
-    max-width: 50vh;
+    max-width: 68vh;
     margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 1px;
+    padding-bottom: 10px
 }
 
 h1 {
@@ -33,8 +38,6 @@ img {
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%);
-    width: 350px;
-    height: 200px;
     padding: 20px;
     background-color: #3A5874;
 }
