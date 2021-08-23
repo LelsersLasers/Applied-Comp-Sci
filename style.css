@@ -22,9 +22,17 @@ h1 {
     margin-top: 1em;
 }
 
+.textBlock {
+    background-color: #3A5874;
+    color: snow;
+    border: 3px solid gold;
+    padding: 7px;
+}
+
 .sectionHead {
     background-color: #ff6961;
     color: #FAF8F6;
+    padding-left: 3px;
 }
 
 .tldrLink {
@@ -53,6 +61,7 @@ hr {
 table {
     border-collapse: collapse;
     width: 100%;
+    border: 3px solid;
 }
 
 td, th {
