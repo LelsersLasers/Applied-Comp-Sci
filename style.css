@@ -1,10 +1,10 @@
 html {
     height: 100%;
-    background-color: #3A5874;
+    background-color: #2d7f9d;
 }
 
 body {
-    background-color: #aec6cf;
+    background-color: #a4c9d7;
     max-width: 50%;
     margin: 0 auto;
     padding-left: 20px;
@@ -14,38 +14,38 @@ body {
 }
 
 h1 {
-    color: #027524;
-    background-color: #688a93;
-    border-bottom: 3px solid #FAF8F6;
-    border-left: 3px solid #FAF8F6;
+    color: #e4ca99;
+    /* background-color: #688a93; */
+    border-bottom: 3px solid #eaf2f4;
+    border-left: 3px solid #eaf2f4;
     padding-left: 3px;
     margin-top: 1em;
 }
 
 .textBlock {
     background-color: #3A5874;
-    color: snow;
-    border: 3px solid gold;
+    color: #eaf2f4;
+    border: 3px solid #e4ca99;
     padding: 7px;
 }
 
 .sectionHead {
-    background-color: #ff6961;
-    color: #FAF8F6;
+    background-color: #dc7684;
+    color: #eaf2f4;
     padding-left: 3px;
 }
 
 .tldrLink {
-    color: slategrey;
+    color: #e4ca99;
 }
 
 .normalLink {
     background-color: slategrey;
-    color: snow;
+    color: #eaf2f4;
 }
 
 img {
-    border: 2px solid #77dd77;
+    border: 2px solid #e4ca99;
     position: relative;
     left: 50%;
     margin-right: -50%;
@@ -55,7 +55,7 @@ img {
 }
 
 hr {
-    border-top: 2px solid #FAF8F6;
+    border-top: 2px solid #eaf2f4;
 }
 
 table {
@@ -64,12 +64,13 @@ table {
     border: 3px solid;
 }
 
-td, th {
-    border: 1px solid #dddddd;
+td,
+th {
+    border: 1px solid #eaf2f4;
     text-align: left;
     padding: 8px;
 }
 
 tr:nth-child(even) {
-    background-color: #dddddd;
+    background-color: #eaf2f4;
 }
