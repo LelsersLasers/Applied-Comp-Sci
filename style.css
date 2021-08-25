@@ -10,12 +10,23 @@ body {
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 1px;
-    padding-bottom: 10px
+    padding-bottom: 10px;
+}
+
+.mainStyle {
+    background-color: #a4c9d7;
+    max-width: 50%;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 1px;
+    padding-bottom: 10px;
 }
 
 h1 {
     color: #e4ca99;
     /* background-color: #688a93; */
+    background-color: #3A5874;
     border-bottom: 3px solid #eaf2f4;
     border-left: 3px solid #eaf2f4;
     padding-left: 3px;
@@ -64,8 +75,7 @@ table {
     border: 3px solid;
 }
 
-td,
-th {
+td, th {
     border: 1px solid #eaf2f4;
     text-align: left;
     padding: 8px;
