@@ -9,7 +9,7 @@ body {
     margin: 0 auto;
     padding-left: 20px;
     padding-right: 20px;
-    padding-top: 1px;
+    padding-top: 14px;
     padding-bottom: 10px;
 }
 
@@ -19,7 +19,6 @@ h1 {
     border-bottom: 3px solid #eaf2f4;
     border-left: 3px solid #eaf2f4;
     padding-left: 3px;
-    margin-top: 1em;
 }
 
 .textBlock {
@@ -61,17 +60,26 @@ hr {
 table {
     border-collapse: collapse;
     width: 100%;
-    border: 3px solid;
+    border: 3px solid #e4ca99;
 }
 
-td, th {
-    border: 1px solid #eaf2f4;
+td {
+    border: 2px solid #eaf2f4;
     text-align: left;
     padding: 8px;
+    color: #eaf2f4;
+}
+
+th {
+    border: 2px solid #e4ca99;
+    text-align: center;
+    padding: 8px;
+    color: #e4ca99;
 }
 
 tr:nth-child(even) {
-    background-color: #eaf2f4;
+    /* background-color: #a4c9d7; */
+    border-top: 2px solid #e4ca99;
 }
 
 
@@ -79,6 +87,23 @@ tr:nth-child(even) {
     background-color: #3A5874;
     color: white;
     padding: 7px;
+}
+
+.footer {
+    padding-top: 1px;
+    padding-bottom: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 10px;
+}
+
+.header {
+    padding-left: 10px;
+    /* padding-top: 8px; */
+}
+
+article {
+    margin-top: 10px;
 }
 
 .column {
@@ -98,6 +123,7 @@ tr:nth-child(even) {
 
 .menu {
     width: 20%;
+    /* position: fixed; */
 }
 
 .content {
