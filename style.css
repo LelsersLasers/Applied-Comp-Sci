@@ -21,6 +21,11 @@ h1 {
     padding-left: 3px;
 }
 
+article {
+    margin-top: 10px;
+}
+
+
 .textBlock {
     background-color: #3A5874;
     color: #eaf2f4;
@@ -34,14 +39,16 @@ h1 {
     padding-left: 3px;
 }
 
+
 .tldrLink {
     color: #e4ca99;
 }
 
 .normalLink {
-    background-color: slategrey;
-    color: #eaf2f4;
+    /* background-color: slategrey; */
+    color: #e4ca99;
 }
+
 
 img, iframe {
     border: 3px solid #e4ca99;
@@ -52,6 +59,7 @@ img, iframe {
     padding: 20px;
     background-color: #3A5874;
 }
+
 
 hr {
     border-top: 2px solid #eaf2f4;
@@ -102,9 +110,6 @@ tr:nth-child(even) {
     /* padding-top: 8px; */
 }
 
-article {
-    margin-top: 10px;
-}
 
 .column {
     float: left;
@@ -142,6 +147,7 @@ article {
     padding: 0;
 }
 
+
 .menu li {
     padding: 8px;
     margin-bottom: 8px;
@@ -153,12 +159,31 @@ article {
     background-color: #0099cc;
 }
 
-.img-container {
-    float: left;
-    width: 50%;
-    padding: 5px;
+
+.topUl {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* background-color: #33b5e5; */
+    /* border: 3px solid #e4ca99; */
+    margin-bottom: 5px;
 }
 
-* {
-    box-sizing: border-box;
-  }
+.topLi {
+    float: left;
+    padding: 14px 16px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    background-color: #33b5e5;
+}
+
+
+.topLi:hover {
+    background-color: #0099cc;
+}
+
+.active {
+    background-color: #e4ca99;
+}
