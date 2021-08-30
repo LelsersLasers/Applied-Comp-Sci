@@ -9,7 +9,6 @@ body {
     margin: 0 auto;
     padding-left: 20px;
     padding-right: 20px;
-    /* padding-top: 5px; */
     padding-bottom: 10px;
 }
 
@@ -45,7 +44,6 @@ article {
 }
 
 .normalLink {
-    /* background-color: slategrey; */
     color: #e4ca99;
 }
 
@@ -107,7 +105,6 @@ tr:nth-child(even) {
 
 .header {
     padding-left: 10px;
-    /* padding-top: 8px; */
 }
 
 
@@ -133,7 +130,6 @@ tr:nth-child(even) {
 
 .menu {
     width: 20%;
-    /* position: fixed; */
 }
 
 .content {
@@ -155,7 +151,7 @@ tr:nth-child(even) {
     color: #ffffff;
 }
 
-.menu li:hover {
+.menu li:hover, .topLi:hover {
     background-color: #0099cc;
 }
 
@@ -165,8 +161,6 @@ tr:nth-child(even) {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    /* background-color: #33b5e5; */
-    /* border: 3px solid #e4ca99; */
     margin-bottom: 5px;
 }
 
@@ -177,11 +171,6 @@ tr:nth-child(even) {
     text-align: center;
     text-decoration: none;
     background-color: #33b5e5;
-}
-
-
-.topLi:hover {
-    background-color: #0099cc;
 }
 
 .active {
