@@ -176,3 +176,15 @@ tr:nth-child(even) {
 .active {
     background-color: #e4ca99;
 }
+
+#red {
+    color: red;
+}
+
+#width92 {
+    width: 92%;
+}
+
+#fixOffset {
+    padding-left: 9px;
+}
