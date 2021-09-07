@@ -192,7 +192,7 @@ tr:nth-child(even) {
 #topPad {
     margin-right: 10px;
     /* padding: 15.5px; */
-    /* font-size: 15.5px; */
+    font-size: 16px;
     font-family: "Times New Roman";
 }
 

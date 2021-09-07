@@ -1,20 +1,12 @@
 <!DOCTYPE html>
 <html charset="UTF-8" lang="en-US">
 
-<script>
-
-function play() {
-    var audio = document.getElementById("audio");
-    audio.play();
-}
-
-</script>
-
 <head>
     <title>Things I wish I had</title>
     <meta name="description" content="A blog post about a couple of the things I wish I had">
     <meta name="keywords" content="wish, want, had, money, expensive">
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 
 <body>
@@ -34,7 +26,7 @@ function play() {
                         <source src="BillionaireCleanVersion.mp3" type="audio/mpeg">
                     </audio>
                 </li>
-            <button type="button" id="topPad" class="topLi floatRight" autofocus>
+            <button type="button" id="topPad" class="topLi floatRight" onclick="play()" autofocus>
                 <li>Music Controls (I want to be a billionaire):</li>
             </button>
         </ul>
