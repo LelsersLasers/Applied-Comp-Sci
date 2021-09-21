@@ -1,12 +1,11 @@
-html {
-    background-color: #2d7f9d;
-}
-
-
-.mainWidth {
-    width: 90%;
-}
-
-/* * {
+.blue {
     border: 1px solid blue;
-} */
+}
+
+body {
+    position: relative;
+}
+
+.card {
+    height: 100%;
+}

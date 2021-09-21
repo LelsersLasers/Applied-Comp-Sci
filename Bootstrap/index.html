@@ -2,6 +2,7 @@
 <html charset="UTF-8" lang="en-US">
 
 <head>
+    <title>War on Toads</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
@@ -16,7 +17,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+    <nav class="navbar navbar-expand bg-dark navbar-dark fixed-top">
+        <a class="navbar-brand" href="#">Table of Contents:</a>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#poemTitle">Poem</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#markSection">Toad Mentions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#myThought">My Analysis</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#pointless">Pointless Stuff</a>
+            </li>
+        </ul>
+    </nav>
+
     <div class="container-fluid">
 
         <br />
@@ -24,27 +44,12 @@
             <h1>The War on Toads</h1>
             <p>What, why, and how it didn't start</p>
 
-            <div class="row">
-                <div class="col-0 col-xl-6">
-                    <nav class="navbar navbar-expand bg-dark navbar-dark">
-                        <a class="navbar-brand" href="#">Table of Contents:</a>
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#poemTitle">Poem</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#markSection">Toad Mentions</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#myThought">My Analysis</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-0 col-xl-6">
+            <div class="blue row">
+                <div class="blue col-0 col-md-5 col-lg-6 col-xl-8"></div>
+                <div class="col-0 col-md-7 col-lg-6 col-xl-4">
                     <nav class="navbar navbar-expand bg-dark navbar-dark">
                         <div class="clearfix">
-                            <ul class="navbar-nav float-xl-right" style="border: 1px solid blue;">
+                            <ul class="blue navbar-nav float-xl-right">
                                 <form>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -76,7 +81,7 @@
         </div>
           
 
-        <div class="container p-3 my-3" style="border: 1px solid blue;">
+        <div class="blue container p-3 my-3">
             <p>
                 For English, we had to read this poem.
                 I thought it was about huntining toads.
@@ -84,7 +89,7 @@
                 huntining toads, and why it was not about huntining toads.
                 Here is the poem:
             </p>
-            <div class="row" style="border: 1px solid blue;">
+            <div class="blue row">
                 <div class="col-0 col-lg-3">
                     <h5>Table of Contents</h5>
                     <ul>
@@ -93,7 +98,7 @@
                         <a href="#myThought"><li>My Analysis</li></a>
                     </ul>
                 </div>
-                <div class="col-12 col-lg-8" style="border: 1px solid blue;">
+                <div class="blue col-12 col-lg-8">
                     <h3 id="poemTitle">
                         A Dog Was Crying Tonight in Wicklow Also
                     </h3>
@@ -142,8 +147,8 @@ The dog crying out all night behind the corpse house.</pre>
             </div>
 
             <br />
-            <div class="row" style="border: 1px solid blue;">
-                <div class="col-0 col-lg-2" style="border: 1px solid blue;"></div>
+            <div class="blue row">
+                <div class="blue col-0 col-lg-2"></div>
                 <div class="col-12 col-lg-10">
                     <h3 id="myThought">
                         My Analysis
@@ -191,12 +196,59 @@ The dog crying out all night behind the corpse house.</pre>
                         were hunters (only way to get food). Thus the idea of 
 
                     </p>
-
                 </div>
                 <div class="col-1"></div>
-
             </div>
+        </div>
 
+        <div id="pointless" class="blue container p-3 my-3">
+            <div class="blue row">
+                <div class="blue col-0 col-md-6 col-xl-3">
+                    <div class="card bg-dark text-white">
+                        <div class="card-body">
+                            <h4 class="card-title">Hi there</h4>
+                            <p class="card-text">
+                                This doesn't fit the content of the rest of the website.
+                            </p>
+                            <a href="#" class="card-link">This goes nowhere</a>
+                            <a href="#" class="card-link">As does this</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="blue col-0 col-md-6 col-xl-3">
+                    <div class="card bg-secondary text-white">
+                        <div class="card-body">
+                            <h4 class="card-title">Hello again</h4>
+                            <p class="card-text">These might do stuff:</p>
+                            <a href="#poemTitle" class="card-link">Poem</a>
+                            <a href="#markSection" class="card-link">Marked section</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="blue col-0 col-md-6 col-xl-3">
+                    <div class="card bg-light text-dark">
+                        <div class="card-body">
+                            <h4 class="card-title">Y r u still here?</h4>
+                            <p class="card-text">
+                                Really why? Don't push these buttons, nothing happens.
+                            </p>
+                            <a href="#" class="card-link">Magic 1</a>
+                            <a href="#m" class="card-link">Magic 2</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="blue col-0 col-md-6 col-xl-3">
+                    <div class="card bg-info text-white">
+                        <div class="card-body">
+                            <h4 class="card-title">I have nothing better to type</h4>
+                            <p class="card-text">
+                                I really don't, also no useless links because I
+                                would hope you get the point by now.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
