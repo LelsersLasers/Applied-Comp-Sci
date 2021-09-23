@@ -16,7 +16,8 @@ Things in simple:
     - Cards
     - Text/Typography
     - Dropdown
-    - (Row/col)
+    - Jumbotron
+    - Input box
 
 
 Note: I used a blue border to make things easier to see/fix for the row/col stuff.
