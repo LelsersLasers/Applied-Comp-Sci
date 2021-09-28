@@ -15,6 +15,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -66,13 +67,13 @@
                                             Submit options
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">
-                                                Do nothing<
-                                                    /a>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" href="#nothing">
+                                                Do nothing
+                                            </a>
+                                            <a class="dropdown-item" href="#alsoNothing">
                                                 Also does nothing
                                             </a>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" href="#guessNothing">
                                                 Can u guess?
                                             </a>
                                         </div>
@@ -221,8 +222,8 @@ The dog crying out all night behind the corpse house.</pre>
                             <p class="card-text">
                                 This doesn't fit the content of the rest of the website.
                             </p>
-                            <a href="#" class="card-link">"nowhere"</a>
-                            <a href="#" class="card-link">"here"</a>
+                            <a href="#nowhere" class="card-link">"nowhere"</a>
+                            <a href="#here" class="card-link">"here"</a>
                         </div>
                     </div>
                 </div>
@@ -237,14 +238,19 @@ The dog crying out all night behind the corpse house.</pre>
                     </div>
                 </div>
                 <div class="blue col-0 col-md-6 col-xl-3">
-                    <div class="card bg-light text-dark">
+                    <div id="magicCard" class="card bg-light text-dark">
                         <div class="card-body">
                             <h4 class="card-title">Y r u still here?</h4>
                             <p class="card-text">
-                                Really why? Don't push these buttons, nothing happens.
+                                Really why? Might as well push these buttons and
+                                see what happens.
                             </p>
-                            <a href="#" class="card-link">Magic 1</a>
-                            <a href="#m" class="card-link">Magic 2</a>
+                            <button type="button" id="magic1But" class="btn btn-danger card-link" onclick="magic1()">
+                                Magic 1
+                            </button>
+                            <button type="button" id="magic2But" class="btn btn-dark card-link" onclick="magic2()">
+                                Magic 2
+                            </button>
                         </div>
                     </div>
                 </div>
