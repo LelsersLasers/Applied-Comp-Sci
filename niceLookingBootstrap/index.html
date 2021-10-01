@@ -72,21 +72,15 @@
                                             Submit options
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#nothing">
-                                                Do nothing
-                                            </a>
-                                            <a class="dropdown-item" href="#alsoNothing">
-                                                Also does nothing
-                                            </a>
-                                            <a class="dropdown-item" href="#guessNothing">
-                                                Can u guess?
-                                            </a>
+                                            <button type="button" class="btn btn-primary dropdown-item" data-toggle="modal" data-target="#newsletterModal">
+                                                Sign up for newsletter
+                                            </button>
+                                            <button type="button" class="btn btn-primary dropdown-item" data-toggle="modal" data-target="#editorWriterModal">
+                                                Sign up to be an editor or writer
+                                            </button>
                                         </div>
                                     </div>
                                 </li>
-                                <!-- <li>
-                                    <div class="spinner-border text-warning"></div>
-                                </li> -->
                             </ul>
                         </div>
                     </nav>
@@ -98,7 +92,7 @@
         <div class="blue container p-3 my-3">
             <p>
                 For English, we had to read this poem.
-                I thought it was about huntining toads.
+                I thought it was about hunting toads.
                 This webpage will discuss the reasons why I thought it was about
                 huntining toads, and why it was not about huntining toads.
                 Here is the poem:
@@ -255,7 +249,7 @@ The dog crying out all night behind the corpse house.</pre>
             </div>
         </div>
 
-        <div id="about" class="blue container p-3 my-3">
+        <div id="about" class="blue container">
             <div class="blue row">
                 <div class="blue col-0 col-md-6 col-xl-3">
                     <div class="card bg-dark text-white">
@@ -324,7 +318,73 @@ The dog crying out all night behind the corpse house.</pre>
                 </div>
             </div>
         </div>
+        <br />
     </div>
+
+    <div class="modal fade" id="newsletterModal">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm sign up for newsletter</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" value="">
+                                I agree to recive weekly emails
+                            </input>
+                            <br />
+                            <input type="checkbox" class="form-check-input" value="">
+                                I agree to give all my money to the author of this cite
+                            </input>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        Confirm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editorWriterModal">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        Confirm sign up to be a writer and/or editor
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" value="">
+                                I will be a faithful and good writer
+                            </input>
+                            <br />
+                            <input type="checkbox" class="form-check-input" value="">
+                                I will be a faithful and good editor
+                            </input>
+                            <br />
+                            <input type="checkbox" class="form-check-input" value="">
+                                I agree to give all my money to the author of this cite
+                            </input>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        Confirm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 
