@@ -1,0 +1,27 @@
+.blue {
+    /* border: 1px solid blue; */
+    border: none;
+}
+
+body {
+    position: relative;
+}
+
+.card {
+    height: 100%;
+    padding: 1px;
+}
+
+
+.signUpBox {
+    width: 100%;
+}
+
+.noBotPadding {
+    padding-bottom: 0px;
+    vertical-align: middle;
+}
+
+.leftPadding {
+    padding-left: 5px;
+}
