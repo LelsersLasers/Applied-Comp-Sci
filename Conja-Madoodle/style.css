@@ -1,0 +1,17 @@
+.blue {
+    /* border: 1px solid blue; */
+    border: none;
+}
+
+body {
+    position: relative;
+}
+
+.dropdown:hover>.dropdown-menu {
+    display: block;
+}
+
+/* #videoHolder {
+    margin: 0px;
+    padding: 100px;
+} */

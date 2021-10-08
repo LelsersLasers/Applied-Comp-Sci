@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html charset="UTF-8" lang="en-US">
+
+<head>
+    <title>CONJA-MADOODLE</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand bg-dark navbar-dark fixed-top">
+        <a class="navbar-brand" href="index.html">LOGO!</a>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <div class="dropdown">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        Products
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="#basic">
+                            <button type="button" class="btn btn-primary dropdown-item">
+                                Conja-madoodle
+                            </button>
+                        </a>
+                        <a href="#pro">
+                            <button type="button" class="btn btn-primary dropdown-item">
+                                Conja-madoodle PRO
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="dropdown">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        Tools
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="#redDriver">
+                            <button type="button" class="btn btn-primary dropdown-item">
+                                Red Screwdriver
+                            </button>
+                        </a>
+                        <a href="#greenDriver">
+                            <button type="button" class="btn btn-primary dropdown-item">
+                                Green Screwdriver
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#cart">Your Cart</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#moreInfo">More Info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#account">Your Account</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <br />
+        <br />
+        <br />
+
+        <div id="videoHolder" class="jumbotron rounded-lg">
+            <h1>Featuring the Conja-madoodle PRO!</h1>
+            <div class="embed-responsive embed-responsive-21by9">
+                <iframe class="embed-responsive-item" src="video.mp4"></iframe>
+            </div>
+        </div>
+
+        <div class="jumbotron rounded-lg">
+            <div id="demo" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ul class="carousel-indicators">
+                    <li data-target="#demo" data-slide-to="0" class="active"></li>
+                    <li data-target="#demo" data-slide-to="1"></li>
+                    <li data-target="#demo" data-slide-to="2"></li>
+                </ul>
+                <!-- The slideshow -->
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="wand1.jpg" alt="WAND PIC">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="chicago.jpg" alt="Chicago">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="ny.jpg" alt="New York">
+                    </div>
+                </div>
+                <!-- Left and right controls -->
+                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#demo" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+
+</html>
