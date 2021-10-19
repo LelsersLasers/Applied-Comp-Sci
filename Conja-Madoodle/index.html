@@ -21,180 +21,228 @@
 <body>
 
     <nav class="navbar navbar-expand bg-dark navbar-dark fixed-top">
-        <a class="navbar-brand" href="index.html">LOGO!</a>
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <div class="dropdown">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        Products
-                    </button>
-                    <div class="dropdown-menu">
-                        <a href="basic.html">
-                            <button type="button" class="btn btn-primary dropdown-item">
-                                Conja-madoodle
+        <div class="row container-fluid">
+            <div class="blue col-0 col-md-6">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="navbar-brand" href="index.html">LOGO!</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                Products
                             </button>
-                        </a>
-                        <a href="pro.html">
-                            <button type="button" class="btn btn-primary dropdown-item">
-                                Conja-madoodle PRO
+                            <div class="dropdown-menu">
+                                <a href="basic.html">
+                                    <button type="button" class="btn btn-primary dropdown-item">
+                                        Conja-madoodle
+                                    </button>
+                                </a>
+                                <a href="pro.html">
+                                    <button type="button" class="btn btn-primary dropdown-item">
+                                        Conja-madoodle PRO
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                Tools
                             </button>
-                        </a>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <div class="dropdown">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        Tools
-                    </button>
-                    <div class="dropdown-menu">
-                        <a href="#redDriver">
-                            <button type="button" class="btn btn-primary dropdown-item">
-                                Red Screwdriver
-                            </button>
-                        </a>
-                        <a href="#greenDriver">
-                            <button type="button" class="btn btn-primary dropdown-item">
-                                Green Screwdriver
-                            </button>
-                        </a>
-                    </div>
-                </div>
-            </li>
-        </ul>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="#cart">Your Cart</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#moreInfo">More Info</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#account">Your Account</a>
-            </li>
-            <li class="nav-item">
-                <img src="head.png" height="40" />
-            </li>
-        </ul>
-    </nav>
-
-    <div class="container">
-
-        <br />
-        <br />
-        <br />
-
-        <div id="videoHolder" class="jumbotron rounded-lg">
-            <h1>Featuring the Conja-madoodle PRO!</h1>
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="video.mp4"></iframe>
+                            <div class="dropdown-menu">
+                                <a href="#redDriver">
+                                    <button type="button" class="btn btn-primary dropdown-item">
+                                        Red Screwdriver
+                                    </button>
+                                </a>
+                                <a href="#greenDriver">
+                                    <button type="button" class="btn btn-primary dropdown-item">
+                                        Green Screwdriver
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <p>
-                The PRO Edtion of the Conja-madoodle! All the core
-                features such as: instant improvement of life, and
-                does not require any charging ever! But being the PRO edition,
-                it can also affect other people's lifes! 
-            </p>
-            <div class="blue float-right">
-                <a href="#somewhere">
-                    <button type="button" class="btn btn-primary">
-                        BUY NOW!
-                    </button>
-                </a>
-                <a href="#somewhere">
-                    <button type="button" class="btn btn-secondary">
-                        More Info
-                    </button>
-                </a>
+            <div class="blue col-0 col-md-6">
+                <ul class="navbar-nav">
+                    <li class="nav-item mr-auto"></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cart">Your Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#moreInfo">More Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#accountPopOut" class="nav-link" onclick="showAccount('popOut')">
+                            Your Account
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#accountPopOut" onclick="showAccount('popOut')">
+                            <img src="head.png" height="40" />
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
+    </nav>
 
-        <div class="jumbotron rounded-lg">
-            <div id="demo" class="blue carousel slide" data-ride="carousel">
-                <ul class="carousel-indicators">
-                    <li data-target="#demo" data-slide-to="0" class="active"></li>
-                    <li data-target="#demo" data-slide-to="1"></li>
-                    <li data-target="#demo" data-slide-to="2"></li>
-                </ul>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <h3>
-                            Basic Edition!
-                        </h3>
-                        <img class="blue img-fluid" src="wand1.jpg" alt="Conja-madoodle Basic Edition" />
-                        <p>
-                            The Basic Edtion of the Conja-madoodle! All the core
-                            features such as: instant improvement of life, and
-                            does not require any charging ever!
-                        </p>
-                        <div class="blue float-right">
-                            <a href="basic.html">
-                                <button type="button" class="btn btn-primary">
-                                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa BUY NOW!
-                                </button>
-                            </a>
-                            <a href="basic.html">
-                                <button type="button" class="btn btn-secondary">
-                                    More Info
-                                </button>
-                            </a>
-                        </div>
+    <div class="container-fluid">
+
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-0 col-md-1 col-xl-2"></div>
+            <div class="col-12 col-md-10 col-xl-8">
+                <div id="videoHolder" class="jumbotron rounded-lg">
+                    <h1>Featuring the Conja-madoodle PRO!</h1>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="video.mp4"></iframe>
                     </div>
-                    <div class="carousel-item">
-                        <h3>
-                            NEW Tree Trimmer Edition!
-                        </h3>
-                        <img src="wand2.jpeg" alt="Conja-madoodle Tree Trimmer Edition" />
-                        <p>
-                            The Environmentally Friendly Edition of the Conja-madoodle!
-                            None of the core features but it is very good at trimming trees!
-                            With the ??????LINK?????? tree cutter addon it can even
-                            cut trees!
-                        </p>
-                        <div class="blue float-right">
-                            <a href="#somewhere">
-                                <button type="button" class="btn btn-primary">
-                                    BUY NOW!
-                                </button>
-                            </a>
-                            <a href="#somewhere">
-                                <button type="button" class="btn btn-secondary">
-                                    More Info
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <h3>
-                            NEW Environmentally Friendly Edition!
-                        </h3>
-                        <img src="wand3.jpg" alt="Conja-madoodle Environmentally Friendly Edition" />
-                        <p>
-                            The Environmentally Friendly Edition of the Conja-madoodle!
-                            All the core features such as: instant improvement of
-                            life, and does not require any charging ever! In addition,
-                            this edtion has a carbon neutral footprint with zero emissions!
-                        </p>
-                        <div class="blue float-right">
-                            <a href="#somewhere">
-                                <button type="button" class="btn btn-primary">
-                                    BUY NOW!
-                                </button>
-                            </a>
-                            <a href="#somewhere">
-                                <button type="button" class="btn btn-secondary">
-                                    More Info
-                                </button>
-                            </a>
-                        </div>
+                    <p>
+                        The PRO Edtion of the Conja-madoodle! All the core
+                        features such as: instant improvement of life, and
+                        does not require any charging ever! But being the PRO edition,
+                        it can also affect other people's lifes! 
+                    </p>
+                    <div class="blue float-right">
+                        <a href="#somewhere">
+                            <button type="button" class="btn btn-primary">
+                                BUY NOW!
+                            </button>
+                        </a>
+                        <a href="#somewhere">
+                            <button type="button" class="btn btn-secondary">
+                                More Info
+                            </button>
+                        </a>
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                    <span class="carousel-control-prev-icon"></span>
-                </a>
-                <a class="carousel-control-next" href="#demo" data-slide="next">
-                    <span class="carousel-control-next-icon"></span>
-                </a>
+
+                <div class="jumbotron rounded-lg">
+                    <div id="demo" class="blue carousel slide" data-ride="carousel">
+                        <ul class="carousel-indicators">
+                            <li data-target="#demo" data-slide-to="0" class="active"></li>
+                            <li data-target="#demo" data-slide-to="1"></li>
+                            <li data-target="#demo" data-slide-to="2"></li>
+                        </ul>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <h3>
+                                    Basic Edition!
+                                </h3>
+                                <img class="blue img-fluid" src="wand1.jpg" alt="Conja-madoodle Basic Edition" />
+                                <p>
+                                    The Basic Edtion of the Conja-madoodle! All the core
+                                    features such as: instant improvement of life, and
+                                    does not require any charging ever!
+                                </p>
+                                <div class="blue float-right">
+                                    <a href="basic.html">
+                                        <button type="button" class="btn btn-primary">
+                                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa BUY NOW!
+                                        </button>
+                                    </a>
+                                    <a href="basic.html">
+                                        <button type="button" class="btn btn-secondary">
+                                            More Info
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <h3>
+                                    NEW Tree Trimmer Edition!
+                                </h3>
+                                <img src="wand2.jpeg" alt="Conja-madoodle Tree Trimmer Edition" />
+                                <p>
+                                    The Environmentally Friendly Edition of the Conja-madoodle!
+                                    None of the core features but it is very good at trimming trees!
+                                    With the ??????LINK?????? tree cutter addon it can even
+                                    cut trees!
+                                </p>
+                                <div class="blue float-right">
+                                    <a href="#somewhere">
+                                        <button type="button" class="btn btn-primary">
+                                            BUY NOW!
+                                        </button>
+                                    </a>
+                                    <a href="#somewhere">
+                                        <button type="button" class="btn btn-secondary">
+                                            More Info
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <h3>
+                                    NEW Environmentally Friendly Edition!
+                                </h3>
+                                <img src="wand3.jpg" alt="Conja-madoodle Environmentally Friendly Edition" />
+                                <p>
+                                    The Environmentally Friendly Edition of the Conja-madoodle!
+                                    All the core features such as: instant improvement of
+                                    life, and does not require any charging ever! In addition,
+                                    this edtion has a carbon neutral footprint with zero emissions!
+                                </p>
+                                <div class="blue float-right">
+                                    <a href="#somewhere">
+                                        <button type="button" class="btn btn-primary">
+                                            BUY NOW!
+                                        </button>
+                                    </a>
+                                    <a href="#somewhere">
+                                        <button type="button" class="btn btn-secondary">
+                                            More Info
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#demo" data-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-0 col-md-1 col-xl-2">
+                <div id="popOut" class="d-none">
+                    <div class="blue jumbotron">
+                        <h5 class="blue text-center">Your Account</h5>
+                        <p class="blue text-center">
+                            <a href="#settings">
+                                <button type="button" class="accountPopButton btn btn-primary">
+                                    Settings
+                                </button>
+                            </a>
+                        </p>
+                        <p class="blue text-center">
+                            <button type="button" class="accountPopButton btn btn-primary">
+                                Cart
+                            </button>
+                        </p>
+                        <p class="blue text-center">
+                            <button type="button" class="accountPopButton btn btn-primary">
+                                Log Out
+                            </button>
+                        </p>
+                        <p class="blue text-center">
+                            <a href="#accountPopOut">
+                                <button type="button" class="accountPopButton btn btn-secondary" onclick="showAccount('popOut')">
+                                    &#129044;
+                                </button>
+                            </a>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
 

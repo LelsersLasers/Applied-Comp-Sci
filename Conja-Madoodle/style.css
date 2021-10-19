@@ -11,7 +11,6 @@ body {
     display: block;
 }
 
-/* #videoHolder {
-    margin: 0px;
-    padding: 100px;
-} */
+.accountPopButton {
+    width: 80%;
+}
