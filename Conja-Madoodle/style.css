@@ -14,3 +14,8 @@ body {
 .accountPopButton {
     width: 80%;
 }
+
+.topBar {
+    width: 100%;
+    margin: 0 auto;
+}
