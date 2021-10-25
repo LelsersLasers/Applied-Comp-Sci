@@ -4,11 +4,11 @@
 - Black bars on video
 - Account picture
 - Top bar size/spacing when small
-- Products/Tools buttons cleaner into bar
 - Logo
-- Top bar colors
+- "more info" button float down
 - Update html files per product to match main page
 - Update account pop up per product to match main page
+- Finish per product pages
 - Show account on small
 - Call to action
 - Buttons can just be a class="button btn"
