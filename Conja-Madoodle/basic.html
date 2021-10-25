@@ -20,62 +20,75 @@
 
 <body>
 
-    <nav class="navbar navbar-expand bg-dark navbar-dark fixed-top">
-        <a class="navbar-brand" href="index.html">LOGO!</a>
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <div class="dropdown">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        Products
-                    </button>
-                    <div class="dropdown-menu">
-                        <a href="basic.html">
-                            <button type="button" class="btn btn-primary dropdown-item">
-                                Conja-madoodle
+    <nav class="blue navbar navbar-expand bg-dark navbar-dark fixed-top">
+        <div class="topBar row">
+            <div class="blue col-0 col-md-6">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="navbar-brand" href="index.html">LOGO!</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                Products
                             </button>
-                        </a>
-                        <a href="pro.html">
-                            <button type="button" class="btn btn-primary dropdown-item">
-                                Conja-madoodle PRO
+                            <div class="dropdown-menu">
+                                <a href="basic.html">
+                                    <button type="button" class="btn btn-primary dropdown-item">
+                                        Conja-madoodle
+                                    </button>
+                                </a>
+                                <a href="pro.html">
+                                    <button type="button" class="btn btn-primary dropdown-item">
+                                        Conja-madoodle PRO
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                Tools
                             </button>
+                            <div class="dropdown-menu">
+                                <a href="#redDriver">
+                                    <button type="button" class="btn btn-primary dropdown-item">
+                                        Red Screwdriver
+                                    </button>
+                                </a>
+                                <a href="#greenDriver">
+                                    <button type="button" class="btn btn-primary dropdown-item">
+                                        Green Screwdriver
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="blue col-0 col-md-6">
+                <ul class="navbar-nav">
+                    <li class="nav-item mr-0 mr-md-auto"></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cart">Your Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#moreInfo">More Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#accountPopOut" class="nav-link" onclick="showAccount('popOut')">
+                            Your Account
                         </a>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <div class="dropdown">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        Tools
-                    </button>
-                    <div class="dropdown-menu">
-                        <a href="#redDriver">
-                            <button type="button" class="btn btn-primary dropdown-item">
-                                Red Screwdriver
-                            </button>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#accountPopOut" onclick="showAccount('popOut')">
+                            <img src="head.png" height="40" />
                         </a>
-                        <a href="#greenDriver">
-                            <button type="button" class="btn btn-primary dropdown-item">
-                                Green Screwdriver
-                            </button>
-                        </a>
-                    </div>
-                </div>
-            </li>
-        </ul>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="#cart">Your Cart</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#moreInfo">More Info</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#account">Your Account</a>
-            </li>
-            <li class="nav-item">
-                <img src="head.png" height="40"/>
-            </li>
-        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </nav>
 
     <div class="blue container">

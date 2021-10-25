@@ -19,3 +19,13 @@ body {
     width: 100%;
     margin: 0 auto;
 }
+
+.videoSize {
+    height: 60vh;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
