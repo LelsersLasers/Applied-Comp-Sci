@@ -25,7 +25,9 @@
             <div class="blue col-0 col-md-6">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="navbar-brand" href="index.html">LOGO!</a>
+                        <a class="navbar-brand p-0 m-0" href="index.html">
+                            <img src="logo.JPG" alt="LOGO!" height="40" />
+                        </a>
                     </li>
                     <li class="nav-item mr-2">
                         <div class="dropdown">
@@ -83,7 +85,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="#accountPopOut" onclick="showAccount('popOut')">
-                            <img src="head.png" height="40" />
+                            <img id="accountImg" src="head.png" height="40" />
                         </a>
                     </li>
                 </ul>
@@ -100,7 +102,7 @@
 
                 <div id="videoHolder" class="jumbotron rounded-lg">
                     <h1>Featuring the Conja-madoodle PRO!</h1>
-                    <div class="blue videoSize embed-responsive embed-responsive-16by9">
+                    <div class="blue center videoSize img-fluid embed-responsive">
                         <iframe class="embed-responsive-item" src="video.mp4"></iframe>
                     </div>
                     <p>
@@ -109,16 +111,18 @@
                         does not require any charging ever! But being the PRO edition,
                         it can also affect other people's lifes! 
                     </p>
-                    <a href="#somewhere">
-                        <button type="button" class="btn btn-primary btn-lg">
-                            BUY NOW!
-                        </button>
-                    </a>
-                    <a href="#somewhere">
-                        <button type="button" class="btn btn-secondary float-right">
-                            More Info
-                        </button>
-                    </a>
+                    <div class="blue d-flex justify-content-between align-items-center flex-column flex-sm-row">
+                        <a href="#somewhere">
+                            <button type="button" class="btn btn-primary btn-lg">
+                                BUY NOW!
+                            </button>
+                        </a>
+                        <a href="#somewhere">
+                            <button type="button" class="btn btn-secondary">
+                                More Info
+                            </button>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="jumbotron rounded-lg p-4">
@@ -134,23 +138,25 @@
                                     <h3 class="blue card-title">
                                         Basic Edition!
                                     </h3>
-                                    <div class="card-body">
+                                    <div class="blue card-body">
                                         <img class="blue center videoSize img-fluid" src="wand1.jpg" alt="Conja-madoodle Basic Edition" />
                                         <p>
                                             The Basic Edtion of the Conja-madoodle! All the core
                                             features such as: instant improvement of life, and
                                             does not require any charging ever!
                                         </p>
-                                        <a href="basic.html">
-                                            <button type="button" class="btn btn-primary btn-lg">
-                                                BUY NOW!
-                                            </button>
-                                        </a>
-                                        <a href="basic.html">
-                                            <button type="button" class="btn btn-secondary float-right">
-                                                More Info
-                                            </button>
-                                        </a>
+                                        <div class="blue d-flex justify-content-between align-items-center flex-column flex-sm-row">
+                                            <a href="#basic.html">
+                                                <button type="button" class="btn btn-primary btn-lg">
+                                                    BUY NOW!
+                                                </button>
+                                            </a>
+                                            <a href="#basic.html">
+                                                <button type="button" class="btn btn-secondary">
+                                                    More Info
+                                                </button>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -167,16 +173,18 @@
                                             With the ??????LINK?????? tree cutter addon it can even
                                             cut trees!
                                         </p>
-                                        <a href="basic.html">
-                                            <button type="button" class="btn btn-primary btn-lg">
-                                                BUY NOW!
-                                            </button>
-                                        </a>
-                                        <a href="#treeTrimmer">
-                                            <button type="button" class="btn btn-secondary float-right">
-                                                More Info
-                                            </button>
-                                        </a>
+                                        <div class="blue d-flex justify-content-between align-items-center flex-column flex-sm-row">
+                                            <a href="#treeTrimmer">
+                                                <button type="button" class="btn btn-primary btn-lg">
+                                                    BUY NOW!
+                                                </button>
+                                            </a>
+                                            <a href="#treeTrimmer">
+                                                <button type="button" class="btn btn-secondary">
+                                                    More Info
+                                                </button>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -193,25 +201,27 @@
                                         life, and does not require any charging ever! In addition,
                                         this edtion has a carbon neutral footprint with zero emissions!
                                         </p>
-                                        <a href="basic.html">
-                                            <button type="button" class="btn btn-primary btn-lg">
-                                                BUY NOW!
-                                            </button>
-                                        </a>
-                                        <a href="basic.html">
-                                            <button type="button" class="btn btn-secondary float-right">
-                                                More Info
-                                            </button>
-                                        </a>
+                                        <div class="blue d-flex justify-content-between align-items-center flex-column flex-sm-row">
+                                            <a href="#evFriendly">
+                                                <button type="button" class="btn btn-primary btn-lg">
+                                                    BUY NOW!
+                                                </button>
+                                            </a>
+                                            <a href="#evFriendly">
+                                                <button type="button" class="btn btn-secondary">
+                                                    More Info
+                                                </button>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                            <span class="carousel-control-prev-icon"></span>
+                        <a class="blue m-auto carousel-arrow carousel-control-prev" href="#demo" data-slide="prev">
+                            <span class="arrowColor carousel-control-prev-icon p-3"></span>
                         </a>
-                        <a class="carousel-control-next" href="#demo" data-slide="next">
-                            <span class="carousel-control-next-icon"></span>
+                        <a class="blue m-auto carousel-arrow carousel-control-next" href="#demo" data-slide="next">
+                            <span class=" arrowColor carousel-control-next-icon p-3"></span>
                         </a>
                     </div>
                 </div>
@@ -221,7 +231,7 @@
                 <br />
                 <br />
                 <div id="popOut" class="d-none">
-                    <div class="blue jumbotron">
+                    <div class="blue jumbotron p-0 p-lg-4">
                         <h5 class="blue text-center">Your Account</h5>
                         <p class="blue text-center">
                             <a href="#settings">

@@ -25,16 +25,18 @@
             <div class="blue col-0 col-md-6">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="navbar-brand" href="index.html">LOGO!</a>
+                        <a class="navbar-brand p-0 m-0" href="index.html">
+                            <img src="logo.JPG" alt="LOGO!" height="40" />
+                        </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item mr-2">
                         <div class="dropdown">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown">
                                 Products
                             </button>
                             <div class="dropdown-menu">
                                 <a href="basic.html">
-                                    <button type="button" class="btn btn-primary dropdown-item">
+                                    <button type="button" class="btn dropdown-item">
                                         Conja-madoodle
                                     </button>
                                 </a>
@@ -48,7 +50,7 @@
                     </li>
                     <li class="nav-item">
                         <div class="dropdown">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown">
                                 Tools
                             </button>
                             <div class="dropdown-menu">
@@ -76,14 +78,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#moreInfo">More Info</a>
                     </li>
-                    <li class="nav-item">
+                    <li id="accountTxt" class="nav-item">
                         <a href="#accountPopOut" class="nav-link" onclick="showAccount('popOut')">
                             Your Account
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#accountPopOut" onclick="showAccount('popOut')">
-                            <img src="head.png" height="40" />
+                            <img id="accountImg" src="head.png" height="40" />
                         </a>
                     </li>
                 </ul>
@@ -92,10 +94,8 @@
     </nav>
 
     <div class="blue container">
-
-        <br />
-        <br />
-        <br />
+        <div class="mt-4"><p>a</p></div>
+        <div class="mt-5 mt-md-0"><p></p></div>
 
         <h1>
             Conja-madoodle Basic
@@ -105,13 +105,13 @@
         <div class="blue row">
             <div class="blue col-md-2">
                 <div class="btn-group-vertical">
-                    <img class="blue" src="wand1 - 1.jpg" width="100%" onclick="setPic('wand1 - 1.jpg', 'mainPic')" />
-                    <img class="blue" src="wand1 - 2.jpg" width="100%" onclick="setPic('wand1 - 2.jpg', 'mainPic')" />
-                    <img class="blue" src="wand1 - 3.jpg" width="100%" onclick="setPic('wand1 - 3.jpg', 'mainPic')" />
+                    <img class="blue borderGrey" src="wand1 - 1.jpg" width="100%" onclick="setPic('wand1 - 1.jpg', 'mainPic')" />
+                    <img class="blue borderGrey" src="wand1 - 2.jpg" width="100%" onclick="setPic('wand1 - 2.jpg', 'mainPic')" />
+                    <img class="blue borderGrey" src="wand1 - 3.jpg" width="100%" onclick="setPic('wand1 - 3.jpg', 'mainPic')" />
                 </div>
             </div>
             <div class="blue col-md-7">
-                <img id="mainPic" src="wand1 - 1.jpg" width="100%" />
+                <img id="mainPic" class="blue borderGrey" src="wand1 - 1.jpg" width="100%" />
             </div>
             <div class="blue col-md-3">
                 <h5 class="blue text-center">

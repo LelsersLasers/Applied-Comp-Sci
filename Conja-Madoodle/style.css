@@ -1,6 +1,6 @@
 .blue {
-    border: 1px solid blue;
-    /* border: none; */
+    /* border: 1px solid blue; */
+    border: none;
 }
 
 body {
@@ -12,7 +12,7 @@ body {
 }
 
 .accountPopButton {
-    width: 80%;
+    width: 90%;
 }
 
 .topBar {
@@ -22,10 +22,23 @@ body {
 
 .videoSize {
     height: 60vh;
+    /* width: 106vh; */
 }
 
 .center {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.carousel-arrow {
+    height: 50%;
+}
+
+.arrowColor {
+    background-color: lightgray;
+}
+
+.borderGrey {
+    border: 1px solid lightgray;
 }
