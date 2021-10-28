@@ -7,6 +7,8 @@
 - Update account pop up per product to match main page
 - Finish per product pages
 - Show account on small
+- show account on per product pages
+- products page
 
 # 
 - Call to action
