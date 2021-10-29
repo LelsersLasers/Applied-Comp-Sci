@@ -3,16 +3,13 @@
 - Fix colors on whole site, make uniform
 - Black bars on video
 - "added to cart"
-- Update html files per product to match main page
-- Update account pop up per product to match main page
-- Finish per product pages
 - Show account on small
 - show account on per product pages
 - products page
+- "Proof read"
 
 # 
 - Call to action
-- Buttons can just be a class="button btn"
 
 # Assignment
 1) An overall design strategy that makes sense for your content.

@@ -45,3 +45,11 @@ function showAccount(popUpId) {
         shown = false;
     }
 }
+
+
+function addToCart(id) {
+    console.log("addToCart");
+    button = document.getElementById(id);
+    button.innerText = "Added to Cart!";
+    console.log(button.innerText);
+}

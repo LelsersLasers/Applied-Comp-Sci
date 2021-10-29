@@ -1,6 +1,6 @@
 .blue {
-    border: 1px solid blue;
-    /* border: none; */
+    /* border: 1px solid blue; */
+    border: none;
 }
 
 body {
@@ -41,4 +41,8 @@ body {
 
 .borderGrey {
     border: 1px solid lightgray;
+}
+
+.tall {
+    height: 95%;
 }
