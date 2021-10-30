@@ -2,10 +2,10 @@
 
 - Fix colors on whole site, make uniform
 - Black bars on video
-- "added to cart"
 - Show account on small
 - show account on per product pages
-- products page
+- input /> endings? - products page
+- Make per product pages the same
 - "Proof read"
 
 # 

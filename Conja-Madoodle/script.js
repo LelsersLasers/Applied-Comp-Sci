@@ -53,3 +53,20 @@ function addToCart(id) {
     button.innerText = "Added to Cart!";
     console.log(button.innerText);
 }
+
+function checkBox(idOfBox) {
+    if (idOfBox == "tools"){
+        cards = document.getElementsByClassName("tool");
+    }
+    else {
+        cards = document.getElementsByClassName("product");
+    }
+    for (i = 0; i < cards.length; i++) {
+        if (cards[i].classList.contains("d-none")) {
+            cards[i].classList.remove("d-none");
+        }
+        else {
+            cards[i].classList.add("d-none");
+        }
+    }
+}
