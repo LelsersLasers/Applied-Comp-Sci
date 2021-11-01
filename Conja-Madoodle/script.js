@@ -1,7 +1,4 @@
 shown = false;
-$(document).ready(function() {
-    $('[data-toggle="popover"]').popover();
-});
 
 function setPic(source, id) {
     img = document.getElementById(id);
