@@ -3,7 +3,7 @@
 BUY NOW! :)
 
 # Features
-- "Z" design
+- "One Column" design
 - Multiple pages:
     - Main page
         - Account menu pops out from side
