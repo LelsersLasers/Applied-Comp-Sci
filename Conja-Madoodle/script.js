@@ -6,7 +6,6 @@ function setPic(source, id) {
 }
 
 function showAccount(popUpId) {
-    console.log("clicked")
     if (popUpId != "none") {
         div = document.getElementById(popUpId);
     }
@@ -16,7 +15,6 @@ function showAccount(popUpId) {
     img = document.getElementById("accountImg");
 
     if (!shown) {
-        console.log("show");
         if (popUpId != "none") {
             div.classList.remove("d-none");
             leftBar.classList.remove("col-md-1");
@@ -29,7 +27,6 @@ function showAccount(popUpId) {
         shown = true;
     }
     else {
-        console.log("hide");
         if (popUpId != "none") {
             div.classList.add("d-none");
             leftBar.classList.add("col-md-1");
@@ -45,14 +42,16 @@ function showAccount(popUpId) {
 
 
 function addToCart(id) {
-    console.log("addToCart");
     button = document.getElementById(id);
     button.innerText = "Added to Cart!";
-    console.log(button.innerText);
+    if (button.classList.contains("btn-primary")) {
+        button.classList.remove("btn-primary");
+        button.classList.add("btn-success");
+    }
 }
 
 function checkBox(idOfBox) {
-    if (idOfBox == "tools"){
+    if (idOfBox == "tools") {
         cards = document.getElementsByClassName("tool");
     }
     else {
