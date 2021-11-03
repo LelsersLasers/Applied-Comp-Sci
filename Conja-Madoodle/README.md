@@ -3,14 +3,15 @@
 BUY NOW! :)
 
 # Features
-- "One Column" design
+- "One Column"ish design for main page and all products page
+- "Three Column"ish design for the per product pages
 - Multiple pages:
     - Main page
         - Account menu pops out from side
         - And picture color changes
     - basic edition page / pro page
         - Add to cart button change text
-        - Clicking a small picture focuses it
+        - Clicking a small picture enlarges it
     - all products page
         - with working filters
         - (also had account menu pop out)
@@ -27,9 +28,8 @@ BUY NOW! :)
 - The product pages do not contain the pop out, instead it would be a link to a full page about it
     - It make it too crowded on the page when it popped out
 - The random "blue" class was my border to outline/make sure things were aligned right
-- I tried to loosly keep within 80 characters wide, but it definitely didn't happen
-    - (also I like 4 spaces per tab to make sure the </ end up on the same level, but it didn't help the 80 char thing)
 - All extra styling is in style.css and there is some basic JavaScript in script.js
+- All the pages have a "terrible" line of code for top spacing
 - Call to action / Colors:
     - Main actions in bright blue ("primary")
         - BUY NOW, Add to Cart
@@ -39,5 +39,4 @@ BUY NOW! :)
         - line (hr) and very light grey to set it as not imporant (compared to the normal bright white)
     - Jumbotrons to seperate sections
         - Featured product vs others
-        - Title vs Filters and products
-        - (Also just looks nice)
+        - (Also the rounded corners just looks nice)
