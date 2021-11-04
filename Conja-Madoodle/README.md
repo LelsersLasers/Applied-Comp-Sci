@@ -30,6 +30,7 @@ BUY NOW! :)
 - The random "blue" class was my border to outline/make sure things were aligned right
 - All extra styling is in style.css and there is some basic JavaScript in script.js
 - All the pages have a "terrible" line of code for top spacing
+- I have no idea how to properly organize the project folder, so I just didn't
 - Call to action / Colors:
     - Main actions in bright blue ("primary")
         - BUY NOW, Add to Cart
