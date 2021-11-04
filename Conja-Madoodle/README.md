@@ -33,6 +33,8 @@ BUY NOW! :)
 - Call to action / Colors:
     - Main actions in bright blue ("primary")
         - BUY NOW, Add to Cart
+    - Green on success
+        - for Add to Cart buttons
     - Bonus actions in muted colors
         - "Info" (a bootstrap blue) for settings, light grey for more info
     - Out of the way bottom links
