@@ -94,6 +94,8 @@ class Square {
     checkDone() {
         if (this.pt.x > canvas.width - 50){
             console.log("YOU WIN!");
+            stateTxt.innerText = "Status: VICTORY";
+            alive = false;
         }
     }
 
@@ -162,6 +164,7 @@ function drawAll()
     greenLight.draw();
     redLight.draw();
     sq.move();
+    sq.checkDone();
 
     // Loop the animation to the next frame.
     if (alive) {
