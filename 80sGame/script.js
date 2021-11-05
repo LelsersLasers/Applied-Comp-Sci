@@ -1,25 +1,37 @@
+g = [0, 9.8];
+
 class Square {
     // Notice that the constructor takes some of its values as inputs,
     //   and sets others by itself.
     constructor(x1, y1, w, h) {
         this.pt1 = [x1, y1];
-        this.width = w;
-        this.height = h;
+        this.w = w;
+        this.h = h;
+        this.v = [0, 0];
         // this.vel1 = [Math.random() * 4 - 2, Math.random() * 4 - 2];
         // this.vel2 = [Math.random() * 4 - 2, Math.random() * 4 - 2];
         this.vel1 = [0, 0];
         this.vel2 = [0, 0];
         this.color = "#0000ff";
         this.width = 3;
-        this.cap = 'round';
+        this.f = [g];
     }
+
+    update() {
+        for (var i = 0; i < this.f.length; i++) {
+            this.v[0] = this.v[0] + this.f[i][0];
+            this.v[1] = this.v[1] + this.f[i][1];
+        }
+        this.pt1[0] = this.pt1[0] + this.v[0];
+        this.pt1[1] = this.pt1[1] + this.v[1]
+    }
+
     draw() {
         context.strokeStyle = this.color;
         context.lineWidth = this.width;
-        // context.beginPath();
+        context.beginPath();
         context.rect(this.pt1[0], this.pt1[1], this.w, this.h);
         context.stroke();
-        console.log(this.pt1);
     }
 }
 
@@ -32,9 +44,11 @@ function drawAll()
 */
 {
 
+    
     // Draw the new frame
     context.clearRect(0, 0, canvas.width, canvas.height);
     sq.draw();
+    sq.update();
 
     // Loop the animation to the next frame.
     window.requestAnimationFrame(drawAll);
@@ -59,7 +73,7 @@ function setUpContext() {
 
 // Set up the canvas and context objects
 context = setUpContext();
-sq = new Square(200, 200, 50, 50);
+sq = new Square(50, 50, 50, 50);
 
 // Fire up the animation engine
 window.requestAnimationFrame(drawAll);
