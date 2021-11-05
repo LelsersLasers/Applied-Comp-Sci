@@ -33,7 +33,7 @@ function getRandomInt(min, max) {
 }
 
 
-class Vector {
+class Vector { // also a force
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -53,15 +53,13 @@ class Vector {
     }
 }
 
-class Square {
-    // Notice that the constructor takes some of its values as inputs,
-    //   and sets others by itself.
-    constructor(pt, w, h, color) {
+class Thing {
+    constructor(pt, w, h, color, f) {
         this.pt = pt;
         this.w = w;
         this.h = h;
         this.v = new Vector(0, 0);
-        this.f = []; // forces
+        this.f = f; // forces
         this.color = color;
         this.width = 3;
         this.active = true;
@@ -77,26 +75,6 @@ class Square {
         this.active = !this.active;
     }
 
-    move() {
-        if (rightPressed) {
-            this.pt.x += 1;
-        }
-        else if (leftPressed) {
-            this.pt.x -= 1;
-        }
-        if ((rightPressed || leftPressed) && !canMove) {
-            console.log("Illeagal movement!");
-            stateTxt.innerText = "Status: DEAD";
-            alive = false;
-        }
-    }
-
-    checkDone() {
-        if (this.pt.x > canvas.width - 50){
-            console.log("YOU WIN!");
-        }
-    }
-
     update() {
         for (var i = 0; i < this.f.length; i++) { // for every force, update the vel
             this.v.apply(this.f[i])
@@ -104,17 +82,18 @@ class Square {
         this.pt.apply(this.v);
     }
 
-    draw() {
-        context.strokeStyle = this.color;
-        context.fillStyle = this.color;
-        context.lineWidth = this.width;
-        context.beginPath();
-        context.rect(this.pt.x, this.pt.y, this.w, this.h);
-        if (this.active) {
-            context.fill();
-        }
-        context.stroke();
-    }
+    // draw to be pre extend
+    // draw() {
+    //     context.strokeStyle = this.color;
+    //     context.fillStyle = this.color;
+    //     context.lineWidth = this.width;
+    //     context.beginPath();
+    //     context.rect(this.pt.x, this.pt.y, this.w, this.h);
+    //     if (this.active) {
+    //         context.fill();
+    //     }
+    //     context.stroke();
+    // }
 }
 
 function shortener(start) {
@@ -123,9 +102,6 @@ function shortener(start) {
 }
 
 var frame = 0;
-var time = 0;
-var delay = getRandomInt(200, 400);
-var canMove = false;
 var alive = true;
 function drawAll()
 /*
@@ -134,34 +110,9 @@ function drawAll()
   Returns: None, but it calls itself to cycle to the next frame
 */
 {
-    if (frame == delay) {
-        if (!greenLight.active && !redLight.active) {
-            greenLight.on()
-            redLight.on();
-            canMove = true;
-            delay = getRandomInt(shortener(100), shortener(200));
-            frame = 0;
-        }
-        else if(greenLight.active && redLight.active){
-            greenLight.off();
-            frame = 0;
-        }
-        else {
-            redLight.off();
-            canMove = false;
-            delay = getRandomInt(shortener(200), shortener(400));
-            frame = 0;
-        }
-        
-    }
     
     // Draw the new frame
     context.clearRect(0, 0, canvas.width, canvas.height);
-    sq.draw();
-    sq.update();
-    greenLight.draw();
-    redLight.draw();
-    sq.move();
 
     // Loop the animation to the next frame.
     if (alive) {
@@ -169,21 +120,11 @@ function drawAll()
     }
 
     frame++;
-    time++;
 }
 
 function reset() {
-    sq = new Square(new Vector(50, canvas.height/2 - 25), 50, 50, "#0000ff");
-    greenLight = new Square(new Vector(canvas.width - 50, 0), 50, 50, "#00ff00");
-    greenLight.off();
-    redLight = new Square(new Vector(canvas.width - 50, 54), 50, 50, "#ff0000");
-    redLight.off();
-    stateTxt.innerText = "Status: Alive";
 
     frame = 0;
-    time = 0;
-    delay = getRandomInt(200, 400);
-    canMove = false;
     alive = true;
     window.requestAnimationFrame(drawAll);
 }
