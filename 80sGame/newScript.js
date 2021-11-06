@@ -1,14 +1,22 @@
-var rightPressed = false;
-var leftPressed = false;
+var up = false;
+var down = false;
+var left = false;
+var right = false;
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
 function keyDownHandler(e) {
-    if(e.key == "Right" || e.key == "ArrowRight") {
-        rightPressed = true;
+    if(e.key == "w") {
+        up = true;
     }
-    else if(e.key == "Left" || e.key == "ArrowLeft") {
-        leftPressed = true;
+    else if(e.key == "s") {
+        down = true;
+    }
+    else if(e.key == "a") {
+        left = true;
+    }
+    else if(e.key == "d") {
+        right = true;
     }
     if (e.key == "r") {
         reset();
@@ -16,11 +24,17 @@ function keyDownHandler(e) {
 }
 
 function keyUpHandler(e) {
-    if(e.key == "Right" || e.key == "ArrowRight") {
-        rightPressed = false;
+    if(e.key == "w") {
+        up = false;
     }
-    else if(e.key == "Left" || e.key == "ArrowLeft") {
-        leftPressed = false;
+    else if(e.key == "s") {
+        down = false;
+    }
+    else if(e.key == "a") {
+        left = false;
+    }
+    else if(e.key == "d") {
+        right = false;
     }
 }
 
@@ -32,69 +46,6 @@ function getRandomInt(min, max) {
     return value;
 }
 
-
-class Vector { // also a force
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    print() {
-        console.log(this.x, this.y);
-    }
-
-    apply(vOther) {
-        this.x += vOther.x;
-        this.y += vOther.y;
-    }
-    setBoth(values) {
-        this.x = values[0];
-        this.y = values[1];
-    }
-}
-
-class Thing {
-    constructor(pt, w, h, color, f) {
-        this.pt = pt;
-        this.w = w;
-        this.h = h;
-        this.v = new Vector(0, 0);
-        this.f = f; // forces
-        this.color = color;
-        this.width = 3;
-        this.active = true;
-    }
-
-    off() {
-        this.active = false;
-    }
-    on() {
-        this.active = true;
-    }
-    toggle() {
-        this.active = !this.active;
-    }
-
-    update() {
-        for (var i = 0; i < this.f.length; i++) { // for every force, update the vel
-            this.v.apply(this.f[i])
-        }
-        this.pt.apply(this.v);
-    }
-
-    // draw to be pre extend
-    // draw() {
-    //     context.strokeStyle = this.color;
-    //     context.fillStyle = this.color;
-    //     context.lineWidth = this.width;
-    //     context.beginPath();
-    //     context.rect(this.pt.x, this.pt.y, this.w, this.h);
-    //     if (this.active) {
-    //         context.fill();
-    //     }
-    //     context.stroke();
-    // }
-}
 
 function shortener(start) {
     value = start * Math.pow(0.99, time/100);
@@ -113,6 +64,10 @@ function drawAll()
     
     // Draw the new frame
     context.clearRect(0, 0, canvas.width, canvas.height);
+
+    player.checkMove();
+    player.update();
+    player.draw();
 
     // Loop the animation to the next frame.
     if (alive) {
@@ -146,15 +101,17 @@ function setUpContext() {
 }
 
 // gravity
-Fg = new Vector(0, 9.8);
+Fg = new Force(0, 9.8, 270);
+
+Fforward = new Vector(5, 0, 0);
+Fforward.setHeading(0);
+Fbackward = new Vector(-5, 0, 0);
+
+player = new Ship(new Vector(50,50), 20, 20, 0, "#00ff00", [Fforward]);
+
 
 // Set up the canvas and context objects
 context = setUpContext();
-sq = new Square(new Vector(50, canvas.height/2 - 25), 50, 50, "#0000ff");
-greenLight = new Square(new Vector(canvas.width - 50, 0), 50, 50, "#00ff00");
-greenLight.off();
-redLight = new Square(new Vector(canvas.width - 50, 54), 50, 50, "#ff0000");
-redLight.off();
 
 stateTxt = document.getElementById("state");
 
