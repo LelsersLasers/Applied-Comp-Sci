@@ -65,6 +65,9 @@ function drawAll()
     
     // Draw the new frame
     context.clearRect(0, 0, canvas.width, canvas.height);
+    for (var i = 0; i < bar.length; i++) {
+        bar[i].draw();
+    }
     player.move();
     player.draw();
     for (var i = 0; i < cars.length; i++) {
@@ -125,6 +128,17 @@ car2 = new Car(new Vector(canvas.width - carWidth, playerLevel - 3.25 * carHeigh
 car3 = new Car(new Vector(0, playerLevel - 4.75 * carHeight), "#ff0000", carWidth, carHeight, 5);
 car4 = new Car(new Vector(0, playerLevel - 6.25 * carHeight), "#ff0000", carWidth, carHeight, 7);
 cars = [car1, car2, car3, car4];
+
+// to make it look like player is moving
+bar = [];
+for (i = 0; i < 10; i++) {
+    c = "#ffff00";
+    if (i % 2 == 0) {
+        c = "#ff00ff";
+    }
+    bar.push(new Thing(new Vector(0, i * canvas.height/10), c, 20, canvas.height/10));
+    bar.push(new Thing(new Vector(canvas.width - 20, i * canvas.height/10), c, 20, canvas.height/10));
+}
 
 // Fire up the animation engine
 window.requestAnimationFrame(drawAll);
