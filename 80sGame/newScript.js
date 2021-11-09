@@ -75,6 +75,11 @@ function drawAll()
             stateTxt.innerText = "Status: Road Kill (DEAD)";
         }
     }
+    if (player.hb.outOfBounds()) {
+        alive = false;
+        player.off();
+        stateTxt.innerText = "Status: Lost (DEAD)";
+    }
 
     // Loop the animation to the next frame.
     // if (alive) {
@@ -109,11 +114,11 @@ function setUpContext() {
 // Set up the canvas and context objects
 context = setUpContext();
 stateTxt = document.getElementById("state");
-player = new Player(new Vector(canvas.width/2, canvas.height - 50), "#00ff00", 50, 50);
+player = new Player(new Vector(canvas.width/2, canvas.height - 75), "#00ff00", 50, 50);
 car1 = new Car(new Vector(0, canvas.height - 150), "#ff0000", 100, 50, 3);
-car2 = new Car(new Vector(canvas.width-100, canvas.height - 250), "#ff0000", 100, 50, -3);
-car3 = new Car(new Vector(0, canvas.height - 350), "#ff0000", 100, 50, 5);
-car4 = new Car(new Vector(0, canvas.height - 450), "#ff0000", 100, 50, 7);
+car2 = new Car(new Vector(canvas.width - 100, canvas.height - 225), "#ff0000", 100, 50, -3);
+car3 = new Car(new Vector(0, canvas.height - 300), "#ff0000", 100, 50, 5);
+car4 = new Car(new Vector(0, canvas.height - 375), "#ff0000", 100, 50, 7);
 cars = [car1, car2, car3, car4];
 
 // Fire up the animation engine

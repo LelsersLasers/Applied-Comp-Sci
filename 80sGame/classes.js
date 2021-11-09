@@ -68,7 +68,7 @@ class Player extends Thing {
     }
 
     move() {
-        if (alive) {
+        if (this.active) {
             if (up) {
                 this.pt.y -= 3;
             }
@@ -121,13 +121,16 @@ class HitBox {
         this.h = h;
     }
     checkCollide(boxOther) {
-        // if (boxOther.pt.x > this.pt.x && boxOther.pt.x < this.pt.x - this.w && boxOther.pt.y > this.pt.y && boxOther.pt.y < this.pt.y - this.h) {
-        //     console.log("HIT");
-        // }
         if (this.pt.x < boxOther.pt.x + boxOther.w && boxOther.pt.x < this.pt.x + this.w) {
             if (this.pt.y < boxOther.pt.y + boxOther.h && boxOther.pt.y < this.pt.y + this.h) {
                 return true;
             }
+        }
+        return false;
+    }
+    outOfBounds() {
+        if (this.pt.x < 0 || this.pt.x + this.w > canvas.width || this.pt.y < 0 || this.pt.y + this.h > canvas.height) {
+            return true;
         }
         return false;
     }
