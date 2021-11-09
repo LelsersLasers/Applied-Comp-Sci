@@ -64,16 +64,23 @@ function drawAll()
     
     // Draw the new frame
     context.clearRect(0, 0, canvas.width, canvas.height);
-
-    player.checkMove();
-    player.update();
+    player.move();
     player.draw();
-
-    // Loop the animation to the next frame.
-    if (alive) {
-        window.requestAnimationFrame(drawAll);
+    for (var i = 0; i < cars.length; i++) {
+        cars[i].update();
+        cars[i].draw();
+        if (cars[i].hb.checkCollide(player.hb)) {
+            alive = false;
+            player.off();
+            stateTxt.innerText = "Status: Road Kill (DEAD)";
+        }
     }
 
+    // Loop the animation to the next frame.
+    // if (alive) {
+    //     window.requestAnimationFrame(drawAll);
+    // }
+    window.requestAnimationFrame(drawAll);
     frame++;
 }
 
@@ -90,7 +97,6 @@ function setUpContext() {
 
     // Get the canvas, set the width and height from the window
     canvas = document.getElementById("mainCanvas");
-    
     canvas.width = window.innerWidth - 50;
     canvas.height = window.innerHeight - 100;
     // canvas.style.border = "4px solid black";
@@ -100,20 +106,15 @@ function setUpContext() {
     return context;
 }
 
-// gravity
-Fg = new Force(0, 9.8, 270);
-
-Fforward = new Vector(5, 0, 0);
-Fforward.setHeading(0);
-Fbackward = new Vector(-5, 0, 0);
-
-player = new Ship(new Vector(50,50), 20, 20, 0, "#00ff00", [Fforward]);
-
-
 // Set up the canvas and context objects
 context = setUpContext();
-
 stateTxt = document.getElementById("state");
+player = new Player(new Vector(canvas.width/2, canvas.height - 50), "#00ff00", 50, 50);
+car1 = new Car(new Vector(0, canvas.height - 150), "#ff0000", 100, 50, 3);
+car2 = new Car(new Vector(canvas.width-100, canvas.height - 250), "#ff0000", 100, 50, -3);
+car3 = new Car(new Vector(0, canvas.height - 350), "#ff0000", 100, 50, 5);
+car4 = new Car(new Vector(0, canvas.height - 450), "#ff0000", 100, 50, 7);
+cars = [car1, car2, car3, car4];
 
 // Fire up the animation engine
 window.requestAnimationFrame(drawAll);

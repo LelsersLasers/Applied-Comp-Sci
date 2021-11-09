@@ -16,30 +16,9 @@ class Vector {
     }
 }
 
-class Force extends Vector {
-    constructor(x, y, heading) {
-        super(x, y);
-        this.heading = heading; // 0 = right, 90 = up
-    }
-    setHeading(heading) {
-        this.heading = heading;
-    }
-
-    updateByHeading(heading) {
-        len = Math.sqrt(this.x * this.heading.x + this.y * this.heading.y); // distance formula
-        this.x = Math.cos(heading);
-        this.y = Math.sin(heading);
-        newLen = Math.sqrt(this.x * this.heading.x + this.y * this.heading.y);
-        this.x = this.x * len/newLen;
-        this.y = this.y * len/newLen;
-    }
-}
-
 class Thing {
-    constructor(pt, color, f) { // w, h, radius, etc per child
+    constructor(pt, color) { // w, h, radius, etc per child
         this.pt = pt;
-        this.v = new Vector(0, 0);
-        this.f = f; // forces
         this.color = color;
         this.width = 3;
         this.active = true;
@@ -53,13 +32,6 @@ class Thing {
     }
     toggle() {
         this.active = !this.active;
-    }
-
-    update() {
-        for (var i = 0; i < this.f.length; i++) { // for every force, update the vel
-            this.v.apply(this.f[i])
-        }
-        this.pt.apply(this.v);
     }
 
     // draw to be per child
@@ -76,36 +48,87 @@ class Thing {
     // }
 }
 
-class Ship extends Thing {
-    constructor(pt, w, h, heading, color, f) {
-        super(pt, color, f);
+class Player extends Thing {
+    constructor(pt, color, w, h) {
+        super(pt, color);
         this.w = w;
         this.h = h;
-        this.heading = heading;
-        console.log(this.f);
-    }
-    checkMove() {
-        if (left) {
-            heading = this.heading + 1;
-        }
-        if (right) {
-            heading = this.heading - 1;
-        }
-        for (var i = 0; i < this.f.length; i++) {
-            console.log(this.f[0]);
-            this.f[i].setHeading(this.heading);
-            this.f[i].updateByHeading();
-        }
+        this.hb = new HitBox(pt, w, h);
     }
     draw() {
-            context.strokeStyle = this.color;
-            context.fillStyle = this.color;
-            context.lineWidth = this.width;
-            context.beginPath();
-            context.rect(this.pt.x, this.pt.y, this.w, this.h);
-            if (this.active) {
-                context.fill();
-            }
-            context.stroke();
+        context.strokeStyle = this.color;
+        context.fillStyle = this.color;
+        context.lineWidth = this.width;
+        context.beginPath();
+        context.rect(this.pt.x, this.pt.y, this.w, this.h);
+        if (this.active) {
+            context.fill();
         }
+        context.stroke();
+    }
+
+    move() {
+        if (alive) {
+            if (up) {
+                this.pt.y -= 3;
+            }
+            if (down) {
+                this.pt.y += 3;
+            }
+            if (left) {
+                this.pt.x -= 3;
+            }
+            if (right) {
+                this.pt.x += 3;
+            }
+        }
+    }
+}
+
+class Car extends Thing {
+    constructor(pt, color, w, h, ms) {
+        super(pt, color);
+        this.w = w;
+        this.h = h;
+        this.ms = ms;
+        this.hb = new HitBox(pt, w, h);
+    }
+    draw() {
+        context.strokeStyle = this.color;
+        context.fillStyle = this.color;
+        context.lineWidth = this.width;
+        context.beginPath();
+        context.rect(this.pt.x, this.pt.y, this.w, this.h);
+        if (this.active) {
+            context.fill();
+        }
+        context.stroke();
+    }
+
+    update() {
+        this.pt.x += this.ms;
+        if (this.pt.x < 0 || this.pt.x > canvas.width - this.w) {
+            this.ms = this.ms * -1;
+        }
+    }
+}
+
+
+class HitBox {
+    constructor(pt, w, h) {
+        this.pt = pt;
+        this.w = w;
+        this.h = h;
+    }
+    checkCollide(boxOther) {
+        // if (boxOther.pt.x > this.pt.x && boxOther.pt.x < this.pt.x - this.w && boxOther.pt.y > this.pt.y && boxOther.pt.y < this.pt.y - this.h) {
+        //     console.log("HIT");
+        // }
+        if (this.pt.x < boxOther.pt.x + boxOther.w && boxOther.pt.x < this.pt.x + this.w) {
+            if (this.pt.y < boxOther.pt.y + boxOther.h && boxOther.pt.y < this.pt.y + this.h) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
