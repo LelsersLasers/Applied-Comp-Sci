@@ -49,11 +49,12 @@ class Thing {
 }
 
 class Player extends Thing {
-    constructor(pt, color, w, h) {
+    constructor(pt, color, w, h, ms) {
         super(pt, color);
         this.w = w;
         this.h = h;
         this.hb = new HitBox(pt, w, h);
+        this.ms = ms;
     }
     draw() {
         context.strokeStyle = this.color;
@@ -68,18 +69,25 @@ class Player extends Thing {
     }
 
     move() {
-        if (this.active) {
+        if (this.active && frame > moveLockWait) {
             if (up) {
-                this.pt.y -= 3;
+                for (var i = 0; i < cars.length; i++) {
+                    cars[i].pt.y += this.ms;
+                }
             }
-            if (down) {
-                this.pt.y += 3;
+            else if (down) {
+                for (var i = 0; i < cars.length; i++) {
+                    cars[i].pt.y -= this.ms;
+                }
             }
-            if (left) {
-                this.pt.x -= 3;
+            else if (left) {
+                this.pt.x -= this.ms;
             }
-            if (right) {
-                this.pt.x += 3;
+            else if (right) {
+                this.pt.x += this.ms;
+            }
+            if (up || down || left || right) {
+                frame = 0;
             }
         }
     }
@@ -109,6 +117,10 @@ class Car extends Thing {
         this.pt.x += this.ms;
         if (this.pt.x < 0 || this.pt.x > canvas.width - this.w) {
             this.ms = this.ms * -1;
+        }
+        if (this.pt.y > canvas.height) {
+            this.pt.y = 0;
+            this.ms = this.ms * 1.3;
         }
     }
 }

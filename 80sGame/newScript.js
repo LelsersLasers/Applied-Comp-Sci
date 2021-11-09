@@ -54,6 +54,7 @@ function shortener(start) {
 
 var frame = 0;
 var alive = true;
+var moveLockWait = 30;
 function drawAll()
 /*
   Purpose: This is the main drawing loop.
@@ -78,7 +79,7 @@ function drawAll()
     if (player.hb.outOfBounds()) {
         alive = false;
         player.off();
-        stateTxt.innerText = "Status: Lost (DEAD)";
+        stateTxt.innerText = "Status: Got Lost (DEAD)";
     }
 
     // Loop the animation to the next frame.
@@ -114,11 +115,15 @@ function setUpContext() {
 // Set up the canvas and context objects
 context = setUpContext();
 stateTxt = document.getElementById("state");
-player = new Player(new Vector(canvas.width/2, canvas.height - 75), "#00ff00", 50, 50);
-car1 = new Car(new Vector(0, canvas.height - 150), "#ff0000", 100, 50, 3);
-car2 = new Car(new Vector(canvas.width - 100, canvas.height - 225), "#ff0000", 100, 50, -3);
-car3 = new Car(new Vector(0, canvas.height - 300), "#ff0000", 100, 50, 5);
-car4 = new Car(new Vector(0, canvas.height - 375), "#ff0000", 100, 50, 7);
+playerLevel = canvas.height * 2/3;
+carWidth = canvas.width * 1/9;
+carHeight = canvas.height * 5/72;
+player = new Player(new Vector(canvas.width/2, playerLevel + 1.25 * carHeight), "#00ff00", carHeight, carHeight, carHeight * 1.5);
+
+car1 = new Car(new Vector(0, playerLevel - 1.75 * carHeight), "#ff0000", carWidth, carHeight, 3);
+car2 = new Car(new Vector(canvas.width - carWidth, playerLevel - 3.25 * carHeight), "#ff0000", carWidth, carHeight, -3);
+car3 = new Car(new Vector(0, playerLevel - 4.75 * carHeight), "#ff0000", carWidth, carHeight, 5);
+car4 = new Car(new Vector(0, playerLevel - 6.25 * carHeight), "#ff0000", carWidth, carHeight, 7);
 cars = [car1, car2, car3, car4];
 
 // Fire up the animation engine
