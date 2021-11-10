@@ -64,6 +64,10 @@ class Player extends Thing {
                 for (var i = 0; i < bar.length; i++) {
                     bar[i].toggle();
                 }
+                score += 1;
+                if (score > topScore) {
+                    topScore = score;
+                }
             }
             else if (down) {
                 for (var i = 0; i < cars.length; i++) {
@@ -72,6 +76,7 @@ class Player extends Thing {
                 for (var i = 0; i < bar.length; i++) {
                     bar[i].toggle();
                 }
+                score -= 1;
             }
             else if (left) {
                 this.pt.x -= this.ms;

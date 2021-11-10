@@ -82,6 +82,8 @@ function drawAll()
         stateTxt.innerText = "Status: Got Lost (DEAD)";
     }
 
+    scoreTxt.innerText = "Score: " + topScore;
+
     // Loop the animation to the next frame.
     // if (alive) {
     //     window.requestAnimationFrame(drawAll);
@@ -114,10 +116,13 @@ function setUpContext() {
 var frame = 0;
 var alive = true;
 var moveLockWait = 30;
+var score = 0;
+var topScore = 0;
 
 // Set up the canvas and context objects
 context = setUpContext();
 stateTxt = document.getElementById("state");
+scoreTxt = document.getElementById("score");
 carWidth = canvas.width * 1/9;
 carHeight = canvas.height * 1/14;
 console.log(carHeight);

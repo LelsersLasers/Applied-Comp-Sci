@@ -3,6 +3,21 @@ canvas {
     border: 4px solid black;
 }
 
-p {
+span {
     margin-top: 0 !important;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#state {
+    float: left;
+}
+
+#score {
+    float: right;
+}
+
+#mainTxt {
+    align-items: center;
+    /* border: 1px solid blue; */
 }
