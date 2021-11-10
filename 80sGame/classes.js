@@ -55,18 +55,6 @@ class Player extends Thing {
         this.hb = new HitBox(pt, w, h);
         this.ms = ms;
     }
-    // draw() {
-    //     context.strokeStyle = this.color;
-    //     context.fillStyle = this.color;
-    //     context.lineWidth = this.width;
-    //     context.beginPath();
-    //     context.rect(this.pt.x, this.pt.y, this.w, this.h);
-    //     if (this.active) {
-    //         context.fill();
-    //     }
-    //     context.stroke();
-    // }
-
     move() {
         if (this.active && frame > moveLockWait) {
             if (up) {
@@ -104,25 +92,14 @@ class Car extends Thing {
         this.ms = ms;
         this.hb = new HitBox(pt, w, h);
     }
-    // draw() {
-    //     context.strokeStyle = this.color;
-    //     context.fillStyle = this.color;
-    //     context.lineWidth = this.width;
-    //     context.beginPath();
-    //     context.rect(this.pt.x, this.pt.y, this.w, this.h);
-    //     if (this.active) {
-    //         context.fill();
-    //     }
-    //     context.stroke();
-    // }
-
     update() {
         this.pt.x += this.ms;
         if (this.pt.x < 0 || this.pt.x > canvas.width - this.w) {
             this.ms = this.ms * -1;
+            this.ms = this.ms * 1.05;
         }
         if (this.pt.y > canvas.height) {
-            this.pt.y -= canvas.height;
+            this.pt.y = this.pt.y - (1.5 * carHeight) * 10; // 10 cars, no break
             this.ms = this.ms * 1.3;
         }
     }
@@ -144,7 +121,7 @@ class HitBox {
         return false;
     }
     outOfBounds() {
-        if (this.pt.x < 0 || this.pt.x + this.w > canvas.width || this.pt.y < 0 || this.pt.y + this.h > canvas.height) {
+        if (this.pt.x < 0 || this.pt.x + this.w > canvas.width) {
             return true;
         }
         return false;

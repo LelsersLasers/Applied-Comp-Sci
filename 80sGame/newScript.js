@@ -120,14 +120,28 @@ context = setUpContext();
 stateTxt = document.getElementById("state");
 carWidth = canvas.width * 1/9;
 carHeight = canvas.height * 1/14;
+console.log(carHeight);
 playerLevel = carHeight * 9;
 player = new Player(new Vector(canvas.width/2, playerLevel + 1.25 * carHeight), "#00ff00", carHeight, carHeight, carHeight * 1.5);
 
-car1 = new Car(new Vector(0, playerLevel - 1.75 * carHeight), "#ff0000", carWidth, carHeight, 3/900 * canvas.height);
-car2 = new Car(new Vector(canvas.width - carWidth, playerLevel - 3.25 * carHeight), "#ff0000", carWidth, carHeight, -3/900 * canvas.height);
-car3 = new Car(new Vector(0, playerLevel - 4.75 * carHeight), "#ff0000", carWidth, carHeight, 5/900 * canvas.height);
-car4 = new Car(new Vector(0, playerLevel - 6.25 * carHeight), "#ff0000", carWidth, carHeight, 7/900 * canvas.height);
-cars = [car1, car2, car3, car4];
+// car1 = new Car(new Vector(0, playerLevel - 1.75 * carHeight), "#ff0000", carWidth, carHeight, 3/900 * canvas.height);
+// car2 = new Car(new Vector(canvas.width - carWidth, playerLevel - 3.25 * carHeight), "#ff0000", carWidth, carHeight, -3/900 * canvas.height);
+// car3 = new Car(new Vector(0, playerLevel - 4.75 * carHeight), "#ff0000", carWidth, carHeight, 5/900 * canvas.height);
+// car4 = new Car(new Vector(0, playerLevel - 6.25 * carHeight), "#ff0000", carWidth, carHeight, 7/900 * canvas.height);
+// car5 = new Car(new Vector(0, playerLevel - 7.75 * carHeight), "#ff0000", carWidth, carHeight, 3/900 * canvas.height);
+// car6 = new Car(new Vector(canvas.width - carWidth, playerLevel - 9.25 * carHeight), "#ff0000", carWidth, carHeight, -3/900 * canvas.height);
+// car7 = new Car(new Vector(0, playerLevel - 10.75 * carHeight), "#ff0000", carWidth, carHeight, 3/900 * canvas.height);
+// car8 = new Car(new Vector(0, playerLevel - 12.25 * carHeight), "#ff0000", carWidth, carHeight, 5/900 * canvas.height);
+// car9 = new Car(new Vector(0, playerLevel - 13.75 * carHeight), "#ff0000", carWidth, carHeight, -7/900 * canvas.height);
+// car10 = new Car(new Vector(0, playerLevel - 15.25 * carHeight), "#ff0000", carWidth, carHeight, 7/900 * canvas.height);
+// cars = [car1, car2, car3, car4, car5, car6, car7, car8, car9, car10];
+cars = [];
+base = playerLevel - 1.75 * carHeight;
+for (var i = 0; i < 10; i++) {
+    startPos = new Vector(getRandomInt(0, canvas.width - carWidth), base - (1.5 * carHeight * i));
+    speed = (getRandomInt(i/4 + 1, i/3 + 2)/900) * canvas.width;
+    cars.push(new Car(startPos, "#ff0000", carWidth, carHeight, speed));
+}
 
 // to make it look like player is moving
 bar = [];
