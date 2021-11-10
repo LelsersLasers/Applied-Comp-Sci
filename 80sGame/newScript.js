@@ -118,26 +118,28 @@ function setUpContext() {
 // Set up the canvas and context objects
 context = setUpContext();
 stateTxt = document.getElementById("state");
-playerLevel = canvas.height * 2/3;
 carWidth = canvas.width * 1/9;
-carHeight = canvas.height * 5/72;
+carHeight = canvas.height * 1/14;
+playerLevel = carHeight * 9;
 player = new Player(new Vector(canvas.width/2, playerLevel + 1.25 * carHeight), "#00ff00", carHeight, carHeight, carHeight * 1.5);
 
-car1 = new Car(new Vector(0, playerLevel - 1.75 * carHeight), "#ff0000", carWidth, carHeight, 3);
-car2 = new Car(new Vector(canvas.width - carWidth, playerLevel - 3.25 * carHeight), "#ff0000", carWidth, carHeight, -3);
-car3 = new Car(new Vector(0, playerLevel - 4.75 * carHeight), "#ff0000", carWidth, carHeight, 5);
-car4 = new Car(new Vector(0, playerLevel - 6.25 * carHeight), "#ff0000", carWidth, carHeight, 7);
+car1 = new Car(new Vector(0, playerLevel - 1.75 * carHeight), "#ff0000", carWidth, carHeight, 3/900 * canvas.height);
+car2 = new Car(new Vector(canvas.width - carWidth, playerLevel - 3.25 * carHeight), "#ff0000", carWidth, carHeight, -3/900 * canvas.height);
+car3 = new Car(new Vector(0, playerLevel - 4.75 * carHeight), "#ff0000", carWidth, carHeight, 5/900 * canvas.height);
+car4 = new Car(new Vector(0, playerLevel - 6.25 * carHeight), "#ff0000", carWidth, carHeight, 7/900 * canvas.height);
 cars = [car1, car2, car3, car4];
 
 // to make it look like player is moving
 bar = [];
-for (i = 0; i < 10; i++) {
+for (i = 0; i < 14; i++) {
     c = "#ffff00";
+    c2 = "#ff00ff";
     if (i % 2 == 0) {
         c = "#ff00ff";
+        c2 = "#ffff00";
     }
-    bar.push(new Thing(new Vector(0, i * canvas.height/10), c, 20, canvas.height/10));
-    bar.push(new Thing(new Vector(canvas.width - 20, i * canvas.height/10), c, 20, canvas.height/10));
+    bar.push(new Block(new Vector(0, i * carHeight), c, c2, 20, carHeight));
+    bar.push(new Block(new Vector(canvas.width - 20, i * carHeight), c, c2, 20, carHeight));
 }
 
 // Fire up the animation engine

@@ -73,10 +73,16 @@ class Player extends Thing {
                 for (var i = 0; i < cars.length; i++) {
                     cars[i].pt.y += this.ms;
                 }
+                for (var i = 0; i < bar.length; i++) {
+                    bar[i].toggle();
+                }
             }
             else if (down) {
                 for (var i = 0; i < cars.length; i++) {
                     cars[i].pt.y -= this.ms;
+                }
+                for (var i = 0; i < bar.length; i++) {
+                    bar[i].toggle();
                 }
             }
             else if (left) {
@@ -146,10 +152,16 @@ class HitBox {
 }
 
 class Block extends Thing {
-    constructor(pt, color, w, h) {
+    constructor(pt, color, color2, w, h) {
         super(pt, color, w, h);
+        this.color2 = color2;
     }
-    move() {
-
-    }   
+    draw() {
+        // context.strokeStyle = this.color;
+        context.fillStyle = this.active ? this.color2 : this.color;
+        context.lineWidth = this.width;
+        context.beginPath();
+        context.rect(this.pt.x, this.pt.y, this.w, this.h);
+        context.fill();
+    }
 }
