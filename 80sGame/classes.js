@@ -64,6 +64,9 @@ class Player extends Thing {
                 for (var i = 0; i < bar.length; i++) {
                     bar[i].toggle();
                 }
+                for (var i = 0; i < waters.length; i++) {
+                    waters[i].pt.y += this.ms;
+                }
                 score += 1;
                 if (score > topScore) {
                     topScore = score;
@@ -75,6 +78,9 @@ class Player extends Thing {
                 }
                 for (var i = 0; i < bar.length; i++) {
                     bar[i].toggle();
+                }
+                for (var i = 0; i < waters.length; i++) {
+                    waters[i].pt.y -= this.ms;
                 }
                 score -= 1;
             }
@@ -118,11 +124,11 @@ class HitBox {
         this.h = h;
     }
     checkCollide(boxOther) {
-        if (this.pt.x < boxOther.pt.x + boxOther.w && boxOther.pt.x < this.pt.x + this.w) {
-            if (this.pt.y < boxOther.pt.y + boxOther.h && boxOther.pt.y < this.pt.y + this.h) {
-                return true;
-            }
-        }
+        // if (this.pt.x < boxOther.pt.x + boxOther.w && boxOther.pt.x < this.pt.x + this.w) {
+        //     if (this.pt.y < boxOther.pt.y + boxOther.h && boxOther.pt.y < this.pt.y + this.h) {
+        //         return true;
+        //     }
+        // }
         return false;
     }
     outOfBounds() {
@@ -145,5 +151,21 @@ class Block extends Thing {
         context.beginPath();
         context.rect(this.pt.x, this.pt.y, this.w, this.h);
         context.fill();
+    }
+}
+
+class Water extends Thing {
+    constructor(pt, color, w, h) {
+        super(pt, color, w, h);
+        this.hb = new HitBox(pt, w, h);
+    }
+
+    update() {
+        if (this.pt.y > canvas.height) {
+            this.w = getRandomInt(carHeight * 0.75, carHeight * 2);
+            this.h = getRandomInt(carHeight * 0.75, carHeight * 1.5);
+            this.pt.y = 0 - this.h - getRandomInt(carHeight * 0.75);
+            this.pt.setBoth([getRandomInt(0, canvas.width - w), 0 - this.h]);
+        }
     }
 }

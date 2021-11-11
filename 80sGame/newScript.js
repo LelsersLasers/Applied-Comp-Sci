@@ -62,6 +62,15 @@ function drawAll()
     
     // Draw the new frame
     context.clearRect(0, 0, canvas.width, canvas.height);
+    for (var i = 0; i < waters.length; i++) {
+        waters[i].update();
+        waters[i].draw();
+        if (waters[i].hb.checkCollide(player.hb)) {
+            alive = false;
+            player.off();
+            stateTxt.innerText = "Status: Drowned (DEAD)";
+        }
+    }
     for (var i = 0; i < bar.length; i++) {
         bar[i].draw();
     }
@@ -123,6 +132,8 @@ var topScore = 0;
 context = setUpContext();
 stateTxt = document.getElementById("state");
 scoreTxt = document.getElementById("score");
+
+// player
 carWidth = canvas.width * 1/9;
 carHeight = canvas.height * 1/14;
 console.log(carHeight);
@@ -150,6 +161,15 @@ for (i = 0; i < 14; i++) {
     bar.push(new Block(new Vector(0, i * carHeight), c, c2, 20, carHeight));
     bar.push(new Block(new Vector(canvas.width - 20, i * carHeight), c, c2, 20, carHeight));
 }
+
+// water
+waters = [];
+for (var i = 0; i < 5; i++) {
+    w = getRandomInt(carHeight * 0.75, carHeight * 2);
+    h = getRandomInt(carHeight * 0.75, carHeight * 1.5);
+    pos = new Vector(getRandomInt(0, canvas.width - w), getRandomInt(0, base));
+    waters.push(new Water(pos, "#0000ff", w, h));
+} 
 
 // Fire up the animation engine
 window.requestAnimationFrame(drawAll);
