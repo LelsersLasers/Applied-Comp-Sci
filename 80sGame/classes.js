@@ -64,9 +64,9 @@ class Player extends Thing {
                 for (var i = 0; i < bar.length; i++) {
                     bar[i].toggle();
                 }
-                for (var i = 0; i < waters.length; i++) {
-                    waters[i].pt.y += this.ms;
-                }
+                // for (var i = 0; i < waters.length; i++) {
+                //     waters[i].pt.y += this.ms;
+                // }
                 score += 1;
                 if (score > topScore) {
                     topScore = score;
@@ -79,9 +79,9 @@ class Player extends Thing {
                 for (var i = 0; i < bar.length; i++) {
                     bar[i].toggle();
                 }
-                for (var i = 0; i < waters.length; i++) {
-                    waters[i].pt.y -= this.ms;
-                }
+                // for (var i = 0; i < waters.length; i++) {
+                //     waters[i].pt.y -= this.ms;
+                // }
                 score -= 1;
             }
             else if (left) {
@@ -165,7 +165,7 @@ class Water extends Thing {
             this.w = getRandomInt(carHeight * 0.75, carHeight * 2);
             this.h = getRandomInt(carHeight * 0.75, carHeight * 1.5);
             this.pt.y = 0 - this.h - getRandomInt(carHeight * 0.75);
-            this.pt.setBoth([getRandomInt(0, canvas.width - w), 0 - this.h]);
+            this.pt.setBoth([getRandomInt(0, canvas.width - this.w), 0 - this.h]);
         }
     }
 }
