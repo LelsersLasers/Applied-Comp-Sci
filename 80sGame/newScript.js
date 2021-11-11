@@ -141,12 +141,16 @@ playerLevel = carHeight * 9;
 player = new Player(new Vector(canvas.width/2, playerLevel + 1.25 * carHeight), "#00ff00", carHeight, carHeight, carHeight * 1.5);
 
 cars = [];
+// waterBlockCount = 5;
 base = playerLevel - 1.75 * carHeight;
 for (var i = 0; i < 10; i++) {
     startPos = new Vector(getRandomInt(0, canvas.width - carWidth), base - (1.5 * carHeight * i));
     speed = (getRandomInt(i/4 + 1, i/3 + 2)/900) * canvas.width;
     speed = getRandomInt(1, 3) == 2? -speed : speed;
     cars.push(new Car(startPos, "#ff0000", carWidth, carHeight, speed));
+    // if (Math.random() > waterBlockCount/10) {
+    //     cars.push(new Water(startPos, "#0000ff", carWidth, carHeight));
+    // }
 }
 
 // to make it look like player is moving
