@@ -107,7 +107,7 @@ class Car extends Thing {
         this.pt.x += this.ms;
         if (this.pt.x < 0 || this.pt.x > canvas.width - this.w) {
             this.ms = this.ms * -1;
-            this.ms = this.ms * 1.001;
+            this.ms = this.ms * 1.01;
         }
         if (this.pt.y > canvas.height) {
             this.pt.y = this.pt.y - (1.5 * carHeight) * 10; // 10 cars, no break
