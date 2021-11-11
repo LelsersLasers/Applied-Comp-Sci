@@ -182,3 +182,30 @@ class Water extends Thing {
         }
     }
 }
+
+class Lake {
+    constructor(ws) {
+        this.ws = ws;
+    }
+    
+    form() {
+        this.ws = [];
+        // at most can be 1/2 of total width
+        topW = getRandomInt(carHeight * 0.75, carHeight * 2);
+        totalH = getRandomInt(3, 6);
+        for (var i = 0; i < totalH; i++) {
+            
+        }
+    }
+
+    moveUp(ms) {
+        for (var i = 0; i < ws.length; i++) {
+            this.ws.pt.y += ms;
+        }
+    }
+    moveDown(ms) {
+        for (var i = 0; i < ws.length; i++) {
+            this.ws.pt.y -= ms;
+        }
+    }
+}

@@ -1,9 +1,8 @@
 # TODO
 
-- To many cars
+- To many cars?
     - Need a break, section them off
     - random numbered sections
-- Water spawns in "packs"
 - Want "Lakes" of water
 - "Jump" animation, don't teleport things around
 - Keep waters and cars in 1 list?
