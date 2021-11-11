@@ -107,11 +107,11 @@ class Car extends Thing {
         this.pt.x += this.ms;
         if (this.pt.x < 0 || this.pt.x > canvas.width - this.w) {
             this.ms = this.ms * -1;
-            this.ms = this.ms * 1.02;
+            this.ms = this.ms * 1.001;
         }
         if (this.pt.y > canvas.height) {
             this.pt.y = this.pt.y - (1.5 * carHeight) * 10; // 10 cars, no break
-            this.ms = this.ms * 1.1;
+            this.ms = this.ms * 1.05;
         }
     }
 }
@@ -124,11 +124,11 @@ class HitBox {
         this.h = h;
     }
     checkCollide(boxOther) {
-        // if (this.pt.x < boxOther.pt.x + boxOther.w && boxOther.pt.x < this.pt.x + this.w) {
-        //     if (this.pt.y < boxOther.pt.y + boxOther.h && boxOther.pt.y < this.pt.y + this.h) {
-        //         return true;
-        //     }
-        // }
+        if (this.pt.x < boxOther.pt.x + boxOther.w && boxOther.pt.x < this.pt.x + this.w) {
+            if (this.pt.y < boxOther.pt.y + boxOther.h && boxOther.pt.y < this.pt.y + this.h) {
+                return true;
+            }
+        }
         return false;
     }
     outOfBounds() {
