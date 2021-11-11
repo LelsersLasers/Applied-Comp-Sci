@@ -4,8 +4,8 @@
     - Need a break, section them off
     - random numbered sections
 - Water spawns in "packs"
-    - Fix spawn from top
-    - Keep the same "rows" as the cars?
-- If player goes back, things from top do not go to the bottom
+- Want "Lakes" of water
+- "Jump" animation, don't teleport things around
+- Keep waters and cars in 1 list?
 - General math/speed/sizes/etc
 - "Clean", Mr. Bloom approved code

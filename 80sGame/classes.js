@@ -4,7 +4,7 @@ class Vector {
         this.y = y;
     }
     print() {
-        console.log(this.x, this.y);
+        console.log("(" + this.x + ", " + this.y + ")");
     }
     apply(vOther) {
         this.x += vOther.x;
@@ -16,6 +16,36 @@ class Vector {
     }
 }
 
+class HitBox {
+    constructor(pt, w, h) {
+        this.pt = pt;
+        this.w = w;
+        this.h = h;
+    }
+    checkCollide(boxOther) {
+        if (this.pt.x < boxOther.pt.x + boxOther.w && boxOther.pt.x < this.pt.x + this.w) {
+            if (this.pt.y < boxOther.pt.y + boxOther.h && boxOther.pt.y < this.pt.y + this.h) {
+                return true;
+            }
+        }
+        return false;
+    }
+    outOfBounds() {
+        if (this.pt.x < 0 || this.pt.x + this.w > canvas.width) {
+            return true;
+        }
+        return false;
+    }
+    draw(color) {
+        context.strokeStyle = color;
+        context.fillStyle = color;
+        context.lineWidth = this.width;
+        context.beginPath();
+        context.rect(this.pt.x, this.pt.y, this.w, this.h);
+        context.stroke();
+    }
+}
+
 class Thing {
     constructor(pt, color, w, h) { // w, h, radius, etc per child
         this.pt = pt;
@@ -24,6 +54,7 @@ class Thing {
         this.h = h;
         this.width = 3;
         this.active = true;
+        this.hb = new HitBox(pt, w, h);
     }
 
     off() {
@@ -47,12 +78,14 @@ class Thing {
         }
         context.stroke();
     }
+    updateHB() {
+        this.hb = new HitBox(this.pt, this.w, this.h);
+    }
 }
 
 class Player extends Thing {
     constructor(pt, color, w, h, ms) {
         super(pt, color, w, h);
-        this.hb = new HitBox(pt, w, h);
         this.ms = ms;
     }
     move() {
@@ -60,13 +93,11 @@ class Player extends Thing {
             if (up) {
                 for (var i = 0; i < cars.length; i++) {
                     cars[i].pt.y += this.ms;
+                    // cars[i].updateHB();
                 }
                 for (var i = 0; i < bar.length; i++) {
                     bar[i].toggle();
                 }
-                // for (var i = 0; i < waters.length; i++) {
-                //     waters[i].pt.y += this.ms;
-                // }
                 score += 1;
                 if (score > topScore) {
                     topScore = score;
@@ -75,13 +106,11 @@ class Player extends Thing {
             else if (down) {
                 for (var i = 0; i < cars.length; i++) {
                     cars[i].pt.y -= this.ms;
+                    // cars[i].updateHB();
                 }
                 for (var i = 0; i < bar.length; i++) {
                     bar[i].toggle();
                 }
-                // for (var i = 0; i < waters.length; i++) {
-                //     waters[i].pt.y -= this.ms;
-                // }
                 score -= 1;
             }
             else if (left) {
@@ -101,7 +130,8 @@ class Car extends Thing {
     constructor(pt, color, w, h, ms) {
         super(pt, color, w, h);
         this.ms = ms;
-        this.hb = new HitBox(pt, w, h);
+        this.offScreen = false;
+        this.deathMessage = "Road Kill";
     }
     update() {
         this.pt.x += this.ms;
@@ -109,35 +139,16 @@ class Car extends Thing {
             this.ms = this.ms * -1;
             this.ms = this.ms * 1.01;
         }
-        if (this.pt.y > canvas.height) {
-            this.pt.y = this.pt.y - (1.5 * carHeight) * 10; // 10 cars, no break
-            this.ms = this.ms * 1.05;
+        if (this.pt.y > canvas.height && !this.offScreen) {
+            // this.pt.y = this.pt.y - (1.5 * carHeight) * 10; // 10 cars, no break
+            // this.ms = this.ms * 1.05;
+            var pos = new Vector(getRandomInt(0, canvas.width - carWidth), this.pt.y - (1.5 * carHeight) * 10);
+            cars.push(new Car(pos, "#ff0000", carWidth, carHeight, this.ms * 1.05));
+            this.offScreen = true;
         }
     }
 }
 
-
-class HitBox {
-    constructor(pt, w, h) {
-        this.pt = pt;
-        this.w = w;
-        this.h = h;
-    }
-    checkCollide(boxOther) {
-        if (this.pt.x < boxOther.pt.x + boxOther.w && boxOther.pt.x < this.pt.x + this.w) {
-            if (this.pt.y < boxOther.pt.y + boxOther.h && boxOther.pt.y < this.pt.y + this.h) {
-                return true;
-            }
-        }
-        return false;
-    }
-    outOfBounds() {
-        if (this.pt.x < 0 || this.pt.x + this.w > canvas.width) {
-            return true;
-        }
-        return false;
-    }
-}
 
 class Block extends Thing {
     constructor(pt, color, color2, w, h) {
@@ -157,15 +168,17 @@ class Block extends Thing {
 class Water extends Thing {
     constructor(pt, color, w, h) {
         super(pt, color, w, h);
-        this.hb = new HitBox(pt, w, h);
+        this.offScreen = false;
+        this.deathMessage = "Drowned";
     }
 
     update() {
-        if (this.pt.y > canvas.height) {
-            this.w = getRandomInt(carHeight * 0.75, carHeight * 2);
-            this.h = getRandomInt(carHeight * 0.75, carHeight * 1.5);
-            this.pt.y = 0 - this.h - getRandomInt(carHeight * 0.75);
-            this.pt.setBoth([getRandomInt(0, canvas.width - this.w), 0 - this.h]);
+        if (this.pt.y > canvas.height && !this.offScreen) {
+            var w = getRandomInt(carHeight * 0.75, carHeight * 2);
+            var pos = new Vector(getRandomInt(0, canvas.width - w), this.pt.y - (1.5 * carHeight) * 10);
+            cars.push(new Water(pos, "#0000ff", w, carHeight));
+            waters.push(new Water(pos, "#0000ff", w, carHeight));
+            this.offScreen = true;
         }
     }
 }

@@ -22,7 +22,6 @@ function keyDownHandler(e) {
         reset();
     }
 }
-
 function keyUpHandler(e) {
     if(e.key == "w") {
         up = false;
@@ -42,7 +41,6 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     value = Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-    console.log("Random Number: " + value);
     return value;
 }
 
@@ -52,25 +50,10 @@ function shortener(start) {
     return value;
 }
 
-function drawAll()
-/*
-  Purpose: This is the main drawing loop.
-  Inputs: None, but it is affected by what the other functions are doing
-  Returns: None, but it calls itself to cycle to the next frame
-*/
-{
+function drawAll() {
     
     // Draw the new frame
     context.clearRect(0, 0, canvas.width, canvas.height);
-    // for (var i = 0; i < waters.length; i++) {
-    //     waters[i].update();
-    //     waters[i].draw();
-    //     if (waters[i].hb.checkCollide(player.hb)) {
-    //         alive = false;
-    //         player.off();
-    //         stateTxt.innerText = "Status: Drowned (DEAD)";
-    //     }
-    // }
     for (var i = 0; i < bar.length; i++) {
         bar[i].draw();
     }
@@ -78,11 +61,20 @@ function drawAll()
     player.draw();
     for (var i = 0; i < cars.length; i++) {
         cars[i].update();
+        // cars[i].updateHB();
         cars[i].draw();
+        // cars[i].hb.draw("#ff00ff");
         if (cars[i].hb.checkCollide(player.hb)) {
             alive = false;
             player.off();
-            stateTxt.innerText = "Status: Road Kill (DEAD)";
+            stateTxt.innerText = "Status: " + cars[i].deathMessage + " (DEAD)";
+        }
+        for (var j = 0; j < waters.length; j++) {
+            waters[j].updateHB();
+            // waters[j].hb.draw("#ffff00");
+            if (cars[i].hb.checkCollide(waters[j].hb)) {
+                cars[i].ms = -1 * cars[i].ms;
+            }
         }
     }
     if (player.hb.outOfBounds()) {
@@ -140,40 +132,44 @@ console.log(carHeight);
 playerLevel = carHeight * 9;
 player = new Player(new Vector(canvas.width/2, playerLevel + 1.25 * carHeight), "#00ff00", carHeight, carHeight, carHeight * 1.5);
 
-cars = [];
+var cars = [];
 waterBlockCount = 5;
+waters = [];
 base = playerLevel - 1.75 * carHeight;
 for (var i = 0; i < 10; i++) {
     startPos = new Vector(getRandomInt(0, canvas.width - carWidth), base - (1.5 * carHeight * i));
-    speed = (getRandomInt(i/4 + 1, i/3 + 2)/900) * canvas.width;
-    speed = getRandomInt(1, 3) == 2? -speed : speed;
+    var speed = (getRandomInt(i/4 + 1, i/3 + 2)/900) * canvas.width;
+    speed = getRandomInt(1, 3) == 2 ? -speed : speed;
     cars.push(new Car(startPos, "#ff0000", carWidth, carHeight, speed));
-    if (Math.random() > waterBlockCount/10) {
-        cars.push(new Water(startPos, "#0000ff", carWidth, carHeight));
+    if (Math.random() < waterBlockCount/10) {
+        var w = getRandomInt(carHeight * 0.75, carHeight * 2);
+        badX = true;
+        while (badX) {
+            x = getRandomInt(0, canvas.width - carWidth);
+            if (x < startPos.x + carWidth && startPos.x < x + w) {}
+            else {
+                badX = false;
+            }
+        }
+        pos = new Vector(x, startPos.y); // i think pos gets passed as a reference??
+        cars.push(new Water(pos, "#0000ff", w, carHeight));
+        waters.push(new Water(pos, "#0000ff", w, carHeight));
     }
 }
 
 // to make it look like player is moving
 bar = [];
 for (i = 0; i < 14; i++) {
-    c = "#ffff00";
-    c2 = "#ff00ff";
+    var c = "#ffff00";
+    var c2 = "#ff00ff";
     if (i % 2 == 0) {
-        c = "#ff00ff";
-        c2 = "#ffff00";
+        var c = "#ff00ff";
+        var c2 = "#ffff00";
     }
     bar.push(new Block(new Vector(0, i * carHeight), c, c2, 20, carHeight));
     bar.push(new Block(new Vector(canvas.width - 20, i * carHeight), c, c2, 20, carHeight));
 }
 
-// water
-// waters = [];
-// for (var i = 0; i < 5; i++) {
-//     w = getRandomInt(carHeight * 0.75, carHeight * 2);
-//     h = getRandomInt(carHeight * 0.75, carHeight * 1.5);
-//     pos = new Vector(getRandomInt(0, canvas.width - w), getRandomInt(0, base));
-//     waters.push(new Water(pos, "#0000ff", w, h));
-// } 
 
 // Fire up the animation engine
 window.requestAnimationFrame(drawAll);
