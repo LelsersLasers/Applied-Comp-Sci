@@ -174,8 +174,32 @@ class Water extends Thing {
 
     update() {
         if (this.pt.y > canvas.height && !this.offScreen) {
+            // var w = getRandomInt(carHeight * 0.75, carHeight * 2);
+            // badX = true;
+            // while (badX) {
+            //     x = getRandomInt(0, canvas.width - carWidth);
+            //     if (x < startPos.x + carWidth && startPos.x < x + w) {}
+            //     else {
+            //         badX = false;
+            //     }
+            // }
+            // pos = new Vector(x, startPos.y); // i think pos gets passed as a reference??
+            // cars.push(new Water(pos, "#0000ff", w, carHeight));
+            // waters.push(new Water(pos, "#0000ff", w, carHeight));
             var w = getRandomInt(carHeight * 0.75, carHeight * 2);
-            var pos = new Vector(getRandomInt(0, canvas.width - w), this.pt.y - (1.5 * carHeight) * 10);
+            var y = this.pt.y - (1.5 * carHeight) * 10
+            badX = true;
+            while (badX) {
+                x = getRandomInt(0, canvas.width - w);
+                var tempHB = new HitBox(new Vector(x,y));
+                for (var i = 0; i < cars.length; i++) {
+                    if (tempHB.checkCollide(cars[i].hb)) {}
+                    else {
+                        badX = false;
+                    }
+                }
+            }
+            var pos = new Vector(x, y);
             cars.push(new Water(pos, "#0000ff", w, carHeight));
             waters.push(new Water(pos, "#0000ff", w, carHeight));
             this.offScreen = true;

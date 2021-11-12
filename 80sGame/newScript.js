@@ -145,7 +145,7 @@ for (var i = 0; i < 10; i++) {
         var w = getRandomInt(carHeight * 0.75, carHeight * 2);
         badX = true;
         while (badX) {
-            x = getRandomInt(0, canvas.width - carWidth);
+            x = getRandomInt(0, canvas.width - w);
             if (x < startPos.x + carWidth && startPos.x < x + w) {}
             else {
                 badX = false;
