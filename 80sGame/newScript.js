@@ -65,8 +65,8 @@ function drawAll() {
         cars[i].draw();
         // cars[i].hb.draw("#ff00ff");
         if (cars[i].hb.checkCollide(player.hb)) {
-            alive = false;
-            player.off();
+            // alive = false;
+            // player.off();
             stateTxt.innerText = "Status: " + cars[i].deathMessage + " (DEAD)";
         }
         for (var j = 0; j < waters.length; j++) {
