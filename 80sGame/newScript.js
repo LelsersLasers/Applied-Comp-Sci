@@ -78,6 +78,8 @@ function drawAll() {
     }
 
     scoreTxt.innerText = "Score: " + topScore;
+    moveDelay = moveLockWait - frame > 0 ? moveLockWait - frame : 0;
+    moveDelayTxt.innerText = "Move Wait: " + moveDelay;
 
     // Loop the animation to the next frame.
     // if (alive) {
@@ -118,6 +120,7 @@ var topScore = 0;
 context = setUpContext();
 stateTxt = document.getElementById("state");
 scoreTxt = document.getElementById("score");
+moveDelayTxt = document.getElementById("moveDelay");
 
 // player
 carWidth = canvas.width * 1/9;
