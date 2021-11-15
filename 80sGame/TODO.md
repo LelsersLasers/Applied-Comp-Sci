@@ -1,10 +1,10 @@
 # TODO
-- New waters spawn on cars
+- CLEAN CODE
 - To many cars?
     - Need a break, section them off
     - random numbered sections
-- Want "Lakes" of water
 - "Jump" animation, don't teleport things around
-- Keep waters and cars in 1 list?
+- "Abilites"
+    - Q = teleport 2 up, 5 sec cd, etc
 - General math/speed/sizes/etc
 - "Clean", Mr. Bloom approved code

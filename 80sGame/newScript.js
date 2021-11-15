@@ -44,12 +44,6 @@ function getRandomInt(min, max) {
     return value;
 }
 
-
-function shortener(start) {
-    value = start * Math.pow(0.99, time/100);
-    return value;
-}
-
 function drawAll() {
     
     // Draw the new frame
@@ -59,19 +53,19 @@ function drawAll() {
     }
     player.move();
     player.draw();
-    for (var i = 0; i < cars.length; i++) {
-        cars[i].update();
-        // cars[i].updateHB();
-        cars[i].draw();
-        // cars[i].hb.draw("#ff00ff");
-        if (cars[i].hb.checkCollide(player.hb)) {
-            // alive = false;
-            // player.off();
-            stateTxt.innerText = "Status: " + cars[i].deathMessage + " (DEAD)";
+    obstacles = [...cars, ...waters];
+    for (var i = 0; i < obstacles.length; i++) {
+        obstacles[i].update();
+        obstacles[i].draw();
+        if (obstacles[i].hb.checkCollide(player.hb)) {
+            alive = false;
+            player.off();
+            stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
         }
+    }
+    for (var i = 0; i < cars.length; i++) {
         for (var j = 0; j < waters.length; j++) {
             waters[j].updateHB();
-            // waters[j].hb.draw("#ffff00");
             if (cars[i].hb.checkCollide(waters[j].hb)) {
                 cars[i].ms = -1 * cars[i].ms;
             }
@@ -128,44 +122,29 @@ scoreTxt = document.getElementById("score");
 // player
 carWidth = canvas.width * 1/9;
 carHeight = canvas.height * 1/14;
-console.log(carHeight);
-playerLevel = carHeight * 9;
-player = new Player(new Vector(canvas.width/2, playerLevel + 1.25 * carHeight), "#00ff00", carHeight, carHeight, carHeight * 1.5);
+playerLevel = carHeight * 10;
+player = new Player(new Vector(canvas.width/2, playerLevel), carHeight, carHeight, carHeight * 1.5);
 
 var cars = [];
 waterBlockCount = 5;
 waters = [];
-base = playerLevel - 1.75 * carHeight;
+base = playerLevel - 3 * carHeight;
 for (var i = 0; i < 10; i++) {
     startPos = new Vector(getRandomInt(0, canvas.width - carWidth), base - (1.5 * carHeight * i));
     var speed = (getRandomInt(i/4 + 1, i/3 + 2)/900) * canvas.width;
     speed = getRandomInt(1, 3) == 2 ? -speed : speed;
-    cars.push(new Car(startPos, "#ff0000", carWidth, carHeight, speed));
+    cars.push(new Car(startPos, carWidth, carHeight, speed));
+
     if (Math.random() < waterBlockCount/10) {
-        var w = getRandomInt(carHeight * 0.75, carHeight * 2);
-        badX = true;
-        while (badX) {
-            x = getRandomInt(0, canvas.width - w);
-            if (x < startPos.x + carWidth && startPos.x < x + w) {}
-            else {
-                badX = false;
-            }
-        }
-        pos = new Vector(x, startPos.y); // i think pos gets passed as a reference??
-        cars.push(new Water(pos, "#0000ff", w, carHeight));
-        waters.push(new Water(pos, "#0000ff", w, carHeight));
+        waters.push(new Water(startPos.y));
     }
 }
 
 // to make it look like player is moving
 bar = [];
 for (i = 0; i < 14; i++) {
-    var c = "#ffff00";
-    var c2 = "#ff00ff";
-    if (i % 2 == 0) {
-        var c = "#ff00ff";
-        var c2 = "#ffff00";
-    }
+    var c = (i % 2 == 0) ? "#ffff00" : "#ff00ff";
+    var c2 = (i % 2 == 0) ? "#ff00ff" : "#ffff00";
     bar.push(new Block(new Vector(0, i * carHeight), c, c2, 20, carHeight));
     bar.push(new Block(new Vector(canvas.width - 20, i * carHeight), c, c2, 20, carHeight));
 }

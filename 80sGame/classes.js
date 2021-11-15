@@ -84,17 +84,18 @@ class Thing {
 }
 
 class Player extends Thing {
-    constructor(pt, color, w, h, ms) {
+    constructor(pt, w, h, ms) {
+        var color = "#00ff00";
         super(pt, color, w, h);
         this.ms = ms;
     }
     move() {
         if (this.active && frame > moveLockWait) {
             if (up) {
-                for (var i = 0; i < cars.length; i++) {
-                    cars[i].pt.y += this.ms;
-                    // cars[i].updateHB();
-                }
+                obstacles = [...cars, ...waters];
+                for (var i = 0; i < obstacles.length; i++) {
+                    obstacles[i].pt.y += this.ms;
+                }  
                 for (var i = 0; i < bar.length; i++) {
                     bar[i].toggle();
                 }
@@ -104,10 +105,10 @@ class Player extends Thing {
                 }
             }
             else if (down) {
-                for (var i = 0; i < cars.length; i++) {
-                    cars[i].pt.y -= this.ms;
-                    // cars[i].updateHB();
-                }
+                obstacles = [...cars, ...waters];
+                for (var i = 0; i < obstacles.length; i++) {
+                    obstacles[i].pt.y -= this.ms;
+                }  
                 for (var i = 0; i < bar.length; i++) {
                     bar[i].toggle();
                 }
@@ -127,7 +128,8 @@ class Player extends Thing {
 }
 
 class Car extends Thing {
-    constructor(pt, color, w, h, ms) {
+    constructor(pt, w, h, ms) {
+        var color = "#ff0000";
         super(pt, color, w, h);
         this.ms = ms;
         this.offScreen = false;
@@ -140,10 +142,8 @@ class Car extends Thing {
             this.ms = this.ms * 1.01;
         }
         if (this.pt.y > canvas.height && !this.offScreen) {
-            // this.pt.y = this.pt.y - (1.5 * carHeight) * 10; // 10 cars, no break
-            // this.ms = this.ms * 1.05;
             var pos = new Vector(getRandomInt(0, canvas.width - carWidth), this.pt.y - (1.5 * carHeight) * 10);
-            cars.push(new Car(pos, "#ff0000", carWidth, carHeight, this.ms * 1.05));
+            cars.push(new Car(pos, carWidth, carHeight, this.ms * 1.05));
             this.offScreen = true;
         }
     }
@@ -166,7 +166,22 @@ class Block extends Thing {
 }
 
 class Water extends Thing {
-    constructor(pt, color, w, h) {
+    constructor(y) {
+        var color = "#0000ff";
+        var w = getRandomInt(carHeight * 0.75, carHeight * 2);
+        var h = carHeight;
+        var badX = true;
+        while (badX) {
+            badX = false;
+            var x = getRandomInt(0, canvas.width - w);
+            var tempHB = new HitBox(new Vector(x,y), w, h);
+            for (var i = 0; i < cars.length; i++) {
+                if (tempHB.checkCollide(cars[i].hb)) {
+                    badX = true;
+                }
+            }
+        }
+        var pt = new Vector(x, y);
         super(pt, color, w, h);
         this.offScreen = false;
         this.deathMessage = "Drowned";
@@ -174,62 +189,9 @@ class Water extends Thing {
 
     update() {
         if (this.pt.y > canvas.height && !this.offScreen) {
-            // var w = getRandomInt(carHeight * 0.75, carHeight * 2);
-            // badX = true;
-            // while (badX) {
-            //     x = getRandomInt(0, canvas.width - carWidth);
-            //     if (x < startPos.x + carWidth && startPos.x < x + w) {}
-            //     else {
-            //         badX = false;
-            //     }
-            // }
-            // pos = new Vector(x, startPos.y); // i think pos gets passed as a reference??
-            // cars.push(new Water(pos, "#0000ff", w, carHeight));
-            // waters.push(new Water(pos, "#0000ff", w, carHeight));
-            var w = getRandomInt(carHeight * 0.75, carHeight * 2);
-            var y = this.pt.y - (1.5 * carHeight) * 10
-            badX = true;
-            while (badX) {
-                x = getRandomInt(0, canvas.width - w);
-                var tempHB = new HitBox(new Vector(x,y), w, carHeight);
-                for (var i = 0; i < cars.length; i++) {
-                    if (tempHB.checkCollide(cars[i].hb)) {}
-                    else {
-                        badX = false;
-                    }
-                }
-            }
-            var pos = new Vector(x, y);
-            cars.push(new Water(pos, "#0000ff", w, carHeight));
-            waters.push(new Water(pos, "#0000ff", w, carHeight));
+            var y = this.pt.y - (1.5 * carHeight) * 10;
+            waters.push(new Water(y));
             this.offScreen = true;
-        }
-    }
-}
-
-class Lake {
-    constructor(ws) {
-        this.ws = ws;
-    }
-    
-    form() {
-        this.ws = [];
-        // at most can be 1/2 of total width
-        topW = getRandomInt(carHeight * 0.75, carHeight * 2);
-        totalH = getRandomInt(3, 6);
-        for (var i = 0; i < totalH; i++) {
-            
-        }
-    }
-
-    moveUp(ms) {
-        for (var i = 0; i < ws.length; i++) {
-            this.ws.pt.y += ms;
-        }
-    }
-    moveDown(ms) {
-        for (var i = 0; i < ws.length; i++) {
-            this.ws.pt.y -= ms;
         }
     }
 }
