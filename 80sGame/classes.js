@@ -84,10 +84,31 @@ class Thing {
 }
 
 class Laser extends Thing {
-    constructor(pt, w, h, moveVector) {
+    constructor(pt, dir, ms) {
         var color = "#ff0055";
+        if (dir == "w") {
+            var moveVector = new Vector(0, -ms);
+            var h = ms * 2;
+            var w = ms;
+        }
+        else if (dir == "s") {
+            var moveVector = new Vector(0, ms);
+            var h = ms * 2;
+            var w = ms;
+        }
+        else if (dir == "a") {
+            var moveVector = new Vector(-ms, 0);
+            var h = ms;
+            var w = ms * 2;
+        }
+        else if (dir == "d") {
+            var moveVector = new Vector(ms, 0);
+            var h = ms;
+            var w = ms * 2;
+        }
         super(pt, color, w, h);
         this.stunTime = 60;
+        this.ms = ms;
         this.moveVector = moveVector;
     }
     update() {
@@ -95,9 +116,9 @@ class Laser extends Thing {
             this.pt.apply(this.moveVector);
             for (var i = 0; i < cars.length; i++) {
                 if (this.hb.checkCollide(cars[i].hb)) {
-                    // DELETE
                     this.off();
                     cars[i].off();
+                    cars[i].stun = this.stunTime;
                 }
             }
             this.draw();
@@ -176,7 +197,8 @@ class Player extends Thing {
         }
         if (this.active && eTimer > eWait) { // laser ability
             if (eDown) {
-                lasers.push(new Laser(new Vector(this.pt.x, this.pt.y), 20, 20, new Vector(0, -5)));
+                var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
+                lasers.push(new Laser(startPos, lastDir, 5));
                 eTimer = 0;
             }
         }
@@ -188,10 +210,15 @@ class Car extends Thing {
         var color = "#ff0000";
         super(pt, color, w, h);
         this.ms = ms;
+        this.stun = 0;
         this.offScreen = false;
         this.deathMessage = "Road Kill";
     }
     update() {
+        this.stun--;
+        if (this.stun <= 0) {
+            this.on();
+        }
         if (this.active) {
             this.pt.x += this.ms;
         }
