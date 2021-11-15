@@ -5,16 +5,8 @@ canvas {
 
 span {
     margin-top: 0 !important;
-    margin-left: 50px;
-    margin-right: 50px;
-}
-
-#state {
-    float: left;
-}
-
-#score {
-    float: right;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 #mainTxt {
