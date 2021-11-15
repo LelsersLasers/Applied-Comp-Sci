@@ -1,3 +1,7 @@
+.blue {
+    border: 1px solid blue;
+}
+
 canvas {
     margin-left: 0 auto !important;
     border: 4px solid black;
@@ -10,6 +14,7 @@ span {
 }
 
 #mainTxt {
-    align-items: center;
-    /* border: 1px solid blue; */
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
 }
