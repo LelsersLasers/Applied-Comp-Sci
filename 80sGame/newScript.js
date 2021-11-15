@@ -2,25 +2,34 @@ var up = false;
 var down = false;
 var left = false;
 var right = false;
+var qDown = false;
+var lastDir = "d";
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
 function keyDownHandler(e) {
     if(e.key == "w") {
         up = true;
+        lastDir = e.key;
     }
     else if(e.key == "s") {
         down = true;
+        lastDir = e.key;
     }
     else if(e.key == "a") {
         left = true;
+        lastDir = e.key;
     }
     else if(e.key == "d") {
         right = true;
+        lastDir = e.key;
     }
-    if (e.key == "r") {
-        reset();
+    if (e.key == "q") {
+        qDown = true;
     }
+    // if (e.key == "r") {
+    //     reset();
+    // }
 }
 function keyUpHandler(e) {
     if(e.key == "w") {
@@ -34,6 +43,9 @@ function keyUpHandler(e) {
     }
     else if(e.key == "d") {
         right = false;
+    }
+    if (e.key == "q") {
+        qDown = false;
     }
 }
 
@@ -87,6 +99,7 @@ function drawAll() {
     // }
     window.requestAnimationFrame(drawAll);
     frame++;
+    qTimer++;
 }
 
 function reset() {
@@ -115,6 +128,8 @@ var alive = true;
 var moveLockWait = 30;
 var score = 0;
 var topScore = 0;
+var qTimer = 0;
+var qWait = 60;
 
 // Set up the canvas and context objects
 context = setUpContext();

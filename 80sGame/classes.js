@@ -89,30 +89,36 @@ class Player extends Thing {
         super(pt, color, w, h);
         this.ms = ms;
     }
+    moveUp() {
+        obstacles = [...cars, ...waters];
+        for (var i = 0; i < obstacles.length; i++) {
+            obstacles[i].pt.y += this.ms;
+        }  
+        for (var i = 0; i < bar.length; i++) {
+            bar[i].toggle();
+        }
+        score += 1;
+        if (score > topScore) {
+            topScore = score;
+        }
+    }
+    moveDown() {
+        obstacles = [...cars, ...waters];
+        for (var i = 0; i < obstacles.length; i++) {
+            obstacles[i].pt.y -= this.ms;
+        }  
+        for (var i = 0; i < bar.length; i++) {
+            bar[i].toggle();
+        }
+        score -= 1;
+    }
     move() {
         if (this.active && frame > moveLockWait) {
             if (up) {
-                obstacles = [...cars, ...waters];
-                for (var i = 0; i < obstacles.length; i++) {
-                    obstacles[i].pt.y += this.ms;
-                }  
-                for (var i = 0; i < bar.length; i++) {
-                    bar[i].toggle();
-                }
-                score += 1;
-                if (score > topScore) {
-                    topScore = score;
-                }
+                this.moveUp();
             }
             else if (down) {
-                obstacles = [...cars, ...waters];
-                for (var i = 0; i < obstacles.length; i++) {
-                    obstacles[i].pt.y -= this.ms;
-                }  
-                for (var i = 0; i < bar.length; i++) {
-                    bar[i].toggle();
-                }
-                score -= 1;
+                this.moveDown();
             }
             else if (left) {
                 this.pt.x -= this.ms;
@@ -122,6 +128,18 @@ class Player extends Thing {
             }
             if (up || down || left || right) {
                 frame = 0;
+            }
+        }
+        if (this.active && qTimer > qWait) {
+            console.log("FIRE");
+            
+            if (qDown) {
+                if (lastDir == "w") {
+                    for (var i = 0; i < 3; i++) {
+                        this.moveUp();
+                    }
+                }
+                qTimer = 0;
             }
         }
     }

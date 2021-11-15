@@ -1,5 +1,8 @@
 # TODO
 - CLEAN CODE
+    - Mr. Bloom approved code
+    - Variable name conventions inside code
+        - qTimer, qDown, etc
 - To many cars?
     - Need a break, section them off
     - random numbered sections
@@ -7,4 +10,3 @@
 - "Abilites"
     - Q = teleport 2 up, 5 sec cd, etc
 - General math/speed/sizes/etc
-- "Clean", Mr. Bloom approved code
