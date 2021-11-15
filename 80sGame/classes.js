@@ -83,6 +83,28 @@ class Thing {
     }
 }
 
+class Laser extends Thing {
+    constructor(pt, w, h, moveVector) {
+        var color = "#ff0055";
+        super(pt, color, w, h);
+        this.stunTime = 60;
+        this.moveVector = moveVector;
+    }
+    update() {
+        if (this.active) {
+            this.pt.apply(this.moveVector);
+            for (var i = 0; i < cars.length; i++) {
+                if (this.hb.checkCollide(cars[i].hb)) {
+                    // DELETE
+                    this.off();
+                    cars[i].off();
+                }
+            }
+            this.draw();
+        }
+    }
+}
+
 class Player extends Thing {
     constructor(pt, w, h, ms) {
         var color = "#00ff00";
@@ -152,6 +174,12 @@ class Player extends Thing {
                 qTimer = 0;
             }
         }
+        if (this.active && eTimer > eWait) { // laser ability
+            if (eDown) {
+                lasers.push(new Laser(new Vector(this.pt.x, this.pt.y), 20, 20, new Vector(0, -5)));
+                eTimer = 0;
+            }
+        }
     }
 }
 
@@ -164,7 +192,9 @@ class Car extends Thing {
         this.deathMessage = "Road Kill";
     }
     update() {
-        this.pt.x += this.ms;
+        if (this.active) {
+            this.pt.x += this.ms;
+        }
         if (this.pt.x < 0 || this.pt.x > canvas.width - this.w) {
             this.ms = this.ms * -1;
             this.ms = this.ms * 1.01;

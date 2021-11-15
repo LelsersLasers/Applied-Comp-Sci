@@ -3,6 +3,7 @@ var down = false;
 var left = false;
 var right = false;
 var qDown = false;
+var eDown = false;
 var lastDir = "d";
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -27,6 +28,9 @@ function keyDownHandler(e) {
     if (e.key == "q") {
         qDown = true;
     }
+    if (e.key == "e") {
+        eDown = true;
+    }
     // if (e.key == "r") {
     //     reset();
     // }
@@ -46,6 +50,9 @@ function keyUpHandler(e) {
     }
     if (e.key == "q") {
         qDown = false;
+    }
+    if (e.key == "e") {
+        eDown = false;
     }
 }
 
@@ -75,6 +82,9 @@ function drawAll() {
             stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
         }
     }
+    for (var i = 0; i < lasers.length; i++) {
+        lasers[i].update();
+    }
     for (var i = 0; i < cars.length; i++) {
         for (var j = 0; j < waters.length; j++) {
             waters[j].updateHB();
@@ -94,6 +104,8 @@ function drawAll() {
     moveDelayTxt.innerText = "Move Wait: " + moveDelay;
     qDelay = qWait - qTimer > 0 ? qWait - qTimer : 0;
     qDelayTxt.innerText = "Teleport Available in: " + qDelay;
+    eDelay = eWait - eTimer > 0 ? eWait - eTimer : 0;
+    eDelayTxt.innerText = "Laser Available in: " + eDelay;
 
     // Loop the animation to the next frame.
     // if (alive) {
@@ -102,6 +114,7 @@ function drawAll() {
     window.requestAnimationFrame(drawAll);
     frame++;
     qTimer++;
+    eTimer++;
 }
 
 function reset() {
@@ -132,6 +145,9 @@ var score = 0;
 var topScore = 0;
 var qTimer = 0;
 var qWait = 120;
+var eTimer = 0;
+var eWait = 120;
+var lasers = [];
 
 // Set up the canvas and context objects
 context = setUpContext();
@@ -139,6 +155,7 @@ stateTxt = document.getElementById("state");
 scoreTxt = document.getElementById("score");
 moveDelayTxt = document.getElementById("moveDelay");
 qDelayTxt = document.getElementById("qDelay");
+eDelayTxt = document.getElementById("eDelay");
 
 // player
 carWidth = canvas.width * 1/9;
