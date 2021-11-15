@@ -12,15 +12,15 @@ function keyDownHandler(e) {
         up = true;
         lastDir = e.key;
     }
-    else if(e.key == "s") {
+    if(e.key == "s") {
         down = true;
         lastDir = e.key;
     }
-    else if(e.key == "a") {
+    if(e.key == "a") {
         left = true;
         lastDir = e.key;
     }
-    else if(e.key == "d") {
+    if(e.key == "d") {
         right = true;
         lastDir = e.key;
     }
@@ -35,13 +35,13 @@ function keyUpHandler(e) {
     if(e.key == "w") {
         up = false;
     }
-    else if(e.key == "s") {
+    if(e.key == "s") {
         down = false;
     }
-    else if(e.key == "a") {
+    if(e.key == "a") {
         left = false;
     }
-    else if(e.key == "d") {
+    if(e.key == "d") {
         right = false;
     }
     if (e.key == "q") {
@@ -92,6 +92,8 @@ function drawAll() {
     scoreTxt.innerText = "Score: " + topScore;
     moveDelay = moveLockWait - frame > 0 ? moveLockWait - frame : 0;
     moveDelayTxt.innerText = "Move Wait: " + moveDelay;
+    qDelay = qWait - qTimer > 0 ? qWait - qTimer : 0;
+    qDelayTxt.innerText = "Teleport Available in: " + qDelay;
 
     // Loop the animation to the next frame.
     // if (alive) {
@@ -129,13 +131,14 @@ var moveLockWait = 30;
 var score = 0;
 var topScore = 0;
 var qTimer = 0;
-var qWait = 60;
+var qWait = 120;
 
 // Set up the canvas and context objects
 context = setUpContext();
 stateTxt = document.getElementById("state");
 scoreTxt = document.getElementById("score");
 moveDelayTxt = document.getElementById("moveDelay");
+qDelayTxt = document.getElementById("qDelay");
 
 // player
 carWidth = canvas.width * 1/9;

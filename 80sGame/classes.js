@@ -88,6 +88,7 @@ class Player extends Thing {
         var color = "#00ff00";
         super(pt, color, w, h);
         this.ms = ms;
+        this.teleportSpeed = 3;
     }
     moveUp() {
         obstacles = [...cars, ...waters];
@@ -130,14 +131,23 @@ class Player extends Thing {
                 frame = 0;
             }
         }
-        if (this.active && qTimer > qWait) {
-            console.log("FIRE");
-            
+        if (this.active && qTimer > qWait) { // teleport ability
             if (qDown) {
                 if (lastDir == "w") {
-                    for (var i = 0; i < 3; i++) {
+                    for (var i = 0; i < this.teleportSpeed; i++) {
                         this.moveUp();
                     }
+                }
+                else if (lastDir == "s") {
+                    for (var i = 0; i < this.teleportSpeed; i++) {
+                        this.moveDown();
+                    }
+                }
+                else if (lastDir == "a") {
+                    this.pt.x -= this.ms * this.teleportSpeed;
+                }
+                else if (lastDir == "d") {
+                    this.pt.x += this.ms * this.teleportSpeed;
                 }
                 qTimer = 0;
             }
