@@ -197,7 +197,7 @@ class Player extends Thing {
         }
         if (this.active && eTimer > eWait) { // laser ability
             if (eDown) {
-                var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
+                var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2)); // why is it a reference??
                 lasers.push(new Laser(startPos, lastDir, 5));
                 eTimer = 0;
             }
@@ -213,6 +213,7 @@ class Car extends Thing {
         this.stun = 0;
         this.offScreen = false;
         this.deathMessage = "Road Kill";
+        this.deathColor = "#e37e7b";
     }
     update() {
         this.stun--;
@@ -270,6 +271,7 @@ class Water extends Thing {
         super(pt, color, w, h);
         this.offScreen = false;
         this.deathMessage = "Drowned";
+        this.deathColor = "#7bb6e3";
     }
 
     update() {

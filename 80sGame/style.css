@@ -1,6 +1,12 @@
 .blue {
-    /* border: 1px solid blue; */
-    border: none;
+    border: 1px solid blue;
+    /* border: none; */
+}
+.txtCenter {
+    text-align: center;
+}
+.center {
+    margin: 0 auto;
 }
 
 canvas {
@@ -31,12 +37,14 @@ span {
     background-color: #dadfe6;
 }
 
-/* #state {
+#state {
     background-color:#9ee092;    
-} */
+}
 
 #bar {
     width: 100%;
+    vertical-align: middle;
+    height: 2em;
 }
 
 div {

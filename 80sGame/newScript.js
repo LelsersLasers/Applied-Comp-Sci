@@ -31,9 +31,9 @@ function keyDownHandler(e) {
     if (e.key == "e") {
         eDown = true;
     }
-    // if (e.key == "r") {
-    //     reset();
-    // }
+    if (e.key == "r") {
+        reset();
+    }
 }
 function keyUpHandler(e) {
     if(e.key == "w") {
@@ -80,6 +80,7 @@ function drawAll() {
             alive = false;
             player.off();
             stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
+            stateTxt.style.backgroundColor = obstacles[i].deathColor;
         }
     }
     for (var i = 0; i < lasers.length; i++) {
@@ -97,19 +98,20 @@ function drawAll() {
         alive = false;
         player.off();
         stateTxt.innerText = "Status: Got Lost (DEAD)";
+        stateTxt.style.backgroundColor = "#dae37b";
     }
 
     scoreTxt.innerText = "Score: " + topScore;
-    moveDelay = moveLockWait - frame > 0 ? moveLockWait - frame : 0;
-    moveDelayTxt.innerText = "Move Wait: " + moveDelay;
+    // moveDelay = moveLockWait - frame > 0 ? moveLockWait - frame : 0;
+    // moveDelayTxt.innerText = "Move Wait: " + moveDelay;
     
     qDelay = qWait - qTimer > 0 ? qWait - qTimer : 0;
-    qDelayTxt.innerText = "Teleport Available in: " + qDelay;
+    // qDelayTxt.innerText = "Q: " + qDelay;
     qCD1.style.width = (qWait - qDelay) + "px";
     qCD2.style.width = qDelay + "px";
 
     eDelay = eWait - eTimer > 0 ? eWait - eTimer : 0;
-    eDelayTxt.innerText = "Laser Available in: " + eDelay;
+    // eDelayTxt.innerText = "Laser Available in: " + eDelay;
     eCD1.style.width = (eWait - eDelay) + "px";
     eCD2.style.width = eDelay + "px";
 
@@ -126,10 +128,7 @@ function drawAll() {
 }
 
 function reset() {
-
-    frame = 0;
-    alive = true;
-    window.requestAnimationFrame(drawAll);
+    location.reload();
 }
 
 function setUpContext() {
@@ -161,7 +160,7 @@ var lasers = [];
 context = setUpContext();
 stateTxt = document.getElementById("state");
 scoreTxt = document.getElementById("score");
-moveDelayTxt = document.getElementById("moveDelay");
+// moveDelayTxt = document.getElementById("moveDelay");
 
 qDelayTxt = document.getElementById("qDelay");
 qCD1 = document.getElementById("qCD1");
