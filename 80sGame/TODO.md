@@ -5,7 +5,6 @@
         - qTimer, qDown, etc
 - "Jump" animation, don't teleport things around
 - "Abilites"
-    - Q = teleport 2 up, 5 sec cd, etc
-- Bars or spinners to show cds
+    - Bars or spinners to show cds
 - General math/speed/sizes/etc
     - Centering things

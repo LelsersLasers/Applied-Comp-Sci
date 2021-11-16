@@ -1,5 +1,6 @@
 .blue {
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
+    border: none;
 }
 
 canvas {
@@ -8,13 +9,39 @@ canvas {
 }
 
 span {
-    margin-top: 0 !important;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 5px;
 }
 
 #mainTxt {
     text-align: center;
     width: 80%;
     margin: 0 auto;
+}
+
+.ability {
+    margin-right: 0;
+}
+
+.CD1 {
+    background-color: #5e94d1;
+}
+.CD2 {
+    background-color: #dadfe6;
+}
+
+/* #state {
+    background-color:#9ee092;    
+} */
+
+#bar {
+    width: 100%;
+}
+
+div {
+    height: 1em;
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
 }

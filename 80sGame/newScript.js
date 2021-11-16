@@ -102,10 +102,18 @@ function drawAll() {
     scoreTxt.innerText = "Score: " + topScore;
     moveDelay = moveLockWait - frame > 0 ? moveLockWait - frame : 0;
     moveDelayTxt.innerText = "Move Wait: " + moveDelay;
+    
     qDelay = qWait - qTimer > 0 ? qWait - qTimer : 0;
     qDelayTxt.innerText = "Teleport Available in: " + qDelay;
+    qCD1.style.width = (qWait - qDelay) + "px";
+    qCD2.style.width = qDelay + "px";
+
     eDelay = eWait - eTimer > 0 ? eWait - eTimer : 0;
     eDelayTxt.innerText = "Laser Available in: " + eDelay;
+    eCD1.style.width = (eWait - eDelay) + "px";
+    eCD2.style.width = eDelay + "px";
+
+    
 
     // Loop the animation to the next frame.
     // if (alive) {
@@ -154,8 +162,14 @@ context = setUpContext();
 stateTxt = document.getElementById("state");
 scoreTxt = document.getElementById("score");
 moveDelayTxt = document.getElementById("moveDelay");
+
 qDelayTxt = document.getElementById("qDelay");
+qCD1 = document.getElementById("qCD1");
+qCD2 = document.getElementById("qCD2");
+
 eDelayTxt = document.getElementById("eDelay");
+eCD1 = document.getElementById("eCD1");
+eCD2 = document.getElementById("eCD2");
 
 // player
 carWidth = canvas.width * 1/9;
@@ -172,7 +186,6 @@ for (var i = 0; i < 10; i++) {
     var speed = (getRandomInt(i/4 + 1, i/3 + 2)/900) * canvas.width;
     speed = getRandomInt(1, 3) == 2 ? -speed : speed;
     cars.push(new Car(startPos, carWidth, carHeight, speed));
-
     if (Math.random() < waterBlockCount/10) {
         waters.push(new Water(startPos.y));
     }

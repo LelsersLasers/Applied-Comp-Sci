@@ -13,12 +13,24 @@
 </head>
 <body>
     <h3>Crossy Road?</h3>
+
     <canvas id="mainCanvas"></canvas>
-    <span id="state">Status: Alive</span>
-    <span id="score">Score: 0</span>
-    <span id="moveDelay">Move Wait: 0</span>
-    <span id="qDelay">Teleport Available in: 0</span>
-    <span id="eDelay">Laser Available in: 0</span>
+
+    <div id="bar" class="blue">
+        <span id="state">Status: Alive</span>
+        <span id="score">Score: 0</span>
+        <span id="moveDelay">Move Wait: 0</span>
+
+        <span id="qDelay" class="ability">Q: </span>
+        <div id="qCD1" class="CD1"></div>
+        <div id="qCD2" class="CD2"></div>
+
+        <span id="eDelay" class="ability">Laser Available in: 0</span>
+        <div id="eCD1" class="CD1"></div>
+        <div id="eCD2" class="CD2"></div>
+    </div>
+
+
     <p id="mainTxt">
         Directions: You are the green, the cars are the red. Use "wasd" to move.
         Don't get hit by cars or go out of bounds sideways. Also you can't swim
