@@ -134,7 +134,7 @@ class Player extends Thing {
         this.teleportSpeed = 3;
     }
     moveUp() {
-        obstacles = [...cars, ...waters];
+        obstacles = [...cars, ...waters, ...lasers];
         for (var i = 0; i < obstacles.length; i++) {
             obstacles[i].pt.y += this.ms;
         }  
@@ -147,7 +147,7 @@ class Player extends Thing {
         }
     }
     moveDown() {
-        obstacles = [...cars, ...waters];
+        obstacles = [...cars, ...waters, ...lasers];
         for (var i = 0; i < obstacles.length; i++) {
             obstacles[i].pt.y -= this.ms;
         }  
@@ -197,7 +197,7 @@ class Player extends Thing {
         }
         if (this.active && eTimer > eWait) { // laser ability
             if (eDown) {
-                var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2)); // why is it a reference??
+                var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
                 lasers.push(new Laser(startPos, lastDir, 5));
                 eTimer = 0;
             }
