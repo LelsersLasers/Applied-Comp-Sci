@@ -2,9 +2,12 @@ var up = false;
 var down = false;
 var left = false;
 var right = false;
+var lastDir = "d";
+
 var qDown = false;
 var eDown = false;
-var lastDir = "d";
+var rDown = false;
+
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
@@ -32,6 +35,9 @@ function keyDownHandler(e) {
         eDown = true;
     }
     if (e.key == "r") {
+        rDown = true;
+    }
+    if (e.key == "z") {
         reset();
     }
 }
@@ -53,6 +59,9 @@ function keyUpHandler(e) {
     }
     if (e.key == "e") {
         eDown = false;
+    }
+    if (e.key == "r") {
+        rDown = false;
     }
 }
 
@@ -106,14 +115,16 @@ function drawAll() {
     // moveDelayTxt.innerText = "Move Wait: " + moveDelay;
     
     qDelay = qWait - qTimer >= 0 ? qWait - qTimer : 0;
-    // qDelayTxt.innerText = "Q: " + qDelay;
     qCD2.style.width = (qWait - qDelay) + "px";;
     qCD2.style.backgroundColor = qDelay == 0 ? "#9ee092" : "#5e94d1";
 
     eDelay = eWait - eTimer >= 0 ? eWait - eTimer : 0;
-    // eDelayTxt.innerText = "Laser Available in: " + eDelay;
     eCD2.style.width = (eWait - eDelay) + "px";;
     eCD2.style.backgroundColor = eDelay == 0 ? "#9ee092" : "#5e94d1";
+
+    rDelay = rWait - rTimer >= 0 ? rWait - rTimer : 0;
+    rCD2.style.width = (rWait - rDelay) + "px";;
+    rCD2.style.backgroundColor = rDelay == 0 ? "#9ee092" : "#5e94d1";
 
     
 
@@ -125,6 +136,7 @@ function drawAll() {
     frame++;
     qTimer++;
     eTimer++;
+    rTimer++;
 }
 
 function reset() {
@@ -150,13 +162,17 @@ var alive = true;
 var moveLockWait = 30;
 var score = 0;
 var topScore = 0;
+
 var qTimer = 0;
 var qWait = 120;
 var eTimer = 0;
 var eWait = 120;
+var rTimer = 0;
+var rWait = 240;
+
 var lasers = [];
 
-// Set up the canvas and context objects
+// Set up the canvas, context objects, and html elements
 context = setUpContext();
 stateTxt = document.getElementById("state");
 scoreTxt = document.getElementById("score");
@@ -169,6 +185,11 @@ qCD2 = document.getElementById("qCD2");
 eDelayTxt = document.getElementById("eDelay");
 eCD1 = document.getElementById("eCD1");
 eCD2 = document.getElementById("eCD2");
+
+rDelayTxt = document.getElementById("rDelay");
+rCD1 = document.getElementById("rCD1");
+rCD2 = document.getElementById("rCD2");
+rCD1.style.width = rWait + "px";
 
 // player
 carWidth = canvas.width * 1/9;
@@ -191,7 +212,7 @@ for (var i = 0; i < 10; i++) {
 }
 
 // to make it look like player is moving
-bar = [];
+var bar = [];
 for (i = 0; i < 14; i++) {
     var c = (i % 2 == 0) ? "#ffff00" : "#ff00ff";
     var c2 = (i % 2 == 0) ? "#ff00ff" : "#ffff00";

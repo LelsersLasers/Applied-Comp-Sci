@@ -202,6 +202,16 @@ class Player extends Thing {
                 eTimer = 0;
             }
         }
+        if (this.active && rTimer > rWait) { // laser grenade ability
+            if (rDown) {
+                var dirs = ["w", "a", "s", "d"];
+                for (var i = 0; i < 4; i++) {
+                    var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
+                    lasers.push(new Laser(startPos, dirs[i], 5));
+                }
+                rTimer = 0;
+            }
+        }
     }
 }
 
@@ -234,7 +244,6 @@ class Car extends Thing {
         }
     }
 }
-
 
 class Block extends Thing {
     constructor(pt, color, color2, w, h) {
