@@ -1,6 +1,6 @@
 .blue {
-    border: 1px solid blue;
-    /* border: none; */
+    /* border: 1px solid blue; */
+    border: none;
 }
 .txtCenter {
     text-align: center;
@@ -31,10 +31,11 @@ span {
 }
 
 .CD1 {
-    background-color: #5e94d1;
+    background-color: #dadfe6;
+    width: 120px;
 }
 .CD2 {
-    background-color: #dadfe6;
+    background-color: #5e94d1;
 }
 
 #state {
