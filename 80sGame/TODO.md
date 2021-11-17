@@ -1,7 +1,7 @@
 # TODO
 - "HUD"
     - WHY IS IT SO BAD?
-    - scale qCD1 and qCD2 lens to 100?
+    - scale qCD1 and qCD2 lens to 1/5 of witdh?
 - CLEAN CODE
     - Mr. Bloom approved code
     - Variable name conventions inside code
@@ -10,7 +10,11 @@
 - "Jump" animation, don't teleport things around
 - "Abilites"
     - "r": ult: grendade like stun?
+        - Lasers in 8 directions
 - General math/speed/sizes/etc
     - Centering things
     - numbers, speeds, etc
     - colors
+    - scale stuff to witdh height
+        - laser speed
+        - player side movement
