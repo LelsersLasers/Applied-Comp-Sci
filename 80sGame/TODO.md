@@ -1,10 +1,15 @@
 # TODO
+- "HUD"
+    - WHY IS IT SO BAD?
 - CLEAN CODE
     - Mr. Bloom approved code
     - Variable name conventions inside code
-        - qTimer, qDown, etc
+        - keep: 'qTimer, qDown' etc
+        - change 'up down' etc
 - "Jump" animation, don't teleport things around
 - "Abilites"
-    - Bars or spinners to show cds
+    - "r": ult: grendade like stun?
 - General math/speed/sizes/etc
     - Centering things
+    - numbers, speeds, etc
+    - colors

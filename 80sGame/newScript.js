@@ -105,15 +105,17 @@ function drawAll() {
     // moveDelay = moveLockWait - frame > 0 ? moveLockWait - frame : 0;
     // moveDelayTxt.innerText = "Move Wait: " + moveDelay;
     
-    qDelay = qWait - qTimer > 0 ? qWait - qTimer : 0;
+    qDelay = qWait - qTimer >= 0 ? qWait - qTimer : 0;
     // qDelayTxt.innerText = "Q: " + qDelay;
     qCD1.style.width = (qWait - qDelay) + "px";
     qCD2.style.width = qDelay + "px";
+    qCD1.style.backgroundColor = qDelay == 0 ? "#9ee092" : "#5e94d1";
 
-    eDelay = eWait - eTimer > 0 ? eWait - eTimer : 0;
+    eDelay = eWait - eTimer >= 0 ? eWait - eTimer : 0;
     // eDelayTxt.innerText = "Laser Available in: " + eDelay;
     eCD1.style.width = (eWait - eDelay) + "px";
     eCD2.style.width = eDelay + "px";
+    eCD1.style.backgroundColor = eDelay == 0 ? "#9ee092" : "#5e94d1";
 
     
 
