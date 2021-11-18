@@ -84,27 +84,32 @@ class Thing {
 }
 
 class Laser extends Thing {
-    constructor(pt, dir, ms, stunTime) {
+    constructor(pt, dir, stunTime) {
+        var ms = Math.sqrt((canvas.width * canvas.width + canvas.height * canvas.height)/52000);
         var color = "#ff0055";
         if (dir == "w") {
             var moveVector = new Vector(0, -ms);
             var h = ms * 2;
             var w = ms;
+            pt.x -= w/2;
         }
         else if (dir == "s") {
             var moveVector = new Vector(0, ms);
             var h = ms * 2;
             var w = ms;
+            pt.x -= w/2;
         }
         else if (dir == "a") {
             var moveVector = new Vector(-ms, 0);
             var h = ms;
             var w = ms * 2;
+            pt.y -= h/2;
         }
         else if (dir == "d") {
             var moveVector = new Vector(ms, 0);
             var h = ms;
             var w = ms * 2;
+            pt.y -= h/2;
         }
         else if (dir == "sd") {
             var moveVector = new Vector(ms * Math.sqrt(2) * 0.5, ms * Math.sqrt(2) * 0.5);
@@ -162,11 +167,6 @@ class Laser extends Thing {
         context.moveTo(this.pt.x, this.pt.y);
         context.lineTo(this.pt.x + this.h * Math.cos(angle) * Math.sqrt(2), this.pt.y + this.h * Math.sin(angle) * Math.sqrt(2));
         context.stroke();
-        // context.beginPath();
-        // context.moveTo(this.pt.x, this.pt.y);
-        // context.lineTo(this.pt.x + this.h * Math.cos(angle), this.pt.y + this.h * Math.sin(angle));
-        // context.lineTo((this.pt.x + this.h * Math.cos(angle)) - (this.w * Math.cos(angle)), (this.pt.y + this.h * Math.sin(angle) - (this.w * Math.sin(angle))));
-        // context.stroke();
       }
 }
 
@@ -242,7 +242,7 @@ class Player extends Thing {
         if (this.active && eTimer > eWait) { // laser ability
             if (eDown) {
                 var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
-                lasers.push(new Laser(startPos, lastDir, 5, 60));
+                lasers.push(new Laser(startPos, lastDir, 60));
                 eTimer = 0;
             }
         }
@@ -251,7 +251,7 @@ class Player extends Thing {
                 var dirs = ["w", "a", "s", "d", "sd", "wd", "sa", "wa"];
                 for (var i = 0; i < dirs.length; i++) {
                     var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
-                    lasers.push(new Laser(startPos, dirs[i], 5, 120));
+                    lasers.push(new Laser(startPos, dirs[i], 120));
                 }
                 // lasers.push(new Laser(new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2)), "sd", 5));
                 // lasers.push(new Laser(new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2)), "wd", 5));
@@ -259,23 +259,23 @@ class Player extends Thing {
             }
         }
     }
-    drawCenter() {
-        context.strokeStyle = "#000000";
-        context.beginPath();
-        context.arc(canvas.width/2, player.pt.y, 5, 0, 2 * Math.PI);
-        context.stroke();
+    // drawCenter() {
+    //     context.strokeStyle = "#000000";
+    //     context.beginPath();
+    //     context.arc(this.pt.x + (this.w/2), this.pt.y + (this.h/2), 5, 0, 2 * Math.PI);
+    //     context.stroke();
 
-        context.beginPath();
-        context.rect(0, 0, canvas.width/2, canvas.height);
-        context.stroke();
-        context.beginPath();
-        context.rect(canvas.width/2, canvas.height, canvas.width/2, canvas.height);
-        context.stroke();
+    //     context.beginPath();
+    //     context.rect(this.pt.x + (this.w/2), this.pt.y + (this.h/2), 6, 3);
+    //     context.stroke();
+    //     // context.beginPath();
+    //     // context.rect(canvas.width/2, canvas.height, canvas.width/2, canvas.height);
+    //     // context.stroke();
 
-        // context.beginPath();
-        // context.arc(50, 50, 50, 0, 2 * Math.PI);
-        // context.stroke();
-    }
+    //     // context.beginPath();
+    //     // context.arc(50, 50, 50, 0, 2 * Math.PI);
+    //     // context.stroke();
+    // }
 }
 
 class Car extends Thing {
@@ -326,13 +326,13 @@ class Block extends Thing {
 class Water extends Thing {
     constructor(y) {
         var color = "#0000ff";
-        var w = getRandomInt(carHeight * 0.75, carHeight * 2);
+        var w = getRandomInt(carHeight * 0.5, carWidth * 1.5);
         var h = carHeight;
         var badX = true;
         while (badX) {
             badX = false;
             var x = getRandomInt(0, canvas.width - w);
-            var tempHB = new HitBox(new Vector(x,y), w, h);
+            var tempHB = new HitBox(new Vector(x - 10, y - 10), w + 10, h + 10);
             for (var i = 0; i < cars.length; i++) {
                 if (tempHB.checkCollide(cars[i].hb)) {
                     badX = true;

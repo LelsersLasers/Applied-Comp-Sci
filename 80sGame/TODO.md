@@ -16,5 +16,4 @@
     - numbers, speeds, etc
     - colors
     - scale stuff to witdh height
-        - laser speed
         - player side movement

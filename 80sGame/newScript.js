@@ -40,6 +40,9 @@ function keyDownHandler(e) {
     if (e.key == "z") {
         reset();
     }
+    // if (e.key == "x") {
+    //     alive = false;
+    // }
 }
 function keyUpHandler(e) {
     if(e.key == "w") {
@@ -81,7 +84,7 @@ function drawAll() {
     }
     player.move();
     player.draw();
-    player.drawCenter();
+    // player.drawCenter();
     obstacles = [...cars, ...waters];
     for (var i = 0; i < obstacles.length; i++) {
         obstacles[i].update();
@@ -116,15 +119,15 @@ function drawAll() {
     // moveDelayTxt.innerText = "Move Wait: " + moveDelay;
     
     qDelay = qWait - qTimer >= 0 ? qWait - qTimer : 0;
-    qCD2.style.width = (qWait - qDelay) + "px";;
+    qCD2.style.width = ((qWait - qDelay) * cdBarWidth/qWait) + "px";
     qCD2.style.backgroundColor = qDelay == 0 ? "#9ee092" : "#5e94d1";
 
     eDelay = eWait - eTimer >= 0 ? eWait - eTimer : 0;
-    eCD2.style.width = (eWait - eDelay) + "px";;
+    eCD2.style.width = ((eWait - eDelay) * cdBarWidth/eWait) + "px";
     eCD2.style.backgroundColor = eDelay == 0 ? "#9ee092" : "#5e94d1";
 
     rDelay = rWait - rTimer >= 0 ? rWait - rTimer : 0;
-    rCD2.style.width = (rWait - rDelay) + "px";;
+    rCD2.style.width = ((rWait - rDelay) * cdBarWidth/rWait) + "px";
     rCD2.style.backgroundColor = rDelay == 0 ? "#9ee092" : "#5e94d1";
 
     
@@ -178,6 +181,8 @@ stateTxt = document.getElementById("state");
 scoreTxt = document.getElementById("score");
 // moveDelayTxt = document.getElementById("moveDelay");
 
+cdBarWidth = 150/900 * canvas.width;
+
 qDelayTxt = document.getElementById("qDelay");
 qCD1 = document.getElementById("qCD1");
 qCD2 = document.getElementById("qCD2");
@@ -189,13 +194,16 @@ eCD2 = document.getElementById("eCD2");
 rDelayTxt = document.getElementById("rDelay");
 rCD1 = document.getElementById("rCD1");
 rCD2 = document.getElementById("rCD2");
-rCD1.style.width = rWait + "px";
+
+qCD1.style.width = cdBarWidth + "px";
+eCD1.style.width = cdBarWidth + "px";
+rCD1.style.width = cdBarWidth + "px";
 
 // player
 carWidth = canvas.width * 1/9;
 carHeight = canvas.height * 1/14;
 playerLevel = carHeight * 10;
-player = new Player(new Vector(canvas.width/2, playerLevel), carHeight, carHeight, carHeight * 1.5);
+player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight, carHeight, carHeight * 1.5);
 
 var cars = [];
 waterBlockCount = 5;
