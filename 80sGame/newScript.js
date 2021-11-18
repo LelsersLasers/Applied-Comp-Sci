@@ -1,7 +1,7 @@
-var up = false;
-var down = false;
-var left = false;
-var right = false;
+var wDown = false;
+var sDown = false;
+var aDown = false;
+var dDown = false;
 var lastDir = "d";
 
 var qDown = false;
@@ -13,19 +13,19 @@ document.addEventListener("keyup", keyUpHandler, false);
 
 function keyDownHandler(e) {
     if(e.key == "w") {
-        up = true;
+        wDown = true;
         lastDir = e.key;
     }
     if(e.key == "s") {
-        down = true;
+        sDown = true;
         lastDir = e.key;
     }
     if(e.key == "a") {
-        left = true;
+        aDown = true;
         lastDir = e.key;
     }
     if(e.key == "d") {
-        right = true;
+        dDown = true;
         lastDir = e.key;
     }
     if (e.key == "q") {
@@ -46,16 +46,16 @@ function keyDownHandler(e) {
 }
 function keyUpHandler(e) {
     if(e.key == "w") {
-        up = false;
+        wDown = false;
     }
     if(e.key == "s") {
-        down = false;
+        sDown = false;
     }
     if(e.key == "a") {
-        left = false;
+        aDown = false;
     }
     if(e.key == "d") {
-        right = false;
+        dDown = false;
     }
     if (e.key == "q") {
         qDown = false;
@@ -131,7 +131,7 @@ function drawAll() {
     rCD2.style.backgroundColor = rDelay == 0 ? "#9ee092" : "#5e94d1";
 
     
-    frame++;
+    moveTimer++;
     qTimer++;
     eTimer++;
     rTimer++;
@@ -160,11 +160,12 @@ function setUpContext() {
     context = canvas.getContext("2d");
     return context;
 }
-var frame = 0;
 var alive = true;
-var moveLockWait = 30;
 var score = 0;
 var topScore = 0;
+
+var moveWait = 30;
+var moveTimer = 0;
 
 var qWait = 120;
 var qTimer = qWait;

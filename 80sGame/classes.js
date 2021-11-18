@@ -202,21 +202,21 @@ class Player extends Thing {
         score -= 1;
     }
     move() {
-        if (this.active && frame > moveLockWait) {
-            if (up) {
+        if (this.active && moveTimer > moveWait) {
+            if (wDown) {
                 this.moveUp();
             }
-            else if (down) {
+            else if (sDown) {
                 this.moveDown();
             }
-            else if (left) {
+            else if (aDown) {
                 this.pt.x -= this.msX;
             }
-            else if (right) {
+            else if (dDown) {
                 this.pt.x += this.msX;
             }
-            if (up || down || left || right) {
-                frame = 0;
+            if (wDown || sDown || aDown || dDown) {
+                moveTimer = 0;
             }
         }
         if (this.active && qTimer > qWait) { // teleport ability

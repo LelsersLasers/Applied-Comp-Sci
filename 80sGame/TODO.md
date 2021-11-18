@@ -1,7 +1,4 @@
 # TODO
-- "HUD"
-    - WHY IS IT SO BAD?
-    - scale qCD1 and qCD2 lens to 1/5 of witdh?
 - CLEAN CODE
     - Mr. Bloom approved code
     - Variable name conventions inside code
