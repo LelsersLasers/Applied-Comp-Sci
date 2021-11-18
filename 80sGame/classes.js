@@ -84,7 +84,7 @@ class Thing {
 }
 
 class Laser extends Thing {
-    constructor(pt, dir, ms) {
+    constructor(pt, dir, ms, stunTime) {
         var color = "#ff0055";
         if (dir == "w") {
             var moveVector = new Vector(0, -ms);
@@ -106,9 +106,35 @@ class Laser extends Thing {
             var h = ms;
             var w = ms * 2;
         }
+        else if (dir == "sd") {
+            var moveVector = new Vector(ms * Math.sqrt(2) * 0.5, ms * Math.sqrt(2) * 0.5);
+            var h = ms * 2;
+            var w = ms;
+            var angle = 45;
+        }
+        else if (dir == "wd") {
+            var moveVector = new Vector(ms * Math.sqrt(2) * 0.5, -ms * Math.sqrt(2) * 0.5);
+            var h = ms * 2;
+            var w = ms;
+            var angle = -45;
+        }
+        else if (dir == "sa") {
+            var moveVector = new Vector(-ms * Math.sqrt(2) * 0.5, ms * Math.sqrt(2) * 0.5);
+            var h = ms * 2;
+            var w = ms;
+            var angle = 135;
+        }
+        else if (dir == "wa") {
+            var moveVector = new Vector(-ms * Math.sqrt(2) * 0.5, -ms * Math.sqrt(2) * 0.5);
+            var h = ms * 2;
+            var w = ms;
+            var angle = -135;
+        }
         super(pt, color, w, h);
-        this.stunTime = 60;
+        this.stunTime = stunTime;
         this.ms = ms;
+        this.dir = dir;
+        this.angle = angle;
         this.moveVector = moveVector;
     }
     update() {
@@ -121,9 +147,27 @@ class Laser extends Thing {
                     cars[i].stun = this.stunTime;
                 }
             }
-            this.draw();
+            if (["w", "a", "s", "d"].indexOf(this.dir) >= 0) {
+                this.draw();
+            }
+            else {
+                this.drawRotatedRect(this.angle);
+            }
         }
     }
+    drawRotatedRect(angle) {
+        angle *= Math.PI / 180;
+        // context.lineWidth = this.w * 1.5;
+        // context.beginPath();
+        // context.moveTo(this.pt.x, this.pt.y);
+        // context.lineTo(this.pt.x + this.h * Math.cos(angle) * 1.5, this.pt.y + this.h * Math.sin(angle) * 1.5);
+        // context.stroke();
+        context.beginPath();
+        context.moveTo(this.pt.x, this.pt.y);
+        context.lineTo(this.pt.x + this.h * Math.cos(angle), this.pt.y + this.h * Math.sin(angle));
+        context.lineTo((this.pt.x + this.h * Math.cos(angle)) - (this.w * Math.cos(angle)), (this.pt.y + this.h * Math.sin(angle) - (this.w * Math.sin(angle))));
+        context.stroke();
+      }
 }
 
 class Player extends Thing {
@@ -198,17 +242,19 @@ class Player extends Thing {
         if (this.active && eTimer > eWait) { // laser ability
             if (eDown) {
                 var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
-                lasers.push(new Laser(startPos, lastDir, 5));
+                lasers.push(new Laser(startPos, lastDir, 5, 60));
                 eTimer = 0;
             }
         }
         if (this.active && rTimer > rWait) { // laser grenade ability
             if (rDown) {
-                var dirs = ["w", "a", "s", "d"];
-                for (var i = 0; i < 4; i++) {
+                var dirs = ["w", "a", "s", "d", "sd", "wd", "sa", "wa"];
+                for (var i = 0; i < dirs.length; i++) {
                     var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
-                    lasers.push(new Laser(startPos, dirs[i], 5));
+                    lasers.push(new Laser(startPos, dirs[i], 5, 120));
                 }
+                // lasers.push(new Laser(new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2)), "sd", 5));
+                // lasers.push(new Laser(new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2)), "wd", 5));
                 rTimer = 0;
             }
         }

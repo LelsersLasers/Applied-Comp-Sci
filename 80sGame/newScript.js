@@ -127,16 +127,15 @@ function drawAll() {
     rCD2.style.backgroundColor = rDelay == 0 ? "#9ee092" : "#5e94d1";
 
     
-
+    frame++;
+    qTimer++;
+    eTimer++;
+    rTimer++;
     // Loop the animation to the next frame.
     // if (alive) {
     //     window.requestAnimationFrame(drawAll);
     // }
     window.requestAnimationFrame(drawAll);
-    frame++;
-    qTimer++;
-    eTimer++;
-    rTimer++;
 }
 
 function reset() {
