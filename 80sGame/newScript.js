@@ -81,6 +81,7 @@ function drawAll() {
     }
     player.move();
     player.draw();
+    player.drawCenter();
     obstacles = [...cars, ...waters];
     for (var i = 0; i < obstacles.length; i++) {
         obstacles[i].update();
@@ -162,12 +163,12 @@ var moveLockWait = 30;
 var score = 0;
 var topScore = 0;
 
-var qTimer = 0;
 var qWait = 120;
-var eTimer = 0;
+var qTimer = qWait;
 var eWait = 120;
-var rTimer = 0;
+var eTimer = eWait;
 var rWait = 240;
+var rTimer = rWait;
 
 var lasers = [];
 

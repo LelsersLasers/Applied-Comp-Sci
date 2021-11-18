@@ -157,16 +157,16 @@ class Laser extends Thing {
     }
     drawRotatedRect(angle) {
         angle *= Math.PI / 180;
-        // context.lineWidth = this.w * 1.5;
-        // context.beginPath();
-        // context.moveTo(this.pt.x, this.pt.y);
-        // context.lineTo(this.pt.x + this.h * Math.cos(angle) * 1.5, this.pt.y + this.h * Math.sin(angle) * 1.5);
-        // context.stroke();
+        context.lineWidth = this.w * 1.5;
         context.beginPath();
         context.moveTo(this.pt.x, this.pt.y);
-        context.lineTo(this.pt.x + this.h * Math.cos(angle), this.pt.y + this.h * Math.sin(angle));
-        context.lineTo((this.pt.x + this.h * Math.cos(angle)) - (this.w * Math.cos(angle)), (this.pt.y + this.h * Math.sin(angle) - (this.w * Math.sin(angle))));
+        context.lineTo(this.pt.x + this.h * Math.cos(angle) * Math.sqrt(2), this.pt.y + this.h * Math.sin(angle) * Math.sqrt(2));
         context.stroke();
+        // context.beginPath();
+        // context.moveTo(this.pt.x, this.pt.y);
+        // context.lineTo(this.pt.x + this.h * Math.cos(angle), this.pt.y + this.h * Math.sin(angle));
+        // context.lineTo((this.pt.x + this.h * Math.cos(angle)) - (this.w * Math.cos(angle)), (this.pt.y + this.h * Math.sin(angle) - (this.w * Math.sin(angle))));
+        // context.stroke();
       }
 }
 
@@ -258,6 +258,23 @@ class Player extends Thing {
                 rTimer = 0;
             }
         }
+    }
+    drawCenter() {
+        context.strokeStyle = "#000000";
+        context.beginPath();
+        context.arc(canvas.width/2, player.pt.y, 5, 0, 2 * Math.PI);
+        context.stroke();
+
+        context.beginPath();
+        context.rect(0, 0, canvas.width/2, canvas.height);
+        context.stroke();
+        context.beginPath();
+        context.rect(canvas.width/2, canvas.height, canvas.width/2, canvas.height);
+        context.stroke();
+
+        // context.beginPath();
+        // context.arc(50, 50, 50, 0, 2 * Math.PI);
+        // context.stroke();
     }
 }
 
