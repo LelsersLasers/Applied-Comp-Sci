@@ -171,16 +171,17 @@ class Laser extends Thing {
 }
 
 class Player extends Thing {
-    constructor(pt, w, h, ms) {
+    constructor(pt, w, h, msX, msY) {
         var color = "#00ff00";
         super(pt, color, w, h);
-        this.ms = ms;
+        this.msX = msX;
+        this.msY = msY;
         this.teleportSpeed = 3;
     }
     moveUp() {
         obstacles = [...cars, ...waters, ...lasers];
         for (var i = 0; i < obstacles.length; i++) {
-            obstacles[i].pt.y += this.ms;
+            obstacles[i].pt.y += this.msY;
         }  
         for (var i = 0; i < bar.length; i++) {
             bar[i].toggle();
@@ -193,7 +194,7 @@ class Player extends Thing {
     moveDown() {
         obstacles = [...cars, ...waters, ...lasers];
         for (var i = 0; i < obstacles.length; i++) {
-            obstacles[i].pt.y -= this.ms;
+            obstacles[i].pt.y -= this.msY;
         }  
         for (var i = 0; i < bar.length; i++) {
             bar[i].toggle();
@@ -209,10 +210,10 @@ class Player extends Thing {
                 this.moveDown();
             }
             else if (left) {
-                this.pt.x -= this.ms;
+                this.pt.x -= this.msX;
             }
             else if (right) {
-                this.pt.x += this.ms;
+                this.pt.x += this.msX;
             }
             if (up || down || left || right) {
                 frame = 0;
@@ -231,10 +232,10 @@ class Player extends Thing {
                     }
                 }
                 else if (lastDir == "a") {
-                    this.pt.x -= this.ms * this.teleportSpeed;
+                    this.pt.x -= this.msX * this.teleportSpeed;
                 }
                 else if (lastDir == "d") {
-                    this.pt.x += this.ms * this.teleportSpeed;
+                    this.pt.x += this.msX * this.teleportSpeed;
                 }
                 qTimer = 0;
             }

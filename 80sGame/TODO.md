@@ -8,12 +8,9 @@
         - keep: 'qTimer, qDown' etc
         - change 'up down' etc
 - "Jump" animation, don't teleport things around
-- "Abilites"
-    - "r": ult: grendade like stun?
-        - Lasers in 8 directions
 - General math/speed/sizes/etc
     - Centering things
     - numbers, speeds, etc
     - colors
     - scale stuff to witdh height
-        - player side movement
+- Abilities/Movement are buttons by touch

@@ -181,7 +181,7 @@ stateTxt = document.getElementById("state");
 scoreTxt = document.getElementById("score");
 // moveDelayTxt = document.getElementById("moveDelay");
 
-cdBarWidth = 150/900 * canvas.width;
+cdBarWidth = 1/6 * canvas.width;
 
 qDelayTxt = document.getElementById("qDelay");
 qCD1 = document.getElementById("qCD1");
@@ -203,7 +203,7 @@ rCD1.style.width = cdBarWidth + "px";
 carWidth = canvas.width * 1/9;
 carHeight = canvas.height * 1/14;
 playerLevel = carHeight * 10;
-player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight, carHeight, carHeight * 1.5);
+player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight, carHeight, carHeight * 1.5 * canvas.width/900, carHeight * 1.5);
 
 var cars = [];
 waterBlockCount = 5;
