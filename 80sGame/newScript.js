@@ -84,7 +84,6 @@ function drawAll() {
     }
     player.move();
     player.draw();
-    // player.drawCenter();
     obstacles = [...cars, ...waters];
     for (var i = 0; i < obstacles.length; i++) {
         obstacles[i].update();
@@ -115,8 +114,6 @@ function drawAll() {
     }
 
     scoreTxt.innerText = "Score: " + topScore;
-    // moveDelay = moveLockWait - frame > 0 ? moveLockWait - frame : 0;
-    // moveDelayTxt.innerText = "Move Wait: " + moveDelay;
     
     qDelay = qWait - qTimer >= 0 ? qWait - qTimer : 0;
     qCD2.style.width = ((qWait - qDelay) * cdBarWidth/qWait) + "px";
@@ -222,11 +219,12 @@ for (var i = 0; i < 10; i++) {
 
 // to make it look like player is moving
 var bar = [];
-for (i = 0; i < 10; i++) {
+for (i = 0; i < 12; i++) {
     var c = (i % 2 == 0) ? "#ffff00" : "#ff00ff";
     var c2 = (i % 2 == 0) ? "#ff00ff" : "#ffff00";
-    bar.push(new Block(new Vector(0, i * carHeight * 1.5), c, c2, 20, carHeight * 1.5));
-    bar.push(new Block(new Vector(canvas.width - 20, i * carHeight * 1.5), c, c2, 20, carHeight * 1.5));
+    j = i - 1;
+    bar.push(new Block(new Vector(0, j * carHeight * 1.5), c, c2, 20, carHeight * 1.5));
+    bar.push(new Block(new Vector(canvas.width - 20, j * carHeight * 1.5), c, c2, 20, carHeight * 1.5));
 }
 
 

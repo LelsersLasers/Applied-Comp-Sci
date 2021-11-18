@@ -177,58 +177,80 @@ class Player extends Thing {
         this.msX = msX;
         this.msY = msY;
         this.teleportSpeed = 3;
+        this.animationDir = "";
     }
-    moveUp() {
-        obstacles = [...cars, ...waters, ...lasers];
+    moveUp(ms) {
+        obstacles = [...cars, ...waters, ...lasers, ...bar];
         for (var i = 0; i < obstacles.length; i++) {
-            obstacles[i].pt.y += this.msY;
+            obstacles[i].pt.y += ms;
         }  
         for (var i = 0; i < bar.length; i++) {
-            bar[i].toggle();
-        }
-        score += 1;
-        if (score > topScore) {
-            topScore = score;
+            bar[i].update();
         }
     }
-    moveDown() {
-        obstacles = [...cars, ...waters, ...lasers];
+    moveDown(ms) {
+        obstacles = [...cars, ...waters, ...lasers, ...bar];
         for (var i = 0; i < obstacles.length; i++) {
-            obstacles[i].pt.y -= this.msY;
+            obstacles[i].pt.y -= ms;
         }  
         for (var i = 0; i < bar.length; i++) {
-            bar[i].toggle();
+            bar[i].update();
         }
-        score -= 1;
     }
     move() {
+        if (moveTimer >= moveWait) {
+            this.animationDir = "";
+        }
         if (this.active && moveTimer > moveWait) {
             if (wDown) {
-                this.moveUp();
+                this.animationDir = "w";
+                score += 1;
+                if (score > topScore) {
+                    topScore = score;
+                }
             }
             else if (sDown) {
-                this.moveDown();
+                this.animationDir = "s";
+                score -= 1;
             }
             else if (aDown) {
-                this.pt.x -= this.msX;
+                this.animationDir = "a";
             }
             else if (dDown) {
-                this.pt.x += this.msX;
+                this.animationDir = "d";
             }
             if (wDown || sDown || aDown || dDown) {
                 moveTimer = 0;
             }
         }
+        if (this.animationDir == "w") {
+            this.moveUp(this.msY/moveWait);
+        }
+        else if (this.animationDir == "s") {
+            this.moveDown(this.msY/moveWait);
+        }
+        else if (this.animationDir == "a") {
+            this.pt.x -= this.msX/moveWait;
+        }
+        else if (this.animationDir == "d") {
+            this.pt.x += this.msX/moveWait;
+        }
+
         if (this.active && qTimer > qWait) { // teleport ability
             if (qDown) {
                 if (lastDir == "w") {
                     for (var i = 0; i < this.teleportSpeed; i++) {
-                        this.moveUp();
+                        this.moveUp(this.msY);
+                        score += 1;
+                        if (score > topScore) {
+                            topScore = score;
+                        }
                     }
                 }
                 else if (lastDir == "s") {
                     for (var i = 0; i < this.teleportSpeed; i++) {
-                        this.moveDown();
+                        this.moveDown(this.msY);
+                        score -= 1;
                     }
                 }
                 else if (lastDir == "a") {
@@ -260,23 +282,6 @@ class Player extends Thing {
             }
         }
     }
-    // drawCenter() {
-    //     context.strokeStyle = "#000000";
-    //     context.beginPath();
-    //     context.arc(this.pt.x + (this.w/2), this.pt.y + (this.h/2), 5, 0, 2 * Math.PI);
-    //     context.stroke();
-
-    //     context.beginPath();
-    //     context.rect(this.pt.x + (this.w/2), this.pt.y + (this.h/2), 6, 3);
-    //     context.stroke();
-    //     // context.beginPath();
-    //     // context.rect(canvas.width/2, canvas.height, canvas.width/2, canvas.height);
-    //     // context.stroke();
-
-    //     // context.beginPath();
-    //     // context.arc(50, 50, 50, 0, 2 * Math.PI);
-    //     // context.stroke();
-    // }
 }
 
 class Car extends Thing {
@@ -315,12 +320,19 @@ class Block extends Thing {
         this.color2 = color2;
     }
     draw() {
-        // context.strokeStyle = this.color;
         context.fillStyle = this.active ? this.color2 : this.color;
         context.lineWidth = this.width;
         context.beginPath();
         context.rect(this.pt.x, this.pt.y, this.w, this.h);
         context.fill();
+    }
+    update() {
+        if (this.pt.y < -carHeight * 1.5) {
+            this.pt.y += carHeight * 1.5 * 10;
+        }
+        if (this.pt.y > canvas.height) {
+            this.pt.y -= carHeight * 1.5 * 10;
+        }
     }
 }
 
