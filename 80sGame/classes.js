@@ -276,8 +276,6 @@ class Player extends Thing {
                     var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
                     lasers.push(new Laser(startPos, dirs[i], 120));
                 }
-                // lasers.push(new Laser(new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2)), "sd", 5));
-                // lasers.push(new Laser(new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2)), "wd", 5));
                 rTimer = 0;
             }
         }
@@ -327,11 +325,11 @@ class Block extends Thing {
         context.fill();
     }
     update() {
-        if (this.pt.y < -carHeight * 1.5) {
-            this.pt.y += carHeight * 1.5 * 10;
+        if (this.pt.y < -this.h) {
+            this.pt.y = this.pt.y + (this.h * 10);
         }
         if (this.pt.y > canvas.height) {
-            this.pt.y -= carHeight * 1.5 * 10;
+            this.pt.y = this.pt.y - (this.h * 10);
         }
     }
 }

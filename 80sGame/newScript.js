@@ -78,7 +78,9 @@ function getRandomInt(min, max) {
 function drawAll() {
     
     // Draw the new frame
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    // context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = "#000000";
+    context.fillRect(0, 0, canvas.width, canvas.height);
     for (var i = 0; i < bar.length; i++) {
         bar[i].draw();
     }
@@ -88,12 +90,12 @@ function drawAll() {
     for (var i = 0; i < obstacles.length; i++) {
         obstacles[i].update();
         obstacles[i].draw();
-        if (obstacles[i].hb.checkCollide(player.hb)) {
-            alive = false;
-            player.off();
-            stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
-            stateTxt.style.backgroundColor = obstacles[i].deathColor;
-        }
+        // if (obstacles[i].hb.checkCollide(player.hb)) {
+        //     alive = false;
+        //     player.off();
+        //     stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
+        //     stateTxt.style.backgroundColor = obstacles[i].deathColor;
+        // }
     }
     for (var i = 0; i < lasers.length; i++) {
         lasers[i].update();
@@ -219,10 +221,10 @@ for (var i = 0; i < 10; i++) {
 
 // to make it look like player is moving
 var bar = [];
-for (i = 0; i < 12; i++) {
+for (i = 0; i < 14; i++) {
     var c = (i % 2 == 0) ? "#ffff00" : "#ff00ff";
     var c2 = (i % 2 == 0) ? "#ff00ff" : "#ffff00";
-    j = i - 1;
+    j = i - 2;
     bar.push(new Block(new Vector(0, j * carHeight * 1.5), c, c2, 20, carHeight * 1.5));
     bar.push(new Block(new Vector(canvas.width - 20, j * carHeight * 1.5), c, c2, 20, carHeight * 1.5));
 }
