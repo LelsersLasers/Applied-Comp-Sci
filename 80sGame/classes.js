@@ -343,7 +343,7 @@ class Water extends Thing {
         while (badX) {
             badX = false;
             var x = getRandomInt(0, canvas.width - w);
-            var tempHB = new HitBox(new Vector(x - 10, y - 10), w + 10, h + 10);
+            var tempHB = new HitBox(new Vector(x - 10, y - 10), w + 20, h + 20);
             for (var i = 0; i < cars.length; i++) {
                 if (tempHB.checkCollide(cars[i].hb)) {
                     badX = true;

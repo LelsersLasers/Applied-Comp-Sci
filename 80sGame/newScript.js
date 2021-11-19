@@ -8,8 +8,6 @@ var qDown = false;
 var eDown = false;
 var rDown = false;
 
-var cursorClick = [-1, -1];
-
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("click", getCursorPosition, false);
@@ -74,15 +72,26 @@ function getCursorPosition(event) {
     var rect = canvas.getBoundingClientRect();
     x = event.clientX - rect.left;
     y = event.clientY - rect.top;
-    cursorClick = [x, y];
-    console.log("x: " + x + " y: " + y);
 
     if (screen == "welcome") {
-        screen = "game";
+        cursorHB = new HitBox(new Vector(x - 3, y - 3), 6, 6);
+        if (cursorHB.checkCollide(directionsHB)) {
+            screen = "directions";
+        }
+        else {
+            screen = "game";
+        }
     }
     else if (screen == "game" && !alive) {
         screen = "welcome";
     }
+    else if (screen == "directions") {
+        screen = "welcome";
+    }
+}
+
+function reset() {
+    location.reload();
 }
 
 function getRandomInt(min, max) {
@@ -101,21 +110,55 @@ function drawWelcome() {
 
     context.textAlign = "center";
     context.fillStyle = "#ffffff";
-    textSize = carHeight;
 
-    context.font = textSize + "px serif";
+    context.font = carHeight + "px serif";
     context.fillText("NEO CROSSER", canvas.width/2, canvas.height * 1/3);
 
     if (textActive) {
-        context.font = textSize/2 + "px serif";
-        context.fillText("Touch to Start", canvas.width/2, canvas.height * 1/3 + textSize);
+        context.font = carHeight/2 + "px serif";
+        context.fillText("Touch to Start", canvas.width/2, canvas.height * 1/3 + carHeight);
     }
     txt = "Directions";
-    context.font = textSize * 5/12 + "px serif";
+    context.font = carHeight * 5/12 + "px serif";
     width = context.measureText(txt).width;
-    directionsHB = new HitBox(new Vector(canvas.width/2 - width/2, canvas.height * 1/3 + textSize * 4 - textSize * 1/3), width, textSize * 5/12);
+    directionsHB = new HitBox(new Vector(canvas.width/2 - width/2 - 10, canvas.height * 1/3 + carHeight * 4 - carHeight * 1/3 - 10), width + 20, carHeight * 5/12 + 20);
     directionsHB.draw("#ffffff");
-    context.fillText(txt, canvas.width/2, canvas.height * 1/3 + textSize * 4);
+    context.fillText(txt, canvas.width/2, canvas.height * 1/3 + carHeight * 4);
+
+    textTimer++;
+}
+
+
+
+function drawDirections() {
+    if (textTimer > textWait) {
+        textActive = !textActive;
+        textTimer = 0;
+    }
+
+    context.textAlign = "center";
+    context.fillStyle = "#ffffff";
+
+    context.font = carHeight + "px serif";
+    context.fillText("Directions", canvas.width/2, canvas.height * 1/3);
+
+    if (textActive) {
+        context.font = carHeight/2 + "px serif";
+        context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/3 + carHeight);
+    }
+    var txts = [];
+    txts.push("Directions: You are the green, the cars are the red. Use 'wasd' to move.");
+    txts.push("Don't get hit by cars or go out of bounds sideways.");
+    txts.push("Also you can't swim (don't go into the blue water). Cars also can't swim.");
+    txts.push("Goal: Go as far up as possible. You also have 3 abilities.");
+    txts.push("Q which teleports a short distance,");
+    txts.push("E which fires a laser that causes a small stun, and");
+    txts.push("R which fires a laser in every direction.");
+    txts.push("If you die, touch the screen to restart");
+    context.font = carHeight * 5/12 + "px serif";
+    for (var i = 0; i < txts.length; i++) {
+        context.fillText(txts[i], canvas.width/2, canvas.height * 1/3 + carHeight + carHeight * 1/2 * (3+i));
+    }
 
     textTimer++;
 }
@@ -186,6 +229,9 @@ function drawAll() {
     else if (screen == "game") {
         drawGame();
     }
+    else if (screen == "directions") {
+        drawDirections();
+    }
     
     
     // Loop the animation to the next frame.
@@ -193,10 +239,6 @@ function drawAll() {
     //     window.requestAnimationFrame(drawAll);
     // }
     window.requestAnimationFrame(drawAll);
-}
-
-function reset() {
-    location.reload();
 }
 
 function setUpContext() {
@@ -233,6 +275,7 @@ var rTimer = rWait;
 var textTimer = 0;
 var textWait = 25;
 var textActive = false;
+var directionsHB;
 
 var lasers = [];
 

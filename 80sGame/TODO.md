@@ -12,5 +12,5 @@
     - Abilities/Movement are buttons by touch
     - "Screens"
         - start/welcome
-            - directions, goal, etc
-        - ending
+        - directions
+        - main game
