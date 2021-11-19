@@ -8,8 +8,11 @@ var qDown = false;
 var eDown = false;
 var rDown = false;
 
+var cursorClick = [-1, -1];
+
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+document.addEventListener("click", getCursorPosition, false);
 
 function keyDownHandler(e) {
     if(e.key == "w") {
@@ -67,6 +70,20 @@ function keyUpHandler(e) {
         rDown = false;
     }
 }
+function getCursorPosition(event) {
+    var rect = canvas.getBoundingClientRect();
+    x = event.clientX - rect.left;
+    y = event.clientY - rect.top;
+    cursorClick = [x, y];
+    console.log("x: " + x + " y: " + y);
+
+    if (screen == "welcome") {
+        screen = "game";
+    }
+    else if (screen == "game" && !alive) {
+        screen = "welcome";
+    }
+}
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -75,12 +92,35 @@ function getRandomInt(min, max) {
     return value;
 }
 
-function drawAll() {
-    
-    // Draw the new frame
-    // context.clearRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = "#000000";
-    context.fillRect(0, 0, canvas.width, canvas.height);
+function drawWelcome() {
+
+    if (textTimer > textWait) {
+        textActive = !textActive;
+        textTimer = 0;
+    }
+
+    context.textAlign = "center";
+    context.fillStyle = "#ffffff";
+    textSize = carHeight;
+
+    context.font = textSize + "px serif";
+    context.fillText("NEO CROSSER", canvas.width/2, canvas.height * 1/3);
+
+    if (textActive) {
+        context.font = textSize/2 + "px serif";
+        context.fillText("Touch to Start", canvas.width/2, canvas.height * 1/3 + textSize);
+    }
+    txt = "Directions";
+    context.font = textSize * 5/12 + "px serif";
+    width = context.measureText(txt).width;
+    directionsHB = new HitBox(new Vector(canvas.width/2 - width/2, canvas.height * 1/3 + textSize * 4 - textSize * 1/3), width, textSize * 5/12);
+    directionsHB.draw("#ffffff");
+    context.fillText(txt, canvas.width/2, canvas.height * 1/3 + textSize * 4);
+
+    textTimer++;
+}
+
+function drawGame() {
     for (var i = 0; i < bar.length; i++) {
         bar[i].draw();
     }
@@ -90,12 +130,12 @@ function drawAll() {
     for (var i = 0; i < obstacles.length; i++) {
         obstacles[i].update();
         obstacles[i].draw();
-        // if (obstacles[i].hb.checkCollide(player.hb)) {
-        //     alive = false;
-        //     player.off();
-        //     stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
-        //     stateTxt.style.backgroundColor = obstacles[i].deathColor;
-        // }
+        if (obstacles[i].hb.checkCollide(player.hb)) {
+            alive = false;
+            player.off();
+            stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
+            stateTxt.style.backgroundColor = obstacles[i].deathColor;
+        }
     }
     for (var i = 0; i < lasers.length; i++) {
         lasers[i].update();
@@ -134,6 +174,20 @@ function drawAll() {
     qTimer++;
     eTimer++;
     rTimer++;
+}
+
+function drawAll() {
+    
+    context.fillStyle = "#000000";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    if (screen == "welcome") {
+        drawWelcome();
+    }
+    else if (screen == "game") {
+        drawGame();
+    }
+    
+    
     // Loop the animation to the next frame.
     // if (alive) {
     //     window.requestAnimationFrame(drawAll);
@@ -159,6 +213,9 @@ function setUpContext() {
     context = canvas.getContext("2d");
     return context;
 }
+
+var screen = "welcome";
+
 var alive = true;
 var score = 0;
 var topScore = 0;
@@ -172,6 +229,10 @@ var eWait = 120;
 var eTimer = eWait;
 var rWait = 240;
 var rTimer = rWait;
+
+var textTimer = 0;
+var textWait = 25;
+var textActive = false;
 
 var lasers = [];
 
