@@ -165,13 +165,16 @@ function drawDirections() {
         context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/3 + carHeight);
     }
     var txts = [];
-    txts.push("You are the green, the cars are the red. Use 'wasd' to move.");
+    txts.push("You are the green, the cars are the red.");
+    txts.push("To move, either use 'wasd' or touch the top, bottom, left, and right.")
     txts.push("Don't get hit by cars or go out of bounds sideways.");
     txts.push("Also you can't swim (don't go into the blue water). Cars also can't swim.");
-    txts.push("Goal: Go as far up as possible. You also have 3 abilities.");
+    txts.push("You also have 3 abilities:");
     txts.push("Q which teleports a short distance,");
     txts.push("E which fires a laser that causes a small stun, and");
     txts.push("R which fires a laser in every direction.");
+    txts.push("(Abilites can be actived with their respective key, or by tapping the icon in the bottom right.)")
+    txts.push("Goal: Go as far up as possible.")
     txts.push("If you die, click the screen to restart");
     context.font = carHeight * 5/12 + "px serif";
     for (var i = 0; i < txts.length; i++) {
@@ -280,7 +283,6 @@ function setUpContext() {
     
     // MARK, makes these like the others
     canvas.onmousedown = function(event) {
-        console.log("hi");
         mouseDown = true;
     }
     canvas.onmouseup = function(event) {
