@@ -100,14 +100,14 @@ function getMousePos(event) {
 function mouseDownActions() {
     // cursorHB.draw("#ffffff");
     
-    qDown = cursorHB.checkCollide(qAbility.hb);
-    eDown = cursorHB.checkCollide(eAbility.hb);
-    rDown = cursorHB.checkCollide(rAbility.hb);
+    qDown = cursorHB.checkCollide(qAbility.hb) && mouseDown;
+    eDown = cursorHB.checkCollide(eAbility.hb) && mouseDown;
+    rDown = cursorHB.checkCollide(rAbility.hb) && mouseDown;
 
-    wDown = cursorHB.checkCollide(wHB);
-    sDown = cursorHB.checkCollide(sHB);
-    aDown = cursorHB.checkCollide(aHB);
-    dDown = cursorHB.checkCollide(dHB);
+    wDown = cursorHB.checkCollide(wHB) && mouseDown;
+    sDown = cursorHB.checkCollide(sHB) && mouseDown;
+    aDown = cursorHB.checkCollide(aHB) && mouseDown;
+    dDown = cursorHB.checkCollide(dHB) && mouseDown;
 }
 
 function reset() {
