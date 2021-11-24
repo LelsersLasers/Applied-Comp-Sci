@@ -177,7 +177,6 @@ class Player extends Thing {
         this.msX = msX;
         this.msY = msY;
         this.teleportSpeed = 3;
-        this.animationDir = "";
     }
     moveUp(ms) {
         obstacles = [...cars, ...waters, ...lasers, ...bar];
@@ -201,39 +200,27 @@ class Player extends Thing {
         if (moveTimer >= moveWait) {
             this.animationDir = "";
         }
-        if (this.active && moveTimer > moveWait) {
+        if (this.active) {
             if (wDown) {
-                this.animationDir = "w";
+                this.moveUp(this.msY/moveWait);
                 score += 1;
                 if (score > topScore) {
                     topScore = score;
                 }
             }
             else if (sDown) {
-                this.animationDir = "s";
+                this.moveDown(this.msY/moveWait);
                 score -= 1;
             }
             else if (aDown) {
-                this.animationDir = "a";
+                this.pt.x -= this.msX/moveWait;
             }
             else if (dDown) {
-                this.animationDir = "d";
+                this.pt.x += this.msX/moveWait;
             }
             if (wDown || sDown || aDown || dDown) {
                 moveTimer = 0;
             }
-        }
-        if (this.animationDir == "w") {
-            this.moveUp(this.msY/moveWait);
-        }
-        else if (this.animationDir == "s") {
-            this.moveDown(this.msY/moveWait);
-        }
-        else if (this.animationDir == "a") {
-            this.pt.x -= this.msX/moveWait;
-        }
-        else if (this.animationDir == "d") {
-            this.pt.x += this.msX/moveWait;
         }
 
         if (this.active && qTimer > qWait) { // teleport ability
@@ -241,7 +228,7 @@ class Player extends Thing {
                 if (lastDir == "w") {
                     for (var i = 0; i < this.teleportSpeed; i++) {
                         this.moveUp(this.msY);
-                        score += 1;
+                        score += moveWait;
                         if (score > topScore) {
                             topScore = score;
                         }
@@ -250,7 +237,7 @@ class Player extends Thing {
                 else if (lastDir == "s") {
                     for (var i = 0; i < this.teleportSpeed; i++) {
                         this.moveDown(this.msY);
-                        score -= 1;
+                        score -= moveWait;
                     }
                 }
                 else if (lastDir == "a") {
