@@ -13,7 +13,7 @@ var mousePos = new Vector(-1, -1);
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
-document.addEventListener("click", getCursorPosition, false);
+document.addEventListener("click", clickHandler, false);
 document.addEventListener('mousemove', getMousePos, false);
 
 function keyDownHandler(e) {
@@ -72,12 +72,7 @@ function keyUpHandler(e) {
         rDown = false;
     }
 }
-function getCursorPosition(event) {
-    var rect = canvas.getBoundingClientRect();
-    x = event.clientX - rect.left;
-    y = event.clientY - rect.top;
-    cursorHB = new HitBox(new Vector(x - 3, y - 3), 6, 6);
-
+function clickHandler(event) {
     if (screen == "welcome") {
         if (cursorHB.checkCollide(directionsHB)) {
             screen = "directions";
@@ -86,11 +81,6 @@ function getCursorPosition(event) {
             screen = "game";
         }
     }
-    // else if (screen == "game" && alive) {
-    //     qDown = cursorHB.checkCollide(qAbility.hb);
-    //     eDown = cursorHB.checkCollide(eAbility.hb);
-    //     rDown = cursorHB.checkCollide(rAbility.hb);
-    // }
     else if (screen == "game" && !alive) {
         reset();
     }
@@ -102,13 +92,22 @@ function getMousePos(event) {
     var rect = canvas.getBoundingClientRect();
     mousePos.x = event.clientX - rect.left;
     mousePos.y = event.clientY - rect.top;
+    cursorHB = new HitBox(new Vector(mousePos.x - 3, mousePos.y - 3), 6, 6);
+    cursorHB.draw("#ffffff");
+    console.log("move");
 }
 
 function mouseDownActions() {
-    cursorHB = new HitBox(new Vector(mousePos.x - 3, mousePos.y - 3), 6, 6);
+    // cursorHB.draw("#ffffff");
+    
     qDown = cursorHB.checkCollide(qAbility.hb);
     eDown = cursorHB.checkCollide(eAbility.hb);
     rDown = cursorHB.checkCollide(rAbility.hb);
+
+    wDown = cursorHB.checkCollide(wHB);
+    sDown = cursorHB.checkCollide(sHB);
+    aDown = cursorHB.checkCollide(aHB);
+    dDown = cursorHB.checkCollide(dHB);
 }
 
 function reset() {
@@ -186,10 +185,11 @@ function drawGame() {
     for (var i = 0; i < bar.length; i++) {
         bar[i].draw();
     }
-    player.move();
     if (mouseDown) {
         mouseDownActions();
     }
+    player.move();
+    mouseDownActions();
     player.draw();
     obstacles = [...cars, ...waters];
     for (var i = 0; i < obstacles.length; i++) {
@@ -241,6 +241,11 @@ function drawGame() {
     rDelay = rAbility.wait - rAbility.timer >= 0 ? rAbility.wait - rAbility.timer : 0;
     rCD2.style.width = ((rAbility.wait - rDelay) * cdBarWidth/rAbility.wait) + "px";
     rCD2.style.backgroundColor = rDelay == 0 ? "#9ee092" : "#5e94d1";
+
+    wHB.draw("#ffffff");
+    sHB.draw("#ffffff");
+    aHB.draw("#ffffff");
+    dHB.draw("#ffffff");
 }
 
 function drawAll() {
@@ -335,6 +340,12 @@ player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHe
 qAbility = new Ability(new Vector(carHeight    , playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "Q");
 eAbility = new Ability(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "E");
 rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 240, 240, "R");
+
+wHB = new HitBox(new Vector(canvas.width * 1/5, 0), canvas.width * 3/5, canvas.height * 1/5);
+sHB = new HitBox(new Vector(canvas.width * 1/5, canvas.height * 4/5), canvas.width * 3/5, canvas.height * 1/5);
+aHB = new HitBox(new Vector(0, canvas.height * 1/5), canvas.width * 1/5, canvas.height * 3/5);
+dHB = new HitBox(new Vector(canvas.width * 4/5, canvas.height * 1/5), canvas.width * 1/5, canvas.height * 3/5);
+
 scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", carHeight, carHeight/3, "Score: 0");
 
 var cars = [];
