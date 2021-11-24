@@ -8,7 +8,7 @@ var qDown = false;
 var eDown = false;
 var rDown = false;
 
-var keyDown = false;
+var inputMode = "either";
 var mouseDown = false;
 var mousePos = new Vector(-1, -1);
 
@@ -46,10 +46,7 @@ function keyDownHandler(e) {
     if (e.key == "z") {
         reset();
     }
-    // if (e.key == "x") {
-    //     alive = false;
-    // }
-    keyDown = true;
+    inputMode = "key";
 }
 function keyUpHandler(e) {
     if(e.key == "w") {
@@ -73,7 +70,6 @@ function keyUpHandler(e) {
     if (e.key == "r") {
         rDown = false;
     }
-    keyDown = false;
 }
 function clickHandler(event) {
     if (screen == "welcome") {
@@ -102,7 +98,7 @@ function getMousePos(event) {
 
 function mouseDownActions() {
     // cursorHB.draw("#ffffff");
-    if (!keyDown) {
+    if (inputMode != "key") {
         qDown = cursorHB.checkCollide(qAbility.hb) && mouseDown;
         eDown = cursorHB.checkCollide(eAbility.hb) && mouseDown;
         rDown = cursorHB.checkCollide(rAbility.hb) && mouseDown;
@@ -115,7 +111,7 @@ function mouseDownActions() {
 }
 
 function reset() {
-    location.reload();
+    location.reload(); // reloads the webpage
 }
 
 function getRandomInt(min, max) {
@@ -169,14 +165,14 @@ function drawDirections() {
         context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/3 + carHeight);
     }
     var txts = [];
-    txts.push("Directions: You are the green, the cars are the red. Use 'wasd' to move.");
+    txts.push("You are the green, the cars are the red. Use 'wasd' to move.");
     txts.push("Don't get hit by cars or go out of bounds sideways.");
     txts.push("Also you can't swim (don't go into the blue water). Cars also can't swim.");
     txts.push("Goal: Go as far up as possible. You also have 3 abilities.");
     txts.push("Q which teleports a short distance,");
     txts.push("E which fires a laser that causes a small stun, and");
     txts.push("R which fires a laser in every direction.");
-    txts.push("If you die, touch the screen to restart");
+    txts.push("If you die, click the screen to restart");
     context.font = carHeight * 5/12 + "px serif";
     for (var i = 0; i < txts.length; i++) {
         context.fillText(txts[i], canvas.width/2, canvas.height * 1/3 + carHeight + carHeight * 1/2 * (3+i));
@@ -192,8 +188,8 @@ function drawGame() {
     if (mouseDown) {
         mouseDownActions();
     }
-    player.move();
     mouseDownActions();
+    player.move();
     player.draw();
     obstacles = [...cars, ...waters];
     for (var i = 0; i < obstacles.length; i++) {

@@ -1,7 +1,8 @@
 # TODO
 - BAR SCOLLING
-- EITHER TOUCH OR KEYBOARD - is it fixed?
+- EITHER TOUCH OR KEYBOARD
     - Keyboard currently broken
+    - have a temp fix, see if it is good enough
 
 - Clean code
     - Mr. Bloom approved code
@@ -18,6 +19,8 @@
 - Prep for ipad
     - Movement are buttons by touch
         - mouse down vs mouse click for q, e, r, and movement
+        - confirm current system works
+    - update directions
 
 - "this.width" in draws
 - on mouse down same as other 3
