@@ -356,7 +356,7 @@ for (var i = 0; i < 10; i++) {
     startPos = new Vector(getRandomInt(0, canvas.width - carWidth), base - (1.5 * carHeight * i));
     var speed = (getRandomInt(i/4 + 1, i/3 + 2)/900) * canvas.width;
     speed = getRandomInt(1, 3) == 2 ? -speed : speed;
-    cars.push(new Car(startPos, carWidth, carHeight, speed));
+    cars.push(new Car(startPos, speed));
     if (Math.random() < waterBlockCount/10) {
         waters.push(new Water(startPos.y));
     }

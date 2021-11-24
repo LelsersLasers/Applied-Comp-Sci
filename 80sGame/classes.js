@@ -316,8 +316,10 @@ class Player extends Thing {
 }
 
 class Car extends Thing {
-    constructor(pt, w, h, ms) {
+    constructor(pt, ms) {
         var color = "#ff0000";
+        var w = carWidth;
+        var h = carHeight;
         super(pt, color, w, h);
         this.ms = ms;
         this.stun = 0;
@@ -339,7 +341,7 @@ class Car extends Thing {
         }
         if (this.pt.y > canvas.height && !this.offScreen) {
             var pos = new Vector(getRandomInt(0, canvas.width - carWidth), this.pt.y - (1.5 * carHeight) * 10);
-            cars.push(new Car(pos, carWidth, carHeight, this.ms * 1.05));
+            cars.push(new Car(pos, this.ms * 1.05));
             this.offScreen = true;
         }
     }

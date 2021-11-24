@@ -1,10 +1,12 @@
 # TODO
 - BAR SCOLLING
+- EITHER TOUCH OR KEYBOARD
+    - Keyboard currently broken
+
 - Clean code
     - Mr. Bloom approved code
     - Variable name conventions inside code
     - get set?
-    - simplify car constructor
     - spaces between words, brakects, etc?
     - unused code/functions/vars
     - var vs let?
