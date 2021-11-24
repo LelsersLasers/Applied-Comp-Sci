@@ -8,9 +8,13 @@ var qDown = false;
 var eDown = false;
 var rDown = false;
 
+var mouseDown = false;
+var mousePos = new Vector(-1, -1);
+
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("click", getCursorPosition, false);
+// document.addEventListener("mousdown", onMousDownHandler, false);
 
 function keyDownHandler(e) {
     if(e.key == "w") {
@@ -82,11 +86,11 @@ function getCursorPosition(event) {
             screen = "game";
         }
     }
-    else if (screen == "game" && alive) {
-        qDown = cursorHB.checkCollide(qAbility.hb);
-        eDown = cursorHB.checkCollide(eAbility.hb);
-        rDown = cursorHB.checkCollide(rAbility.hb);
-    }
+    // else if (screen == "game" && alive) {
+    //     qDown = cursorHB.checkCollide(qAbility.hb);
+    //     eDown = cursorHB.checkCollide(eAbility.hb);
+    //     rDown = cursorHB.checkCollide(rAbility.hb);
+    // }
     else if (screen == "game" && !alive) {
         // screen = "welcome";
         reset();
@@ -95,6 +99,20 @@ function getCursorPosition(event) {
         screen = "welcome";
     }
 }
+// function onMousDownHandler(event) {
+//     var rect = canvas.getBoundingClientRect();
+//     x = event.clientX - rect.left;
+//     y = event.clientY - rect.top;
+//     cursorHB = new HitBox(new Vector(x - 3, y - 3), 6, 6);
+
+//     if (screen == "game" && alive) {
+//         qDown = cursorHB.checkCollide(qAbility.hb);
+//         eDown = cursorHB.checkCollide(eAbility.hb);
+//         rDown = cursorHB.checkCollide(rAbility.hb);
+//         console.log("hi");
+//     }
+//     console.log("o");
+// }
 
 function reset() {
     location.reload();
@@ -254,7 +272,27 @@ function setUpContext() {
     canvas = document.getElementById("mainCanvas");
     canvas.width = window.innerWidth - 50;
     canvas.height = window.innerHeight - 100;
-    // canvas.style.border = "4px solid black";
+    
+    // MARK
+    canvas.onmousedown = function(event){ // Why is it not treating it like a hold?
+        var rect = canvas.getBoundingClientRect();
+        x = event.clientX - rect.left;
+        y = event.clientY - rect.top;
+        cursorHB = new HitBox(new Vector(x - 3, y - 3), 6, 6);
+        if (screen == "game" && alive) {
+            qDown = cursorHB.checkCollide(qAbility.hb);
+            eDown = cursorHB.checkCollide(eAbility.hb);
+            rDown = cursorHB.checkCollide(rAbility.hb);
+        }
+        console.log("hi");
+        mouseDown = true;
+    }
+    canvas.onmouseup = function(event){ // Why is it not treating it like a hold?
+        qDown = false;
+        eDown = false;
+        rDown = false;
+        mouseDown = false;
+    }
 
     // Set up the context for the animation
     context = canvas.getContext("2d");
