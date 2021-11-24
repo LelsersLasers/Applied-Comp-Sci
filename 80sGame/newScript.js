@@ -83,7 +83,8 @@ function getCursorPosition(event) {
         }
     }
     else if (screen == "game" && !alive) {
-        screen = "welcome";
+        // screen = "welcome";
+        reset();
     }
     else if (screen == "directions") {
         screen = "welcome";
@@ -198,6 +199,10 @@ function drawGame() {
         stateTxt.style.backgroundColor = "#dae37b";
     }
 
+    qAbility.draw();
+    eAbility.draw();
+    rAbility.draw();
+
     scoreTxt.innerText = "Score: " + topScore;
     
     qDelay = qWait - qTimer >= 0 ? qWait - qTimer : 0;
@@ -212,11 +217,12 @@ function drawGame() {
     rCD2.style.width = ((rWait - rDelay) * cdBarWidth/rWait) + "px";
     rCD2.style.backgroundColor = rDelay == 0 ? "#9ee092" : "#5e94d1";
 
-    
-    moveTimer++;
     qTimer++;
     eTimer++;
     rTimer++;
+    qAbility.setTimer(qTimer);
+    eAbility.setTimer(eTimer);
+    rAbility.setTimer(rTimer);
 }
 
 function drawAll() {
@@ -263,7 +269,6 @@ var score = 0;
 var topScore = 0;
 
 var moveWait = 30;
-var moveTimer = 0;
 
 var qWait = 120;
 var qTimer = qWait;
@@ -308,6 +313,10 @@ carWidth = canvas.width * 1/9;
 carHeight = canvas.height * 1/14;
 playerLevel = carHeight * 10;
 player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight, carHeight, carHeight * 1.5 * canvas.width/900, carHeight * 1.5);
+
+qAbility = new Ability(new Vector(carHeight    , playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 0, qWait);
+eAbility = new Ability(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 0, eWait);
+rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 0, rWait);
 
 var cars = [];
 waterBlockCount = 5;

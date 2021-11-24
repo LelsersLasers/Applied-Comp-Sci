@@ -47,7 +47,7 @@ class HitBox {
 }
 
 class Thing {
-    constructor(pt, color, w, h) { // w, h, radius, etc per child
+    constructor(pt, color, w, h) {
         this.pt = pt;
         this.color = color;
         this.w = w;
@@ -80,6 +80,35 @@ class Thing {
     }
     updateHB() {
         this.hb = new HitBox(this.pt, this.w, this.h);
+    }
+}
+
+class Ability extends Thing {
+    constructor(pt, w, h, timer, wait) {
+        var color = "#dadfe6";
+        super(pt, color, w, h);
+        this.timer = timer;
+        this.wait = wait;
+    }
+    draw() {
+        context.fillStyle = this.color;
+        context.lineWidth = this.width;
+        context.beginPath();
+        context.rect(this.pt.x, this.pt.y, this.w, this.h);
+        context.fill();
+        
+        var delay = this.wait - this.timer >= 0 ? this.wait - this.timer : 0;
+        var width = (this.wait - delay) * this.w/this.wait;
+        // console.log(width);
+        // console.log(width/this.w);
+
+        context.beginPath();
+        context.fillStyle = delay == 0 ? "#9ee092" : "#5e94d1";
+        context.rect(this.pt.x, this.pt.y, width, this.h);
+        context.fill();
+    }
+    setTimer(timer) {
+        this.timer = timer;
     }
 }
 
@@ -197,9 +226,6 @@ class Player extends Thing {
         }
     }
     move() {
-        if (moveTimer >= moveWait) {
-            this.animationDir = "";
-        }
         if (this.active) {
             if (wDown) {
                 this.moveUp(this.msY/moveWait);
@@ -217,9 +243,6 @@ class Player extends Thing {
             }
             else if (dDown) {
                 this.pt.x += this.msX/moveWait;
-            }
-            if (wDown || sDown || aDown || dDown) {
-                moveTimer = 0;
             }
         }
 
