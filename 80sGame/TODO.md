@@ -10,14 +10,6 @@
     - colors
         - "NEO CROSSER"
 - Prep for ipad
-    - Abilities/Movement are buttons by touch
-        - Make it seem like a hud not something moving with the player
-        - Score
-    - "Screens"
-        - start/welcome
-        - directions
-        - main game
+    - Movement are buttons by touch
 
-- "this.width"
-- qTimer, qWait to qAbility
-    - with qAbility.timer and qAbility.wait?
+- "this.width" in draws

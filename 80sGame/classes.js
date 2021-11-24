@@ -10,10 +10,6 @@ class Vector {
         this.x += vOther.x;
         this.y += vOther.y;
     }
-    setBoth(values) {
-        this.x = values[0];
-        this.y = values[1];
-    }
 }
 
 class HitBox {
@@ -111,9 +107,8 @@ class Ability extends Thing {
         context.font = carHeight/3 + "px serif";
         context.textBaseline = "middle";
         context.fillText(this.txt, this.pt.x + this.w/2, this.pt.y + this.h/2);
-    }
-    setTimer(timer) {
-        this.timer = timer;
+
+        this.timer++;
     }
 }
 
@@ -137,9 +132,6 @@ class GameTxt extends Thing {
     setTxt(txt) {
         this.txt = txt;
         this.w = context.measureText(this.txt).width + 5;
-    }
-    setColor(color) {
-        this.color = color;
     }
 }
 
@@ -277,7 +269,7 @@ class Player extends Thing {
             }
         }
 
-        if (this.active && qTimer > qWait) { // teleport ability
+        if (this.active && qAbility.timer > qAbility.wait) { // teleport ability
             if (qDown) {
                 if (lastDir == "w") {
                     for (var i = 0; i < this.teleportSpeed; i++) {
@@ -300,26 +292,26 @@ class Player extends Thing {
                 else if (lastDir == "d") {
                     this.pt.x += this.msX * this.teleportSpeed;
                 }
-                qTimer = 0;
+                qAbility.timer = 0;
                 qDown = false;
             }
         }
-        if (this.active && eTimer > eWait) { // laser ability
+        if (this.active && eAbility.timer > eAbility.wait) { // laser ability
             if (eDown) {
                 var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
                 lasers.push(new Laser(startPos, lastDir, 60));
-                eTimer = 0;
+                eAbility.timer = 0;
                 eDown = false;
             }
         }
-        if (this.active && rTimer > rWait) { // laser grenade ability
+        if (this.active && rAbility.timer > rAbility.wait) { // laser grenade ability
             if (rDown) {
                 var dirs = ["w", "a", "s", "d", "sd", "wd", "sa", "wa"];
                 for (var i = 0; i < dirs.length; i++) {
                     var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
                     lasers.push(new Laser(startPos, dirs[i], 120));
                 }
-                rTimer = 0;
+                rAbility.timer = 0;
                 rDown = false;
             }
         }

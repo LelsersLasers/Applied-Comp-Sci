@@ -182,7 +182,7 @@ function drawGame() {
             player.off();
             stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
             stateTxt.style.backgroundColor = obstacles[i].deathColor;
-            scoreView.setColor(obstacles[i].deathColor);
+            scoreView.color = obstacles[i].deathColor;
         }
     }
     for (var i = 0; i < lasers.length; i++) {
@@ -201,7 +201,7 @@ function drawGame() {
         player.off();
         stateTxt.innerText = "Status: Got Lost (DEAD)";
         stateTxt.style.backgroundColor = "#dae37b";
-        scoreView.setColor("#dae37b");
+        scoreView.color = "#dae37b";
     }
 
     qAbility.draw();
@@ -212,24 +212,17 @@ function drawGame() {
     scoreView.setTxt("Score: " + topScore);
     scoreView.draw();
     
-    qDelay = qWait - qTimer >= 0 ? qWait - qTimer : 0;
-    qCD2.style.width = ((qWait - qDelay) * cdBarWidth/qWait) + "px";
+    qDelay = qAbility.wait - qAbility.timer >= 0 ? qAbility.wait - qAbility.timer : 0;
+    qCD2.style.width = ((qAbility.wait - qDelay) * cdBarWidth/qAbility.wait) + "px";
     qCD2.style.backgroundColor = qDelay == 0 ? "#9ee092" : "#5e94d1";
 
-    eDelay = eWait - eTimer >= 0 ? eWait - eTimer : 0;
-    eCD2.style.width = ((eWait - eDelay) * cdBarWidth/eWait) + "px";
+    eDelay = eAbility.wait - eAbility.timer >= 0 ? eAbility.wait - eAbility.timer : 0;
+    eCD2.style.width = ((eAbility.wait - eDelay) * cdBarWidth/eAbility.wait) + "px";
     eCD2.style.backgroundColor = eDelay == 0 ? "#9ee092" : "#5e94d1";
 
-    rDelay = rWait - rTimer >= 0 ? rWait - rTimer : 0;
-    rCD2.style.width = ((rWait - rDelay) * cdBarWidth/rWait) + "px";
+    rDelay = rAbility.wait - rAbility.timer >= 0 ? rAbility.wait - rAbility.timer : 0;
+    rCD2.style.width = ((rAbility.wait - rDelay) * cdBarWidth/rAbility.wait) + "px";
     rCD2.style.backgroundColor = rDelay == 0 ? "#9ee092" : "#5e94d1";
-
-    qTimer++;
-    eTimer++;
-    rTimer++;
-    qAbility.setTimer(qTimer);
-    eAbility.setTimer(eTimer);
-    rAbility.setTimer(rTimer);
 }
 
 function drawAll() {
@@ -276,13 +269,6 @@ var topScore = 0;
 
 var moveWait = 30;
 
-var qWait = 120;
-var qTimer = qWait;
-var eWait = 120;
-var eTimer = eWait;
-var rWait = 240;
-var rTimer = rWait;
-
 var textTimer = 0;
 var textWait = 25;
 var textActive = false;
@@ -320,9 +306,9 @@ carHeight = canvas.height * 1/14;
 playerLevel = carHeight * 10;
 player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight, carHeight, carHeight * 1.5 * canvas.width/900, carHeight * 1.5);
 
-qAbility = new Ability(new Vector(carHeight    , playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 0, qWait, "Q");
-eAbility = new Ability(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 0, eWait, "E");
-rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 0, rWait, "R");
+qAbility = new Ability(new Vector(carHeight    , playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "Q");
+eAbility = new Ability(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "E");
+rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 240, 240, "R");
 scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", carHeight, carHeight/3, "Score: 0");
 
 var cars = [];
