@@ -2,7 +2,7 @@ var wDown = false;
 var sDown = false;
 var aDown = false;
 var dDown = false;
-var lastDir = "d";
+var lastDir = "s";
 
 var qDown = false;
 var eDown = false;
@@ -182,6 +182,7 @@ function drawGame() {
             player.off();
             stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
             stateTxt.style.backgroundColor = obstacles[i].deathColor;
+            scoreView.setColor(obstacles[i].deathColor);
         }
     }
     for (var i = 0; i < lasers.length; i++) {
@@ -200,6 +201,7 @@ function drawGame() {
         player.off();
         stateTxt.innerText = "Status: Got Lost (DEAD)";
         stateTxt.style.backgroundColor = "#dae37b";
+        scoreView.setColor("#dae37b");
     }
 
     qAbility.draw();
@@ -207,6 +209,8 @@ function drawGame() {
     rAbility.draw();
 
     scoreTxt.innerText = "Score: " + topScore;
+    scoreView.setTxt("Score: " + topScore);
+    scoreView.draw();
     
     qDelay = qWait - qTimer >= 0 ? qWait - qTimer : 0;
     qCD2.style.width = ((qWait - qDelay) * cdBarWidth/qWait) + "px";
@@ -319,6 +323,7 @@ player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHe
 qAbility = new Ability(new Vector(carHeight    , playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 0, qWait, "Q");
 eAbility = new Ability(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 0, eWait, "E");
 rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 0, rWait, "R");
+scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", carHeight, carHeight/3, "Score: 0");
 
 var cars = [];
 waterBlockCount = 5;

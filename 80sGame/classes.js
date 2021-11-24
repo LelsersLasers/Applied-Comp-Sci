@@ -117,6 +117,32 @@ class Ability extends Thing {
     }
 }
 
+class GameTxt extends Thing {
+    constructor(pt, color, w, h, txt) {
+        super(pt, color, w, h);
+        this.txt = txt;
+    }
+    draw() {
+        context.beginPath();
+        context.fillStyle = this.color;
+        context.rect(this.pt.x, this.pt.y, this.w, this.h);
+        context.fill();
+
+        context.textAlign = "center";
+        context.fillStyle = "#ffffff";
+        context.font = carHeight/4.5 + "px serif";
+        context.textBaseline = "middle";
+        context.fillText(this.txt, this.pt.x + this.w/2, this.pt.y + this.h/2);
+    }
+    setTxt(txt) {
+        this.txt = txt;
+        this.w = context.measureText(this.txt).width + 5;
+    }
+    setColor(color) {
+        this.color = color;
+    }
+}
+
 class Laser extends Thing {
     constructor(pt, dir, stunTime) {
         var ms = Math.sqrt((canvas.width * canvas.width + canvas.height * canvas.height)/52000);

@@ -3,6 +3,7 @@
 - Clean code
     - Mr. Bloom approved code
     - Variable name conventions inside code
+    - get set?
 - General math/speed/sizes/etc
     - Centering things
     - numbers, speeds, etc
