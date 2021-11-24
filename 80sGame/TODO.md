@@ -18,7 +18,6 @@
         - "NEO CROSSER"
 - Prep for ipad
     - Movement are buttons by touch
-        - mouse down vs mouse click for q, e, r, and movement
         - confirm current system works
 
 - "this.width" in draws

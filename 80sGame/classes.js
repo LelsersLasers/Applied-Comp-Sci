@@ -35,7 +35,7 @@ class HitBox {
     draw(color) {
         context.strokeStyle = color;
         context.fillStyle = color;
-        context.lineWidth = this.width;
+        context.lineWidth = 3;
         context.beginPath();
         context.rect(this.pt.x, this.pt.y, this.w, this.h);
         context.stroke();
@@ -66,7 +66,7 @@ class Thing {
     draw() {
         context.strokeStyle = this.color;
         context.fillStyle = this.color;
-        context.lineWidth = this.width;
+        context.lineWidth = 3;
         context.beginPath();
         context.rect(this.pt.x, this.pt.y, this.w, this.h);
         if (this.active) {
@@ -89,7 +89,7 @@ class Ability extends Thing {
     }
     draw() {
         context.fillStyle = this.color;
-        context.lineWidth = this.width;
+        // context.lineWidth = this.width;
         context.beginPath();
         context.rect(this.pt.x, this.pt.y, this.w, this.h);
         context.fill();
@@ -354,7 +354,7 @@ class Block extends Thing {
     }
     draw() {
         context.fillStyle = this.active ? this.color2 : this.color;
-        context.lineWidth = this.width;
+        // context.lineWidth = this.width;
         context.beginPath();
         context.rect(this.pt.x, this.pt.y, this.w, this.h);
         context.fill();
