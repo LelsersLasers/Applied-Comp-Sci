@@ -84,11 +84,12 @@ class Thing {
 }
 
 class Ability extends Thing {
-    constructor(pt, w, h, timer, wait) {
+    constructor(pt, w, h, timer, wait, txt) {
         var color = "#dadfe6";
         super(pt, color, w, h);
         this.timer = timer;
         this.wait = wait;
+        this.txt = txt;
     }
     draw() {
         context.fillStyle = this.color;
@@ -99,13 +100,17 @@ class Ability extends Thing {
         
         var delay = this.wait - this.timer >= 0 ? this.wait - this.timer : 0;
         var width = (this.wait - delay) * this.w/this.wait;
-        // console.log(width);
-        // console.log(width/this.w);
 
         context.beginPath();
         context.fillStyle = delay == 0 ? "#9ee092" : "#5e94d1";
         context.rect(this.pt.x, this.pt.y, width, this.h);
         context.fill();
+
+        context.textAlign = "center";
+        context.fillStyle = "#ffffff";
+        context.font = carHeight/3 + "px serif";
+        context.textBaseline = "middle";
+        context.fillText(this.txt, this.pt.x + this.w/2, this.pt.y + this.h/2);
     }
     setTimer(timer) {
         this.timer = timer;
@@ -270,6 +275,7 @@ class Player extends Thing {
                     this.pt.x += this.msX * this.teleportSpeed;
                 }
                 qTimer = 0;
+                qDown = false;
             }
         }
         if (this.active && eTimer > eWait) { // laser ability
@@ -277,6 +283,7 @@ class Player extends Thing {
                 var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
                 lasers.push(new Laser(startPos, lastDir, 60));
                 eTimer = 0;
+                eDown = false;
             }
         }
         if (this.active && rTimer > rWait) { // laser grenade ability
@@ -287,6 +294,7 @@ class Player extends Thing {
                     lasers.push(new Laser(startPos, dirs[i], 120));
                 }
                 rTimer = 0;
+                rDown = false;
             }
         }
     }

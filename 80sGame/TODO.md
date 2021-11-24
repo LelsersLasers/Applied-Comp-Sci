@@ -10,7 +10,6 @@
         - "NEO CROSSER"
 - Prep for ipad
     - Abilities/Movement are buttons by touch
-        - Text ("q", "e", etc)
         - Make it seem like a hud not something moving with the player
         - Score
     - "Screens"

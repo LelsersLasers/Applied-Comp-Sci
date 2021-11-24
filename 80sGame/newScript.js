@@ -72,15 +72,20 @@ function getCursorPosition(event) {
     var rect = canvas.getBoundingClientRect();
     x = event.clientX - rect.left;
     y = event.clientY - rect.top;
+    cursorHB = new HitBox(new Vector(x - 3, y - 3), 6, 6);
 
     if (screen == "welcome") {
-        cursorHB = new HitBox(new Vector(x - 3, y - 3), 6, 6);
         if (cursorHB.checkCollide(directionsHB)) {
             screen = "directions";
         }
         else {
             screen = "game";
         }
+    }
+    else if (screen == "game" && alive) {
+        qDown = cursorHB.checkCollide(qAbility.hb);
+        eDown = cursorHB.checkCollide(eAbility.hb);
+        rDown = cursorHB.checkCollide(rAbility.hb);
     }
     else if (screen == "game" && !alive) {
         // screen = "welcome";
@@ -128,8 +133,6 @@ function drawWelcome() {
 
     textTimer++;
 }
-
-
 
 function drawDirections() {
     if (textTimer > textWait) {
@@ -239,7 +242,6 @@ function drawAll() {
         drawDirections();
     }
     
-    
     // Loop the animation to the next frame.
     // if (alive) {
     //     window.requestAnimationFrame(drawAll);
@@ -314,9 +316,9 @@ carHeight = canvas.height * 1/14;
 playerLevel = carHeight * 10;
 player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight, carHeight, carHeight * 1.5 * canvas.width/900, carHeight * 1.5);
 
-qAbility = new Ability(new Vector(carHeight    , playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 0, qWait);
-eAbility = new Ability(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 0, eWait);
-rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 0, rWait);
+qAbility = new Ability(new Vector(carHeight    , playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 0, qWait, "Q");
+eAbility = new Ability(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 0, eWait, "E");
+rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 0, rWait, "R");
 
 var cars = [];
 waterBlockCount = 5;
