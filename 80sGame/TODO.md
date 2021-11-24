@@ -16,3 +16,4 @@
         - mouse down vs mouse click for q, e, r, and movement (1)
 
 - "this.width" in draws (2 - ask)
+- on mouse down same as other 3 (1)

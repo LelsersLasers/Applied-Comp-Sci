@@ -293,7 +293,6 @@ class Player extends Thing {
                     this.pt.x += this.msX * this.teleportSpeed;
                 }
                 qAbility.timer = 0;
-                // qDown = false;
             }
         }
         if (this.active && eAbility.timer > eAbility.wait) { // laser ability
@@ -301,7 +300,6 @@ class Player extends Thing {
                 var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
                 lasers.push(new Laser(startPos, lastDir, 60));
                 eAbility.timer = 0;
-                // eDown = false;
             }
         }
         if (this.active && rAbility.timer > rAbility.wait) { // laser grenade ability
@@ -312,7 +310,6 @@ class Player extends Thing {
                     lasers.push(new Laser(startPos, dirs[i], 120));
                 }
                 rAbility.timer = 0;
-                // rDown = false;
             }
         }
     }
