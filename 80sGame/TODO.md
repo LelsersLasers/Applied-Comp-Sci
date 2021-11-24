@@ -1,6 +1,6 @@
 # TODO
 - BAR SCOLLING
-- EITHER TOUCH OR KEYBOARD
+- EITHER TOUCH OR KEYBOARD - is it fixed?
     - Keyboard currently broken
 
 - Clean code

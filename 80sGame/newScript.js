@@ -8,13 +8,14 @@ var qDown = false;
 var eDown = false;
 var rDown = false;
 
+var keyDown = false;
 var mouseDown = false;
 var mousePos = new Vector(-1, -1);
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("click", clickHandler, false);
-document.addEventListener('mousemove', getMousePos, false);
+document.addEventListener("mousemove", getMousePos, false);
 
 function keyDownHandler(e) {
     if(e.key == "w") {
@@ -48,6 +49,7 @@ function keyDownHandler(e) {
     // if (e.key == "x") {
     //     alive = false;
     // }
+    keyDown = true;
 }
 function keyUpHandler(e) {
     if(e.key == "w") {
@@ -71,6 +73,7 @@ function keyUpHandler(e) {
     if (e.key == "r") {
         rDown = false;
     }
+    keyDown = false;
 }
 function clickHandler(event) {
     if (screen == "welcome") {
@@ -99,15 +102,16 @@ function getMousePos(event) {
 
 function mouseDownActions() {
     // cursorHB.draw("#ffffff");
-    
-    qDown = cursorHB.checkCollide(qAbility.hb) && mouseDown;
-    eDown = cursorHB.checkCollide(eAbility.hb) && mouseDown;
-    rDown = cursorHB.checkCollide(rAbility.hb) && mouseDown;
+    if (!keyDown) {
+        qDown = cursorHB.checkCollide(qAbility.hb) && mouseDown;
+        eDown = cursorHB.checkCollide(eAbility.hb) && mouseDown;
+        rDown = cursorHB.checkCollide(rAbility.hb) && mouseDown;
 
-    wDown = cursorHB.checkCollide(wHB) && mouseDown;
-    sDown = cursorHB.checkCollide(sHB) && mouseDown;
-    aDown = cursorHB.checkCollide(aHB) && mouseDown;
-    dDown = cursorHB.checkCollide(dHB) && mouseDown;
+        wDown = cursorHB.checkCollide(wHB) && mouseDown;
+        sDown = cursorHB.checkCollide(sHB) && mouseDown;
+        aDown = cursorHB.checkCollide(aHB) && mouseDown;
+        dDown = cursorHB.checkCollide(dHB) && mouseDown;
+    }
 }
 
 function reset() {
