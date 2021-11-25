@@ -3,7 +3,10 @@
 - EITHER TOUCH OR KEYBOARD
     - Keyboard currently broken
     - have a temp fix, see if it is good enough
-
+- "this.width" in draws
+- on mouse down same as other 3
+- Graphics?!?
+#
 - Clean code
     - Mr. Bloom approved code
     - Variable name conventions inside code
@@ -20,6 +23,4 @@
 - Prep for ipad
     - Movement are buttons by touch
         - confirm current system works
-
-- "this.width" in draws
-- on mouse down same as other 3
+#
