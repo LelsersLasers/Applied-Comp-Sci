@@ -3,7 +3,6 @@
 - EITHER TOUCH OR KEYBOARD
     - Keyboard currently broken
     - have a temp fix, see if it is good enough
-- "this.width" in draws
 - on mouse down same as other 3
 - Graphics?!?
 #

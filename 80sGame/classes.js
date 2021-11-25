@@ -17,6 +17,7 @@ class HitBox {
         this.pt = pt;
         this.w = w;
         this.h = h;
+        this.width = 3;
     }
     checkCollide(boxOther) {
         if (this.pt.x < boxOther.pt.x + boxOther.w && boxOther.pt.x < this.pt.x + this.w) {
@@ -35,7 +36,7 @@ class HitBox {
     draw(color) {
         context.strokeStyle = color;
         context.fillStyle = color;
-        context.lineWidth = 3;
+        context.lineWidth = this.width;
         context.beginPath();
         context.rect(this.pt.x, this.pt.y, this.w, this.h);
         context.stroke();
@@ -66,7 +67,7 @@ class Thing {
     draw() {
         context.strokeStyle = this.color;
         context.fillStyle = this.color;
-        context.lineWidth = 3;
+        context.lineWidth = this.width;
         context.beginPath();
         context.rect(this.pt.x, this.pt.y, this.w, this.h);
         if (this.active) {
@@ -89,7 +90,6 @@ class Ability extends Thing {
     }
     draw() {
         context.fillStyle = this.color;
-        // context.lineWidth = this.width;
         context.beginPath();
         context.rect(this.pt.x, this.pt.y, this.w, this.h);
         context.fill();
@@ -221,7 +221,7 @@ class Laser extends Thing {
         context.moveTo(this.pt.x, this.pt.y);
         context.lineTo(this.pt.x + this.h * Math.cos(angle) * Math.sqrt(2), this.pt.y + this.h * Math.sin(angle) * Math.sqrt(2));
         context.stroke();
-      }
+    }
 }
 
 class Player extends Thing {
@@ -356,7 +356,6 @@ class Block extends Thing {
     }
     draw() {
         context.fillStyle = this.active ? this.color2 : this.color;
-        // context.lineWidth = this.width;
         context.beginPath();
         context.rect(this.pt.x, this.pt.y, this.w, this.h);
         context.fill();
