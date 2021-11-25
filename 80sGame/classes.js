@@ -3,9 +3,6 @@ class Vector {
         this.x = x;
         this.y = y;
     }
-    print() {
-        console.log("(" + this.x + ", " + this.y + ")");
-    }
     apply(vOther) {
         this.x += vOther.x;
         this.y += vOther.y;
