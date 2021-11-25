@@ -46,6 +46,17 @@ function keyDownHandler(e) {
     if (e.key == "z") {
         reset();
     }
+    if (e.key == "Enter") {
+        if (screen == "welcome") {
+            screen = "game";
+        }
+        else if (screen == "game" && !alive) {
+            reset();
+        }
+        else if (screen == "directions") {
+            screen = "welcome";
+        }
+    }
     inputMode = "key";
 }
 function keyUpHandler(e) {
