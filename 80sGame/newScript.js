@@ -85,14 +85,13 @@ function getMousePos(event) {
 function mouseDownActions() {
     // cursorHB.draw("#ffffff");
     if (inputMode != "key") {
-        qDown = cursorHB.checkCollide(qAbility.hb) && mouseDown;
-        eDown = cursorHB.checkCollide(eAbility.hb) && mouseDown;
-        rDown = cursorHB.checkCollide(rAbility.hb) && mouseDown;
-
         wDown = cursorHB.checkCollide(wHB) && mouseDown;
         sDown = cursorHB.checkCollide(sHB) && mouseDown;
         aDown = cursorHB.checkCollide(aHB) && mouseDown;
         dDown = cursorHB.checkCollide(dHB) && mouseDown;
+        qDown = cursorHB.checkCollide(qAbility.hb) && mouseDown;
+        eDown = cursorHB.checkCollide(eAbility.hb) && mouseDown;
+        rDown = cursorHB.checkCollide(rAbility.hb) && mouseDown;
     }
 }
 
@@ -103,12 +102,11 @@ function reset() {
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    value = Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+    value = Math.floor(Math.random() * (max - min) + min); //The max is exclusive and the min is inclusive
     return value;
 }
 
 function drawWelcome() {
-
     if (textTimer > textWait) {
         textActive = !textActive;
         textTimer = 0;
@@ -116,7 +114,6 @@ function drawWelcome() {
 
     context.textAlign = "center";
     context.fillStyle = "#ffffff";
-
     context.font = carHeight + "px serif";
     context.fillText("NEO CROSSER", canvas.width/2, canvas.height * 1/3);
 
@@ -124,6 +121,7 @@ function drawWelcome() {
         context.font = carHeight/2 + "px serif";
         context.fillText("Touch to Start", canvas.width/2, canvas.height * 1/3 + carHeight);
     }
+
     txt = "Directions";
     context.font = carHeight * 5/12 + "px serif";
     width = context.measureText(txt).width;
@@ -142,7 +140,6 @@ function drawDirections() {
 
     context.textAlign = "center";
     context.fillStyle = "#ffffff";
-
     context.font = carHeight + "px serif";
     context.fillText("Directions", canvas.width/2, canvas.height * 1/3);
 
@@ -150,6 +147,7 @@ function drawDirections() {
         context.font = carHeight/2 + "px serif";
         context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/3 + carHeight);
     }
+
     var txts = [];
     txts.push("You are the green, the cars are the red.");
     txts.push("To move, either use 'wasd' or touch the top, bottom, left, and right.")
@@ -238,7 +236,6 @@ function drawGame() {
 }
 
 function drawAll() {
-    
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
     if (screen == "welcome") {
@@ -250,11 +247,6 @@ function drawAll() {
     else if (screen == "directions") {
         drawDirections();
     }
-    
-    // Loop the animation to the next frame.
-    // if (alive) {
-    //     window.requestAnimationFrame(drawAll);
-    // }
     window.requestAnimationFrame(drawAll);
 }
 
@@ -299,7 +291,6 @@ var lasers = [];
 context = setUpContext();
 stateTxt = document.getElementById("state");
 scoreTxt = document.getElementById("score");
-// moveDelayTxt = document.getElementById("moveDelay");
 
 cdBarWidth = 1/6 * canvas.width;
 

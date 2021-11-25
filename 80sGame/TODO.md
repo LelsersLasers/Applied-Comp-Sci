@@ -11,6 +11,7 @@
     - spaces between words, brakects, etc?
     - unused code/functions/vars
     - var vs let?
+    - semi-colens
 - General math/speed/sizes/etc
     - Centering things
     - numbers, speeds, etc
