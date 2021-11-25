@@ -18,71 +18,43 @@ document.addEventListener("click", clickHandler, false);
 document.addEventListener("mousemove", getMousePos, false);
 
 function keyDownHandler(e) {
-    if (e.key == "w") {
-        wDown = true;
-        // lastDir = e.key;
-    }
-    if (e.key == "s") {
-        sDown = true;
-        // lastDir = e.key;
-    }
-    if (e.key == "a") {
-        aDown = true;
-        // lastDir = e.key;
-    }
-    if (e.key == "d") {
-        dDown = true;
-        // lastDir = e.key;
+    switch (e.key) {
+        case "w": wDown = true; break;
+        case "s": sDown = true; break;
+        case "a": aDown = true; break;
+        case "d": dDown = true; break;
+        case "q": qDown = true; break;
+        case "e": eDown = true; break;
+        case "r": rDown = true; break;
+        case "z":
+            reset();
+            break;
+        case "Enter":
+            if (screen == "welcome") {
+                screen = "game";
+            }
+            else if (screen == "game" && !alive) {
+                reset();
+            }
+            else if (screen == "directions") {
+                screen = "welcome";
+            }
+            break;
     }
     if (["w", "a", "s", "d"].indexOf(e.key) >= 0) {
         lastDir = e.key;
     }
-    if (e.key == "q") {
-        qDown = true;
-    }
-    if (e.key == "e") {
-        eDown = true;
-    }
-    if (e.key == "r") {
-        rDown = true;
-    }
-    if (e.key == "z") {
-        reset();
-    }
-    if (e.key == "Enter") {
-        if (screen == "welcome") {
-            screen = "game";
-        }
-        else if (screen == "game" && !alive) {
-            reset();
-        }
-        else if (screen == "directions") {
-            screen = "welcome";
-        }
-    }
     inputMode = "key";
 }
 function keyUpHandler(e) {
-    if (e.key == "w") {
-        wDown = false;
-    }
-    if (e.key == "s") {
-        sDown = false;
-    }
-    if (e.key == "a") {
-        aDown = false;
-    }
-    if (e.key == "d") {
-        dDown = false;
-    }
-    if (e.key == "q") {
-        qDown = false;
-    }
-    if (e.key == "e") {
-        eDown = false;
-    }
-    if (e.key == "r") {
-        rDown = false;
+    switch (e.key) {
+        case "w": wDown = false; break;
+        case "s": sDown = false; break;
+        case "a": aDown = false; break;
+        case "d": dDown = false; break;
+        case "q": qDown = false; break;
+        case "e": eDown = false; break;
+        case "r": rDown = false; break;
     }
 }
 function clickHandler(event) {
