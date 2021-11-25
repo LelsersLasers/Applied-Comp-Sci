@@ -18,20 +18,23 @@ document.addEventListener("click", clickHandler, false);
 document.addEventListener("mousemove", getMousePos, false);
 
 function keyDownHandler(e) {
-    if(e.key == "w") {
+    if (e.key == "w") {
         wDown = true;
-        lastDir = e.key;
+        // lastDir = e.key;
     }
-    if(e.key == "s") {
+    if (e.key == "s") {
         sDown = true;
-        lastDir = e.key;
+        // lastDir = e.key;
     }
-    if(e.key == "a") {
+    if (e.key == "a") {
         aDown = true;
-        lastDir = e.key;
+        // lastDir = e.key;
     }
-    if(e.key == "d") {
+    if (e.key == "d") {
         dDown = true;
+        // lastDir = e.key;
+    }
+    if (["w", "a", "s", "d"].indexOf(e.key) >= 0) {
         lastDir = e.key;
     }
     if (e.key == "q") {
@@ -60,16 +63,16 @@ function keyDownHandler(e) {
     inputMode = "key";
 }
 function keyUpHandler(e) {
-    if(e.key == "w") {
+    if (e.key == "w") {
         wDown = false;
     }
-    if(e.key == "s") {
+    if (e.key == "s") {
         sDown = false;
     }
-    if(e.key == "a") {
+    if (e.key == "a") {
         aDown = false;
     }
-    if(e.key == "d") {
+    if (e.key == "d") {
         dDown = false;
     }
     if (e.key == "q") {
