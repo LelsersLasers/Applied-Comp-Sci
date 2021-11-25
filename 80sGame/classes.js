@@ -139,53 +139,55 @@ class Laser extends Thing {
     constructor(pt, dir, stunTime) {
         var ms = Math.sqrt((canvas.width * canvas.width + canvas.height * canvas.height)/52000);
         var color = "#ff0055";
-        if (dir == "w") {
-            var moveVector = new Vector(0, -ms);
-            var h = ms * 2;
-            var w = ms;
-            pt.x -= w/2;
-        }
-        else if (dir == "s") {
-            var moveVector = new Vector(0, ms);
-            var h = ms * 2;
-            var w = ms;
-            pt.x -= w/2;
-        }
-        else if (dir == "a") {
-            var moveVector = new Vector(-ms, 0);
-            var h = ms;
-            var w = ms * 2;
-            pt.y -= h/2;
-        }
-        else if (dir == "d") {
-            var moveVector = new Vector(ms, 0);
-            var h = ms;
-            var w = ms * 2;
-            pt.y -= h/2;
-        }
-        else if (dir == "sd") {
-            var moveVector = new Vector(ms * Math.sqrt(2) * 0.5, ms * Math.sqrt(2) * 0.5);
-            var h = ms * 2;
-            var w = ms;
-            var angle = 45;
-        }
-        else if (dir == "wd") {
-            var moveVector = new Vector(ms * Math.sqrt(2) * 0.5, -ms * Math.sqrt(2) * 0.5);
-            var h = ms * 2;
-            var w = ms;
-            var angle = -45;
-        }
-        else if (dir == "sa") {
-            var moveVector = new Vector(-ms * Math.sqrt(2) * 0.5, ms * Math.sqrt(2) * 0.5);
-            var h = ms * 2;
-            var w = ms;
-            var angle = 135;
-        }
-        else if (dir == "wa") {
-            var moveVector = new Vector(-ms * Math.sqrt(2) * 0.5, -ms * Math.sqrt(2) * 0.5);
-            var h = ms * 2;
-            var w = ms;
-            var angle = -135;
+        switch (dir) {
+            case "w":
+                var moveVector = new Vector(0, -ms);
+                var h = ms * 2;
+                var w = ms;
+                pt.x -= w/2;
+                break;
+            case "s":
+                var moveVector = new Vector(0, ms);
+                var h = ms * 2;
+                var w = ms;
+                pt.x -= w/2;
+                break;
+            case "a":
+                var moveVector = new Vector(-ms, 0);
+                var h = ms;
+                var w = ms * 2;
+                pt.y -= h/2;
+                break
+            case "d":
+                var moveVector = new Vector(ms, 0);
+                var h = ms;
+                var w = ms * 2;
+                pt.y -= h/2;
+                break;
+            case "sd":
+                var moveVector = new Vector(ms * Math.sqrt(2) * 0.5, ms * Math.sqrt(2) * 0.5);
+                var h = ms * 2;
+                var w = ms;
+                var angle = 45;
+                break;
+            case "wd":
+                var moveVector = new Vector(ms * Math.sqrt(2) * 0.5, -ms * Math.sqrt(2) * 0.5);
+                var h = ms * 2;
+                var w = ms;
+                var angle = -45;
+                break;
+            case "sa":
+                var moveVector = new Vector(-ms * Math.sqrt(2) * 0.5, ms * Math.sqrt(2) * 0.5);
+                var h = ms * 2;
+                var w = ms;
+                var angle = 135;
+                break;
+            case "wa":
+                var moveVector = new Vector(-ms * Math.sqrt(2) * 0.5, -ms * Math.sqrt(2) * 0.5);
+                var h = ms * 2;
+                var w = ms;
+                var angle = -135;
+                break;
         }
         super(pt, color, w, h);
         this.stunTime = stunTime;
