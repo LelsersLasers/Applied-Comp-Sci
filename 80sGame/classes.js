@@ -334,7 +334,7 @@ class Car extends Thing {
         if (this.active) {
             this.pt.x += this.ms;
         }
-        if (this.pt.x < 0 || this.pt.x > canvas.width - this.w) {
+        if (this.hb.outOfBounds()) {
             this.ms = this.ms * -1;
             this.ms = this.ms * 1.01;
         }
