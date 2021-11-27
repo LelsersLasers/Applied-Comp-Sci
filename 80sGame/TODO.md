@@ -22,4 +22,8 @@
 - Prep for ipad
     - Movement are buttons by touch
         - confirm current system works
+- Alt buttons
+    - Arrow keys for movement
+    - 1,2,3 for abilites?
+- Finish README.md
 #
