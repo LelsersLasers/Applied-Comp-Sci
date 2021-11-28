@@ -5,6 +5,16 @@
     - have a temp fix, see if it is good enough
 - on mouse down same as other 3
 - SOUND!!
+    - Q teleport sound
+    - E laser sound
+    - R 3x laser sound
+        - reuse E sound?
+    - Sound on laser hitting a car
+    - Sound on player being hit by car
+        - thunk
+    - Sound on player hitting water
+        - splash
+    - Small sound on car bounce?
 - Animate other things?
     - cars?
     - abilites?

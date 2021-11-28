@@ -192,6 +192,7 @@ function drawGame() {
             stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
             stateTxt.style.backgroundColor = obstacles[i].deathColor;
             scoreView.color = obstacles[i].deathColor;
+            // SOUND BASED ON WHAT WE HIT
         }
     }
     for (var i = 0; i < lasers.length; i++) {
@@ -308,6 +309,7 @@ cdBarWidth = 1/6 * canvas.width;
 qDelayTxt = document.getElementById("qDelay");
 qCD1 = document.getElementById("qCD1");
 qCD2 = document.getElementById("qCD2");
+var teleportSound = document.getElementById("teleportSound");
 
 eDelayTxt = document.getElementById("eDelay");
 eCD1 = document.getElementById("eCD1");

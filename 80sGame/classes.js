@@ -201,6 +201,7 @@ class Laser extends Thing {
                     this.off();
                     cars[i].off();
                     cars[i].stun = this.stunTime;
+                    // SOUND
                 }
             }
             if (["w", "a", "s", "d"].indexOf(this.dir) >= 0) {
@@ -294,6 +295,7 @@ class Player extends Thing {
                     this.pt.x += this.msX * this.teleportSpeed;
                 }
                 qAbility.timer = 0;
+                teleportSound.play();
             }
         }
         if (this.active && eAbility.timer > eAbility.wait) { // laser ability
