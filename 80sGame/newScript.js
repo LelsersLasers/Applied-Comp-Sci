@@ -19,13 +19,13 @@ document.addEventListener("mousemove", getMousePos, false);
 
 function keyDownHandler(e) {
     switch (e.key) {
-        case "w": wDown = true; break;
-        case "s": sDown = true; break;
-        case "a": aDown = true; break;
-        case "d": dDown = true; break;
-        case "q": qDown = true; break;
-        case "e": eDown = true; break;
-        case "r": rDown = true; break;
+        case "w": case "ArrowUp": wDown = true; break;
+        case "s": case "ArrowDown": sDown = true; break;
+        case "a": case "ArrowLeft": aDown = true; break;
+        case "d": case "ArrowRight": dDown = true; break;
+        case "q": case "1": qDown = true; break;
+        case "e": case "2": eDown = true; break;
+        case "r": case "3": rDown = true; break;
         case "z":
             reset();
             break;
@@ -48,13 +48,13 @@ function keyDownHandler(e) {
 }
 function keyUpHandler(e) {
     switch (e.key) {
-        case "w": wDown = false; break;
-        case "s": sDown = false; break;
-        case "a": aDown = false; break;
-        case "d": dDown = false; break;
-        case "q": qDown = false; break;
-        case "e": eDown = false; break;
-        case "r": rDown = false; break;
+        case "w": case "ArrowUp": wDown = false; break;
+        case "s": case "ArrowDown": sDown = false; break;
+        case "a": case "ArrowLeft": aDown = false; break;
+        case "d": case "ArrowRight": dDown = false; break;
+        case "q": case "1": qDown = false; break;
+        case "e": case "2": eDown = false; break;
+        case "r": case "3": rDown = false; break;
     }
 }
 function clickHandler(event) {
