@@ -17,8 +17,8 @@ Features/Design Choices:
         - (not you can only R when on the left side of the screen, etc)
         - Player can use multiple abilites and move at the same time
 - Keyboard Support
-    - W/A/S/D or ??ARROW KEYS?? to move
-    - Q/E/R or ??1/2/3?? for abilites
+    - W/A/S/D or ARROW KEYS to move
+    - Q/E/R or 1/2/3 for abilites
     - Enter to continue/move between screens (mouse click also works)
 - ??TOUCH SUPPORT??
 - ??SOUND??
