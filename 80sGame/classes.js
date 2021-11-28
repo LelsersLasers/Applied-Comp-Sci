@@ -301,6 +301,7 @@ class Player extends Thing {
                 var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
                 lasers.push(new Laser(startPos, lastDir, 60));
                 eAbility.timer = 0;
+                laserSound.play();
             }
         }
         if (this.active && rAbility.timer > rAbility.wait) { // laser grenade ability

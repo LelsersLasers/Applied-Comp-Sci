@@ -312,6 +312,7 @@ qCD2 = document.getElementById("qCD2");
 eDelayTxt = document.getElementById("eDelay");
 eCD1 = document.getElementById("eCD1");
 eCD2 = document.getElementById("eCD2");
+var laserSound = document.getElementById("laserSound");
 
 rDelayTxt = document.getElementById("rDelay");
 rCD1 = document.getElementById("rCD1");
