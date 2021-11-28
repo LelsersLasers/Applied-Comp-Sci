@@ -21,9 +21,12 @@ Features/Design Choices:
     - Q/E/R or 1/2/3 for abilites
     - Enter to continue/move between screens (mouse click also works)
 - ??TOUCH SUPPORT??
-- ??SOUND??
-    - High 'tempo' and a bit 'crazy'
-    - Adds to the environment of the game
+- SOUND
+    - Less 'clear' than visuals
+    - Focus on many sounds at once
+        - (Ex: R fire sound, multiple laser hits at once, while Q teleport sound finishes)
+    - High Tempo (180 BPM) background music
+        - no lyrics
 
 Other Things:
 - 'Screens'

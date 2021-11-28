@@ -32,6 +32,7 @@ function keyDownHandler(e) {
         case "Enter":
             if (screen == "welcome") {
                 screen = "game";
+                backgroundMusic.play();
             }
             else if (screen == "game" && !alive) {
                 reset();
@@ -64,6 +65,7 @@ function clickHandler(event) {
         }
         else {
             screen = "game";
+            backgroundMusic.play();
         }
     }
     else if (screen == "game" && !alive) {
@@ -327,6 +329,9 @@ var laserHitSound = document.getElementById("laserHitSound");
 qCD1.style.width = cdBarWidth + "px";
 eCD1.style.width = cdBarWidth + "px";
 rCD1.style.width = cdBarWidth + "px";
+
+var backgroundMusic = document.getElementById("backgroundMusic");
+backgroundMusic.play();
 
 // player
 var texPlayer = new Image();

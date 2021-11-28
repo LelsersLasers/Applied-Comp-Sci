@@ -9,6 +9,9 @@
     - Dynamically 'create' the sounds and destory them
         - So no issue of them being asked to start again when they are not finished
     - Q sound has 'white space' at start
+        - Same with splash sound
+        - Same with Background Music
+    - Auto play background music
 - Animate other things?
     - cars?
     - abilites?
