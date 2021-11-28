@@ -228,6 +228,8 @@ class Player extends Thing {
         this.msX = msX;
         this.msY = msY;
         this.teleportSpeed = 3;
+        this.animation = 0;
+        this.lastDrawDir = -1;
     }
     moveUp(ms) {
         obstacles = [...cars, ...waters, ...lasers, ...bar];
@@ -311,6 +313,20 @@ class Player extends Thing {
                 rAbility.timer = 0;
             }
         }
+    }
+    draw() {
+        var posSourceAnimation = [ // [dir][animationPlayer][x/y]
+            [[0, 0], [10, 0], [20, 0], [30, 0]], // down
+            [[0, 11], [10, 11], [20, 11], [30, 11]], // up
+            [[0, 22], [10, 22], [20, 22], [30, 22]], // right
+            [[0, 33], [10, 33], [20, 33], [30, 33]] // left
+        ];
+        if (alive) {
+            var dirs = ["s", "w", "d", "a"];
+            var dir = dirs.indexOf(lastDir);
+            this.lastDrawDir = dir;
+        }
+        context.drawImage(texPlayer, posSourceAnimation[this.lastDrawDir][this.animation][0], posSourceAnimation[this.lastDrawDir][this.animation][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
     }
 }
 

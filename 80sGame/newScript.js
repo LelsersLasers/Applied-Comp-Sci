@@ -79,7 +79,7 @@ function getMousePos(event) {
     mousePos.y = event.clientY - rect.top;
     cursorHB = new HitBox(new Vector(mousePos.x - 3, mousePos.y - 3), 6, 6);
     cursorHB.draw("#ffffff");
-    console.log("move");
+    // console.log("move");
 }
 
 function mouseDownActions() {
@@ -92,6 +92,10 @@ function mouseDownActions() {
         qDown = cursorHB.checkCollide(qAbility.hb) && mouseDown;
         eDown = cursorHB.checkCollide(eAbility.hb) && mouseDown;
         rDown = cursorHB.checkCollide(rAbility.hb) && mouseDown;
+        if (wDown) lastDir = "w";
+        if (sDown) lastDir = "s";
+        if (aDown) lastDir = "a";
+        if (dDown) lastDir = "d";
     }
 }
 
@@ -229,6 +233,12 @@ function drawGame() {
     rCD2.style.width = ((rAbility.wait - rDelay) * cdBarWidth/rAbility.wait) + "px";
     rCD2.style.backgroundColor = rDelay == 0 ? "#9ee092" : "#5e94d1";
 
+    frame++;
+    if (frame % 10 == 0 && alive) {
+        player.animation++;
+        if (player.animation > 3) player.animation = 0;
+    }
+
     wHB.draw("#ffffff");
     sHB.draw("#ffffff");
     aHB.draw("#ffffff");
@@ -279,6 +289,7 @@ var score = 0;
 var topScore = 0;
 
 var moveWait = 30;
+var frame = 0;
 
 var textTimer = 0;
 var textWait = 25;
@@ -311,6 +322,9 @@ eCD1.style.width = cdBarWidth + "px";
 rCD1.style.width = cdBarWidth + "px";
 
 // player
+var texPlayer = new Image();
+texPlayer.src = "player-10x11-4x4.png";
+
 carWidth = canvas.width * 1/9;
 carHeight = canvas.height * 1/14;
 playerLevel = carHeight * 10;

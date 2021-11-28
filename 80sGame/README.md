@@ -7,6 +7,9 @@ Features/Design Choices:
         - No particles, everything drawn has effect
     - Clean Edges
         - Rectangles with clear hitboxes
+    - Animated Player
+        - Always doing the move animation
+        - But stops when dead (to show death)
 - Simple Gameplay
     - Move just up/down/left/right (no diagonal)
     - Abilites are relativly straightforward to use

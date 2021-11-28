@@ -5,6 +5,9 @@
     - have a temp fix, see if it is good enough
 - on mouse down same as other 3
 - SOUND!!
+- Animate other things?
+    - cars?
+    - abilites?
 #
 - Clean code
     - Mr. Bloom approved code
