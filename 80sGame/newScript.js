@@ -186,13 +186,14 @@ function drawGame() {
     for (var i = 0; i < obstacles.length; i++) {
         obstacles[i].update();
         obstacles[i].draw();
-        if (obstacles[i].hb.checkCollide(player.hb)) {
-            alive = false;
-            player.off();
+        if (obstacles[i].hb.checkCollide(player.hb) && alive) {
             stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
             stateTxt.style.backgroundColor = obstacles[i].deathColor;
             scoreView.color = obstacles[i].deathColor;
-            // SOUND BASED ON WHAT WE HIT
+            obstacles[i].deathSound.currentTime = 0;
+            obstacles[i].deathSound.play();
+            alive = false;
+            player.off();
         }
     }
     for (var i = 0; i < lasers.length; i++) {
@@ -319,6 +320,9 @@ var laserSound = document.getElementById("laserSound");
 rDelayTxt = document.getElementById("rDelay");
 rCD1 = document.getElementById("rCD1");
 rCD2 = document.getElementById("rCD2");
+var multipleLaserSound = document.getElementById("multipleLaserSound");
+
+var laserHitSound = document.getElementById("laserHitSound");
 
 qCD1.style.width = cdBarWidth + "px";
 eCD1.style.width = cdBarWidth + "px";
@@ -331,7 +335,7 @@ texPlayer.src = "player-10x11-4x4.png";
 carWidth = canvas.width * 1/9;
 carHeight = canvas.height * 1/14;
 playerLevel = carHeight * 10;
-player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight, carHeight, carHeight * 1.5 * canvas.width/900, carHeight * 1.5);
+player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight * 10/11, carHeight, carHeight * 1.5 * canvas.width/900, carHeight * 1.5);
 
 qAbility = new Ability(new Vector(carHeight    , playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "Q");
 eAbility = new Ability(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "E");

@@ -5,19 +5,16 @@
     - have a temp fix, see if it is good enough
 - on mouse down same as other 3
 - SOUND!!
-    - Q teleport sound
-    - E laser sound
-    - R 3x laser sound
-        - reuse E sound?
-    - Sound on laser hitting a car
-    - Sound on player being hit by car
-        - thunk
-    - Sound on player hitting water
-        - splash
     - Small sound on car bounce?
+    - Dynamically 'create' the sounds and destory them
+        - So no issue of them being asked to start again when they are not finished
+    - Q sound has 'white space' at start
 - Animate other things?
     - cars?
     - abilites?
+- Adjust player Hitbox to match smaller animations
+    - maybe 4/5 the total width and 9/10 the total height
+    - make sure it is still centered
 #
 - Clean code
     - Mr. Bloom approved code

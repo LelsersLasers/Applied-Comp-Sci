@@ -201,7 +201,8 @@ class Laser extends Thing {
                     this.off();
                     cars[i].off();
                     cars[i].stun = this.stunTime;
-                    // SOUND
+                    laserHitSound.currentTime = 0;
+                    laserHitSound.play();
                 }
             }
             if (["w", "a", "s", "d"].indexOf(this.dir) >= 0) {
@@ -295,6 +296,7 @@ class Player extends Thing {
                     this.pt.x += this.msX * this.teleportSpeed;
                 }
                 qAbility.timer = 0;
+                teleportSound.currentTime = 0;
                 teleportSound.play();
             }
         }
@@ -303,6 +305,7 @@ class Player extends Thing {
                 var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
                 lasers.push(new Laser(startPos, lastDir, 60));
                 eAbility.timer = 0;
+                laserSound.currentTime = 0;
                 laserSound.play();
             }
         }
@@ -314,6 +317,8 @@ class Player extends Thing {
                     lasers.push(new Laser(startPos, dirs[i], 120));
                 }
                 rAbility.timer = 0;
+                multipleLaserSound.currentTime = 0;
+                multipleLaserSound.play();
             }
         }
     }
@@ -344,6 +349,7 @@ class Car extends Thing {
         this.offScreen = false;
         this.deathMessage = "Road Kill";
         this.deathColor = "#e37e7b";
+        this.deathSound = document.getElementById("thunkSound");
     }
     update() {
         this.stun--;
@@ -407,6 +413,7 @@ class Water extends Thing {
         this.offScreen = false;
         this.deathMessage = "Drowned";
         this.deathColor = "#7bb6e3";
+        this.deathSound = document.getElementById("splashSound");
     }
 
     update() {
