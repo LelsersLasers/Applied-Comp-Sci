@@ -11,6 +11,7 @@ var rDown = false;
 var inputMode = "either";
 var mouseDown = false;
 var mousePos = new Vector(-1, -1);
+var cursorHB = new HitBox(-1, -1, 0, 0);
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -32,6 +33,7 @@ function keyDownHandler(e) {
         case "Enter":
             if (screen == "welcome") {
                 screen = "game";
+                backgroundMusic.currentTime = getRandomInt(10, backgroundMusic.duration);
                 backgroundMusic.play();
             }
             else if (screen == "game" && !alive) {
@@ -65,6 +67,7 @@ function clickHandler(event) {
         }
         else {
             screen = "game";
+            backgroundMusic.currentTime = getRandomInt(10, backgroundMusic.duration);
             backgroundMusic.play();
         }
     }
@@ -243,6 +246,10 @@ function drawGame() {
         if (player.animation > 3) player.animation = 0;
     }
 
+    if (backgroundMusic.currentTime > backgroundMusic.duration - 10) {
+        backgroundMusic.currentTime = 10;
+    }
+
     wHB.draw("#ffffff");
     sHB.draw("#ffffff");
     aHB.draw("#ffffff");
@@ -331,7 +338,6 @@ eCD1.style.width = cdBarWidth + "px";
 rCD1.style.width = cdBarWidth + "px";
 
 var backgroundMusic = document.getElementById("backgroundMusic");
-backgroundMusic.play();
 
 // player
 var texPlayer = new Image();

@@ -27,6 +27,8 @@ Features/Design Choices:
         - (Ex: R fire sound, multiple laser hits at once, while Q teleport sound finishes)
     - High Tempo (180 BPM) background music
         - no lyrics
+    - Lack of clarity + high tempo = chaotic enviroment
+        - Creates a false sense of pressure to do something 
 
 Other Things:
 - 'Screens'
