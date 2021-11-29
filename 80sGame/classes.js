@@ -403,12 +403,11 @@ class Car extends Thing {
         if (this.active) {
             this.frame++;
             this.pt.x += this.ms;
-            var animationWait = Math.abs(parseInt(this.ms)) * 6; // INVERT THIS
-            animationWait = animationWait > 0 ? animationWait : 6;
+            var animationWait = Math.abs(parseInt(30/this.ms));
+            animationWait = animationWait > 0 ? animationWait : 30;
             if (this.frame % animationWait == 0) {
                 this.animation = Number(!this.animation);
             }
-            console.log("frame: " + this.frame + " wait: " + animationWait);
         }
         if (this.hb.outOfBounds()) {
             this.ms = this.ms * -1;
