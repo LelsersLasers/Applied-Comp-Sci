@@ -2,6 +2,7 @@
 
 Features/Design Choices:
 - Visually Clarity
+    - Hand Drawn (mouse drawn) pixel art
     - No 'overlapping' colors
     - No pointless effects
         - No particles, everything drawn has effect

@@ -12,7 +12,9 @@
         - Auto play background music
 - Animate other things
     - cars
-        - simplier, pixel art of car facing left and on bound use a revered texture
+        - animation
+        - stun texture??
+- TRAINS???
 #
 - Clean code
     - Mr. Bloom approved code
