@@ -343,9 +343,8 @@ rCD1.style.width = cdBarWidth + "px";
 
 var backgroundMusic = document.getElementById("backgroundMusic");
 
-// player
 var texPlayer = new Image();
-texPlayer.src = "player-10x11-4x4-1spacing.png";
+texPlayer.src = "player-10x11-4x8-1spacing.png";
 var posSourceAnimation = [ // [!alive][dir][animationPlayer][x/y]
     [
         [[0, 0], [11, 0], [22, 0], [33, 0]], // down
@@ -358,6 +357,17 @@ var posSourceAnimation = [ // [!alive][dir][animationPlayer][x/y]
         [[0, 60], [11, 60], [22, 60], [33, 60]], // up
         [[0, 72], [11, 72], [22, 72], [33, 72]], // right
         [[0, 84], [11, 84], [22, 84], [33, 84]] // left
+    ]
+];
+
+var texCar = new Image();
+texCar.src = "car-34x17-2x2-1spacing.png";
+var posSourceCar = [ // [active][dir][x/y]
+    [
+        [0,0], [35, 0]
+    ],
+    [
+        [0,18], [35, 18]
     ]
 ];
 

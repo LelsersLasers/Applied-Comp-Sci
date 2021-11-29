@@ -403,6 +403,10 @@ class Car extends Thing {
             this.offScreen = true;
         }
     }
+    draw() {
+        var dir = this.ms > 0 ? 0 : 1; 
+        context.drawImage(texCar, posSourceCar[Number(!this.active)][dir][0], posSourceCar[Number(!this.active)][dir][1], 34, 17, this.pt.x, this.pt.y, this.w, this.h);
+    }
 }
 
 class Block extends Thing {
