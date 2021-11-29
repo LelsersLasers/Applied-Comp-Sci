@@ -280,7 +280,7 @@ class Player extends Thing {
         if (this.active && qAbility.timer > qAbility.wait) { // teleport ability
             if (qDown) {
                 if (lastDir == "w") {
-                    for (var i = 0; i < this.teleportSpeed * 2; i++) {
+                    for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
                         this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y - i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
                     }
                     for (var i = 0; i < this.teleportSpeed; i++) {
@@ -292,7 +292,7 @@ class Player extends Thing {
                     }
                 }
                 else if (lastDir == "s") {
-                    for (var i = 0; i < this.teleportSpeed * 2; i++) {
+                    for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
                         this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y + i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
                     }
                     for (var i = 0; i < this.teleportSpeed; i++) {
@@ -301,13 +301,13 @@ class Player extends Thing {
                     }
                 }
                 else if (lastDir == "a") {
-                    for (var i = 0; i < this.teleportSpeed * 2; i++) {
+                    for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
                         this.afterImages.push(new AfterImage(new Vector(this.pt.x - i * this.msX/2, this.pt.y), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
                     }
                     this.pt.x -= this.msX * this.teleportSpeed;
                 }
                 else if (lastDir == "d") {
-                    for (var i = 0; i < this.teleportSpeed * 2; i++) {
+                    for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
                         this.afterImages.push(new AfterImage(new Vector(this.pt.x + i * this.msX/2, this.pt.y), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
                     }
                     this.pt.x += this.msX * this.teleportSpeed;
