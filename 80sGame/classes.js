@@ -279,8 +279,10 @@ class Player extends Thing {
 
         if (this.active && qAbility.timer > qAbility.wait) { // teleport ability
             if (qDown) {
-                this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation));
                 if (lastDir == "w") {
+                    for (var i = 0; i < this.teleportSpeed * 2; i++) {
+                        this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y - i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
+                    }
                     for (var i = 0; i < this.teleportSpeed; i++) {
                         this.moveUp(this.msY);
                         score += moveWait;
@@ -290,15 +292,24 @@ class Player extends Thing {
                     }
                 }
                 else if (lastDir == "s") {
+                    for (var i = 0; i < this.teleportSpeed * 2; i++) {
+                        this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y + i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
+                    }
                     for (var i = 0; i < this.teleportSpeed; i++) {
                         this.moveDown(this.msY);
                         score -= moveWait;
                     }
                 }
                 else if (lastDir == "a") {
+                    for (var i = 0; i < this.teleportSpeed * 2; i++) {
+                        this.afterImages.push(new AfterImage(new Vector(this.pt.x - i * this.msX/2, this.pt.y), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
+                    }
                     this.pt.x -= this.msX * this.teleportSpeed;
                 }
                 else if (lastDir == "d") {
+                    for (var i = 0; i < this.teleportSpeed * 2; i++) {
+                        this.afterImages.push(new AfterImage(new Vector(this.pt.x + i * this.msX/2, this.pt.y), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
+                    }
                     this.pt.x += this.msX * this.teleportSpeed;
                 }
                 qAbility.timer = 0;
@@ -342,17 +353,17 @@ class Player extends Thing {
 }
 
 class AfterImage extends Thing {
-    constructor(pt, w, h, a, b, c) {
+    constructor(pt, w, h, a, b, c, frames) {
         var color = "#000000";
         super(pt, color, w, h);
         this.a = a;
         this.b = b;
         this.c = c;
-        this.frames = 60;
+        this.frames = frames;
     }
     draw() {
         if (this.frames > 0) {
-            context.globalAlpha = 0.4;
+            context.globalAlpha = this.frames/300 * 0.6;
             context.drawImage(texPlayer, posSourceAnimation[this.a][this.b][this.c][0], posSourceAnimation[this.a][this.b][this.c][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
             context.globalAlpha = 1;
             this.frames--;
