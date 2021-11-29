@@ -346,7 +346,7 @@ var backgroundMusic = document.getElementById("backgroundMusic");
 // player
 var texPlayer = new Image();
 texPlayer.src = "player-10x11-4x4.png";
-var posSourceAnimation = [ // [alive][dir][animationPlayer][x/y]
+var posSourceAnimation = [ // [!alive][dir][animationPlayer][x/y]
     [
         [[0, 0], [10, 0], [20, 0], [30, 0]], // down
         [[0, 11], [10, 11], [20, 11], [30, 11]], // up
@@ -383,7 +383,7 @@ waters = [];
 base = playerLevel - 3 * carHeight;
 for (var i = 0; i < 10; i++) {
     startPos = new Vector(getRandomInt(0, canvas.width - carWidth), base - (1.5 * carHeight * i));
-    var speed = (getRandomInt(i/4 + 1, i/3 + 2)/900) * canvas.width;
+    var speed = (getRandomInt(i/6 + 1, i/4 + 2)/900) * canvas.width;
     speed = getRandomInt(1, 3) == 2 ? -speed : speed;
     cars.push(new Car(startPos, speed));
     if (Math.random() < waterBlockCount/10) {
