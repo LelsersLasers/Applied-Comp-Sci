@@ -11,10 +11,10 @@
     - Background music has 'bad start' (trim??)
         - Auto play background music
 - Animate other things?
-    - why is player texture fuzzy/missized?
-        - death texture
-    - cars?
-    - abilites?
+    - why is player texture fuzzy
+        - put 1 px spacing between the characters
+    - cars
+        - simplier, pixel art of car facing left and on bound use a revered texture
 #
 - Clean code
     - Mr. Bloom approved code

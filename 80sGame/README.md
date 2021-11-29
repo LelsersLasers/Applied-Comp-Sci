@@ -10,6 +10,7 @@ Features/Design Choices:
     - Animated Player
         - Animation changes only when moving
         - Changes color on death
+        - Teleport leaves a trail from where you teleported to make it clear what happened
 - Simple Gameplay
     - Move just up/down/left/right (no diagonal)
     - Abilites are relativly straightforward to use
