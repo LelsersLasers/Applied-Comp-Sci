@@ -10,7 +10,6 @@
         - So no issue of them being asked to start again when they are not finished
     - Background music has 'bad start' (trim??)
         - Auto play background music
-    - trim R sound
 - Animate other things?
     - why is player texture fuzzy/missized?
         - death texture
