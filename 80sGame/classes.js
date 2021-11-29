@@ -239,7 +239,7 @@ class Player extends Thing {
         this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
     }
     moveUp(ms) {
-        obstacles = [...cars, ...waters, ...lasers, ...bar, ...this.afterImages];
+        var obstacles = [...cars, ...waters, ...lasers, ...bar, ...this.afterImages];
         for (var i = 0; i < obstacles.length; i++) {
             obstacles[i].pt.y += ms;
         }  
@@ -248,7 +248,7 @@ class Player extends Thing {
         }
     }
     moveDown(ms) {
-        obstacles = [...cars, ...waters, ...lasers, ...bar, ...this.afterImages];
+        var obstacles = [...cars, ...waters, ...lasers, ...bar, ...this.afterImages];
         for (var i = 0; i < obstacles.length; i++) {
             obstacles[i].pt.y -= ms;
         }  
