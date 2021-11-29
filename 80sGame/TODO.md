@@ -10,9 +10,7 @@
         - So no issue of them being asked to start again when they are not finished
     - Background music has 'bad start' (trim??)
         - Auto play background music
-- Animate other things?
-    - why is player texture fuzzy
-        - put 1 px spacing between the characters
+- Animate other things
     - cars
         - simplier, pixel art of car facing left and on bound use a revered texture
 #
