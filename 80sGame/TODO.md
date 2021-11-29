@@ -8,10 +8,10 @@
     - Small sound on car bounce?
     - Dynamically 'create' the sounds and destory them
         - So no issue of them being asked to start again when they are not finished
-    - Q sound has 'white space' at start
-        - Same with splash sound
-        - Same with Background Music
-    - Auto play background music
+    - Background music has 'bad start' (trim)
+        - Auto play background music
+        - on reload don't start from beginning
+            - start from random place?
 - Animate other things?
     - cars?
     - abilites?
