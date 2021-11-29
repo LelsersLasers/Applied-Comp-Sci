@@ -28,7 +28,11 @@ Features/Design Choices:
     - High Tempo (180 BPM) background music
         - no lyrics
     - Lack of clarity + high tempo = chaotic enviroment
-        - Creates a sense of pressure to do something 
+        - Creates a sense of pressure to do something
+- Everything is scaled with canvas.width or canvas.height
+    - Designed around 900x700 px screen, but looks/works completely fine on any resonable screen size
+    - The player and the ability buttons are sqaures, and they scale off the hieght
+        - (player is technically 10:11, but to keep the ratio both numbers have to scale off of 1 number) 
 
 Other Things:
 - 'Screens'
