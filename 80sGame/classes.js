@@ -232,6 +232,10 @@ class Player extends Thing {
         this.teleportSpeed = 3;
         this.animation = 0;
         this.lastDrawDir = -1;
+        this.updateHB();
+    }
+    updateHB() { // player sprite doesn't take up full rectangle
+        this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
     }
     moveUp(ms) {
         obstacles = [...cars, ...waters, ...lasers, ...bar];

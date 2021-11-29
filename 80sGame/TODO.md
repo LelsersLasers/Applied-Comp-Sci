@@ -16,9 +16,6 @@
         - death texture
     - cars?
     - abilites?
-- Adjust player Hitbox to match smaller animations
-    - maybe 4/5 the total width and 9/10 the total height
-    - make sure it is still centered
 #
 - Clean code
     - Mr. Bloom approved code

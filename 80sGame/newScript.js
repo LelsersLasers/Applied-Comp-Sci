@@ -186,6 +186,7 @@ function drawGame() {
     }
     mouseDownActions();
     player.move();
+    player.updateHB();
     player.draw();
     obstacles = [...cars, ...waters];
     for (var i = 0; i < obstacles.length; i++) {
