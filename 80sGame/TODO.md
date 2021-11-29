@@ -12,6 +12,9 @@
         - Auto play background music
 - Animate other things
     - cars - stun texture (ask jerry)
+    - water
+        - 4ish frames total
+        - just white + shades of blue
 - TRAINS???
 #
 - Clean code
