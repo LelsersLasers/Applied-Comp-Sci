@@ -11,9 +11,7 @@
     - Background music has 'bad start' (trim??)
         - Auto play background music
 - Animate other things
-    - cars
-        - animation - base it on speed
-        - stun texture??
+    - cars - stun texture (ask jerry)
 - TRAINS???
 #
 - Clean code
