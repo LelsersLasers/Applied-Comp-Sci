@@ -241,15 +241,6 @@ function drawGame() {
     rCD2.style.width = ((rAbility.wait - rDelay) * cdBarWidth/rAbility.wait) + "px";
     rCD2.style.backgroundColor = rDelay == 0 ? "#9ee092" : "#5e94d1";
 
-    if (wDown || sDown || aDown || dDown) {
-        frame++;
-    }
-    if (frame % 11 == 0 && alive) {
-        player.animation++;
-        frame++; // so if player stops on a %10, it doesn't freak out
-        if (player.animation > 3) player.animation = 0;
-    }
-
     if (backgroundMusic.currentTime > backgroundMusic.duration - 10) {
         backgroundMusic.currentTime = 10;
     }
@@ -304,7 +295,6 @@ var score = 0;
 var topScore = 0;
 
 var moveWait = 30;
-var frame = 0;
 
 var textTimer = 0;
 var textWait = 25;
@@ -361,14 +351,28 @@ var posSourceAnimation = [ // [!alive][dir][animationPlayer][x/y]
 ];
 
 var texCar = new Image();
-texCar.src = "car-34x17-2x2-1spacing.png";
-var posSourceCar = [ // [active][dir][x/y]
-    [
-        [0,0], [35, 0]
+texCar.src = "car-34x17-2x4-1spacing.png";
+var posSourceCar = [ // [active][dir][animation][x/y]
+    [ // if active
+        [ // if dir == right
+            [0, 0], // animation 1
+            [35, 0] // animation 2
+        ],
+        [ // if dir == left
+            [0, 18], // animation 1
+            [35, 18] // animation 2
+        ]
     ],
-    [
-        [0,18], [35, 18]
-    ]
+    [ // if not active
+        [ // if dir == right
+            [0, 36], // animation 1
+            [35, 36] // animation 2
+        ],
+        [ // if dir == left
+            [0, 54], // animation 1
+            [35, 54] // animation 2
+        ]
+    ],
 ];
 
 carWidth = canvas.width * 1/9;

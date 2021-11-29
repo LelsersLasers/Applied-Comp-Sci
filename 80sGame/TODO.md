@@ -12,7 +12,7 @@
         - Auto play background music
 - Animate other things
     - cars
-        - animation
+        - animation - base it on speed
         - stun texture??
 - TRAINS???
 #

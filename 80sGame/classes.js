@@ -234,6 +234,7 @@ class Player extends Thing {
         this.lastDrawDir = -1;
         this.updateHB();
         this.afterImages = [];
+        this.frame = 0;
     }
     updateHB() { // player sprite doesn't take up full rectangle
         this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
@@ -274,6 +275,14 @@ class Player extends Thing {
             }
             else if (dDown) {
                 this.pt.x += this.msX/moveWait;
+            }
+            if (wDown || sDown || aDown || dDown) {
+                this.frame++;
+            }
+            if (this.frame % 11 == 0 && alive) {
+                this.animation++;
+                this.frame++; // so if player stops on a %10, it doesn't freak out
+                if (player.animation > 3) player.animation = 0;
             }
         }
 
@@ -367,7 +376,6 @@ class AfterImage extends Thing {
             context.drawImage(texPlayer, posSourceAnimation[this.a][this.b][this.c][0], posSourceAnimation[this.a][this.b][this.c][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
             context.globalAlpha = 1;
             this.frames--;
-            console.log("tp");
         }
     }
 }
@@ -384,6 +392,8 @@ class Car extends Thing {
         this.deathMessage = "Road Kill";
         this.deathColor = "#e37e7b";
         this.deathSound = document.getElementById("thunkSound");
+        this.animation = 1;
+        this.frame = 0;
     }
     update() {
         this.stun--;
@@ -391,7 +401,14 @@ class Car extends Thing {
             this.on();
         }
         if (this.active) {
+            this.frame++;
             this.pt.x += this.ms;
+            var animationWait = Math.abs(parseInt(this.ms)) * 6; // INVERT THIS
+            animationWait = animationWait > 0 ? animationWait : 6;
+            if (this.frame % animationWait == 0) {
+                this.animation = Number(!this.animation);
+            }
+            console.log("frame: " + this.frame + " wait: " + animationWait);
         }
         if (this.hb.outOfBounds()) {
             this.ms = this.ms * -1;
@@ -405,7 +422,7 @@ class Car extends Thing {
     }
     draw() {
         var dir = this.ms > 0 ? 0 : 1; 
-        context.drawImage(texCar, posSourceCar[Number(!this.active)][dir][0], posSourceCar[Number(!this.active)][dir][1], 34, 17, this.pt.x, this.pt.y, this.w, this.h);
+        context.drawImage(texCar, posSourceCar[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 34, 17, this.pt.x, this.pt.y, this.w, this.h);
     }
 }
 
