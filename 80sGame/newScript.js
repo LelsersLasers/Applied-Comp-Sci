@@ -346,6 +346,20 @@ var backgroundMusic = document.getElementById("backgroundMusic");
 // player
 var texPlayer = new Image();
 texPlayer.src = "player-10x11-4x4.png";
+var posSourceAnimation = [ // [alive][dir][animationPlayer][x/y]
+    [
+        [[0, 0], [10, 0], [20, 0], [30, 0]], // down
+        [[0, 11], [10, 11], [20, 11], [30, 11]], // up
+        [[0, 22], [10, 22], [20, 22], [30, 22]], // right
+        [[0, 33], [10, 33], [20, 33], [30, 33]] // left
+    ],
+    [
+        [[0, 44], [10, 44], [20, 44], [30, 44]], // down
+        [[0, 55], [10, 55], [20, 55], [30, 55]], // up
+        [[0, 66], [10, 66], [20, 66], [30, 66]], // right
+        [[0, 77], [10, 77], [20, 77], [30, 77]] // left
+    ]
+];
 
 carWidth = canvas.width * 1/9;
 carHeight = canvas.height * 1/14;

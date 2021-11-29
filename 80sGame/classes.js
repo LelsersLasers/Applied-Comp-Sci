@@ -233,12 +233,13 @@ class Player extends Thing {
         this.animation = 0;
         this.lastDrawDir = -1;
         this.updateHB();
+        this.afterImages = [];
     }
     updateHB() { // player sprite doesn't take up full rectangle
         this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
     }
     moveUp(ms) {
-        obstacles = [...cars, ...waters, ...lasers, ...bar];
+        obstacles = [...cars, ...waters, ...lasers, ...bar, ...this.afterImages];
         for (var i = 0; i < obstacles.length; i++) {
             obstacles[i].pt.y += ms;
         }  
@@ -247,7 +248,7 @@ class Player extends Thing {
         }
     }
     moveDown(ms) {
-        obstacles = [...cars, ...waters, ...lasers, ...bar];
+        obstacles = [...cars, ...waters, ...lasers, ...bar, ...this.afterImages];
         for (var i = 0; i < obstacles.length; i++) {
             obstacles[i].pt.y -= ms;
         }  
@@ -278,6 +279,7 @@ class Player extends Thing {
 
         if (this.active && qAbility.timer > qAbility.wait) { // teleport ability
             if (qDown) {
+                this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation));
                 if (lastDir == "w") {
                     for (var i = 0; i < this.teleportSpeed; i++) {
                         this.moveUp(this.msY);
@@ -327,26 +329,35 @@ class Player extends Thing {
         }
     }
     draw() {
-        var posSourceAnimation = [ // [alive][dir][animationPlayer][x/y]
-            [
-                [[0, 0], [10, 0], [20, 0], [30, 0]], // down
-                [[0, 11], [10, 11], [20, 11], [30, 11]], // up
-                [[0, 22], [10, 22], [20, 22], [30, 22]], // right
-                [[0, 33], [10, 33], [20, 33], [30, 33]] // left
-            ],
-            [
-                [[0, 44], [10, 44], [20, 44], [30, 44]], // down
-                [[0, 55], [10, 55], [20, 55], [30, 55]], // up
-                [[0, 66], [10, 66], [20, 66], [30, 66]], // right
-                [[0, 77], [10, 77], [20, 77], [30, 77]] // left
-            ]
-        ];
         if (alive) {
             var dirs = ["s", "w", "d", "a"];
             var dir = dirs.indexOf(lastDir);
             this.lastDrawDir = dir;
         }
         context.drawImage(texPlayer, posSourceAnimation[Number(!alive)][this.lastDrawDir][this.animation][0], posSourceAnimation[Number(!alive)][this.lastDrawDir][this.animation][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
+        for (var i = 0; i < this.afterImages.length; i++) {
+            this.afterImages[i].draw();
+        }
+    }
+}
+
+class AfterImage extends Thing {
+    constructor(pt, w, h, a, b, c) {
+        var color = "#000000";
+        super(pt, color, w, h);
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.frames = 60;
+    }
+    draw() {
+        if (this.frames > 0) {
+            context.globalAlpha = 0.4;
+            context.drawImage(texPlayer, posSourceAnimation[this.a][this.b][this.c][0], posSourceAnimation[this.a][this.b][this.c][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
+            context.globalAlpha = 1;
+            this.frames--;
+            console.log("tp");
+        }
     }
 }
 
