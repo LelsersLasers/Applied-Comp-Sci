@@ -240,9 +240,12 @@ function drawGame() {
     rCD2.style.width = ((rAbility.wait - rDelay) * cdBarWidth/rAbility.wait) + "px";
     rCD2.style.backgroundColor = rDelay == 0 ? "#9ee092" : "#5e94d1";
 
-    frame++;
-    if (frame % 10 == 0 && alive) {
+    if (wDown || sDown || aDown || dDown) {
+        frame++;
+    }
+    if (frame % 11 == 0 && alive) {
         player.animation++;
+        frame++; // so if player stops on a %10, it doesn't freak out
         if (player.animation > 3) player.animation = 0;
     }
 

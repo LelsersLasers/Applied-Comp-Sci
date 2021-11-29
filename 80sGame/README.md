@@ -8,8 +8,8 @@ Features/Design Choices:
     - Clean Edges
         - Rectangles with clear hitboxes
     - Animated Player
-        - Always doing the move animation
-        - But stops when dead (to show death)
+        - Animation changes only when moving
+        - Changes color on death
 - Simple Gameplay
     - Move just up/down/left/right (no diagonal)
     - Abilites are relativly straightforward to use
@@ -28,7 +28,7 @@ Features/Design Choices:
     - High Tempo (180 BPM) background music
         - no lyrics
     - Lack of clarity + high tempo = chaotic enviroment
-        - Creates a false sense of pressure to do something 
+        - Creates a sense of pressure to do something 
 
 Other Things:
 - 'Screens'
