@@ -20,7 +20,7 @@ Features/Design Choices:
         - Player can use multiple abilites and move at the same time
         - (Ex: press W then A/D, now you can use Q/E either left/right while moving up)
 - Keyboard Support
-    - W/A/S/D or ARROW KEYS to move
+    - W/A/S/D or Arrow Keys to move
     - Q/E/R or 1/2/3 for abilites
     - Enter to continue/move between screens (mouse click also works)
 - ??TOUCH SUPPORT??
