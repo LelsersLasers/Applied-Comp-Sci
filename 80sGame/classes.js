@@ -259,84 +259,81 @@ class Player extends Thing {
     }
     move() {
         if (this.active) {
-            if (wDown) {
-                this.moveUp(this.msY/moveWait);
-                score += 1;
-                if (score > topScore) {
-                    topScore = score;
-                }
-            }
-            else if (sDown) {
-                this.moveDown(this.msY/moveWait);
-                score -= 1;
-            }
-            else if (aDown) {
-                this.pt.x -= this.msX/moveWait;
-            }
-            else if (dDown) {
-                this.pt.x += this.msX/moveWait;
-            }
             if (wDown || sDown || aDown || dDown) {
                 this.frame++;
-            }
-            if (this.frame % 11 == 0 && alive) {
-                this.animation++;
-                this.frame++; // so if player stops on a %10, it doesn't freak out
-                if (player.animation > 3) player.animation = 0;
-            }
-        }
-
-        if (this.active && qAbility.timer > qAbility.wait) { // teleport ability
-            if (qDown) {
-                if (lastDir == "w") {
-                    for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
-                        this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y - i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
-                    }
-                    for (var i = 0; i < this.teleportSpeed; i++) {
-                        this.moveUp(this.msY);
-                        score += moveWait;
+                switch (lastDir) {
+                    case "w":
+                        this.moveUp(this.msY/moveWait);
+                        score += 1;
                         if (score > topScore) {
                             topScore = score;
                         }
-                    }
+                        break;
+                    case "s":
+                        this.moveDown(this.msY/moveWait);
+                        score -= 1;
+                        break;
+                    case "a":
+                        this.pt.x -= this.msX/moveWait;
+                        break;
+                    case "d":
+                        this.pt.x += this.msX/moveWait;
+                        break
                 }
-                else if (lastDir == "s") {
-                    for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
-                        this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y + i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
-                    }
-                    for (var i = 0; i < this.teleportSpeed; i++) {
-                        this.moveDown(this.msY);
-                        score -= moveWait;
-                    }
-                }
-                else if (lastDir == "a") {
-                    for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
-                        this.afterImages.push(new AfterImage(new Vector(this.pt.x - i * this.msX/2, this.pt.y), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
-                    }
-                    this.pt.x -= this.msX * this.teleportSpeed;
-                }
-                else if (lastDir == "d") {
-                    for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
-                        this.afterImages.push(new AfterImage(new Vector(this.pt.x + i * this.msX/2, this.pt.y), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
-                    }
-                    this.pt.x += this.msX * this.teleportSpeed;
+            }
+            if (this.frame % 11 == 0 && alive) {
+                this.animation++;
+                this.frame++; // so if player stops on a %11, it doesn't freak out
+                if (player.animation > 3) player.animation = 0;
+            }
+            if (qDown && qAbility.timer > qAbility.wait) { // teleport ability
+                switch (lastDir) {
+                    case "w":
+                        for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
+                            this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y - i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
+                        }
+                        for (var i = 0; i < this.teleportSpeed; i++) {
+                            this.moveUp(this.msY);
+                            score += moveWait;
+                            if (score > topScore) {
+                                topScore = score;
+                            }
+                        }
+                        break;
+                    case "s":
+                        for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
+                            this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y + i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
+                        }
+                        for (var i = 0; i < this.teleportSpeed; i++) {
+                            this.moveDown(this.msY);
+                            score -= moveWait;
+                        }
+                        break;
+                    case "a":
+                        for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
+                            this.afterImages.push(new AfterImage(new Vector(this.pt.x - i * this.msX/2, this.pt.y), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
+                        }
+                        this.pt.x -= this.msX * this.teleportSpeed;
+                        break;
+                    case "d":
+                        for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
+                            this.afterImages.push(new AfterImage(new Vector(this.pt.x + i * this.msX/2, this.pt.y), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
+                        }
+                        this.pt.x += this.msX * this.teleportSpeed;
+                        break
                 }
                 qAbility.timer = 0;
                 teleportSound.currentTime = 0;
                 teleportSound.play();
             }
-        }
-        if (this.active && eAbility.timer > eAbility.wait) { // laser ability
-            if (eDown) {
+            if (eDown && eAbility.timer > eAbility.wait) { // laser ability
                 var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
                 lasers.push(new Laser(startPos, lastDir, 60));
                 eAbility.timer = 0;
                 laserSound.currentTime = 0;
                 laserSound.play();
             }
-        }
-        if (this.active && rAbility.timer > rAbility.wait) { // laser grenade ability
-            if (rDown) {
+            if (rDown && rAbility.timer > rAbility.wait) { // laser grenade ability
                 var dirs = ["w", "a", "s", "d", "sd", "wd", "sa", "wa"];
                 for (var i = 0; i < dirs.length; i++) {
                     var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
@@ -349,15 +346,15 @@ class Player extends Thing {
         }
     }
     draw() {
+        for (var i = 0; i < this.afterImages.length; i++) {
+            this.afterImages[i].draw();
+        }
         if (alive) {
             var dirs = ["s", "w", "d", "a"];
             var dir = dirs.indexOf(lastDir);
             this.lastDrawDir = dir;
         }
         context.drawImage(texPlayer, posSourceAnimation[Number(!alive)][this.lastDrawDir][this.animation][0], posSourceAnimation[Number(!alive)][this.lastDrawDir][this.animation][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
-        for (var i = 0; i < this.afterImages.length; i++) {
-            this.afterImages[i].draw();
-        }
     }
 }
 

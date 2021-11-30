@@ -18,7 +18,6 @@ Features/Design Choices:
     - Because of simplicity, the player has freedom to do anything
         - (not you can only R when on the left side of the screen, etc)
         - Player can use multiple abilites and move at the same time
-        - (Ex: press W then A/D, now you can use Q/E either left/right while moving up)
 - Keyboard Support
     - W/A/S/D or Arrow Keys to move
     - Q/E/R or 1/2/3 for abilites
