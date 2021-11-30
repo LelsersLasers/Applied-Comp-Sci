@@ -4,6 +4,10 @@ Features/Design Choices:
 - Visually Clarity
     - Hand Drawn (mouse drawn) pixel art
     - No 'overlapping' colors
+        - Each color means something
+        - Red = Car
+        - Green = Player
+        - Blue = Water
     - No pointless effects
         - No particles, everything drawn has effect
     - Clean Edges
@@ -32,15 +36,23 @@ Features/Design Choices:
         - no lyrics
     - Lack of clarity + high tempo = chaotic enviroment
         - Creates a sense of pressure to do something
+- 'Screens'
+    - Welcome
+        - Clicking on the directions button will open the directions screen
+        - Clicking anywhere else or pressing Enter will start the game
+        - Directions
+            - Click anywhere to return to welcome screen
+        - Main Game
+            - Background music will auto start
+                - Clicking the screen or pressing Enter will toggle it on/off
+            - Clicking the screen while dead returns the player to the welcome screen
+    - Flashing text
 - Everything is scaled with canvas.width or canvas.height
     - Designed around 900x700 px screen, but looks/works completely fine on any resonable screen size
     - The player and the ability buttons are sqaures, and they scale off the hieght
         - (player is technically 10:11, but to keep the ratio both numbers have to scale off of 1 number) 
 
 Other Things:
-- 'Screens'
-    - Welcome/Directions/Main Game
-    - Flashing text
 - Bars on sides to give the impression the player is moving up and down, not the cars/waters
 - Cars will bounce off the edges and the water blocks
     - 'Safe zones' on the other sides of water blocks
