@@ -35,9 +35,20 @@ function keyDownHandler(e) {
                 screen = "game";
                 backgroundMusic.currentTime = getRandomInt(10, backgroundMusic.duration);
                 backgroundMusic.play();
+                backgroundMusic.playing = true;
             }
             else if (screen == "game" && !alive) {
                 reset();
+            }
+            else if (screen == "game") {
+                if (backgroundMusic.playing) {
+                    backgroundMusic.pause();
+                    backgroundMusic.playing = false;
+                }
+                else {
+                    backgroundMusic.play();
+                    backgroundMusic.playing = true;
+                }
             }
             else if (screen == "directions") {
                 screen = "welcome";
@@ -69,10 +80,21 @@ function clickHandler(event) {
             screen = "game";
             backgroundMusic.currentTime = getRandomInt(10, backgroundMusic.duration);
             backgroundMusic.play();
+            backgroundMusic.playing = true;
         }
     }
     else if (screen == "game" && !alive) {
         reset();
+    }
+    else if (screen == "game") {
+        if (backgroundMusic.playing) {
+            backgroundMusic.pause();
+            backgroundMusic.playing = false;
+        }
+        else {
+            backgroundMusic.play();
+            backgroundMusic.playing = true;
+        }
     }
     else if (screen == "directions") {
         screen = "welcome";
@@ -332,6 +354,7 @@ eCD1.style.width = cdBarWidth + "px";
 rCD1.style.width = cdBarWidth + "px";
 
 var backgroundMusic = document.getElementById("backgroundMusic");
+backgroundMusic.playing = false;
 
 var texPlayer = new Image();
 texPlayer.src = "player-10x11-4x8-1spacing.png";
