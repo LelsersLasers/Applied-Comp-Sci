@@ -20,10 +20,22 @@ document.addEventListener("mousemove", getMousePos, false);
 
 function keyDownHandler(e) {
     switch (e.key) {
-        case "w": case "ArrowUp": wDown = true; break;
-        case "s": case "ArrowDown": sDown = true; break;
-        case "a": case "ArrowLeft": aDown = true; break;
-        case "d": case "ArrowRight": dDown = true; break;
+        case "w": case "ArrowUp":
+            wDown = true;
+            lastDir = "w";
+            break;
+        case "s": case "ArrowDown":
+            sDown = true;
+            lastDir = "s";
+            break;
+        case "a": case "ArrowLeft":
+            aDown = true;
+            lastDir = "a";
+            break;
+        case "d": case "ArrowRight":
+            dDown = true;
+            lastDir = "d";
+            break;
         case "q": case "1": qDown = true; break;
         case "e": case "2": eDown = true; break;
         case "r": case "3": rDown = true; break;
@@ -54,9 +66,6 @@ function keyDownHandler(e) {
                 screen = "welcome";
             }
             break;
-    }
-    if (["w", "a", "s", "d"].indexOf(e.key) >= 0) {
-        lastDir = e.key;
     }
     inputMode = "key";
 }
