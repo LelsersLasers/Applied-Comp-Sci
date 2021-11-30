@@ -412,9 +412,9 @@ carHeight = canvas.height * 1/14;
 playerLevel = carHeight * 10;
 player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight * 10/11, carHeight, carHeight * 1.5 * canvas.width/900, carHeight * 1.5);
 
-qAbility = new Ability(new Vector(carHeight    , playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "Q");
-eAbility = new Ability(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "E");
-rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 240, 240, "R");
+qAbility = new Ability(new Vector(carHeight    , playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "Q", teleportSound);
+eAbility = new Ability(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "E", laserSound);
+rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 240, 240, "R", multipleLaserSound);
 
 wHB = new HitBox(new Vector(canvas.width * 1/5, 0), canvas.width * 3/5, canvas.height * 1/5);
 sHB = new HitBox(new Vector(canvas.width * 1/5, canvas.height * 4/5), canvas.width * 3/5, canvas.height * 1/5);

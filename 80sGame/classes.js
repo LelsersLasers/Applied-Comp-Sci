@@ -78,12 +78,13 @@ class Thing {
 }
 
 class Ability extends Thing {
-    constructor(pt, w, h, timer, wait, txt) {
+    constructor(pt, w, h, timer, wait, txt, sound) {
         var color = "#dadfe6";
         super(pt, color, w, h);
         this.timer = timer;
         this.wait = wait;
         this.txt = txt;
+        this.sound = sound;
     }
     draw() {
         context.fillStyle = this.color;
@@ -323,15 +324,15 @@ class Player extends Thing {
                         break
                 }
                 qAbility.timer = 0;
-                teleportSound.currentTime = 0;
-                teleportSound.play();
+                qAbility.sound.currentTime = 0;
+                qAbility.sound.play();
             }
             if (eDown && eAbility.timer > eAbility.wait) { // laser ability
                 var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
                 lasers.push(new Laser(startPos, lastDir, 60));
                 eAbility.timer = 0;
-                laserSound.currentTime = 0;
-                laserSound.play();
+                eAbility.sound.currentTime = 0;
+                eAbility.sound.play();
             }
             if (rDown && rAbility.timer > rAbility.wait) { // laser grenade ability
                 var dirs = ["w", "a", "s", "d", "sd", "wd", "sa", "wa"];
@@ -340,8 +341,8 @@ class Player extends Thing {
                     lasers.push(new Laser(startPos, dirs[i], 120));
                 }
                 rAbility.timer = 0;
-                multipleLaserSound.currentTime = 0;
-                multipleLaserSound.play();
+                rAbility.sound.currentTime = 0;
+                rAbility.sound.play();
             }
         }
     }
