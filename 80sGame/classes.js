@@ -411,11 +411,11 @@ class Car extends Thing {
         }
         if (this.hb.outOfBounds()) {
             this.ms = this.ms * -1;
-            this.ms = this.ms * 1.01;
+            this.ms = this.ms * 1.001;
         }
         if (this.pt.y > canvas.height && !this.offScreen) {
             var pos = new Vector(getRandomInt(0, canvas.width - carWidth), this.pt.y - (1.5 * carHeight) * 10);
-            cars.push(new Car(pos, this.ms * 1.05));
+            cars.push(new Car(pos, this.ms * 1.01));
             this.offScreen = true;
         }
     }

@@ -5,7 +5,6 @@
     - have a temp fix, see if it is good enough
 - on mouse down same as other 3
 - SOUND!!
-    - Small sound on car bounce?
     - Dynamically 'create' the sounds and destory them
         - So no issue of them being asked to start again when they are not finished
     - Background music has 'bad start' (trim??)
