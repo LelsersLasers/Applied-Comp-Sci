@@ -2,20 +2,25 @@
 
 Features/Design Choices:
 - Visually Clarity
-    - Hand Drawn (mouse drawn) pixel art
+    - ALl art is hand drawn (mouse drawn) pixel art by me
     - No 'overlapping' colors
         - Each color means something
         - Red = Car
         - Green = Player
         - Blue = Water
+        - Purple/Yellow = Side Arrows
     - No pointless effects
         - No particles, everything drawn has effect
-    - Clean Edges
-        - Rectangles with clear hitboxes
     - Animated Player
         - Animation changes only when moving
         - Changes color on death
         - Teleport leaves a trail from where you teleported to make it clear what happened
+    - Animated Car
+        - Wheels 'spin' based on the movement speed of the car
+        - Changes color when stunned (just drawns an outline)
+    - Animated Water
+        - Animation speed is random
+        - Picks a section of the texture to show based on random number and the water block's width
 - Simple Gameplay
     - Move just up/down/left/right (no diagonal)
     - Abilites are relativly straightforward to use

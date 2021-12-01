@@ -407,6 +407,13 @@ var posSourceCar = [ // [active][dir][animation][x/y]
     ],
 ];
 
+var texBar = new Image();
+texBar.src = "arrow-14x11-1x2-1spacing.png";
+var posSourceBar = [
+    [0, 0], // purple
+    [0, 12], // yellow
+];
+
 var texWater = new Image();
 texWater.src = "water-40x18-1x3.png";
 
@@ -441,13 +448,13 @@ for (var i = 0; i < 10; i++) {
 }
 
 // to make it look like player is moving
+barWidth = 3/4 * carHeight;
+barHeight = (barWidth * 11) / 14;
+base = 0;
 var bar = [];
-for (i = 0; i < 14; i++) {
-    var c = (i % 2 == 0) ? "#ffff00" : "#ff00ff";
-    var c2 = (i % 2 == 0) ? "#ff00ff" : "#ffff00";
-    j = i - 2;
-    bar.push(new Block(new Vector(0, j * carHeight * 1.5), c, c2, 20, carHeight * 1.5));
-    bar.push(new Block(new Vector(canvas.width - 20, j * carHeight * 1.5), c, c2, 20, carHeight * 1.5));
+for (i = 0; i < canvas.height/barHeight; i++) {
+    bar.push(new Block(new Vector(0, base + i * barHeight), i, barWidth, barHeight));
+    bar.push(new Block(new Vector(canvas.width - barWidth, base + i * barHeight), i, barWidth, barHeight));
 }
 
 

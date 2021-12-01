@@ -1,8 +1,6 @@
 # TODO
 - BAR SCOLLING
-    - Animate? Arrow pixel art?
 - EITHER TOUCH OR KEYBOARD
-    - Keyboard currently broken
     - have a temp fix, see if it is good enough
 - on mouse down same as other 3
 - SOUND!!

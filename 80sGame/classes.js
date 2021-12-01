@@ -424,22 +424,20 @@ class Car extends Thing {
 }
 
 class Block extends Thing {
-    constructor(pt, color, color2, w, h) {
+    constructor(pt, i, w, h) {
+        var color = "#000000";
         super(pt, color, w, h);
-        this.color2 = color2;
+        this.animation = i % 2;
     }
     draw() {
-        context.fillStyle = this.active ? this.color2 : this.color;
-        context.beginPath();
-        context.rect(this.pt.x, this.pt.y, this.w, this.h);
-        context.fill();
+        context.drawImage(texBar, posSourceBar[this.animation][0], posSourceBar[this.animation][1], 14, 11, this.pt.x, this.pt.y, this.w, this.h);
     }
     update() {
         if (this.pt.y < -this.h) {
-            this.pt.y = this.pt.y + (this.h * 10);
+            this.pt.y = this.pt.y + (this.h * canvas.height/barHeight + barHeight);
         }
         if (this.pt.y > canvas.height) {
-            this.pt.y = this.pt.y - (this.h * 10);
+            this.pt.y = this.pt.y - (this.h * canvas.height/barHeight + barHeight);
         }
     }
 }
