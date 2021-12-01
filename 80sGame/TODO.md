@@ -1,5 +1,6 @@
 # TODO
 - BAR SCOLLING
+    - Animate? Arrow pixel art?
 - EITHER TOUCH OR KEYBOARD
     - Keyboard currently broken
     - have a temp fix, see if it is good enough
@@ -11,6 +12,8 @@
         - Auto play background music
 - Animate other things
     - cars - stun texture (ask jerry)
+- Trim R sound
+- Update directions
 - TRAINS???
 #
 - Clean code
