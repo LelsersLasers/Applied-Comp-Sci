@@ -223,15 +223,15 @@ function drawGame() {
     for (var i = 0; i < obstacles.length; i++) {
         obstacles[i].update();
         obstacles[i].draw();
-        if (obstacles[i].hb.checkCollide(player.hb) && alive) {
-            stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
-            stateTxt.style.backgroundColor = obstacles[i].deathColor;
-            scoreView.color = obstacles[i].deathColor;
-            obstacles[i].deathSound.currentTime = 0;
-            obstacles[i].deathSound.play();
-            alive = false;
-            player.off();
-        }
+            if (obstacles[i].hb.checkCollide(player.hb) && alive) {
+                stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
+                stateTxt.style.backgroundColor = obstacles[i].deathColor;
+                scoreView.color = obstacles[i].deathColor;
+                obstacles[i].deathSound.currentTime = 0;
+                obstacles[i].deathSound.play();
+                alive = false;
+                player.off();
+            }
     }
     for (var i = 0; i < lasers.length; i++) {
         lasers[i].update();
@@ -305,8 +305,7 @@ function setUpContext() {
     canvas = document.getElementById("mainCanvas");
     canvas.width = window.innerWidth - 50;
     canvas.height = window.innerHeight - 100;
-    
-    // MARK, makes these like the others
+
     canvas.onmousedown = function(event) {
         mouseDown = true;
     }
@@ -344,19 +343,20 @@ cdBarWidth = 1/6 * canvas.width;
 qDelayTxt = document.getElementById("qDelay");
 qCD1 = document.getElementById("qCD1");
 qCD2 = document.getElementById("qCD2");
-var teleportSound = document.getElementById("teleportSound");
+var teleportSound = document.createElement("audio");
+teleportSound.src = "teleport.mp3";
 
 eDelayTxt = document.getElementById("eDelay");
 eCD1 = document.getElementById("eCD1");
 eCD2 = document.getElementById("eCD2");
-var laserSound = document.getElementById("laserSound");
+var laserSound = document.createElement("audio");
+laserSound.src = "laser.mp3";
 
 rDelayTxt = document.getElementById("rDelay");
 rCD1 = document.getElementById("rCD1");
 rCD2 = document.getElementById("rCD2");
-var multipleLaserSound = document.getElementById("multipleLaserSound");
-
-var laserHitSound = document.getElementById("laserHitSound");
+var multipleLaserSound = document.createElement("audio");
+multipleLaserSound.src = "multipleLasers.mp3";
 
 qCD1.style.width = cdBarWidth + "px";
 eCD1.style.width = cdBarWidth + "px";
@@ -449,7 +449,7 @@ for (var i = 0; i < 10; i++) {
 
 // to make it look like player is moving
 barWidth = 3/4 * carHeight;
-barHeight = (barWidth * 11) / 14;
+barHeight = (barWidth * 11) / 14; // (33/56) * carHeight
 base = 0;
 var bar = [];
 for (i = 0; i < canvas.height/barHeight; i++) {

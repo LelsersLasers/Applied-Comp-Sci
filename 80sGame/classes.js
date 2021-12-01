@@ -108,6 +108,11 @@ class Ability extends Thing {
 
         this.timer++;
     }
+    use() {
+        this.timer = 0;
+        this.sound.currentTime = 0;
+        this.sound.play();
+    }
 }
 
 class GameTxt extends Thing {
@@ -193,6 +198,8 @@ class Laser extends Thing {
         this.dir = dir;
         this.angle = angle;
         this.moveVector = moveVector;
+        this.hitSound = document.createElement("audio");
+        this.hitSound.src = "laserHit.mp3";
     }
     update() {
         if (this.active) {
@@ -202,8 +209,7 @@ class Laser extends Thing {
                     this.off();
                     cars[i].off();
                     cars[i].stun = this.stunTime;
-                    laserHitSound.currentTime = 0;
-                    laserHitSound.play();
+                    this.hitSound.play();
                 }
             }
             if (["w", "a", "s", "d"].indexOf(this.dir) >= 0) {
@@ -323,16 +329,12 @@ class Player extends Thing {
                         this.pt.x += this.msX * this.teleportSpeed;
                         break
                 }
-                qAbility.timer = 0;
-                qAbility.sound.currentTime = 0;
-                qAbility.sound.play();
+                qAbility.use();
             }
             if (eDown && eAbility.timer > eAbility.wait) { // laser ability
                 var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
                 lasers.push(new Laser(startPos, lastDir, 60));
-                eAbility.timer = 0;
-                eAbility.sound.currentTime = 0;
-                eAbility.sound.play();
+                eAbility.use();
             }
             if (rDown && rAbility.timer > rAbility.wait) { // laser grenade ability
                 var dirs = ["w", "a", "s", "d", "sd", "wd", "sa", "wa"];
@@ -340,9 +342,7 @@ class Player extends Thing {
                     var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
                     lasers.push(new Laser(startPos, dirs[i], 120));
                 }
-                rAbility.timer = 0;
-                rAbility.sound.currentTime = 0;
-                rAbility.sound.play();
+                rAbility.use();
             }
         }
     }
@@ -389,7 +389,8 @@ class Car extends Thing {
         this.offScreen = false;
         this.deathMessage = "Road Kill";
         this.deathColor = "#e37e7b";
-        this.deathSound = document.getElementById("thunkSound");
+        this.deathSound = document.createElement("audio");
+        this.deathSound.src = "thunk.mp3";
         this.animation = 1;
         this.frame = 0;
     }
@@ -434,10 +435,10 @@ class Block extends Thing {
     }
     update() {
         if (this.pt.y < -this.h) {
-            this.pt.y = this.pt.y + (this.h * canvas.height/barHeight + barHeight);
+            this.pt.y = this.pt.y + (this.h * canvas.height/barHeight);
         }
         if (this.pt.y > canvas.height) {
-            this.pt.y = this.pt.y - (this.h * canvas.height/barHeight + barHeight);
+            this.pt.y = this.pt.y - (this.h * canvas.height/barHeight);
         }
     }
 }
@@ -463,7 +464,8 @@ class Water extends Thing {
         this.offScreen = false;
         this.deathMessage = "Drowned";
         this.deathColor = "#7bb6e3";
-        this.deathSound = document.getElementById("splashSound");
+        this.deathSound = document.createElement("audio");
+        this.deathSound.src = "splash.mp3";
         this.frame = 0;
         this.animationW = parseInt(40 * (this.w/(carWidth * 1.5)));
         this.animationX = getRandomInt(0, 40 - this.animationW);

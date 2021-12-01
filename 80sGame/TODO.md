@@ -2,17 +2,10 @@
 - BAR SCOLLING
 - EITHER TOUCH OR KEYBOARD
     - have a temp fix, see if it is good enough
-- on mouse down same as other 3
-- SOUND!!
-    - Dynamically 'create' the sounds and destory them
-        - So no issue of them being asked to start again when they are not finished
-    - Background music has 'bad start' (trim??)
-        - Auto play background music
-- Animate other things
-    - cars - stun texture (ask jerry)
-- Trim R sound
+- Sounds
+    - Trim R sound
+- Better integrate the water?
 - Update directions
-- TRAINS???
 #
 - Clean code
     - Mr. Bloom approved code
