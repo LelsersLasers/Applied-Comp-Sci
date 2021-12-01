@@ -407,6 +407,9 @@ var posSourceCar = [ // [active][dir][animation][x/y]
     ],
 ];
 
+var texWater = new Image();
+texWater.src = "water-40x18-1x3.png";
+
 carWidth = canvas.width * 1/9;
 carHeight = canvas.height * 1/14;
 playerLevel = carHeight * 10;

@@ -466,6 +466,11 @@ class Water extends Thing {
         this.deathMessage = "Drowned";
         this.deathColor = "#7bb6e3";
         this.deathSound = document.getElementById("splashSound");
+        this.frame = 0;
+        this.animationW = parseInt(40 * (this.w/(carWidth * 1.5)));
+        this.animationX = getRandomInt(0, 40 - this.animationW);
+        this.animationY = getRandomInt(0, 36);
+        this.aninmationSpeed = getRandomInt(2, 6)/10;
     }
 
     update() {
@@ -474,5 +479,11 @@ class Water extends Thing {
             waters.push(new Water(y));
             this.offScreen = true;
         }
+    }
+
+    draw() {
+        this.animationY -= this.aninmationSpeed;
+        if (this.animationY < 0) this.animationY = 30;
+        context.drawImage(texWater, this.animationX, this.animationY, this.animationW, 18, this.pt.x, this.pt.y, this.w, this.h);
     }
 }
