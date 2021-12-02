@@ -448,10 +448,12 @@ for (var i = 0; i < 10; i++) {
     var speed = (getRandomInt(i/6 + 1, i/4 + 2)/900) * canvas.width;
     speed = getRandomInt(1, 3) == 2 ? -speed : speed;
     cars.push(new Car(startPos, speed));
-    justPlaced = false;
     if (Math.random() < waterBlockCount/10 && !justPlaced) {
         waters.push(new Water(startPos.y));
         justPlaced = true;
+    }
+    else {
+        justPlaced = false;
     }
 }
 

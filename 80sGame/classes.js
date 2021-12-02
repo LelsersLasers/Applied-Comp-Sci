@@ -413,7 +413,18 @@ class Car extends Thing {
             this.ms = this.ms * 1.001;
         }
         if (this.pt.y > canvas.height && !this.offScreen) {
-            var pos = new Vector(getRandomInt(0, canvas.width - carWidth), this.pt.y - (1.5 * carHeight) * 10);
+            var badX = true;
+            while (badX) {
+                badX = false;
+                var x = getRandomInt(0, canvas.width - this.w);
+                var tempHB = new HitBox(new Vector(x, this.pt.y - (1.5 * carHeight) * 10), this.w, this.h);
+                for (var i = 0; i < waters.length; i++) {
+                    if (tempHB.checkCollide(waters[i].hb)) {
+                        badX = true;
+                    }
+                }
+            }
+            var pos = new Vector(x, this.pt.y - (1.5 * carHeight) * 10);
             cars.push(new Car(pos, this.ms * 1.01));
             this.offScreen = true;
         }
@@ -456,7 +467,7 @@ class Water extends Thing {
         while (badX) {
             badX = false;
             var x = getRandomInt(0, canvas.width - w);
-            var tempHB = new HitBox(new Vector(x - 10, y - 10), w + 20, h + 20);
+            var tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (var i = 0; i < cars.length; i++) {
                 if (tempHB.checkCollide(cars[i].hb)) {
                     badX = true;

@@ -1,7 +1,6 @@
 # TODO
 - Waters -> Buildings
     - rename
-    - don't let them spawn overlapping or on cars
 - Sounds
     - Trim R sound
 - Better integrate the water?
