@@ -247,7 +247,7 @@ class Player extends Thing {
         this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
     }
     moveUp(ms) {
-        var obstacles = [...cars, ...waters, ...lasers, ...bar, ...this.afterImages];
+        var obstacles = [...cars, ...buildings, ...lasers, ...bar, ...this.afterImages];
         for (var i = 0; i < obstacles.length; i++) {
             obstacles[i].pt.y += ms;
         }  
@@ -256,7 +256,7 @@ class Player extends Thing {
         }
     }
     moveDown(ms) {
-        var obstacles = [...cars, ...waters, ...lasers, ...bar, ...this.afterImages];
+        var obstacles = [...cars, ...buildings, ...lasers, ...bar, ...this.afterImages];
         for (var i = 0; i < obstacles.length; i++) {
             obstacles[i].pt.y -= ms;
         }  
@@ -418,8 +418,8 @@ class Car extends Thing {
                 badX = false;
                 var x = getRandomInt(0, canvas.width - this.w);
                 var tempHB = new HitBox(new Vector(x, this.pt.y - (1.5 * carHeight) * 10), this.w, this.h);
-                for (var i = 0; i < waters.length; i++) {
-                    if (tempHB.checkCollide(waters[i].hb)) {
+                for (var i = 0; i < buildings.length; i++) {
+                    if (tempHB.checkCollide(buildings[i].hb)) {
                         badX = true;
                     }
                 }
@@ -454,7 +454,7 @@ class Block extends Thing {
     }
 }
 
-class Water extends Thing {
+class building extends Thing {
     constructor(y) {
         var color = "#0000ff";
         var h = carHeight * 2.5;
@@ -493,7 +493,7 @@ class Water extends Thing {
     update() {
         if (this.pt.y > canvas.height && !this.offScreen) {
             var y = this.pt.y - (1.5 * carHeight) * 12;
-            waters.push(new Water(y));
+            buildings.push(new building(y));
             this.offScreen = true;
         }
     }

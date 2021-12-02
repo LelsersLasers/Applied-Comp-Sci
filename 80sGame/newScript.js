@@ -192,7 +192,7 @@ function drawDirections() {
     txts.push("You are the green, the cars are the red.");
     txts.push("To move, either use 'wasd' or touch the top, bottom, left, and right.")
     txts.push("Don't get hit by cars or go out of bounds sideways.");
-    txts.push("Also you can't swim (don't go into the blue water). Cars also can't swim.");
+    txts.push("Also you can't swim (don't go into the blue building). Cars also can't swim.");
     txts.push("You also have 3 abilities:");
     txts.push("Q which teleports a short distance,");
     txts.push("E which fires a laser that causes a small stun, and");
@@ -219,7 +219,7 @@ function drawGame() {
     player.move();
     player.updateHB();
     player.draw();
-    obstacles = [...cars, ...waters];
+    obstacles = [...cars, ...buildings];
     for (var i = 0; i < obstacles.length; i++) {
         obstacles[i].update();
         obstacles[i].draw();
@@ -237,9 +237,9 @@ function drawGame() {
         lasers[i].update();
     }
     for (var i = 0; i < cars.length; i++) {
-        for (var j = 0; j < waters.length; j++) {
-            waters[j].updateHB();
-            if (cars[i].hb.checkCollide(waters[j].hb)) {
+        for (var j = 0; j < buildings.length; j++) {
+            buildings[j].updateHB();
+            if (cars[i].hb.checkCollide(buildings[j].hb)) {
                 cars[i].ms = -1 * cars[i].ms;
             }
         }
@@ -439,8 +439,8 @@ dHB = new HitBox(new Vector(canvas.width * 4/5, canvas.height * 1/5), canvas.wid
 scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", carHeight, carHeight/3, "Score: 0");
 
 var cars = [];
-waterBlockCount = 3;
-waters = [];
+buildingBlockCount = 3;
+buildings = [];
 base = playerLevel - 3 * carHeight;
 justPlaced = false;
 for (var i = 0; i < 10; i++) {
@@ -448,8 +448,8 @@ for (var i = 0; i < 10; i++) {
     var speed = (getRandomInt(i/6 + 1, i/4 + 2)/900) * canvas.width;
     speed = getRandomInt(1, 3) == 2 ? -speed : speed;
     cars.push(new Car(startPos, speed));
-    if (Math.random() < waterBlockCount/10 && !justPlaced) {
-        waters.push(new Water(startPos.y));
+    if (Math.random() < buildingBlockCount/10 && !justPlaced) {
+        buildings.push(new building(startPos.y));
         justPlaced = true;
     }
     else {
