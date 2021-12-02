@@ -414,8 +414,13 @@ var posSourceBar = [
     [0, 12], // yellow
 ];
 
-var texWater = new Image();
-texWater.src = "water-40x18-1x3.png";
+var texBuilding = new Image();
+texBuilding.src = "building-26x40-3x1-1spacing.png";
+var posSourceBuilding = [
+    [0, 0],
+    [27, 0],
+    [54, 0]
+];
 
 carWidth = canvas.width * 1/9;
 carHeight = canvas.height * 1/14;
@@ -434,16 +439,19 @@ dHB = new HitBox(new Vector(canvas.width * 4/5, canvas.height * 1/5), canvas.wid
 scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", carHeight, carHeight/3, "Score: 0");
 
 var cars = [];
-waterBlockCount = 5;
+waterBlockCount = 3;
 waters = [];
 base = playerLevel - 3 * carHeight;
+justPlaced = false;
 for (var i = 0; i < 10; i++) {
     startPos = new Vector(getRandomInt(0, canvas.width - carWidth), base - (1.5 * carHeight * i));
     var speed = (getRandomInt(i/6 + 1, i/4 + 2)/900) * canvas.width;
     speed = getRandomInt(1, 3) == 2 ? -speed : speed;
     cars.push(new Car(startPos, speed));
-    if (Math.random() < waterBlockCount/10) {
+    justPlaced = false;
+    if (Math.random() < waterBlockCount/10 && !justPlaced) {
         waters.push(new Water(startPos.y));
+        justPlaced = true;
     }
 }
 

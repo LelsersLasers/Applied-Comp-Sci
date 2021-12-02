@@ -446,8 +446,12 @@ class Block extends Thing {
 class Water extends Thing {
     constructor(y) {
         var color = "#0000ff";
-        var w = getRandomInt(carHeight * 0.5, carWidth * 1.5);
-        var h = carHeight;
+        var h = carHeight * 2.5;
+        var widthOfOne = (26 * h/40);
+        var maxW = Math.floor((carWidth * 1.5)/widthOfOne);
+        var buildingCount = getRandomInt(1, maxW + 1);
+        var w = buildingCount * widthOfOne;
+
         var badX = true;
         while (badX) {
             badX = false;
@@ -466,24 +470,26 @@ class Water extends Thing {
         this.deathColor = "#7bb6e3";
         this.deathSound = document.createElement("audio");
         this.deathSound.src = "splash.mp3";
-        this.frame = 0;
-        this.animationW = parseInt(40 * (this.w/(carWidth * 1.5)));
-        this.animationX = getRandomInt(0, 40 - this.animationW);
-        this.animationY = getRandomInt(0, 36);
-        this.aninmationSpeed = getRandomInt(2, 6)/10;
+
+        this.buildings = [];
+        for (var i = 0; i < buildingCount; i++) {
+            var src = getRandomInt(0, 3);
+            this.buildings.push(posSourceBuilding[src]);
+        }
+        this.widthOfOne = widthOfOne;
     }
 
     update() {
         if (this.pt.y > canvas.height && !this.offScreen) {
-            var y = this.pt.y - (1.5 * carHeight) * 10;
+            var y = this.pt.y - (1.5 * carHeight) * 12;
             waters.push(new Water(y));
             this.offScreen = true;
         }
     }
 
     draw() {
-        this.animationY -= this.aninmationSpeed;
-        if (this.animationY < 0) this.animationY = 30;
-        context.drawImage(texWater, this.animationX, this.animationY, this.animationW, 18, this.pt.x, this.pt.y, this.w, this.h);
+        for (var i = 0; i < this.buildings.length; i++) {
+            context.drawImage(texBuilding, this.buildings[i][0], this.buildings[i][1], 26, 40, this.pt.x + i * this.widthOfOne, this.pt.y, this.widthOfOne, this.h);
+        }
     }
 }

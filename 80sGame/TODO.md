@@ -1,7 +1,7 @@
 # TODO
-- BAR SCOLLING
-- EITHER TOUCH OR KEYBOARD
-    - have a temp fix, see if it is good enough
+- Waters -> Buildings
+    - rename
+    - don't let them spawn overlapping or on cars
 - Sounds
     - Trim R sound
 - Better integrate the water?
