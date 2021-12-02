@@ -1,6 +1,4 @@
 # TODO
-- Waters -> Buildings
-    - rename
 - Sounds
     - Trim R sound
 - Better integrate the water?
