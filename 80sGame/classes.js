@@ -454,7 +454,7 @@ class Block extends Thing {
     }
 }
 
-class building extends Thing {
+class Building extends Thing {
     constructor(y) {
         var color = "#0000ff";
         var h = carHeight * 2.5;
@@ -493,7 +493,7 @@ class building extends Thing {
     update() {
         if (this.pt.y > canvas.height && !this.offScreen) {
             var y = this.pt.y - (1.5 * carHeight) * 12;
-            buildings.push(new building(y));
+            buildings.push(new Building(y));
             this.offScreen = true;
         }
     }

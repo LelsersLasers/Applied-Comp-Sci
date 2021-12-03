@@ -449,7 +449,7 @@ for (var i = 0; i < 10; i++) {
     speed = getRandomInt(1, 3) == 2 ? -speed : speed;
     cars.push(new Car(startPos, speed));
     if (Math.random() < buildingBlockCount/10 && !justPlaced) {
-        buildings.push(new building(startPos.y));
+        buildings.push(new Building(startPos.y));
         justPlaced = true;
     }
     else {
