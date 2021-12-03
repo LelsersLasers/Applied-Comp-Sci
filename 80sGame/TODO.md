@@ -1,7 +1,6 @@
 # TODO
 - Sounds
     - Trim R sound
-- Better integrate the water?
 - Center Canvas
 - Update directions
 #
