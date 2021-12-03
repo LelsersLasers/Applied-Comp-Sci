@@ -439,10 +439,10 @@ dHB = new HitBox(new Vector(canvas.width * 4/5, canvas.height * 1/5), canvas.wid
 scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", carHeight, carHeight/3, "Score: 0");
 
 var cars = [];
-buildingBlockCount = 3;
+buildingBlockCount = 5;
 buildings = [];
 base = playerLevel - 3 * carHeight;
-justPlaced = false;
+justPlaced = true; // true to skip placing one in the first row
 for (var i = 0; i < 10; i++) {
     startPos = new Vector(getRandomInt(0, canvas.width - carWidth), base - (1.5 * carHeight * i));
     var speed = (getRandomInt(i/6 + 1, i/4 + 2)/900) * canvas.width;
