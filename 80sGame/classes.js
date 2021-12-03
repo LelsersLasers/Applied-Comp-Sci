@@ -477,10 +477,10 @@ class building extends Thing {
         var pt = new Vector(x, y);
         super(pt, color, w, h);
         this.offScreen = false;
-        this.deathMessage = "Drowned";
-        this.deathColor = "#7bb6e3";
+        this.deathMessage = "Ran Into Wall";
+        this.deathColor = "#f8d498";
         this.deathSound = document.createElement("audio");
-        this.deathSound.src = "splash.mp3";
+        this.deathSound.src = "thunk.mp3";
 
         this.buildings = [];
         for (var i = 0; i < buildingCount; i++) {

@@ -1,6 +1,7 @@
 # TODO
 - Sounds
     - Trim R sound
+    - New Sound for buildings?
 - Center Canvas
 - Update directions
 #
