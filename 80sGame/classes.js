@@ -92,8 +92,8 @@ class Ability extends Thing {
         context.rect(this.pt.x, this.pt.y, this.w, this.h);
         context.fill();
         
-        var delay = this.wait - this.timer >= 0 ? this.wait - this.timer : 0;
-        var width = (this.wait - delay) * this.w/this.wait;
+        let delay = this.wait - this.timer >= 0 ? this.wait - this.timer : 0;
+        let width = (this.wait - delay) * this.w/this.wait;
 
         context.beginPath();
         context.fillStyle = delay == 0 ? "#9ee092" : "#5e94d1";
@@ -140,8 +140,8 @@ class GameTxt extends Thing {
 
 class Laser extends Thing {
     constructor(pt, dir, stunTime) {
-        var ms = Math.sqrt((canvas.width * canvas.width + canvas.height * canvas.height)/52000);
-        var color = "#ff0055";
+        let ms = Math.sqrt((canvas.width * canvas.width + canvas.height * canvas.height)/52000);
+        let color = "#ff0055";
         switch (dir) {
             case "w":
                 var moveVector = new Vector(0, -ms);
@@ -247,7 +247,7 @@ class Player extends Thing {
         this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
     }
     moveUp(ms) {
-        var obstacles = [...cars, ...buildings, ...lasers, ...bar, ...this.afterImages];
+        let obstacles = [...cars, ...buildings, ...lasers, ...bar, ...this.afterImages];
         for (var i = 0; i < obstacles.length; i++) {
             obstacles[i].pt.y += ms;
         }  
@@ -256,7 +256,7 @@ class Player extends Thing {
         }
     }
     moveDown(ms) {
-        var obstacles = [...cars, ...buildings, ...lasers, ...bar, ...this.afterImages];
+        let obstacles = [...cars, ...buildings, ...lasers, ...bar, ...this.afterImages];
         for (var i = 0; i < obstacles.length; i++) {
             obstacles[i].pt.y -= ms;
         }  
@@ -332,12 +332,12 @@ class Player extends Thing {
                 qAbility.use();
             }
             if (eDown && eAbility.timer > eAbility.wait) { // laser ability
-                var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
+                let startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
                 lasers.push(new Laser(startPos, lastDir, 60));
                 eAbility.use();
             }
             if (rDown && rAbility.timer > rAbility.wait) { // laser grenade ability
-                var dirs = ["w", "a", "s", "d", "sd", "wd", "sa", "wa"];
+                let dirs = ["w", "a", "s", "d", "sd", "wd", "sa", "wa"];
                 for (var i = 0; i < dirs.length; i++) {
                     var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
                     lasers.push(new Laser(startPos, dirs[i], 120));
@@ -351,8 +351,8 @@ class Player extends Thing {
             this.afterImages[i].draw();
         }
         if (alive) {
-            var dirs = ["s", "w", "d", "a"];
-            var dir = dirs.indexOf(lastDir);
+            let dirs = ["s", "w", "d", "a"];
+            let dir = dirs.indexOf(lastDir);
             this.lastDrawDir = dir;
         }
         context.drawImage(texPlayer, posSourceAnimation[Number(!alive)][this.lastDrawDir][this.animation][0], posSourceAnimation[Number(!alive)][this.lastDrawDir][this.animation][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
@@ -361,7 +361,7 @@ class Player extends Thing {
 
 class AfterImage extends Thing {
     constructor(pt, w, h, a, b, c, frames) {
-        var color = "#000000";
+        let color = "#000000";
         super(pt, color, w, h);
         this.a = a;
         this.b = b;
@@ -380,9 +380,9 @@ class AfterImage extends Thing {
 
 class Car extends Thing {
     constructor(pt, ms) {
-        var color = "#ff0000";
-        var w = carWidth;
-        var h = carHeight;
+        let color = "#ff0000";
+        let w = carWidth;
+        let h = carHeight;
         super(pt, color, w, h);
         this.ms = ms;
         this.stun = 0;
@@ -413,31 +413,31 @@ class Car extends Thing {
             this.ms = this.ms * 1.001;
         }
         if (this.pt.y > canvas.height && !this.offScreen) {
-            var badX = true;
+            let badX = true;
             while (badX) {
                 badX = false;
                 var x = getRandomInt(0, canvas.width - this.w);
-                var tempHB = new HitBox(new Vector(x, this.pt.y - (1.5 * carHeight) * 10), this.w, this.h);
+                let tempHB = new HitBox(new Vector(x, this.pt.y - (1.5 * carHeight) * 10), this.w, this.h);
                 for (var i = 0; i < buildings.length; i++) {
                     if (tempHB.checkCollide(buildings[i].hb)) {
                         badX = true;
                     }
                 }
             }
-            var pos = new Vector(x, this.pt.y - (1.5 * carHeight) * 10);
+            let pos = new Vector(x, this.pt.y - (1.5 * carHeight) * 10);
             cars.push(new Car(pos, this.ms * 1.01));
             this.offScreen = true;
         }
     }
     draw() {
-        var dir = this.ms > 0 ? 0 : 1; 
+        let dir = this.ms > 0 ? 0 : 1; 
         context.drawImage(texCar, posSourceCar[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 34, 17, this.pt.x, this.pt.y, this.w, this.h);
     }
 }
 
 class Block extends Thing {
     constructor(pt, i, w, h) {
-        var color = "#000000";
+        let color = "#000000";
         super(pt, color, w, h);
         this.animation = i % 2;
     }
@@ -456,25 +456,25 @@ class Block extends Thing {
 
 class Building extends Thing {
     constructor(y) {
-        var color = "#0000ff";
-        var h = carHeight * 2.5;
-        var widthOfOne = (26 * h/40);
-        var maxW = Math.floor((carWidth * 1.5)/widthOfOne);
-        var buildingCount = getRandomInt(1, maxW + 1);
-        var w = buildingCount * widthOfOne;
+        let color = "#0000ff";
+        let h = carHeight * 2.5;
+        let widthOfOne = (26 * h/40);
+        let maxW = Math.floor((carWidth * 1.5)/widthOfOne);
+        let buildingCount = getRandomInt(1, maxW + 1);
+        let w = buildingCount * widthOfOne;
 
-        var badX = true;
+        let badX = true;
         while (badX) {
             badX = false;
             var x = getRandomInt(0, canvas.width - w);
-            var tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
+            let tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (var i = 0; i < cars.length; i++) {
                 if (tempHB.checkCollide(cars[i].hb)) {
                     badX = true;
                 }
             }
         }
-        var pt = new Vector(x, y);
+        let pt = new Vector(x, y);
         super(pt, color, w, h);
         this.offScreen = false;
         this.deathMessage = "Ran Into Wall";
@@ -484,7 +484,7 @@ class Building extends Thing {
 
         this.buildings = [];
         for (var i = 0; i < buildingCount; i++) {
-            var src = getRandomInt(0, 3);
+            let src = getRandomInt(0, 3);
             this.buildings.push(posSourceBuilding[src]);
         }
         this.widthOfOne = widthOfOne;
@@ -492,7 +492,7 @@ class Building extends Thing {
 
     update() {
         if (this.pt.y > canvas.height && !this.offScreen) {
-            var y = this.pt.y - (1.5 * carHeight) * 12;
+            let y = this.pt.y - (1.5 * carHeight) * 12;
             buildings.push(new Building(y));
             this.offScreen = true;
         }

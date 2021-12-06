@@ -119,7 +119,6 @@ function getMousePos(event) {
 }
 
 function mouseDownActions() {
-    // cursorHB.draw("#ffffff");
     if (inputMode != "key") {
         wDown = cursorHB.checkCollide(wHB) && mouseDown;
         sDown = cursorHB.checkCollide(sHB) && mouseDown;
@@ -324,7 +323,7 @@ var alive = true;
 var score = 0;
 var topScore = 0;
 
-var moveWait = 30;
+const moveWait = 30;
 
 var textTimer = 0;
 var textWait = 25;
@@ -334,27 +333,24 @@ var directionsHB;
 var lasers = [];
 
 // Set up the canvas, context objects, and html elements
-context = setUpContext();
-stateTxt = document.getElementById("state");
-scoreTxt = document.getElementById("score");
+var context = setUpContext();
+var stateTxt = document.getElementById("state");
+var scoreTxt = document.getElementById("score");
 
-cdBarWidth = 1/6 * canvas.width;
+const cdBarWidth = 1/6 * canvas.width;
 
-qDelayTxt = document.getElementById("qDelay");
-qCD1 = document.getElementById("qCD1");
-qCD2 = document.getElementById("qCD2");
+var qCD1 = document.getElementById("qCD1");
+var qCD2 = document.getElementById("qCD2");
 var teleportSound = document.createElement("audio");
 teleportSound.src = "teleport.mp3";
 
-eDelayTxt = document.getElementById("eDelay");
-eCD1 = document.getElementById("eCD1");
-eCD2 = document.getElementById("eCD2");
+var eCD1 = document.getElementById("eCD1");
+var eCD2 = document.getElementById("eCD2");
 var laserSound = document.createElement("audio");
 laserSound.src = "laser.mp3";
 
-rDelayTxt = document.getElementById("rDelay");
-rCD1 = document.getElementById("rCD1");
-rCD2 = document.getElementById("rCD2");
+var rCD1 = document.getElementById("rCD1");
+var rCD2 = document.getElementById("rCD2");
 var multipleLaserSound = document.createElement("audio");
 multipleLaserSound.src = "multipleLasers.mp3";
 
@@ -422,30 +418,30 @@ var posSourceBuilding = [
     [54, 0]
 ];
 
-carWidth = canvas.width * 1/9;
-carHeight = canvas.height * 1/14;
-playerLevel = carHeight * 10;
-player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight * 10/11, carHeight, canvas.width/14, 1.5 * canvas.height/14);
+const carWidth = canvas.width * 1/9;
+const carHeight = canvas.height * 1/14;
+const playerLevel = carHeight * 10;
+var player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight * 10/11, carHeight, canvas.width/14, 1.5 * canvas.height/14);
 
-qAbility = new Ability(new Vector(carHeight    , playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "Q", teleportSound);
-eAbility = new Ability(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "E", laserSound);
-rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 240, 240, "R", multipleLaserSound);
+var qAbility = new Ability(new Vector(carHeight    , playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "Q", teleportSound);
+var eAbility = new Ability(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "E", laserSound);
+var rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 240, 240, "R", multipleLaserSound);
 
-wHB = new HitBox(new Vector(canvas.width * 1/5, 0), canvas.width * 3/5, canvas.height * 1/5);
-sHB = new HitBox(new Vector(canvas.width * 1/5, canvas.height * 4/5), canvas.width * 3/5, canvas.height * 1/5);
-aHB = new HitBox(new Vector(0, canvas.height * 1/5), canvas.width * 1/5, canvas.height * 3/5);
-dHB = new HitBox(new Vector(canvas.width * 4/5, canvas.height * 1/5), canvas.width * 1/5, canvas.height * 3/5);
+var wHB = new HitBox(new Vector(canvas.width * 1/5, 0), canvas.width * 3/5, canvas.height * 1/5);
+var sHB = new HitBox(new Vector(canvas.width * 1/5, canvas.height * 4/5), canvas.width * 3/5, canvas.height * 1/5);
+var aHB = new HitBox(new Vector(0, canvas.height * 1/5), canvas.width * 1/5, canvas.height * 3/5);
+var dHB = new HitBox(new Vector(canvas.width * 4/5, canvas.height * 1/5), canvas.width * 1/5, canvas.height * 3/5);
 
-scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", carHeight, carHeight/3, "Score: 0");
+var scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", carHeight, carHeight/3, "Score: 0");
 
 var cars = [];
-buildingBlockCount = 5;
-buildings = [];
-base = playerLevel - 3 * carHeight;
-justPlaced = true; // true to skip placing one in the first row
+const buildingBlockCount = 5;
+var buildings = [];
+const base = playerLevel - 3 * carHeight;
+var justPlaced = true; // true to skip placing one in the first row
 for (var i = 0; i < 10; i++) {
-    startPos = new Vector(getRandomInt(0, canvas.width - carWidth), base - (1.5 * carHeight * i));
-    var speed = (getRandomInt(i/6 + 1, i/4 + 2)/900) * canvas.width;
+    let startPos = new Vector(getRandomInt(0, canvas.width - carWidth), base - (1.5 * carHeight * i));
+    let speed = (getRandomInt(i/6 + 1, i/4 + 2)/900) * canvas.width;
     speed = getRandomInt(1, 3) == 2 ? -speed : speed;
     cars.push(new Car(startPos, speed));
     if (Math.random() < buildingBlockCount/10 && !justPlaced) {
@@ -458,12 +454,11 @@ for (var i = 0; i < 10; i++) {
 }
 
 // to make it look like player is moving
-barWidth = 3/4 * carHeight;
-barHeight = (barWidth * 11) / 14; // (33/56) * carHeight
-base = 0;
+const barWidth = 3/4 * carHeight;
+const barHeight = (barWidth * 11) / 14; // (33/56) * carHeight
 var bar = [];
 for (i = 0; i < canvas.height/barHeight; i++) {
-    bar.push(new Block(new Vector(0, base + i * barHeight), i, barWidth, barHeight));
+    bar.push(new Block(new Vector(0, i * barHeight), i, barWidth, barHeight));
     bar.push(new Block(new Vector(canvas.width - barWidth, base + i * barHeight), i, barWidth, barHeight));
 }
 
