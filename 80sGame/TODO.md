@@ -3,15 +3,12 @@
     - Trim R sound
     - New Sound for buildings?
 - Center Canvas
-- Update directions
 #
 - Clean code
     - Mr. Bloom approved code
     - Variable name conventions inside code
-    - get set?
     - spaces between words, brakects, etc?
     - unused code/functions/vars
-    - var vs let?
     - semi-colens
 - General math/speed/sizes/etc
     - Centering things
@@ -21,5 +18,6 @@
 - Prep for ipad
     - Movement are buttons by touch
         - confirm current system works
+- Update directions
 - Finish README.md
 #

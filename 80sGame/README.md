@@ -31,7 +31,9 @@ Features/Design Choices:
     - W/A/S/D or Arrow Keys to move
     - Q/E/R or 1/2/3 for abilites
     - Enter to continue/move between screens (mouse click also works)
-- ??TOUCH SUPPORT??
+- Touch Support
+    - Touch the edges of the screen to move
+    - Touch the ability keys (bottom left) to activate them
 - SOUND
     - Less 'clear' than visuals
     - Focus on many sounds at once

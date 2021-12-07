@@ -188,15 +188,15 @@ function drawDirections() {
     }
 
     var txts = [];
-    txts.push("You are the green, the cars are the red.");
-    txts.push("To move, either use 'wasd' or touch the top, bottom, left, and right.")
+    txts.push("Use 'wasd' to move. Don't get hit by cars or go out of bounds sideways.");
+    txts.push("(You can also touch the top, bottom, left, and right to move.)")
     txts.push("Don't get hit by cars or go out of bounds sideways.");
-    txts.push("Also you can't swim (don't go into the blue building). Cars also can't swim.");
+    txts.push("Also you can't run through the buildings. Cars also can't go through the buildings.");
     txts.push("You also have 3 abilities:");
     txts.push("Q which teleports a short distance,");
     txts.push("E which fires a laser that causes a small stun, and");
     txts.push("R which fires a laser in every direction.");
-    txts.push("(Abilites can be actived with their respective key, or by tapping the icon in the bottom right.)")
+    txts.push("(Abilites can be actived with their respective key, or by tapping the icon in the bottom left.)")
     txts.push("Goal: Go as far up as possible.")
     txts.push("If you die, click the screen to restart");
     context.font = carHeight * 5/12 + "px serif";
