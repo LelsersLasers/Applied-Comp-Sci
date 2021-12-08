@@ -211,9 +211,6 @@ function drawGame() {
     for (var i = 0; i < bar.length; i++) {
         bar[i].draw();
     }
-    if (mouseDown) {
-        mouseDownActions();
-    }
     mouseDownActions();
     player.move();
     player.updateHB();
@@ -222,15 +219,15 @@ function drawGame() {
     for (var i = 0; i < obstacles.length; i++) {
         obstacles[i].update();
         obstacles[i].draw();
-            if (obstacles[i].hb.checkCollide(player.hb) && alive) {
-                stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
-                stateTxt.style.backgroundColor = obstacles[i].deathColor;
-                scoreView.color = obstacles[i].deathColor;
-                obstacles[i].deathSound.currentTime = 0;
-                obstacles[i].deathSound.play();
-                alive = false;
-                player.off();
-            }
+        if (obstacles[i].hb.checkCollide(player.hb) && alive) {
+            stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
+            stateTxt.style.backgroundColor = obstacles[i].deathColor;
+            scoreView.color = obstacles[i].deathColor;
+            obstacles[i].deathSound.currentTime = 0;
+            obstacles[i].deathSound.play();
+            alive = false;
+            player.off();
+        }
     }
     for (var i = 0; i < lasers.length; i++) {
         lasers[i].update();
