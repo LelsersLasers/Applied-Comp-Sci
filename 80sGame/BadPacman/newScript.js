@@ -54,14 +54,17 @@ function drawAll() {
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
     
-    player.move();
+    pos = player.move();
     player.draw();
     
     for (var i = 0; i < tiles.length; i++) {
         tiles[i].draw();
         if (tiles[i].hb.checkCollide(player.hb) && alive) {
-            alive = false;
-            player.off();
+            // alive = false;
+            // player.off();
+            player.x = pos[0];
+            player.y = pos[1];
+            lastDir = "";
         }
     }
     
@@ -90,25 +93,19 @@ const moveWait = 30;
 var context = setUpContext();
 
 const tileWidth = canvas.width / 11;
-const tileHeight = canvas.height / 3;
+const tileHeight = canvas.height / 5;
 
 var player = new Player(new Vector(tileWidth, tileHeight), tileWidth, tileHeight, canvas.width/14, 1.5 * canvas.height/14);
 
 
-var tiles = [
-    new Tile(new Vector(0, 0), tileWidth, tileHeight),
-    new Tile(new Vector(0, tileWidth * 1), tileWidth, tileHeight),
-    new Tile(new Vector(0, tileWidth * 1), tileWidth, tileHeight),
-    new Tile(new Vector(0, tileWidth * 1), tileWidth, tileHeight),
-    new Tile(new Vector(0, tileWidth * 1), tileWidth, tileHeight),
-    new Tile(new Vector(0, 0), tileWidth, tileHeight),
-    new Tile(new Vector(0, 0), tileWidth, tileHeight),
-    new Tile(new Vector(0, 0), tileWidth, tileHeight),
-    new Tile(new Vector(0, 0), tileWidth, tileHeight),
-    new Tile(new Vector(0, 0), tileWidth, tileHeight),
-    new Tile(new Vector(0, 0), tileWidth, tileHeight),
-];
+var tiles = [];
 
+for (var i = 0; i < 11; i++) {
+    tiles.push(new Tile(new Vector(i * tileWidth, 0), tileWidth, tileHeight));
+    tiles.push(new Tile(new Vector(i * tileWidth, canvas.height - tileHeight), tileWidth, tileHeight));
+}
+
+tiles.push(new Tile(new Vector(3 * tileWidth, 2 * tileHeight), tileWidth, tileHeight));
 
 
 // Fire up the animation engine

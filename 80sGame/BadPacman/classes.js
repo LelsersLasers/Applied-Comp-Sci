@@ -46,7 +46,7 @@ class Thing {
         this.color = color;
         this.w = w;
         this.h = h;
-        this.width = 3;
+        this.width = 1;
         this.active = true;
         this.hb = new HitBox(pt, w, h);
     }
@@ -71,6 +71,12 @@ class Thing {
             context.fill();
         }
         context.stroke();
+
+        context.strokeStyle = "#ffffff";
+        context.beginPath();
+        context.rect(this.pt.x, this.pt.y, this.w, this.h);
+        context.stroke();
+
     }
     updateHB() {
         this.hb = new HitBox(this.pt, this.w, this.h);
@@ -91,6 +97,7 @@ class Player extends Thing {
         this.ms = ms;
     }
     move() {
+        var pos = [this.pt.x, this.pt.y];
         if (this.active) {
             switch (lastDir) {
                 case "w":
@@ -107,5 +114,6 @@ class Player extends Thing {
                     break
             }
         }
+        return pos;
     }
 }
