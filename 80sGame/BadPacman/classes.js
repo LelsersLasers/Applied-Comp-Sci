@@ -84,9 +84,11 @@ class Thing {
 }
 
 class Tile extends Thing {
-    constructor(pt, w, h) {
+    constructor(pt, w, h, a, b) {
         var color = "#0000ff";
         super(pt, color, w, h);
+        this.a = a;
+        this.b = b;
     }
 }
 

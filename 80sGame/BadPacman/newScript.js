@@ -3,6 +3,7 @@ var sDown = false;
 var aDown = false;
 var dDown = false;
 var lastDir = "s";
+currentTile = [0, 0];
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -62,9 +63,10 @@ function drawAll() {
         if (tiles[i].hb.checkCollide(player.hb) && alive) {
             // alive = false;
             // player.off();
-            player.x = pos[0];
-            player.y = pos[1];
-            lastDir = "";
+            // player.x = pos[0];
+            // player.y = pos[1];
+            // lastDir = "";
+            tiles[i].off();
         }
     }
     
@@ -101,11 +103,12 @@ var player = new Player(new Vector(tileWidth, tileHeight), tileWidth, tileHeight
 var tiles = [];
 
 for (var i = 0; i < 11; i++) {
-    tiles.push(new Tile(new Vector(i * tileWidth, 0), tileWidth, tileHeight));
-    tiles.push(new Tile(new Vector(i * tileWidth, canvas.height - tileHeight), tileWidth, tileHeight));
+    for (var j = 0; j < 5; j++) {
+        if (j == 0 || j == 4 || i == 0 || i == 10) {
+            tiles.push(new Tile(new Vector(i * tileWidth, j * tileHeight), tileWidth, tileHeight, i, j));
+        }
+    }
 }
-
-tiles.push(new Tile(new Vector(3 * tileWidth, 2 * tileHeight), tileWidth, tileHeight));
 
 
 // Fire up the animation engine
