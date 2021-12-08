@@ -77,13 +77,45 @@ class Thing {
     }
 }
 
-class Ability extends Thing {
+class Trigger extends Thing {
+    constructor(pt, w, h, txt) {
+        var color = "#5e94d1";
+        super(pt, color, w, h);
+        this.color2 = "#9ee092";
+        this.txt = txt;
+        this.down = false;
+    }
+    draw() {
+        context.fillStyle = this.down ? this.color : this.color2;
+        context.beginPath();
+        context.rect(this.pt.x, this.pt.y, this.w, this.h);
+        context.fill();
+        this.drawTxt();
+    }
+    drawTxt() {
+        context.textAlign = "center";
+        context.fillStyle = "#ffffff";
+        context.font = carHeight/3 + "px serif";
+        context.textBaseline = "middle";
+        context.fillText(this.txt, this.pt.x + this.w/2, this.pt.y + this.h/2);
+    }
+    checkDown(cursorHB, mouseDown) {
+        if (cursorHB.checkCollide(this.hb) && mouseDown) {
+            this.down = true;
+            return true;
+        }
+        this.down = false;
+        return false;
+    }
+}
+
+class Ability extends Trigger {
     constructor(pt, w, h, timer, wait, txt, sound) {
         var color = "#dadfe6";
-        super(pt, color, w, h);
+        super(pt, w, h, txt);
+        this.color = color;
         this.timer = timer;
         this.wait = wait;
-        this.txt = txt;
         this.sound = sound;
     }
     draw() {
@@ -100,11 +132,7 @@ class Ability extends Thing {
         context.rect(this.pt.x, this.pt.y, width, this.h);
         context.fill();
 
-        context.textAlign = "center";
-        context.fillStyle = "#ffffff";
-        context.font = carHeight/3 + "px serif";
-        context.textBaseline = "middle";
-        context.fillText(this.txt, this.pt.x + this.w/2, this.pt.y + this.h/2);
+        this.drawTxt();
 
         this.timer++;
     }
@@ -208,7 +236,7 @@ class Laser extends Thing {
                 if (this.hb.checkCollide(cars[i].hb)) {
                     this.off();
                     cars[i].off();
-                    cars[i].stun = this.stunTime;
+                    cars[i].stun += this.stunTime;
                     this.hitSound.play();
                 }
             }
@@ -398,6 +426,7 @@ class Car extends Thing {
         this.stun--;
         if (this.stun <= 0) {
             this.on();
+            this.stun = 0;
         }
         if (this.active) {
             this.frame++;

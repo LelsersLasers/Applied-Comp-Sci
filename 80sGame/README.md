@@ -18,9 +18,9 @@ Features/Design Choices:
     - Animated Car
         - Wheels 'spin' based on the movement speed of the car
         - Changes color when stunned (just drawns an outline)
-    - Animated Water
-        - Animation speed is random
-        - Picks a section of the texture to show based on random number and the water block's width
+    - Buildings spawn in groups
+        - Random number of different textures make up the width
+        - Random textures per texture in the width
 - Simple Gameplay
     - Move just up/down/left/right (no diagonal)
     - Abilites are relativly straightforward to use
@@ -31,8 +31,8 @@ Features/Design Choices:
     - W/A/S/D or Arrow Keys to move
     - Q/E/R or 1/2/3 for abilites
     - Enter to continue/move between screens (mouse click also works)
-- Touch Support
-    - Touch the edges of the screen to move
+- Touch/Mouse support Support
+    - Touch the movement keys (bottom right) to move
     - Touch the ability keys (bottom left) to activate them
 - SOUND
     - Less 'clear' than visuals
@@ -60,6 +60,7 @@ Features/Design Choices:
 
 Other Things:
 - Bars on sides to give the impression the player is moving up and down, not the cars/waters
-- Cars will bounce off the edges and the water blocks
-    - 'Safe zones' on the other sides of water blocks
+- Cars will bounce off the edges and the buildings
+    - 'Safe zones' on the other sides of buildings
 - Stunned cars will still hurt the player
+- Stuns stack additively 

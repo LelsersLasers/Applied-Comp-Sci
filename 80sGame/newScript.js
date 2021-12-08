@@ -120,13 +120,13 @@ function getMousePos(event) {
 
 function mouseDownActions() {
     if (inputMode != "key") {
-        wDown = cursorHB.checkCollide(wHB) && mouseDown;
-        sDown = cursorHB.checkCollide(sHB) && mouseDown;
-        aDown = cursorHB.checkCollide(aHB) && mouseDown;
-        dDown = cursorHB.checkCollide(dHB) && mouseDown;
-        qDown = cursorHB.checkCollide(qAbility.hb) && mouseDown;
-        eDown = cursorHB.checkCollide(eAbility.hb) && mouseDown;
-        rDown = cursorHB.checkCollide(rAbility.hb) && mouseDown;
+        wDown = wTrigger.checkDown(cursorHB, mouseDown);
+        sDown = sTrigger.checkDown(cursorHB, mouseDown);
+        aDown = aTrigger.checkDown(cursorHB, mouseDown);
+        dDown = dTrigger.checkDown(cursorHB, mouseDown);
+        qDown = qAbility.checkDown(cursorHB, mouseDown);
+        eDown = eAbility.checkDown(cursorHB, mouseDown);
+        rDown = rAbility.checkDown(cursorHB, mouseDown);
         if (wDown) lastDir = "w";
         if (sDown) lastDir = "s";
         if (aDown) lastDir = "a";
@@ -275,10 +275,10 @@ function drawGame() {
         backgroundMusic.currentTime = 10;
     }
 
-    wHB.draw("#ffffff");
-    sHB.draw("#ffffff");
-    aHB.draw("#ffffff");
-    dHB.draw("#ffffff");
+    wTrigger.draw();
+    sTrigger.draw();
+    aTrigger.draw();
+    dTrigger.draw();
 }
 
 function drawAll() {
@@ -427,10 +427,10 @@ var qAbility = new Ability(new Vector(carHeight    , playerLevel + carHeight * 2
 var eAbility = new Ability(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "E", laserSound);
 var rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 240, 240, "R", multipleLaserSound);
 
-var wHB = new HitBox(new Vector(canvas.width * 1/5, 0), canvas.width * 3/5, canvas.height * 1/5);
-var sHB = new HitBox(new Vector(canvas.width * 1/5, canvas.height * 4/5), canvas.width * 3/5, canvas.height * 1/5);
-var aHB = new HitBox(new Vector(0, canvas.height * 1/5), canvas.width * 1/5, canvas.height * 3/5);
-var dHB = new HitBox(new Vector(canvas.width * 4/5, canvas.height * 1/5), canvas.width * 1/5, canvas.height * 3/5);
+var wTrigger = new Trigger(new Vector(canvas.width - (carHeight * 7/4), playerLevel + carHeight * 5/4), carHeight * 3/4, carHeight * 3/4, "W");
+var sTrigger = new Trigger(new Vector(canvas.width - (carHeight * 7/4), playerLevel + carHeight * 11/4), carHeight * 3/4, carHeight * 3/4, "S");
+var aTrigger = new Trigger(new Vector(canvas.width - (carHeight * 10/4), playerLevel + carHeight * 2), carHeight * 3/4, carHeight * 3/4, "A");
+var dTrigger = new Trigger(new Vector(canvas.width - carHeight, playerLevel + carHeight * 2), carHeight * 3/4, carHeight * 3/4, "D");
 
 var scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", carHeight, carHeight/3, "Score: 0");
 
@@ -459,7 +459,7 @@ const barHeight = (barWidth * 11) / 14; // (33/56) * carHeight
 var bar = [];
 for (i = 0; i < canvas.height/barHeight; i++) {
     bar.push(new Block(new Vector(0, i * barHeight), i, barWidth, barHeight));
-    bar.push(new Block(new Vector(canvas.width - barWidth, base + i * barHeight), i, barWidth, barHeight));
+    bar.push(new Block(new Vector(canvas.width - barWidth, i * barHeight), i, barWidth, barHeight));
 }
 
 
