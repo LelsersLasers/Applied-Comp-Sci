@@ -107,6 +107,7 @@ for (var i = 0; i < 11; i++) {
         if (j == 0 || j == 4 || i == 0 || i == 10) {
             tiles.push(new Tile(new Vector(i * tileWidth, j * tileHeight), tileWidth, tileHeight, i, j));
         }
+        if (i > 3 && i < 6 && j == )
     }
 }
 
