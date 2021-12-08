@@ -85,8 +85,8 @@ class Trigger extends Thing {
         this.txt = txt;
         this.down = false;
     }
-    draw() {
-        context.fillStyle = this.down ? this.color : this.color2;
+    draw(keyDown) {
+        context.fillStyle = this.down || keyDown ? this.color : this.color2;
         context.beginPath();
         context.rect(this.pt.x, this.pt.y, this.w, this.h);
         context.fill();

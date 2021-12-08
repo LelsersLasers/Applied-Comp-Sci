@@ -55,8 +55,9 @@ Features/Design Choices:
     - Flashing text
 - Everything is scaled with canvas.width or canvas.height
     - Designed around 900x700 px screen, but looks/works completely fine on any resonable screen size
-    - The player and the ability buttons are sqaures, and they scale off the hieght
+    - The player is a squares and scales off the height
         - (player is technically 10:11, but to keep the ratio both numbers have to scale off of 1 number) 
+        - Same with on screen buttons
 
 Other Things:
 - Bars on sides to give the impression the player is moving up and down, not the cars/waters

@@ -275,10 +275,10 @@ function drawGame() {
         backgroundMusic.currentTime = 10;
     }
 
-    wTrigger.draw();
-    sTrigger.draw();
-    aTrigger.draw();
-    dTrigger.draw();
+    wTrigger.draw(wDown);
+    sTrigger.draw(sDown);
+    aTrigger.draw(aDown);
+    dTrigger.draw(dDown);
 }
 
 function drawAll() {
