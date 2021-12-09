@@ -2,7 +2,7 @@ var wDown = false;
 var sDown = false;
 var aDown = false;
 var dDown = false;
-var lastDir = "s";
+var dir = "s";
 currentTile = [0, 0];
 
 document.addEventListener("keydown", keyDownHandler, false);
@@ -12,19 +12,19 @@ function keyDownHandler(e) {
     switch (e.key) {
         case "w": case "ArrowUp":
             wDown = true;
-            lastDir = "w";
+            dir = "w";
             break;
         case "s": case "ArrowDown":
             sDown = true;
-            lastDir = "s";
+            dir = "s";
             break;
         case "a": case "ArrowLeft":
             aDown = true;
-            lastDir = "a";
+            dir = "a";
             break;
         case "d": case "ArrowRight":
             dDown = true;
-            lastDir = "d";
+            dir = "d";
             break;
         case "z":
             reset();
@@ -55,19 +55,19 @@ function drawAll() {
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
     
-    pos = player.move();
+    player.move();
     player.draw();
     
     for (var i = 0; i < tiles.length; i++) {
         tiles[i].draw();
-        if (tiles[i].hb.checkCollide(player.hb) && alive) {
-            // alive = false;
-            // player.off();
-            // player.x = pos[0];
-            // player.y = pos[1];
-            // lastDir = "";
-            tiles[i].off();
-        }
+        // if (tiles[i].hb.checkCollide(player.hb) && alive) {
+        //     // alive = false;
+        //     // player.off();
+        //     // player.x = pos[0];
+        //     // player.y = pos[1];
+        //     // dir = "";
+        //     tiles[i].off();
+        // }
     }
     
     window.requestAnimationFrame(drawAll);
@@ -94,10 +94,12 @@ const moveWait = 30;
 // Set up the canvas, context objects, and html elements
 var context = setUpContext();
 
-const tileWidth = canvas.width / 11;
-const tileHeight = canvas.height / 5;
+// const tileWidth = canvas.width / 11;
+// const tileHeight = canvas.height / 5;
+const tileWidth = 70;
+const tileHeight = 70;
 
-var player = new Player(new Vector(tileWidth, tileHeight), tileWidth, tileHeight, canvas.width/14, 1.5 * canvas.height/14);
+var player = new Player(new Vector(tileWidth, tileHeight), tileWidth, tileHeight, 40, 0, 0);
 
 
 var tiles = [];
@@ -107,7 +109,9 @@ for (var i = 0; i < 11; i++) {
         if (j == 0 || j == 4 || i == 0 || i == 10) {
             tiles.push(new Tile(new Vector(i * tileWidth, j * tileHeight), tileWidth, tileHeight, i, j));
         }
-        if (i > 3 && i < 6 && j == )
+        if (i > 1 && i < 6 && j == 2) {
+            tiles.push(new Tile(new Vector(i * tileWidth, j * tileHeight), tileWidth, tileHeight, i, j));
+        }
     }
 }
 

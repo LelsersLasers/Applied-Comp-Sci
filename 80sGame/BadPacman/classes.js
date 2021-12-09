@@ -93,29 +93,49 @@ class Tile extends Thing {
 }
 
 class Player extends Thing {
-    constructor(pt, w, h, ms) {
+    constructor(pt, w, h, ms, a, b) {
         var color = "#00ff00";
         super(pt, color, w, h);
         this.ms = ms;
+        this.a = a;
+        this.b = b;
+        this.oldDir = " ";
     }
     move() {
         var pos = [this.pt.x, this.pt.y];
-        if (this.active) {
-            switch (lastDir) {
-                case "w":
-                    this.pt.y -= this.ms/moveWait;
-                    break;
-                case "s":
-                    this.pt.y += this.ms/moveWait;
-                    break;
-                case "a":
-                    this.pt.x -= this.ms/moveWait;
-                    break;
-                case "d":
-                    this.pt.x += this.ms/moveWait;
-                    break
+        if (true) {
+            if (this.oldDir != dir) {
+                switch (dir) {
+                    case "w":
+                        this.pt.y -= this.ms/moveWait;
+                        break;
+                    case "s":
+                        this.pt.y += this.ms/moveWait;
+                        break;
+                    case "a":
+                        this.pt.x -= this.ms/moveWait;
+                        break;
+                    case "d":
+                        this.pt.x += this.ms/moveWait;
+                        break
+                }
+                var failed = false;
+                for (var i = 0; i < tiles.length; i++) {
+                    if (tiles[i].hb.checkCollide(player.hb)) {
+                        failed = true;
+                        tiles[i].off();
+                        console.log("a");
+                    }
+                }
+                if (failed) {
+                    // this.pt.x = pos[0];
+                    // this.pt.y = pos[1];
+                    dir = this.oldDir;
+                }
+                else {
+                    this.oldDir = dir;
+                }
             }
         }
-        return pos;
     }
 }
