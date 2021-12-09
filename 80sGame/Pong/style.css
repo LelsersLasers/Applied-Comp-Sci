@@ -1,0 +1,19 @@
+html {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.blue {
+    /* border: 1px solid blue; */
+    border: none;
+}
+.txtCenter {
+    text-align: center;
+}
+.center {
+    margin: 0 auto;
+}
+
+canvas {
+    border: 4px solid white;
+}
