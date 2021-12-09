@@ -89,8 +89,9 @@ class Particle extends Thing {
     constructor(pt, w, h) {
         var color = "#ffffff";
         super(pt, color, w, h, -1);
-        this.move = new Vector(getRandomInt(-100, 100)/1, getRandomInt(-100, 100)/1);
-        this.move.scale(5);
+        this.move = new Vector(getRandomInt(-1000, 1000)/1, getRandomInt(-1000, 1000)/1);
+        this.move.scale(2);
+        this.pts = [];
     }
 
     update() {
@@ -105,5 +106,22 @@ class Particle extends Thing {
                 }
             }
         }
+        if (this.active) this.pts.push(new Vector(this.pt.x, this.pt.y));
+        if (this.hb.checkCollide(endBlock.hb) || !this.active) {
+            endBlock.color = "#ffffff";
+            this.drawLine();
+        }
+    }
+    drawLine() {
+        context.strokeStyle = "#00ff00";
+        context.color = "#00ff00";
+        context.beginPath();
+        context.moveTo(this.pts[0].x, this.pts[0].y);
+        for (var i = 1; i < this.pts.length; i++) {
+            context.lineTo(this.pts[i].x, this.pts[i].y);
+        }
+        context.stroke();
+        this.off();
+        alive = false;
     }
 }
