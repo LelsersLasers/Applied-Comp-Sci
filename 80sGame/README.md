@@ -7,7 +7,7 @@ Features/Design Choices:
         - Each color means something
         - Red = Car
         - Green = Player
-        - Blue = Water
+        - Orange/Grey/Blue = Buildings
         - Purple/Yellow = Side Arrows
     - No pointless effects
         - No particles, everything drawn has effect
@@ -21,6 +21,7 @@ Features/Design Choices:
     - Buildings spawn in groups
         - Random number of different textures make up the width
         - Random textures per texture in the width
+        - Preserves the dimension scale
 - Simple Gameplay
     - Move just up/down/left/right (no diagonal)
     - Abilites are relativly straightforward to use
@@ -29,6 +30,7 @@ Features/Design Choices:
         - Player can use multiple abilites and move at the same time
 - Keyboard Support
     - W/A/S/D or Arrow Keys to move
+        - Note: Arrow Keys might scroll the page not just act as inputs
     - Q/E/R or 1/2/3 for abilites
     - Enter to continue/move between screens (mouse click also works)
 - Touch/Mouse support Support
@@ -48,13 +50,13 @@ Features/Design Choices:
         - Clicking anywhere else or pressing Enter will start the game
         - Directions
             - Click anywhere to return to welcome screen
-        - Main Game
-            - Background music will auto start
-                - Clicking the screen or pressing Enter will toggle it on/off
-            - Clicking the screen while dead returns the player to the welcome screen
+    - Main Game
+        - Background music will auto start
+            - Clicking the screen or pressing Enter will toggle it on/off
+        - Clicking the screen while dead returns the player to the welcome screen
     - Flashing text
 - Everything is scaled with canvas.width or canvas.height
-    - Designed around 900x700 px screen, but looks/works completely fine on any resonable screen size
+    - Designed around 900x700 px screen, but looks/works completely fine on (basically) any screen size
     - The player is a squares and scales off the height
         - (player is technically 10:11, but to keep the ratio both numbers have to scale off of 1 number) 
         - Same with on screen buttons

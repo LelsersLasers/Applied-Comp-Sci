@@ -189,7 +189,7 @@ function drawDirections() {
 
     var txts = [];
     txts.push("Use 'wasd' to move. Don't get hit by cars or go out of bounds sideways.");
-    txts.push("(You can also touch the top, bottom, left, and right to move.)")
+    txts.push("(You can also touch the w/a/s/d buttons in the bottom right.)")
     txts.push("Don't get hit by cars or go out of bounds sideways.");
     txts.push("Also you can't run through the buildings. Cars also can't go through the buildings.");
     txts.push("You also have 3 abilities:");
