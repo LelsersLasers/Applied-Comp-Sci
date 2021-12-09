@@ -488,7 +488,7 @@ class Building extends Thing {
         let color = "#0000ff";
         let h = carHeight * 2.5;
         let widthOfOne = (26 * h/40);
-        let maxW = Math.floor((carWidth * 1.5)/widthOfOne);
+        let maxW = Math.ceil((carWidth * 1.5)/widthOfOne);
         let buildingCount = getRandomInt(1, maxW + 1);
         let w = buildingCount * widthOfOne;
 
