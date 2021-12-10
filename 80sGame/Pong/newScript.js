@@ -58,13 +58,13 @@ function drawAll() {
     var txt = score[0] + " : " + score[1];
     context.fillText(txt, canvas.width/2, canvas.height * 1/6);
 
-    if (score[0] >= 11) {
+    if (score[0] >= 11 && score[0] - score[1] >= 2) {
         alive = false;
         context.font = 1/6 * canvas.height + "px serif";
         var txt = "PLAYER 1 WINS!";
         context.fillText(txt, canvas.width/2, canvas.height * 1/2);
     }
-    else if (score[1] >= 11) {
+    else if (score[1] >= 11 && score[1] - score[0] >= 2) {
         alive = false;
         context.font = 1/6 * canvas.height + "px serif";
         var txt = "PLAYER 2 WINS!";

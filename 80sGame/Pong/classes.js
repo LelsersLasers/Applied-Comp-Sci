@@ -112,18 +112,19 @@ class Ball extends Thing {
             this.move.y *= -1;
         }
         if (this.hb.outOfBoundsX() != -1) {
-            this.move.x *= -1;
             if (this.hb.outOfBoundsX() == 0 && paddle2.active) {
                 paddle2.off();
                 paddle2.ms *= 1.1;
                 ball.ms *= 0.8;
                 score[this.hb.outOfBoundsX()]++;
+                this.move.x *= -1;
             }
             else if (this.hb.outOfBoundsX() == 1 && paddle1.active) {
                 paddle1.off();
                 paddle1.ms *= 1.1;
                 ball.ms *= 0.8;
                 score[this.hb.outOfBoundsX()]++;
+                this.move.x *= -1;
             }
         }
         if (this.pt.x > (canvas.width - this.w)/2) {
@@ -168,7 +169,7 @@ class Paddle extends Thing {
         if (this.active && this.canHit) {
             if (this.hb.checkCollide(ball.hb)) {
                 var dir = ball.move.x > 0 ? -1 : 1;
-                ball.move = new Vector(getRandomInt(4, 10), getRandomInt(-12, 12));
+                ball.move = new Vector(getRandomInt(6, 10), getRandomInt(-8, 8));
                 ball.move.x *= dir;
                 ball.ms *= 1.05;
                 this.canHit = false;
