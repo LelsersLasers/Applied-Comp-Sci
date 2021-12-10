@@ -106,22 +106,24 @@ class Ball extends Thing {
         context.fill();
     }
     update() {
+        this.move.scale(this.ms);
         this.pt.apply(this.move);
         if (this.hb.outOfBoundsY()) {
             this.move.y *= -1;
         }
         if (this.hb.outOfBoundsX() != -1) {
             this.move.x *= -1;
-            score[this.hb.outOfBoundsX()]++;
-            if (this.hb.outOfBoundsX() == 0) {
+            if (this.hb.outOfBoundsX() == 0 && paddle2.active) {
                 paddle2.off();
                 paddle2.ms *= 1.1;
-                ball.ms *= 0.95
+                ball.ms *= 0.8;
+                score[this.hb.outOfBoundsX()]++;
             }
-            else {
+            else if (this.hb.outOfBoundsX() == 1 && paddle1.active) {
                 paddle1.off();
                 paddle1.ms *= 1.1;
-                ball.ms *= 0.95
+                ball.ms *= 0.8;
+                score[this.hb.outOfBoundsX()]++;
             }
         }
         if (this.pt.x > (canvas.width - this.w)/2) {
@@ -168,8 +170,7 @@ class Paddle extends Thing {
                 var dir = ball.move.x > 0 ? -1 : 1;
                 ball.move = new Vector(getRandomInt(4, 10), getRandomInt(-12, 12));
                 ball.move.x *= dir;
-                ball.ms *= 1.08;
-                ball.move.scale(ball.ms);
+                ball.ms *= 1.05;
                 this.canHit = false;
             }
         }
