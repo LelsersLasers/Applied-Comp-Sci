@@ -116,10 +116,12 @@ class Ball extends Thing {
             if (this.hb.outOfBoundsX() == 0) {
                 paddle2.off();
                 paddle2.ms *= 1.1;
+                ball.ms *= 0.9
             }
             else {
                 paddle1.off();
                 paddle1.ms *= 1.1;
+                ball.ms *= 0.9
             }
         }
         if (this.pt.x > (canvas.width - this.w)/2) {

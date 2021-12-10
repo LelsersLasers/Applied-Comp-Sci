@@ -44,6 +44,7 @@ Features/Design Choices:
         - no lyrics
     - Lack of clarity + high tempo = chaotic enviroment
         - Creates a sense of pressure to do something
+    - While in game, tap the screen or press Enter toggle the background music
 - 'Screens'
     - Welcome
         - Clicking on the directions button will open the directions screen
@@ -66,4 +67,8 @@ Other Things:
 - Cars will bounce off the edges and the buildings
     - 'Safe zones' on the other sides of buildings
 - Stunned cars will still hurt the player
-- Stuns stack additively 
+- Stuns stack additively
+
+- This code is also on github at: https://github.com/Lord-Lelsers/Applied-Comp-Sci
+    - "Lord-Lelsers" is my school account
+    - "LelsersLasers" is my home/personal account
