@@ -94,10 +94,10 @@ var score = [0, 0];
 // Set up the canvas, context objects, and html elements
 var context = setUpContext();
 
-var ball = new Ball(6, 6);
+var ball = new Ball((canvas.width * canvas.width + canvas.height * canvas.height)/(500 * 500));
 
-var paddle1 = new Paddle(50/600 * canvas.width, 10/600 * canvas.width, 100/600 * canvas.height, 4);
-var paddle2 = new Paddle(canvas.width - 50/600 * canvas.width, 10/600 * canvas.width, 100/600 * canvas.height, 4);
+var paddle1 = new Paddle(50/600 * canvas.width, 10/600 * canvas.width, 100/600 * canvas.height, 6 * canvas.height/700);
+var paddle2 = new Paddle(canvas.width - 50/600 * canvas.width, 10/600 * canvas.width, 100/600 * canvas.height, 6 * canvas.height/700);
 
 // Fire up the animation engine
 window.requestAnimationFrame(drawAll);

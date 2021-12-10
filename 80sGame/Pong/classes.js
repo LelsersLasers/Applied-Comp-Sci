@@ -89,15 +89,15 @@ class Thing {
 }
 
 class Ball extends Thing {
-    constructor(r, ms) {
+    constructor(r) {
         var color = "#ffffff";
         var w = r * 2;
         var h = r * 2;
         var pt = new Vector(canvas.width/2 - r, canvas.height/2 - r);
         super(pt, color, w, h);
         this.move = new Vector(getRandomInt(1,3) == 1 ? 1 : -1, 0);
-        this.ms = ms;
-        this.move.scale(ms);
+        this.ms = r;
+        this.move.scale(r);
     }
     draw() {
         context.fillStyle = this.color;
@@ -115,11 +115,11 @@ class Ball extends Thing {
             score[this.hb.outOfBoundsX()]++;
             if (this.hb.outOfBoundsX() == 0) {
                 paddle2.off();
-                paddle2.ms *= 1.1;
+                paddle2.ms *= 1.2;
             }
             else {
                 paddle1.off();
-                paddle1.ms *= 1.1;
+                paddle1.ms *= 1.2;
             }
         }
         if (this.pt.x > (canvas.width - this.w)/2) {
