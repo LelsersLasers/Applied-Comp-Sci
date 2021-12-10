@@ -37,12 +37,12 @@ class HitBox {
     }
     outOfBoundsX() {
         if (this.pt.x < 0) {
-            return 0;
-        }
-        else if (this.pt.x + this.w > canvas.width) {
             return 1;
         }
-        return false, -1;
+        else if (this.pt.x + this.w > canvas.width) {
+            return 0;
+        }
+        return -1;
     }
     draw(color) {
         context.strokeStyle = color;
@@ -85,22 +85,19 @@ class Thing {
             context.fill();
         }
         context.stroke();
-
-        // context.strokeStyle = "#ffffff";
-        // context.beginPath();
-        // context.rect(this.hb.pt.x, this.hb.pt.y, this.hb.w, this.hb.h);
-        // context.stroke();
     }
 }
 
 class Ball extends Thing {
-    constructor(pt, r) {
+    constructor(r, ms) {
         var color = "#ffffff";
         var w = r * 2;
         var h = r * 2;
+        var pt = new Vector(canvas.width/2 - r, canvas.height/2 - r);
         super(pt, color, w, h);
-        this.move = new Vector(getRandomInt(-1000, 1000)/1, getRandomInt(-1000, 1000)/1);
-        this.move.scale(5);
+        this.move = new Vector(getRandomInt(1,3) == 1 ? 1 : -1, 0);
+        this.ms = ms;
+        this.move.scale(ms);
     }
     draw() {
         context.fillStyle = this.color;
@@ -115,26 +112,64 @@ class Ball extends Thing {
         }
         if (this.hb.outOfBoundsX() != -1) {
             this.move.x *= -1;
+            score[this.hb.outOfBoundsX()]++;
+            if (this.hb.outOfBoundsX() == 0) {
+                paddle2.off();
+                paddle2.ms *= 1.1;
+            }
+            else {
+                paddle1.off();
+                paddle1.ms *= 1.1;
+            }
+        }
+        if (this.pt.x > (canvas.width - this.w)/2) {
+            paddle1.on();
+            paddle1.canHit = true;
+        }
+        else {
+            paddle2.on();
+            paddle2.canHit = true;
         }
     }
 }
 
 
 class Paddle extends Thing {
-    constructor(pt, w, h, ms) {
+    constructor(x, w, h, ms) {
         var color = "#ffffff";
+        var pt = new Vector(x, (canvas.height - h)/2);
         super(pt, color, w, h);
         this.ms = ms;
+        this.canHit = true;
+        this.mode = false;
+        this.keys = [false, false];
     }
     update() {
-        if (ball.pt.y > this.pt.y + this.h/2) {
-            this.pt.y += this.ms; 
+        if (!this.mode) {
+            if (ball.pt.y > this.pt.y + this.h/2) {
+                if (this.pt.y <= canvas.height - this.h) this.pt.y += this.ms; 
+            }
+            else {
+                if (this.pt.y >= 0) this.pt.y -= this.ms;
+            }
         }
         else {
-            this.pt.y -= this.ms;
+            if (this.keys[1]) {
+                if (this.pt.y <= canvas.height - this.h) this.pt.y += this.ms;  
+            }
+            if (this.keys[0]) {
+                if (this.pt.y >= 0) this.pt.y -= this.ms;
+            }
         }
-        if (this.hb.checkCollide(ball.hb)) {
-            ball.move.x *= -1;
+        if (this.active && this.canHit) {
+            if (this.hb.checkCollide(ball.hb)) {
+                var dir = ball.move.x > 0 ? -1 : 1;
+                ball.move = new Vector(getRandomInt(4, 10), getRandomInt(-12, 12));
+                ball.move.x *= dir;
+                ball.ms *= 1.02;
+                ball.move.scale(ball.ms);
+                this.canHit = false;
+            }
         }
     }
 }

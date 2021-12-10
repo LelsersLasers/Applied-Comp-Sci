@@ -1,3 +1,37 @@
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+
+function keyDownHandler(e) {
+    switch (e.key) {
+        case "w": case "ArrowUp": paddle1.keys[0] = true; break;
+        case "s": case "ArrowDown": paddle1.keys[1] = true; break;
+
+        case "p": paddle2.keys[0] = true; break;
+        case "l": paddle2.keys[1] = true; break;
+
+        case "1": case "Enter": paddle1.mode = !paddle1.mode; break;
+        case "2": case "Enter": paddle2.mode = !paddle2.mode; break;
+
+        case "z":
+            reset();
+            break;
+    }
+}
+function keyUpHandler(e) {
+    switch (e.key) {
+        case "w": paddle1.keys[0] = false; break;
+        case "s": paddle1.keys[1] = false; break;
+
+        case "p": paddle2.keys[0] = false; break;
+        case "l": paddle2.keys[1] = false; break;
+    }
+}
+
+function reset() {
+    location.reload(); // reloads the webpage
+}
+
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -17,6 +51,25 @@ function drawAll() {
 
     paddle1.draw();
     paddle2.draw();
+
+    context.textAlign = "center";
+    context.fillStyle = "#ffffff";
+    context.font = 1/8 * canvas.height + "px serif";
+    var txt = score[0] + " : " + score[1];
+    context.fillText(txt, canvas.width/2, canvas.height * 1/6);
+
+    if (score[0] >= 11) {
+        alive = false;
+        context.font = 1/6 * canvas.height + "px serif";
+        var txt = "PLAYER 1 WINS!";
+        context.fillText(txt, canvas.width/2, canvas.height * 1/2);
+    }
+    else if (score[1] >= 11) {
+        alive = false;
+        context.font = 1/6 * canvas.height + "px serif";
+        var txt = "PLAYER 2 WINS!";
+        context.fillText(txt, canvas.width/2, canvas.height * 1/2);
+    }
 
     if (alive) window.requestAnimationFrame(drawAll);
 }
@@ -41,10 +94,10 @@ var score = [0, 0];
 // Set up the canvas, context objects, and html elements
 var context = setUpContext();
 
-var ball = new Ball(new Vector(canvas.width/2, canvas.height/2), 10);
+var ball = new Ball(6, 6);
 
-var paddle1 = new Paddle(new Vector(50/600 * canvas.width, getRandomInt(0, canvas.height)), 10/600 * canvas.width, 100/600 * canvas.height, 2);
-var paddle2 = new Paddle(new Vector(canvas.width - 50/600 * canvas.width, getRandomInt(0, canvas.height)), 10/600 * canvas.width, 100/600 * canvas.height, 2);
+var paddle1 = new Paddle(50/600 * canvas.width, 10/600 * canvas.width, 100/600 * canvas.height, 4);
+var paddle2 = new Paddle(canvas.width - 50/600 * canvas.width, 10/600 * canvas.width, 100/600 * canvas.height, 4);
 
 // Fire up the animation engine
 window.requestAnimationFrame(drawAll);
