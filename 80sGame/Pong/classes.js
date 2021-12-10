@@ -115,11 +115,11 @@ class Ball extends Thing {
             score[this.hb.outOfBoundsX()]++;
             if (this.hb.outOfBoundsX() == 0) {
                 paddle2.off();
-                paddle2.ms *= 1.2;
+                paddle2.ms *= 1.1;
             }
             else {
                 paddle1.off();
-                paddle1.ms *= 1.2;
+                paddle1.ms *= 1.1;
             }
         }
         if (this.pt.x > (canvas.width - this.w)/2) {
@@ -166,7 +166,7 @@ class Paddle extends Thing {
                 var dir = ball.move.x > 0 ? -1 : 1;
                 ball.move = new Vector(getRandomInt(4, 10), getRandomInt(-12, 12));
                 ball.move.x *= dir;
-                ball.ms *= 1.02;
+                ball.ms *= 1.05;
                 ball.move.scale(ball.ms);
                 this.canHit = false;
             }
