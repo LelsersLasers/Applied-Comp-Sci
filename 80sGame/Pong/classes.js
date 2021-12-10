@@ -60,7 +60,7 @@ class Thing {
         this.color = color;
         this.w = w;
         this.h = h;
-        this.width = 1;
+        this.width = 3;
         this.active = true;
         this.hb = new HitBox(pt, w, h);
     }
@@ -98,6 +98,7 @@ class Ball extends Thing {
         this.move = new Vector(getRandomInt(1,3) == 1 ? 1 : -1, 0);
         this.ms = r;
         this.move.scale(r);
+        this.pts = [];
     }
     draw() {
         context.fillStyle = this.color;
@@ -106,6 +107,7 @@ class Ball extends Thing {
         context.fill();
     }
     update() {
+        this.pts.push(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2));
         this.move.scale(this.ms);
         this.pt.apply(this.move);
         if (this.hb.outOfBoundsY()) {
@@ -135,6 +137,16 @@ class Ball extends Thing {
             paddle2.on();
             paddle2.canHit = true;
         }
+        context.lineWidth = 1;
+        context.strokeStyle = "#ffffff";
+        context.fillStyle = "#666666";
+        context.beginPath();
+        context.moveTo(this.pts[0].x, this.pts[0].y);
+        for (var i = 1; i < this.pts.length; i++) {
+            context.lineTo(this.pts[i].x, this.pts[i].y);
+        }
+        context.fill();
+        context.stroke();
     }
 }
 
