@@ -1,9 +1,11 @@
 # TODO
 - Trim R sound
-- Multiple types of cars
-    - normal red
-    - blue bus
-    - grey ufo?!? that can move vertically?
+- UFO
+    - sound/color
+    - scale:
+        - w/h
+        - speed/vector
+        - spawn rate
 - Center Canvas
 - Update directions/read me
 #

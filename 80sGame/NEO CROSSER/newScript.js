@@ -215,7 +215,7 @@ function drawGame() {
     player.move();
     player.updateHB();
     player.draw();
-    obstacles = [...cars, ...buildings];
+    obstacles = [...cars, ...buildings, ...ufos];
     for (var i = 0; i < obstacles.length; i++) {
         obstacles[i].update();
         obstacles[i].draw();
@@ -425,6 +425,19 @@ var posSourceBus = [ // [active][dir][animation][x/y]
     ],
 ];
 
+var texUfo = new Image();
+texUfo.src = "ufo-20x19-2x2-1spacing.png";
+var posSourceUfo = [
+    [
+        [0, 0],
+        [21, 0]
+    ],
+    [
+        [0, 20],
+        [21, 20]
+    ]
+];
+
 var texBar = new Image();
 texBar.src = "arrow-14x11-1x2-1spacing.png";
 var posSourceBar = [
@@ -455,6 +468,8 @@ var aTrigger = new Trigger(new Vector(canvas.width - (carHeight * 10/4), playerL
 var dTrigger = new Trigger(new Vector(canvas.width - carHeight, playerLevel + carHeight * 2), carHeight * 3/4, carHeight * 3/4, "D");
 
 var scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", carHeight, carHeight/3, "Score: 0");
+
+var ufos = [];
 
 var cars = [];
 const buildingBlockCount = 5;

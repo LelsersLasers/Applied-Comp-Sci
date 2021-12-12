@@ -7,6 +7,11 @@ class Vector {
         this.x += vOther.x;
         this.y += vOther.y;
     }
+    scale(len) {
+        var currentLen = Math.sqrt(this.x * this.x + this.y * this.y);
+        this.x = this.x * (len/currentLen);
+        this.y = this.y * (len/currentLen);
+    }
 }
 
 class HitBox {
@@ -275,7 +280,7 @@ class Player extends Thing {
         this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
     }
     moveUp(ms) {
-        let obstacles = [...cars, ...buildings, ...lasers, ...bar, ...this.afterImages];
+        let obstacles = [...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
         for (var i = 0; i < obstacles.length; i++) {
             obstacles[i].pt.y += ms;
         }  
@@ -284,7 +289,7 @@ class Player extends Thing {
         }
     }
     moveDown(ms) {
-        let obstacles = [...cars, ...buildings, ...lasers, ...bar, ...this.afterImages];
+        let obstacles = [...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
         for (var i = 0; i < obstacles.length; i++) {
             obstacles[i].pt.y -= ms;
         }  
@@ -460,6 +465,9 @@ class Car extends Thing {
         }
         if (this.pt.y > canvas.height && !this.offScreen) {
             cars.push(new Car(this.pt.y - (1.5 * carHeight) * 10, this.ms * 1.01));
+            if (getRandomInt(1, 10) == 1) {
+                ufos.push(new Ufo(this.pt.y - (1.5 * carHeight) * 10, 5));
+            }
             this.offScreen = true;
         }
     }
@@ -471,6 +479,50 @@ class Car extends Thing {
         else {
             context.drawImage(texCar, posSourceCar[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 34, 17, this.pt.x, this.pt.y, this.w, this.h);
         }
+    }
+}
+
+class Ufo extends Thing {
+    constructor(y, ms) {
+        let color = "#ff0000";
+        let w = carWidth;
+        let h = carWidth;
+
+        let pt = new Vector(getRandomInt(0, canvas.width - w), y);
+
+        super(pt, color, w, h);
+        this.ms = ms;
+        this.move = new Vector(getRandomInt(-20, 20), getRandomInt(2, 20));
+        this.move.scale(this.ms);
+        this.stun = 0;
+        this.deathMessage = "Abducted";
+        this.deathColor = "#e37e7b";
+        this.deathSound = document.createElement("audio");
+        this.deathSound.src = "thunk.mp3";
+        this.animation = 1;
+        this.frame = 0;
+    }
+    update() {
+        this.stun--;
+        if (this.stun <= 0) {
+            this.on();
+            this.stun = 0;
+        }
+        if (this.active) {
+            this.frame++;
+            this.pt.apply(this.move);
+            var animationWait = Math.abs(parseInt(30/this.ms));
+            animationWait = animationWait > 0 ? animationWait : 30;
+            if (this.frame % animationWait == 0) {
+                this.animation = Number(!this.animation);
+            }
+        }
+        if (this.hb.outOfBounds()) {
+            this.move.x *= -1;
+        }
+    }
+    draw() {
+        context.drawImage(texUfo, posSourceUfo[Number(!this.active)][this.animation][0], posSourceUfo[Number(!this.active)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
     }
 }
 
