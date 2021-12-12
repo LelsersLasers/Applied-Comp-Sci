@@ -237,11 +237,12 @@ class Laser extends Thing {
     update() {
         if (this.active) {
             this.pt.apply(this.moveVector);
-            for (var i = 0; i < cars.length; i++) {
-                if (this.hb.checkCollide(cars[i].hb)) {
+            obstacles = [...cars, ...ufos];
+            for (var i = 0; i < obstacles.length; i++) {
+                if (this.hb.checkCollide(obstacles[i].hb)) {
                     this.off();
-                    cars[i].off();
-                    cars[i].stun += this.stunTime;
+                    obstacles[i].off();
+                    obstacles[i].stun += this.stunTime;
                     this.hitSound.play();
                 }
             }
@@ -465,7 +466,7 @@ class Car extends Thing {
         }
         if (this.pt.y > canvas.height && !this.offScreen) {
             cars.push(new Car(this.pt.y - (1.5 * carHeight) * 10, this.ms * 1.01));
-            if (getRandomInt(1, 10) == 1) {
+            if (getRandomInt(1, 2) == 1) {
                 ufos.push(new Ufo(this.pt.y - (1.5 * carHeight) * 10, 5));
             }
             this.offScreen = true;
@@ -485,8 +486,8 @@ class Car extends Thing {
 class Ufo extends Thing {
     constructor(y, ms) {
         let color = "#ff0000";
-        let w = carWidth;
-        let h = carWidth;
+        let w = ufoWidth;
+        let h = ufoHeight;
 
         let pt = new Vector(getRandomInt(0, canvas.width - w), y);
 

@@ -3,9 +3,9 @@
 - UFO
     - sound/color
     - scale:
-        - w/h
         - speed/vector
         - spawn rate
+    - Soft Homing?
 - Center Canvas
 - Update directions/read me
 #

@@ -455,6 +455,10 @@ var posSourceBuilding = [
 
 const carWidth = canvas.width * 1/9;
 const carHeight = canvas.height * 1/14;
+
+const ufoWidth = canvas.width * 1/8;
+const ufoHeight = canvas.height * 1/8 * 7/9;
+
 const playerLevel = carHeight * 10;
 var player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight * 10/11, carHeight, canvas.width/14, 1.5 * canvas.height/14);
 
