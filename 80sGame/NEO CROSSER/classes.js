@@ -467,7 +467,7 @@ class Car extends Thing {
         if (this.pt.y > canvas.height && !this.offScreen) {
             cars.push(new Car(this.pt.y - (1.5 * carHeight) * 10, this.ms * 1.01));
             if (getRandomInt(1, 2) == 1) {
-                ufos.push(new Ufo(this.pt.y - (1.5 * carHeight) * 10, 5));
+                ufos.push(new Ufo(this.pt.y - (1.5 * carHeight) * 10));
             }
             this.offScreen = true;
         }
@@ -484,7 +484,7 @@ class Car extends Thing {
 }
 
 class Ufo extends Thing {
-    constructor(y, ms) {
+    constructor(y) {
         let color = "#ff0000";
         let w = ufoWidth;
         let h = ufoHeight;
@@ -492,8 +492,8 @@ class Ufo extends Thing {
         let pt = new Vector(getRandomInt(0, canvas.width - w), y);
 
         super(pt, color, w, h);
-        this.ms = ms;
-        this.move = new Vector(getRandomInt(-20, 20), getRandomInt(2, 20));
+        this.ms = (canvas.width * canvas.width + canvas.height * canvas.height)/(700 * 700);
+        this.move = new Vector(getRandomInt(-10, 10), getRandomInt(3, 5));
         this.move.scale(this.ms);
         this.stun = 0;
         this.deathMessage = "Abducted";

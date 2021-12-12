@@ -2,8 +2,8 @@
 - Trim R sound
 - UFO
     - sound/color
-    - scale:
-        - speed/vector
+    - scale based on score
+        - speed
         - spawn rate
     - Soft Homing?
 - Center Canvas
