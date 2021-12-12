@@ -6,8 +6,9 @@ Features/Design Choices:
     - No 'overlapping' colors
         - Each color means something
         - Red = Car
+        - Blue = Bus (basically a car)
         - Green = Player
-        - Orange/Grey/Blue = Buildings
+        - Muted Colors = Buildings
         - Purple/Yellow = Side Arrows
     - No pointless effects
         - No particles, everything drawn has effect
@@ -15,7 +16,7 @@ Features/Design Choices:
         - Animation changes only when moving
         - Changes color on death
         - Teleport leaves a trail from where you teleported to make it clear what happened
-    - Animated Car
+    - Animated Car/Bus
         - Wheels 'spin' based on the movement speed of the car
         - Changes color when stunned (just drawns an outline)
     - Buildings spawn in groups

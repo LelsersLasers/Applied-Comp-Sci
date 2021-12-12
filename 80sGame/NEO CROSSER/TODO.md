@@ -1,5 +1,9 @@
 # TODO
 - Trim R sound
+- Multiple types of cars
+    - normal red
+    - blue bus
+    - grey ufo?!? that can move vertically?
 - Center Canvas
 - Update directions/read me
 #

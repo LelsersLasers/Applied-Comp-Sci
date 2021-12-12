@@ -400,6 +400,31 @@ var posSourceCar = [ // [active][dir][animation][x/y]
     ],
 ];
 
+var texBus = new Image();
+texBus.src = "bus-35x17-2x4-1spacing.png";
+var posSourceBus = [ // [active][dir][animation][x/y]
+    [ // if active
+        [ // if dir == right
+            [0, 0], // animation 1
+            [36, 0] // animation 2
+        ],
+        [ // if dir == left
+            [0, 18], // animation 1
+            [36, 18] // animation 2
+        ]
+    ],
+    [ // if not active
+        [ // if dir == right
+            [0, 36], // animation 1
+            [36, 36] // animation 2
+        ],
+        [ // if dir == left
+            [0, 54], // animation 1
+            [36, 54] // animation 2
+        ]
+    ],
+];
+
 var texBar = new Image();
 texBar.src = "arrow-14x11-1x2-1spacing.png";
 var posSourceBar = [
@@ -437,12 +462,12 @@ var buildings = [];
 const base = playerLevel - 3 * carHeight;
 var justPlaced = true; // true to skip placing one in the first row
 for (var i = 0; i < 10; i++) {
-    let startPos = new Vector(getRandomInt(0, canvas.width - carWidth), base - (1.5 * carHeight * i));
+    let startPosY = base - (1.5 * carHeight * i);
     let speed = (getRandomInt(i/6 + 1, i/4 + 2)/900) * canvas.width;
     speed = getRandomInt(1, 3) == 2 ? -speed : speed;
-    cars.push(new Car(startPos, speed));
+    cars.push(new Car(startPosY, speed));
     if (Math.random() < buildingBlockCount/10 && !justPlaced) {
-        buildings.push(new Building(startPos.y));
+        buildings.push(new Building(startPosY));
         justPlaced = true;
     }
     else {

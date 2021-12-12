@@ -145,7 +145,7 @@ class Ball extends Thing {
         for (var i = 1; i < this.pts.length; i++) {
             context.lineTo(this.pts[i].x, this.pts[i].y);
         }
-        context.fill();
+        // context.fill();
         context.stroke();
     }
 }

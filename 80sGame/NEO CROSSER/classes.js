@@ -407,10 +407,26 @@ class AfterImage extends Thing {
 }
 
 class Car extends Thing {
-    constructor(pt, ms) {
+    constructor(y, ms) {
         let color = "#ff0000";
         let w = carWidth;
+        let type = getRandomInt(1, 5) == 1 ? 1 : 0;
+        if (type == 1) w *= 1.3;
         let h = carHeight;
+
+        let badX = true;
+        while (badX) {
+            badX = false;
+            var x = getRandomInt(0, canvas.width - w);
+            let tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
+            for (var i = 0; i < buildings.length; i++) {
+                if (tempHB.checkCollide(buildings[i].hb)) {
+                    badX = true;
+                }
+            }
+        }
+        let pt = new Vector(x, y);
+
         super(pt, color, w, h);
         this.ms = ms;
         this.stun = 0;
@@ -421,6 +437,7 @@ class Car extends Thing {
         this.deathSound.src = "thunk.mp3";
         this.animation = 1;
         this.frame = 0;
+        this.type = type;
     }
     update() {
         this.stun--;
@@ -442,25 +459,18 @@ class Car extends Thing {
             this.ms = this.ms * 1.001;
         }
         if (this.pt.y > canvas.height && !this.offScreen) {
-            let badX = true;
-            while (badX) {
-                badX = false;
-                var x = getRandomInt(0, canvas.width - this.w);
-                let tempHB = new HitBox(new Vector(x, this.pt.y - (1.5 * carHeight) * 10), this.w, this.h);
-                for (var i = 0; i < buildings.length; i++) {
-                    if (tempHB.checkCollide(buildings[i].hb)) {
-                        badX = true;
-                    }
-                }
-            }
-            let pos = new Vector(x, this.pt.y - (1.5 * carHeight) * 10);
-            cars.push(new Car(pos, this.ms * 1.01));
+            cars.push(new Car(this.pt.y - (1.5 * carHeight) * 10, this.ms * 1.01));
             this.offScreen = true;
         }
     }
     draw() {
-        let dir = this.ms > 0 ? 0 : 1; 
-        context.drawImage(texCar, posSourceCar[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 34, 17, this.pt.x, this.pt.y, this.w, this.h);
+        let dir = this.ms > 0 ? 0 : 1;
+        if (this.type == 1) {
+            context.drawImage(texBus, posSourceBus[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 35, 17, this.pt.x, this.pt.y, this.w, this.h);
+        }
+        else {
+            context.drawImage(texCar, posSourceCar[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 34, 17, this.pt.x, this.pt.y, this.w, this.h);
+        }
     }
 }
 
