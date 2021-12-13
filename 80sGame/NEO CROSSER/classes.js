@@ -465,9 +465,17 @@ class Car extends Thing {
             this.ms = this.ms * 1.001;
         }
         if (this.pt.y > canvas.height && !this.offScreen) {
-            cars.push(new Car(this.pt.y - (1.5 * carHeight) * 10, this.ms * 1.01));
-            if (getRandomInt(1, 11) * Math.pow(1.0001, score) >= 8) {
-                ufos.push(new Ufo(this.pt.y - (1.5 * carHeight) * 10));
+            let y = this.pt.y - (1.5 * carHeight) * 10;
+            cars.push(new Car(y, this.ms * 1.01)); // always spawn new car
+            if (getRandomInt(1, 15) * Math.pow(1.0001, score) >= 14) { // spawn ufo scale on score
+                ufos.push(new Ufo(y));
+            }
+            if (Math.random() < buildingBlockCount/10 && !justPlaced) {
+                buildings.push(new Building(y - (1.5 * carHeight) * 2));
+                justPlaced = true;
+            }
+            else {
+                justPlaced = false;
             }
             this.offScreen = true;
         }
@@ -492,10 +500,10 @@ class Ufo extends Thing {
         let pt = new Vector(getRandomInt(0, canvas.width - w), y);
 
         super(pt, color, w, h);
-        this.ms = Math.atan(score) * (canvas.width * canvas.width + canvas.height * canvas.height)/(900 * 900);
+        this.ms = score/5000 * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800) + 1;
         
         if (getRandomInt(1, 3) == 1) {
-            this.move = new Vector(player.pt.x - this.pt.x, player.pt.y - this.pt.y);
+            this.move = new Vector(player.pt.x + player.w/2 - this.pt.x + this.w/2, player.pt.y + player.h/2 - this.pt.y + this.h/2);
         }
         else {
             this.move = new Vector(getRandomInt(-10, 10), getRandomInt(3, 5));
@@ -518,7 +526,7 @@ class Ufo extends Thing {
         if (this.active) {
             this.frame++;
             this.pt.apply(this.move);
-            var animationWait = Math.abs(parseInt(30/((this.ms/3))));
+            var animationWait = Math.abs(parseInt(30/((this.ms/1.5))));
             animationWait = animationWait > 0 ? animationWait : 30;
             if (this.frame % animationWait == 0) {
                 this.animation = Number(!this.animation);
@@ -557,7 +565,7 @@ class Building extends Thing {
         let color = "#0000ff";
         let h = carHeight * 2.5;
         let widthOfOne = (26 * h/40);
-        let maxW = Math.ceil((carWidth * 1.5)/widthOfOne);
+        let maxW = Math.floor((carWidth * 1.5)/widthOfOne);
         let buildingCount = getRandomInt(1, maxW + 1);
         let w = buildingCount * widthOfOne;
 
@@ -574,7 +582,6 @@ class Building extends Thing {
         }
         let pt = new Vector(x, y);
         super(pt, color, w, h);
-        this.offScreen = false;
         this.deathMessage = "Ran Into Wall";
         this.deathColor = "#f8d498";
         this.deathSound = document.createElement("audio");
@@ -588,13 +595,7 @@ class Building extends Thing {
         this.widthOfOne = widthOfOne;
     }
 
-    update() {
-        if (this.pt.y > canvas.height && !this.offScreen) {
-            let y = this.pt.y - (1.5 * carHeight) * 12;
-            buildings.push(new Building(y));
-            this.offScreen = true;
-        }
-    }
+    update() {} // do nothing (this is here so it works with obstacles[i].update())
 
     draw() {
         for (var i = 0; i < this.buildings.length; i++) {

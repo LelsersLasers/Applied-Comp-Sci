@@ -69,6 +69,12 @@ Other Things:
     - 'Safe zones' on the other sides of buildings
 - Stunned cars will still hurt the player
 - Stuns stack additively
+- When a car goes offscreen:
+    - It always spawns a new car slightly above the top of the screen
+    - Might spawn a ufo (based on score and random)
+    - Might spawn a building (based on chance)
+        - Will not spawn a building if the last row had a building
+
 
 - This code is also on github at: https://github.com/Lord-Lelsers/Applied-Comp-Sci
     - "Lord-Lelsers" is my school account
