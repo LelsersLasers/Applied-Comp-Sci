@@ -438,7 +438,7 @@ class Car extends Thing {
         this.deathColor = "#e37e7b";
         this.deathSound = document.createElement("audio");
         this.deathSound.src = "thunk.mp3";
-        this.animation = 1;
+        this.animation = getRandomInt(0, 2);
         this.frame = 0;
         this.type = type;
     }
@@ -511,7 +511,7 @@ class Ufo extends Thing {
         this.deathColor = "#e423eb";
         this.deathSound = document.createElement("audio");
         this.deathSound.src = "thunk.mp3"; // TODO
-        this.animation = 1;
+        this.animation = getRandomInt(0, 2);
         this.frame = 0;
     }
     update() {
