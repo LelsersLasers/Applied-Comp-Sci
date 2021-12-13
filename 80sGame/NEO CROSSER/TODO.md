@@ -1,7 +1,7 @@
 # TODO
 - Trim R sound
 - UFO
-    - sound/color
+    - sound
     - scale based on score - speed / spawn rate - improve?
 - Center Canvas
 - Update directions/read me

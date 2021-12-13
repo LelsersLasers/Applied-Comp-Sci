@@ -16,7 +16,8 @@ Features/Design Choices:
     - Animated UFO
         - Has a 50/50 chance to either start moving towards the player or randomly down
         - Bounces off walls
-        - Hover effect thing moves
+        - Hover effect thing moves (scales on speed)
+        - Spawn rate increases based on score
         - Draws just an outline when stunned
     - Buildings spawn in groups
         - Random number of different textures make up the width

@@ -503,7 +503,7 @@ class Ufo extends Thing {
         this.move.scale(this.ms);
         this.stun = 0;
         this.deathMessage = "Abducted";
-        this.deathColor = "#e37e7b"; // TODO
+        this.deathColor = "#e423eb";
         this.deathSound = document.createElement("audio");
         this.deathSound.src = "thunk.mp3"; // TODO
         this.animation = 1;
