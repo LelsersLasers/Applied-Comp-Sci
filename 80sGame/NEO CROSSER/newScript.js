@@ -219,6 +219,7 @@ function drawGame() {
     for (var i = 0; i < obstacles.length; i++) {
         obstacles[i].update();
         obstacles[i].draw();
+        // obstacles[i].hb.draw("#ffffff");
         if (obstacles[i].hb.checkCollide(player.hb) && alive) {
             stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
             stateTxt.style.backgroundColor = obstacles[i].deathColor;
