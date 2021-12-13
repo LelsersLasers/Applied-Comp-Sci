@@ -529,12 +529,16 @@ class Ufo extends Thing {
                 this.animation = Number(!this.animation);
             }
         }
+        this.updateHB();
         if (this.hb.outOfBounds()) {
             this.move.x *= -1;
         }
     }
     draw() {
         context.drawImage(texUfo, posSourceUfo[Number(!this.active)][this.animation][0], posSourceUfo[Number(!this.active)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
+    }
+    updateHB() {
+        this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
     }
 }
 
