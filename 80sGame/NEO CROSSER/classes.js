@@ -412,7 +412,7 @@ class Car extends Thing {
     constructor(y, ms) {
         let color = "#ff0000";
         let w = carWidth;
-        let type = getRandomInt(1, 5) == 1 ? 1 : 0;
+        let type = getRandomInt(1, 8) == 1 ? 1 : 0;
         if (type == 1) w *= 1.3;
         let h = carHeight;
 
@@ -431,6 +431,7 @@ class Car extends Thing {
 
         super(pt, color, w, h);
         this.ms = ms;
+        if (type == 1) this.ms *= 1.3; 
         this.stun = 0;
         this.offScreen = false;
         this.deathMessage = "Road Kill";
