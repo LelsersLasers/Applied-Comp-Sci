@@ -333,22 +333,18 @@ class Player extends Thing {
                         for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
                             this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y - i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
                         }
-                        for (var i = 0; i < this.teleportSpeed; i++) {
-                            this.moveUp(this.msY);
-                            score += moveWait;
-                            if (score > topScore) {
-                                topScore = score;
-                            }
+                        this.moveUp(this.msY * this.teleportSpeed);
+                        score += moveWait * this.teleportSpeed;
+                        if (score > topScore) {
+                            topScore = score;
                         }
                         break;
                     case "s":
                         for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
                             this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y + i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
                         }
-                        for (var i = 0; i < this.teleportSpeed; i++) {
-                            this.moveDown(this.msY);
-                            score -= moveWait;
-                        }
+                        this.moveDown(this.msY * this.teleportSpeed);
+                        score -= moveWait * this.teleportSpeed;
                         break;
                     case "a":
                         for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
