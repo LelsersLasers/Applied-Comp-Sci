@@ -512,7 +512,7 @@ class Ufo extends Thing {
         if (this.active) {
             this.frame++;
             this.pt.apply(this.move);
-            var animationWait = Math.abs(parseInt(30/this.ms));
+            var animationWait = Math.abs(parseInt(30/((this.ms/3))));
             animationWait = animationWait > 0 ? animationWait : 30;
             if (this.frame % animationWait == 0) {
                 this.animation = Number(!this.animation);
@@ -521,9 +521,12 @@ class Ufo extends Thing {
         if (this.hb.outOfBounds()) {
             this.move.x *= -1;
         }
+        this.home();
     }
     draw() {
         context.drawImage(texUfo, posSourceUfo[Number(!this.active)][this.animation][0], posSourceUfo[Number(!this.active)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
+    }
+    home() { // TODO
     }
 }
 
