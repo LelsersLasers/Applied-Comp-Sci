@@ -466,7 +466,7 @@ class Car extends Thing {
         }
         if (this.pt.y > canvas.height && !this.offScreen) {
             cars.push(new Car(this.pt.y - (1.5 * carHeight) * 10, this.ms * 1.01));
-            if (getRandomInt(1, 2) == 1) {
+            if (getRandomInt(1, 11) == 1) {
                 ufos.push(new Ufo(this.pt.y - (1.5 * carHeight) * 10));
             }
             this.offScreen = true;
@@ -492,14 +492,20 @@ class Ufo extends Thing {
         let pt = new Vector(getRandomInt(0, canvas.width - w), y);
 
         super(pt, color, w, h);
-        this.ms = (canvas.width * canvas.width + canvas.height * canvas.height)/(700 * 700);
-        this.move = new Vector(getRandomInt(-10, 10), getRandomInt(3, 5));
+        this.ms = Math.atan(score) * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800);
+        
+        if (getRandomInt(1, 3) == 1) {
+            this.move = new Vector(player.pt.x - this.pt.x, player.pt.y - this.pt.y);
+        }
+        else {
+            this.move = new Vector(getRandomInt(-10, 10), getRandomInt(3, 5));
+        }
         this.move.scale(this.ms);
         this.stun = 0;
         this.deathMessage = "Abducted";
-        this.deathColor = "#e37e7b";
+        this.deathColor = "#e37e7b"; // TODO
         this.deathSound = document.createElement("audio");
-        this.deathSound.src = "thunk.mp3";
+        this.deathSound.src = "thunk.mp3"; // TODO
         this.animation = 1;
         this.frame = 0;
     }
@@ -521,12 +527,9 @@ class Ufo extends Thing {
         if (this.hb.outOfBounds()) {
             this.move.x *= -1;
         }
-        this.home();
     }
     draw() {
         context.drawImage(texUfo, posSourceUfo[Number(!this.active)][this.animation][0], posSourceUfo[Number(!this.active)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
-    }
-    home() { // TODO
     }
 }
 

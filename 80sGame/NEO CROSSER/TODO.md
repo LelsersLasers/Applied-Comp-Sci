@@ -3,9 +3,9 @@
 - UFO
     - sound/color
     - scale based on score
-        - speed
+        - speed (improve)
         - spawn rate
-    - Soft Homing?
+- Adjust background music
 - Center Canvas
 - Update directions/read me
 #

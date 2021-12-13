@@ -4,21 +4,20 @@ Features/Design Choices:
 - Visually Clarity
     - ALl art is hand drawn (mouse drawn) pixel art by me
     - No 'overlapping' colors
-        - Each color means something
-        - Red = Car
-        - Blue = Bus (basically a car)
-        - Green = Player
-        - Muted Colors = Buildings
-        - Purple/Yellow = Side Arrows
     - No pointless effects
         - No particles, everything drawn has effect
     - Animated Player
         - Animation changes only when moving
-        - Changes color on death
+        - Changes color on death (green to white)
         - Teleport leaves a trail from where you teleported to make it clear what happened
     - Animated Car/Bus
         - Wheels 'spin' based on the movement speed of the car
         - Changes color when stunned (just drawns an outline)
+    - Animated UFO
+        - Has a 50/50 chance to either start moving towards the player or randomly down
+        - Bounces off walls
+        - Hover effect thing moves
+        - Draws just an outline when stunned
     - Buildings spawn in groups
         - Random number of different textures make up the width
         - Random textures per texture in the width
