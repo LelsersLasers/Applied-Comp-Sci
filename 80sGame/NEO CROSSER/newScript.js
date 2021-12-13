@@ -483,7 +483,7 @@ const base = playerLevel - 3 * carHeight;
 var justPlaced = true; // true to skip placing one in the first row
 for (var i = 0; i < 10; i++) {
     let startPosY = base - (1.5 * carHeight * i);
-    let speed = (getRandomInt(i/6 + 1, i/4 + 2)/900) * canvas.width;
+    let speed = (getRandomInt(i/6 + 1, i/4 + 2)/900) * canvas.width * 2/3;
     speed = getRandomInt(1, 3) == 2 ? -speed : speed;
     cars.push(new Car(startPosY, speed));
     if (Math.random() < buildingBlockCount/10 && !justPlaced) {

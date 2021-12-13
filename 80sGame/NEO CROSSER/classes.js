@@ -492,7 +492,7 @@ class Ufo extends Thing {
         let pt = new Vector(getRandomInt(0, canvas.width - w), y);
 
         super(pt, color, w, h);
-        this.ms = Math.atan(score) * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800);
+        this.ms = Math.atan(score) * (canvas.width * canvas.width + canvas.height * canvas.height)/(900 * 900);
         
         if (getRandomInt(1, 3) == 1) {
             this.move = new Vector(player.pt.x - this.pt.x, player.pt.y - this.pt.y);
