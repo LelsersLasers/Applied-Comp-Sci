@@ -3,7 +3,6 @@
 - UFO
     - sound/color
     - scale based on score - speed / spawn rate - improve?
-- Adjust background music
 - Center Canvas
 - Update directions/read me
 #
