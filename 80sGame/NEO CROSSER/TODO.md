@@ -2,8 +2,12 @@
 - Trim R sound
 - UFO
     - sound
-    - scale based on score - speed / spawn rate - improve?
 - Center Canvas
+- High scores board
+    - "local storage"
+    - use canvas to display 'input name' field
+        - touch screen doesn't have keyboard so can't use html input boxes
+    - option to get it same as directions
 - Update directions/read me
 #
 - Clean code
@@ -11,6 +15,7 @@
     - Variable name conventions inside code
     - spaces between words, brakects, etc?
     - unused code/functions/vars
+    - duplicate code/functions
     - semi-colens
 - Prep for ipad
     - Movement are buttons by touch
