@@ -466,7 +466,7 @@ class Car extends Thing {
         }
         if (this.pt.y > canvas.height && !this.offScreen) {
             cars.push(new Car(this.pt.y - (1.5 * carHeight) * 10, this.ms * 1.01));
-            if (getRandomInt(1, 11) == 1) {
+            if (getRandomInt(1, 11) * Math.pow(1.0001, score) >= 8) {
                 ufos.push(new Ufo(this.pt.y - (1.5 * carHeight) * 10));
             }
             this.offScreen = true;
