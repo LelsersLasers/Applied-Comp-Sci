@@ -54,7 +54,8 @@ Features/Design Choices:
     - While in game, tap the screen or press Enter toggle the background music
 - 'Screens'
     - Welcome
-        - Clicking on the directions button will open the directions screen
+        - Clicking on the directions/top scores button will open that screen
+            - Or press 'd'/'s'
         - Clicking anywhere else or pressing Enter will start the game
         - Directions/Top Scores
             - Click anywhere to return to welcome screen
