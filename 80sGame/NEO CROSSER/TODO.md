@@ -11,7 +11,7 @@
     - exit button?
 - Colors/Style
     - On welcome/directions/top scores
-    - Monospace font?
+    - font?
 - Update directions/read me
 #
 - Clean code

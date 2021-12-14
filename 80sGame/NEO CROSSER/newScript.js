@@ -170,9 +170,9 @@ function writeScore() {
         if (topScore > parseInt(scores[i].substring(5)) && swap == 0) { // 3 lettes + ':' + ' ' = 5
             var name = localStorage.getItem("name") != null ? localStorage.getItem("name") : "";
             name = prompt("Enter 3 letters for your name:", name);
-            if (name == null) name = "   ";
+            if (name == null) name = "N/A";
             localStorage.setItem("name", name);
-            name += "   ";
+            name += "   "; // incase they entered less than 3 characters, backfill with spaces
             swap = 1;
             scoresNew[i] = name.substring(0,3) + ": " + topScore;
         }
@@ -187,7 +187,7 @@ function getTopScores() {
         for (let i = 0; i < 10; i++) { // fill with black values
             scores.push("N/A: -1");
         }
-        localStorage.setItem("NEO CROSSER - Leader Board", scores.toString()); // create the variable
+        localStorage.setItem("NEO CROSSER - Leader Board", scores.toString()); // create the variable b/c it doesn't exist
     }
     else {
         scores = scoresTxt.split(",");
@@ -198,15 +198,15 @@ function getTopScores() {
 function drawWelcome() {
     context.textAlign = "center";
     context.fillStyle = "rgba(255,255,255,1)";
-    context.font = carHeight + "px serif";
+    context.font = carHeight + "px " + font;
     context.fillText("NEO CROSSER", canvas.width/2, canvas.height * 1/3);
 
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
-    context.font = carHeight/2 + "px serif";
+    context.font = carHeight/2 + "px " + font;
     context.fillText("Touch to Start", canvas.width/2, canvas.height * 1/3 + carHeight);
 
     context.fillStyle = "rgba(255,255,255,1)";
-    context.font = carHeight * 5/12 + "px serif";
+    context.font = carHeight * 5/12 + "px " + font;
     txts = ["[D]irections", "Top [S]cores"];
     for (i = 0; i < txts.length; i++) {
         let width = context.measureText(txts[i]).width;
@@ -220,11 +220,11 @@ function drawWelcome() {
 function drawDirections() {
     context.textAlign = "center";
     context.fillStyle = "rgba(255,255,255,1)";
-    context.font = carHeight + "px serif";
+    context.font = carHeight + "px " + font;
     context.fillText("Directions", canvas.width/2, canvas.height * 1/3);
 
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
-    context.font = carHeight/2 + "px serif";
+    context.font = carHeight/2 + "px " + font;
     context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/3 + carHeight);
 
     var txts = [];
@@ -240,7 +240,7 @@ function drawDirections() {
     txts.push("Goal: Go as far up as possible.")
     txts.push("If you die, click the screen to restart");
     context.fillStyle = "rgba(255,255,255,1)";
-    context.font = carHeight * 5/12 + "px serif";
+    context.font = carHeight * 5/12 + "px  " + font;
     for (var i = 0; i < txts.length; i++) {
         context.fillText(txts[i], canvas.width/2, canvas.height * 1/3 + carHeight + carHeight * 1/2 * (3+i));
     }
@@ -249,25 +249,26 @@ function drawDirections() {
 function drawScores() {
     context.textAlign = "center";
     context.fillStyle = "rgba(255,255,255,1)";
-    context.font = carHeight + "px serif";
+    context.font = carHeight + "px " + font;
     context.fillText("Top Scores", canvas.width/2, canvas.height * 1/3);
 
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
-    context.font = carHeight/2 + "px serif";
+    context.font = carHeight/2 + "px " + font;
     context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/3 + carHeight);
     
     context.fillStyle = "rgba(255,255,255,1)";
-    context.font = carHeight * 5/12 + "px serif";
+    context.font = carHeight * 5/12 + "px monospace";
     let scores = getTopScores();
     let txts = [];
     let maxWidth = 0;
     for (let i = 0; i < scores.length; i++) {
         let line = (i + 1) + ") ";
+        if (i < 9) line += " "; // adjust for 2 digit nums
         if (parseInt(scores[i].substring(5)) > 0) line += scores[i];
-        else line += "N/A: 0"
+        else line += "N/A: 0" // no player set score
         line = line.toUpperCase();
         let width = context.measureText(line).width;
-        if (width > maxWidth) maxWidth = width;
+        if (width > maxWidth) maxWidth = width; // aline by longest line
         txts.push(line);
     }
     context.textAlign = "left";
@@ -391,6 +392,8 @@ function setUpContext() {
 }
 
 // localStorage.removeItem("NEO CROSSER - Leader Board");
+
+var font = "monospace";
 
 var screen = "welcome";
 

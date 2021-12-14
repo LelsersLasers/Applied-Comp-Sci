@@ -100,7 +100,7 @@ class Trigger extends Thing {
     drawTxt() {
         context.textAlign = "center";
         context.fillStyle = "#ffffff";
-        context.font = carHeight/3 + "px serif";
+        context.font = carHeight/3 + "px " + font;
         context.textBaseline = "middle";
         context.fillText(this.txt, this.pt.x + this.w/2, this.pt.y + this.h/2);
     }
@@ -161,7 +161,7 @@ class GameTxt extends Thing {
 
         context.textAlign = "center";
         context.fillStyle = "#ffffff";
-        context.font = carHeight/4.5 + "px serif";
+        context.font = carHeight/4.5 + "px " + font;
         context.textBaseline = "middle";
         context.fillText(this.txt, this.pt.x + this.w/2, this.pt.y + this.h/2);
     }
