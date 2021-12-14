@@ -194,49 +194,43 @@ function getTopScores() {
 }
 
 function drawWelcome() {
-    if (textTimer > textWait) {
-        textActive = !textActive;
-        textTimer = 0;
-    }
+    if (textOpacity > 1) opacityDir = -0.04;
+    else if (textOpacity < 0) opacityDir = 0.04;
 
     context.textAlign = "center";
-    context.fillStyle = "#ffffff";
+    context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight + "px serif";
     context.fillText("NEO CROSSER", canvas.width/2, canvas.height * 1/3);
 
-    if (textActive) {
-        context.font = carHeight/2 + "px serif";
-        context.fillText("Touch to Start", canvas.width/2, canvas.height * 1/3 + carHeight);
-    }
+    context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
+    context.font = carHeight/2 + "px serif";
+    context.fillText("Touch to Start", canvas.width/2, canvas.height * 1/3 + carHeight);
 
+    context.fillStyle = "rgba(255,255,255,1)";
+    context.font = carHeight * 5/12 + "px serif";
     txts = ["[D]irections", "Top [S]cores"];
     for (i = 0; i < txts.length; i++) {
-        context.font = carHeight * 5/12 + "px serif";
         width = context.measureText(txts[i]).width;
         let y = canvas.height * 1/3 + carHeight * 4 + i * carHeight * 1.3;
         welcomeHBs.push(new HitBox(new Vector(canvas.width/2 - width/2 - 10, y - carHeight * 1/3 - 10), width + 20, carHeight * 5/12 + 20));
         welcomeHBs[i].draw("#ffffff");
         context.fillText(txts[i], canvas.width/2, y);
     }
-
-    textTimer++;
+    textOpacity += opacityDir;
 }
 
 function drawDirections() {
-    if (textTimer > textWait) {
-        textActive = !textActive;
-        textTimer = 0;
-    }
+    if (textOpacity > 1) opacityDir = -0.04;
+    else if (textOpacity < 0) opacityDir = 0.04;
 
     context.textAlign = "center";
-    context.fillStyle = "#ffffff";
+    context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight + "px serif";
     context.fillText("Directions", canvas.width/2, canvas.height * 1/3);
 
-    if (textActive) {
-        context.font = carHeight/2 + "px serif";
-        context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/3 + carHeight);
-    }
+    context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
+    context.font = carHeight/2 + "px serif";
+    context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/3 + carHeight);
 
     var txts = [];
     txts.push("Use 'wasd' to move. Don't get hit by cars or go out of bounds sideways.");
@@ -250,30 +244,28 @@ function drawDirections() {
     txts.push("(Abilites can be actived with their respective key, or by tapping the icon in the bottom left.)")
     txts.push("Goal: Go as far up as possible.")
     txts.push("If you die, click the screen to restart");
+    context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight * 5/12 + "px serif";
     for (var i = 0; i < txts.length; i++) {
         context.fillText(txts[i], canvas.width/2, canvas.height * 1/3 + carHeight + carHeight * 1/2 * (3+i));
     }
-
-    textTimer++;
+    textOpacity += opacityDir;
 }
 
 function drawScores() {
-    if (textTimer > textWait) {
-        textActive = !textActive;
-        textTimer = 0;
-    }
+    if (textOpacity > 1) opacityDir = -0.04;
+    else if (textOpacity < 0) opacityDir = 0.04;
 
     context.textAlign = "center";
-    context.fillStyle = "#ffffff";
+    context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight + "px serif";
     context.fillText("Top Scores", canvas.width/2, canvas.height * 1/3);
 
-    if (textActive) {
-        context.font = carHeight/2 + "px serif";
-        context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/3 + carHeight);
-    }
-
+    context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
+    context.font = carHeight/2 + "px serif";
+    context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/3 + carHeight);
+    
+    context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight * 5/12 + "px serif";
     let scores = getTopScores();
     for (let i = 0; i < scores.length; i++) {
@@ -283,7 +275,7 @@ function drawScores() {
         line = line.toUpperCase();
         context.fillText(line, canvas.width/2, canvas.height * 1/3 + carHeight + carHeight * 1/2 * (3+i));
     }
-    textTimer++;
+    textOpacity += opacityDir;
 }
 
 function drawGame() {
@@ -405,9 +397,8 @@ var topScore = 0;
 
 const moveWait = 30;
 
-var textTimer = 0;
-var textWait = 25;
-var textActive = false;
+var textOpacity = 1;
+var opacityDir = -0.04;
 var welcomeHBs = [];
 
 var lasers = [];

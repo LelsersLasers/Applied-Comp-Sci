@@ -8,6 +8,11 @@
     - "localStorage.getItem("NEO CROSSER - Leader Board")
         - confirm it works first
 - Center Canvas
+    - Remove everything but the canvas from the html
+        - will also fix the arrow keys scrolling the screen
+    - exit button?
+- Colors
+    - On welcome/directions/top scores
 - Update directions/read me
 #
 - Clean code
