@@ -34,6 +34,7 @@ Features/Design Choices:
     - If your score is in the top 10, you can enter your name for it to be saved
         - Like old games it stores the first three characters (and shows them in upper case)
         - Will autofill the last saved name (so you just have to hit enter to re-use it)
+    - Center based on the start of the numbers
 - Keyboard Support
     - W/A/S/D or Arrow Keys to move
         - Note: Arrow Keys might scroll the page not just act as inputs

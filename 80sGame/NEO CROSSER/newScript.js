@@ -166,26 +166,28 @@ function writeScore() {
     let swap = 0;
     for (let i = 0; i < scores.length; i++) {
         scoresNew.push(scores[i - swap]);
-        if (topScore > parseInt(scores[i].substring(5).trim()) && swap == 0) { // 3 lettes + ':' + ' ' = 5
+        console.log(scores[i]);
+        if (topScore > parseInt(scores[i].substring(5)) && swap == 0) { // 3 lettes + ':' + ' ' = 5
             var name = localStorage.getItem("name") != null ? localStorage.getItem("name") : "";
             name = prompt("Enter 3 letters for your name:", name);
-            if (name == null) name = "N/A";
-            else localStorage.setItem("name", name);
+            if (name == null) name = "   ";
+            localStorage.setItem("name", name);
+            name += "   ";
             swap = 1;
             scoresNew[i] = name.substring(0,3) + ": " + topScore;
         }
     }
-    localStorage.setItem("scoresy", scoresNew);
+    localStorage.setItem("NEO CROSSER - Leader Board", scoresNew);
 }
 
 function getTopScores() {
-    let scoresTxt = localStorage.getItem("scoresy");
+    let scoresTxt = localStorage.getItem("NEO CROSSER - Leader Board");
     let scores = [];
     if (scoresTxt == null) { // no scores variable in localStorage
         for (let i = 0; i < 10; i++) { // fill with black values
-            scores.push("   : -1");
+            scores.push("N/A: -1");
         }
-        localStorage.setItem("scoresy", scores.toString()); // create the variable
+        localStorage.setItem("NEO CROSSER - Leader Board", scores.toString()); // create the variable
     }
     else {
         scores = scoresTxt.split(",");
@@ -207,7 +209,7 @@ function drawWelcome() {
     context.font = carHeight * 5/12 + "px serif";
     txts = ["[D]irections", "Top [S]cores"];
     for (i = 0; i < txts.length; i++) {
-        width = context.measureText(txts[i]).width;
+        let width = context.measureText(txts[i]).width;
         let y = canvas.height * 1/3 + carHeight * 4 + i * carHeight * 1.3;
         welcomeHBs.push(new HitBox(new Vector(canvas.width/2 - width/2 - 10, y - carHeight * 1/3 - 10), width + 20, carHeight * 5/12 + 20));
         welcomeHBs[i].draw("#ffffff");
@@ -257,12 +259,20 @@ function drawScores() {
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight * 5/12 + "px serif";
     let scores = getTopScores();
+    let txts = [];
+    let maxWidth = 0;
     for (let i = 0; i < scores.length; i++) {
         let line = (i + 1) + ") ";
-        if (parseInt(scores[i].substring(5).trim()) > 0) line += scores[i];
-        else line += "   : 0"
+        if (parseInt(scores[i].substring(5)) > 0) line += scores[i];
+        else line += "N/A: 0"
         line = line.toUpperCase();
-        context.fillText(line, canvas.width/2, canvas.height * 1/3 + carHeight + carHeight * 1/2 * (3+i));
+        let width = context.measureText(line).width;
+        if (width > maxWidth) maxWidth = width;
+        txts.push(line);
+    }
+    context.textAlign = "left";
+    for (let i = 0; i < txts.length; i++) {
+        context.fillText(txts[i], canvas.width/2 - maxWidth/2, canvas.height * 1/3 + carHeight + carHeight * 1/2 * (3+i));
     }
 }
 
@@ -379,6 +389,8 @@ function setUpContext() {
     context = canvas.getContext("2d");
     return context;
 }
+
+// localStorage.removeItem("NEO CROSSER - Leader Board");
 
 var screen = "welcome";
 
