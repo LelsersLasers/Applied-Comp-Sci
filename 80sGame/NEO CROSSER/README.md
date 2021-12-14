@@ -61,7 +61,7 @@ Features/Design Choices:
         - Background music will auto start
             - Clicking the screen or pressing Enter will toggle it on/off
         - Clicking the screen while dead returns the player to the welcome screen
-    - Flashing text
+    - Flashing text (by opacity)
 - Everything is scaled with canvas.width or canvas.height
     - Designed around 900x700 px screen, but looks/works completely fine on (basically) any screen size
     - The player is a squares and scales off the height

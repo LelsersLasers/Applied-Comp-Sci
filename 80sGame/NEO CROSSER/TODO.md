@@ -7,6 +7,7 @@
         - touch screen doesn't have keyboard so can't use html input boxes
     - "localStorage.getItem("NEO CROSSER - Leader Board")
         - confirm it works first
+    - Center txt based on the longest line
 - Center Canvas
     - Remove everything but the canvas from the html
         - will also fix the arrow keys scrolling the screen

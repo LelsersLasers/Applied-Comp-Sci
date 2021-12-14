@@ -194,9 +194,6 @@ function getTopScores() {
 }
 
 function drawWelcome() {
-    if (textOpacity > 1) opacityDir = -0.04;
-    else if (textOpacity < 0) opacityDir = 0.04;
-
     context.textAlign = "center";
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight + "px serif";
@@ -216,13 +213,9 @@ function drawWelcome() {
         welcomeHBs[i].draw("#ffffff");
         context.fillText(txts[i], canvas.width/2, y);
     }
-    textOpacity += opacityDir;
 }
 
 function drawDirections() {
-    if (textOpacity > 1) opacityDir = -0.04;
-    else if (textOpacity < 0) opacityDir = 0.04;
-
     context.textAlign = "center";
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight + "px serif";
@@ -249,13 +242,9 @@ function drawDirections() {
     for (var i = 0; i < txts.length; i++) {
         context.fillText(txts[i], canvas.width/2, canvas.height * 1/3 + carHeight + carHeight * 1/2 * (3+i));
     }
-    textOpacity += opacityDir;
 }
 
 function drawScores() {
-    if (textOpacity > 1) opacityDir = -0.04;
-    else if (textOpacity < 0) opacityDir = 0.04;
-
     context.textAlign = "center";
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight + "px serif";
@@ -275,7 +264,6 @@ function drawScores() {
         line = line.toUpperCase();
         context.fillText(line, canvas.width/2, canvas.height * 1/3 + carHeight + carHeight * 1/2 * (3+i));
     }
-    textOpacity += opacityDir;
 }
 
 function drawGame() {
@@ -365,6 +353,9 @@ function drawAll() {
     else if (screen == "scores") {
         drawScores();
     }
+    if (textOpacity > 1) opacityDir = -0.04;
+    else if (textOpacity < 0) opacityDir = 0.04;
+    textOpacity += opacityDir;
     window.requestAnimationFrame(drawAll);
 }
 
