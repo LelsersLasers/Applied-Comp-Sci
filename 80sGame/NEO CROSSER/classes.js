@@ -246,6 +246,11 @@ class Laser extends Thing {
                     this.hitSound.play();
                 }
             }
+            for (var i = 0; i < buildings.length; i++) {
+                if (this.hb.checkCollide(buildings[i].hb)) {
+                    this.off();
+                }
+            }
             if (["w", "a", "s", "d"].indexOf(this.dir) >= 0) {
                 this.draw();
             }
