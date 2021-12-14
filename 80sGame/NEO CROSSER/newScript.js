@@ -50,6 +50,7 @@ function keyDownHandler(e) {
                 backgroundMusic.playing = true;
             }
             else if (screen == "game" && !alive) {
+                writeScore();
                 reset();
             }
             else if (screen == "game") {
@@ -82,8 +83,11 @@ function keyUpHandler(e) {
 }
 function clickHandler(event) {
     if (screen == "welcome") {
-        if (cursorHB.checkCollide(directionsHB)) {
+        if (cursorHB.checkCollide(welcomeHBs[0])) {
             screen = "directions";
+        }
+        else if (cursorHB.checkCollide(welcomeHBs[1])) {
+            screen = "scores";
         }
         else {
             screen = "game";
@@ -145,6 +149,15 @@ function getRandomInt(min, max) {
     return value;
 }
 
+function writeScore() {
+    localStorage.setItem("score", topScore);
+}
+
+function loadScore(i) {
+    let key = i + 1;
+    return "Score: " + localStorage.getItem("score" + key);
+}
+
 function drawWelcome() {
     if (textTimer > textWait) {
         textActive = !textActive;
@@ -161,12 +174,15 @@ function drawWelcome() {
         context.fillText("Touch to Start", canvas.width/2, canvas.height * 1/3 + carHeight);
     }
 
-    txt = "Directions";
-    context.font = carHeight * 5/12 + "px serif";
-    width = context.measureText(txt).width;
-    directionsHB = new HitBox(new Vector(canvas.width/2 - width/2 - 10, canvas.height * 1/3 + carHeight * 4 - carHeight * 1/3 - 10), width + 20, carHeight * 5/12 + 20);
-    directionsHB.draw("#ffffff");
-    context.fillText(txt, canvas.width/2, canvas.height * 1/3 + carHeight * 4);
+    txts = ["Directions", "Top Scores"];
+    for (i = 0; i < txts.length; i++) {
+        context.font = carHeight * 5/12 + "px serif";
+        width = context.measureText(txts[i]).width;
+        let y = canvas.height * 1/3 + carHeight * 4 + i * carHeight * 1.3;
+        welcomeHBs.push(new HitBox(new Vector(canvas.width/2 - width/2 - 10, y - carHeight * 1/3 - 10), width + 20, carHeight * 5/12 + 20));
+        welcomeHBs[i].draw("#ffffff");
+        context.fillText(txts[i], canvas.width/2, y);
+    }
 
     textTimer++;
 }
@@ -181,6 +197,42 @@ function drawDirections() {
     context.fillStyle = "#ffffff";
     context.font = carHeight + "px serif";
     context.fillText("Directions", canvas.width/2, canvas.height * 1/3);
+
+    if (textActive) {
+        context.font = carHeight/2 + "px serif";
+        context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/3 + carHeight);
+    }
+
+    var txts = [];
+    txts.push("Use 'wasd' to move. Don't get hit by cars or go out of bounds sideways.");
+    txts.push("(You can also touch the w/a/s/d buttons in the bottom right.)")
+    txts.push("Don't get hit by cars, buses, or UFOs or go out of bounds sideways.");
+    txts.push("Also you can't run through the buildings. Cars also can't go through the buildings.");
+    txts.push("You also have 3 abilities:");
+    txts.push("Q which teleports a short distance,");
+    txts.push("E which fires a laser that causes a small stun, and");
+    txts.push("R which fires a laser in every direction.");
+    txts.push("(Abilites can be actived with their respective key, or by tapping the icon in the bottom left.)")
+    txts.push("Goal: Go as far up as possible.")
+    txts.push("If you die, click the screen to restart");
+    context.font = carHeight * 5/12 + "px serif";
+    for (var i = 0; i < txts.length; i++) {
+        context.fillText(txts[i], canvas.width/2, canvas.height * 1/3 + carHeight + carHeight * 1/2 * (3+i));
+    }
+
+    textTimer++;
+}
+
+function drawScores() {
+    if (textTimer > textWait) {
+        textActive = !textActive;
+        textTimer = 0;
+    }
+
+    context.textAlign = "center";
+    context.fillStyle = "#ffffff";
+    context.font = carHeight + "px serif";
+    context.fillText("Top Scores", canvas.width/2, canvas.height * 1/3);
 
     if (textActive) {
         context.font = carHeight/2 + "px serif";
@@ -291,6 +343,9 @@ function drawAll() {
     else if (screen == "directions") {
         drawDirections();
     }
+    else if (screen == "scores") {
+        drawScores();
+    }
     window.requestAnimationFrame(drawAll);
 }
 
@@ -326,7 +381,7 @@ const moveWait = 30;
 var textTimer = 0;
 var textWait = 25;
 var textActive = false;
-var directionsHB;
+var welcomeHBs = [];
 
 var lasers = [];
 
@@ -334,6 +389,7 @@ var lasers = [];
 var context = setUpContext();
 var stateTxt = document.getElementById("state");
 var scoreTxt = document.getElementById("score");
+scoreTxt.innerHTML = loadScore();
 
 const cdBarWidth = 1/6 * canvas.width;
 

@@ -7,7 +7,8 @@
     - "local storage"
     - use canvas to display 'input name' field
         - touch screen doesn't have keyboard so can't use html input boxes
-    - option to get it same as directions
+    - show top 10
+    - get to the page same as directions
 - Update directions/read me
 #
 - Clean code
