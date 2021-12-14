@@ -29,6 +29,11 @@ Features/Design Choices:
     - Because of simplicity, the player has freedom to do anything
         - (not you can only R when on the left side of the screen, etc)
         - Player can use multiple abilites and move at the same time
+- Scoreboard/Leader Board/Top Scores
+    - Saves top 10 scores with 'localStorage'
+    - If your score is in the top 10, you can enter your name for it to be saved
+        - Like old games it stores the first three characters (and shows them in upper case)
+        - Will autofill the last saved name (so you just have to hit enter to re-use it)
 - Keyboard Support
     - W/A/S/D or Arrow Keys to move
         - Note: Arrow Keys might scroll the page not just act as inputs
@@ -50,7 +55,7 @@ Features/Design Choices:
     - Welcome
         - Clicking on the directions button will open the directions screen
         - Clicking anywhere else or pressing Enter will start the game
-        - Directions
+        - Directions/Top Scores
             - Click anywhere to return to welcome screen
     - Main Game
         - Background music will auto start

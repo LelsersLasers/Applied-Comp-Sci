@@ -124,7 +124,6 @@ function getMousePos(event) {
     mousePos.y = event.clientY - rect.top;
     cursorHB = new HitBox(new Vector(mousePos.x - 3, mousePos.y - 3), 6, 6);
     cursorHB.draw("#ffffff");
-    // console.log("move");
 }
 
 function mouseDownActions() {
@@ -167,29 +166,29 @@ function writeScore() {
     let swap = 0;
     for (let i = 0; i < scores.length; i++) {
         scoresNew.push(scores[i - swap]);
-        if (topScore > scores[i] && swap == 0) {
+        if (topScore > parseInt(scores[i].substring(5).trim()) && swap == 0) { // 3 lettes + ':' + ' ' = 5
+            var name = localStorage.getItem("name") != null ? localStorage.getItem("name") : "";
+            name = prompt("Enter 3 letters for your name:", name);
+            if (name == null) name = "N/A";
+            else localStorage.setItem("name", name);
             swap = 1;
-            scoresNew[i] = topScore;
+            scoresNew[i] = name.substring(0,3) + ": " + topScore;
         }
     }
-    console.log(scoresNew);
-    localStorage.setItem("scores", scoresNew);
+    localStorage.setItem("scoresy", scoresNew);
 }
 
 function getTopScores() {
-    let scoresTxt = localStorage.getItem("scores");
+    let scoresTxt = localStorage.getItem("scoresy");
     let scores = [];
-    if (scoresTxt == null) { // no scores
-        for (let i = 0; i < 10; i++) { // fill with -1
-            scores.push(-1);
+    if (scoresTxt == null) { // no scores variable in localStorage
+        for (let i = 0; i < 10; i++) { // fill with black values
+            scores.push("   : -1");
         }
-        localStorage.setItem("scores", scores.toString()); // create the variable
+        localStorage.setItem("scoresy", scores.toString()); // create the variable
     }
     else {
         scores = scoresTxt.split(",");
-        for (var i = 0; i < scores.length; i++) {
-            scores[i] = parseInt(scores[i], 10);
-        }
     }
     return scores;
 }
@@ -279,8 +278,9 @@ function drawScores() {
     let scores = getTopScores();
     for (let i = 0; i < scores.length; i++) {
         let line = (i + 1) + ") ";
-        if (scores[i] > 0) line += scores[i];
-        else line += "None";
+        if (parseInt(scores[i].substring(5).trim()) > 0) line += scores[i];
+        else line += "   : 0"
+        line = line.toUpperCase();
         context.fillText(line, canvas.width/2, canvas.height * 1/3 + carHeight + carHeight * 1/2 * (3+i));
     }
     textTimer++;
