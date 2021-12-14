@@ -50,7 +50,6 @@ function keyDownHandler(e) {
                 backgroundMusic.playing = true;
             }
             else if (screen == "game" && !alive) {
-                writeScore();
                 reset();
             }
             else if (screen == "game") {
@@ -63,7 +62,7 @@ function keyDownHandler(e) {
                     backgroundMusic.playing = true;
                 }
             }
-            else if (screen == "directions") {
+            else if (screen == "directions" || screen == "scores") {
                 screen = "welcome";
             }
             break;
@@ -109,7 +108,7 @@ function clickHandler(event) {
             backgroundMusic.playing = true;
         }
     }
-    else if (screen == "directions") {
+    else if (screen == "directions" || screen == "scores") {
         screen = "welcome";
     }
 }
@@ -139,6 +138,7 @@ function mouseDownActions() {
 }
 
 function reset() {
+    writeScore();
     location.reload(); // reloads the webpage
 }
 
@@ -149,13 +149,43 @@ function getRandomInt(min, max) {
     return value;
 }
 
-function writeScore() {
-    localStorage.setItem("score", topScore);
+function setLastScore(i) {
+    scoreTxt.innerText = "Score: "
+    scoreTxt.innerText += localStorage.getItem("lastScore") != null ? localStorage.getItem("lastScore") : 0;
 }
 
-function loadScore(i) {
-    let key = i + 1;
-    return "Score: " + localStorage.getItem("score" + key);
+function writeScore() {
+    localStorage.setItem("lastScore", topScore);
+    let scores = getTopScores();
+    let scoresNew = [];
+    let swap = 0;
+    for (let i = 0; i < scores.length; i++) {
+        scoresNew.push(scores[i - swap]);
+        if (topScore > scores[i] && swap == 0) {
+            swap = 1;
+            scoresNew[i] = topScore;
+        }
+    }
+    console.log(scoresNew);
+    localStorage.setItem("scores", scoresNew);
+}
+
+function getTopScores() {
+    let scoresTxt = localStorage.getItem("scores");
+    let scores = [];
+    if (scoresTxt == null) { // no scores
+        for (let i = 0; i < 10; i++) { // fill with -1
+            scores.push(-1);
+        }
+        localStorage.setItem("scores", scores.toString()); // create the variable
+    }
+    else {
+        scores = scoresTxt.split(",");
+        for (var i = 0; i < scores.length; i++) {
+            scores[i] = parseInt(scores[i], 10);
+        }
+    }
+    return scores;
 }
 
 function drawWelcome() {
@@ -239,23 +269,14 @@ function drawScores() {
         context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/3 + carHeight);
     }
 
-    var txts = [];
-    txts.push("Use 'wasd' to move. Don't get hit by cars or go out of bounds sideways.");
-    txts.push("(You can also touch the w/a/s/d buttons in the bottom right.)")
-    txts.push("Don't get hit by cars, buses, or UFOs or go out of bounds sideways.");
-    txts.push("Also you can't run through the buildings. Cars also can't go through the buildings.");
-    txts.push("You also have 3 abilities:");
-    txts.push("Q which teleports a short distance,");
-    txts.push("E which fires a laser that causes a small stun, and");
-    txts.push("R which fires a laser in every direction.");
-    txts.push("(Abilites can be actived with their respective key, or by tapping the icon in the bottom left.)")
-    txts.push("Goal: Go as far up as possible.")
-    txts.push("If you die, click the screen to restart");
     context.font = carHeight * 5/12 + "px serif";
-    for (var i = 0; i < txts.length; i++) {
-        context.fillText(txts[i], canvas.width/2, canvas.height * 1/3 + carHeight + carHeight * 1/2 * (3+i));
+    let scores = getTopScores();
+    for (let i = 0; i < scores.length; i++) {
+        let line = (i + 1) + ") ";
+        if (scores[i] > 0) line += scores[i];
+        else line += "None";
+        context.fillText(line, canvas.width/2, canvas.height * 1/3 + carHeight + carHeight * 1/2 * (3+i));
     }
-
     textTimer++;
 }
 
@@ -389,7 +410,7 @@ var lasers = [];
 var context = setUpContext();
 var stateTxt = document.getElementById("state");
 var scoreTxt = document.getElementById("score");
-scoreTxt.innerHTML = loadScore();
+setLastScore();
 
 const cdBarWidth = 1/6 * canvas.width;
 
