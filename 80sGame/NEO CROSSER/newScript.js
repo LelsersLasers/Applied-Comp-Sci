@@ -25,6 +25,9 @@ function keyDownHandler(e) {
             lastDir = "w";
             break;
         case "s": case "ArrowDown":
+            if (screen == "welcome") {
+                screen = "scores";
+            }
             sDown = true;
             lastDir = "s";
             break;
@@ -33,6 +36,9 @@ function keyDownHandler(e) {
             lastDir = "a";
             break;
         case "d": case "ArrowRight":
+            if (screen == "welcome") {
+                screen = "directions";
+            }
             dDown = true;
             lastDir = "d";
             break;
@@ -204,7 +210,7 @@ function drawWelcome() {
         context.fillText("Touch to Start", canvas.width/2, canvas.height * 1/3 + carHeight);
     }
 
-    txts = ["Directions", "Top Scores"];
+    txts = ["[D]irections", "Top [S]cores"];
     for (i = 0; i < txts.length; i++) {
         context.font = carHeight * 5/12 + "px serif";
         width = context.measureText(txts[i]).width;

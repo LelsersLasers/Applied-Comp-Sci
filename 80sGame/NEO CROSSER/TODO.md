@@ -8,9 +8,6 @@
         - touch screen doesn't have keyboard so can't use html input boxes
     - get to the page same as directions
         - make sure it works with both touch/click and keys
-- Move between screens withg keys
-    - [D]irections
-    - Top [S]cores
 - Update directions/read me
 #
 - Clean code
