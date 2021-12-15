@@ -525,10 +525,10 @@ class Ufo extends Thing {
         this.ms = score/5000 * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800) + 1;
         
         if (getRandomInt(1, 3) == 1) {
-            this.move = new Vector(player.pt.x + player.w/2 - this.pt.x + this.w/2, player.pt.y + player.h/2 - this.pt.y + this.h/2);
+            this.move = new Vector(player.pt.x + player.w/2 - this.pt.x + this.w/2, player.pt.y + player.h/2 - this.pt.y + this.h/2); // punish player for not moving
         }
         else {
-            this.move = new Vector(getRandomInt(-10, 10), getRandomInt(3, 5));
+            this.move = new Vector(getRandomInt(-12, 12), getRandomInt(3, 5));
         }
         this.move.scale(this.ms);
         this.stun = 0;

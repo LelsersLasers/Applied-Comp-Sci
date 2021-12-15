@@ -1,11 +1,7 @@
 # TODO
-- Trim R sound
 - UFO
     - sound
-- Buildings don't kill player
-    - also out of bounds
-    - if tp into building, put at bottom
-    - if tp out of bounds, put on edge
+- Sound levels
 - High scores board
     - use canvas to display 'input name' field
         - touch screen doesn't have keyboard so can't use html input boxes
