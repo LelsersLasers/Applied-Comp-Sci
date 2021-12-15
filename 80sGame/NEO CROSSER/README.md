@@ -38,6 +38,8 @@ Features/Design Choices:
     - Saves top 10 scores with 'localStorage'
     - If your score is in the top 10, you can enter your name for it to be saved
         - Like old games it stores the first three characters (and shows them in upper case)
+            - If they enter less than 3 characters, it will be filled with spaces
+            - If they enter more than 3 characters, it will just take the first 3
         - Will autofill the last saved name (so you just have to hit enter to re-use it)
     - Center based on the start of the numbers
     - Different text color based on rank
