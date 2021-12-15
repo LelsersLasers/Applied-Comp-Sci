@@ -51,7 +51,7 @@ function keyDownHandler(e) {
         case "Enter":
             if (screen == "welcome") {
                 screen = "game";
-                backgroundMusic.currentTime = getRandomInt(10, backgroundMusic.duration);
+                backgroundMusic.currentTime = getRandomInt(20, backgroundMusic.duration);
                 backgroundMusic.play();
                 backgroundMusic.playing = true;
             }
@@ -96,7 +96,7 @@ function clickHandler(event) {
         }
         else {
             screen = "game";
-            backgroundMusic.currentTime = getRandomInt(10, backgroundMusic.duration);
+            backgroundMusic.currentTime = getRandomInt(20, backgroundMusic.duration);
             backgroundMusic.play();
             backgroundMusic.playing = true;
         }
@@ -230,7 +230,7 @@ function drawDirections() {
     var txts = [];
     txts.push("Use 'wasd' to move. Don't get hit by cars or go out of bounds sideways.");
     txts.push("(You can also touch the w/a/s/d buttons in the bottom right.)")
-    txts.push("Don't get hit by cars, buses, or UFOs or go out of bounds sideways.");
+    txts.push("Don't get hit by cars, buses.");
     txts.push("Also you can't run through the buildings. Cars also can't go through the buildings.");
     txts.push("You also have 3 abilities:");
     txts.push("Q which teleports a short distance,");
@@ -283,7 +283,6 @@ function drawGame() {
     }
     mouseDownActions();
     player.move();
-    player.updateHB();
     player.draw();
     obstacles = [...cars, ...ufos];
     for (var i = 0; i < obstacles.length; i++) {
@@ -314,13 +313,6 @@ function drawGame() {
             }
         }
     }
-    if (player.hb.outOfBounds()) {
-        alive = false;
-        player.off();
-        stateTxt.innerText = "Status: Got Lost (DEAD)";
-        stateTxt.style.backgroundColor = "#dae37b";
-        scoreView.color = "#dae37b";
-    }
 
     qAbility.draw();
     eAbility.draw();
@@ -342,8 +334,8 @@ function drawGame() {
     rCD2.style.width = ((rAbility.wait - rDelay) * cdBarWidth/rAbility.wait) + "px";
     rCD2.style.backgroundColor = rDelay == 0 ? "#9ee092" : "#5e94d1";
 
-    if (backgroundMusic.currentTime > backgroundMusic.duration - 10) {
-        backgroundMusic.currentTime = 10;
+    if (backgroundMusic.currentTime > backgroundMusic.duration - 20) {
+        backgroundMusic.currentTime = 20;
     }
 
     wTrigger.draw(wDown);

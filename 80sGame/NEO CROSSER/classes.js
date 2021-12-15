@@ -306,7 +306,6 @@ class Player extends Thing {
     move() {
         if (this.active) {
             if (wDown || sDown || aDown || dDown) {
-                let oldPt = new Vector(this.pt.x, this.pt.y);
                 this.frame++;
                 switch (lastDir) {
                     case "w":
@@ -327,13 +326,17 @@ class Player extends Thing {
                         this.pt.x += this.msX/moveWait;
                         break
                 }
+                this.updateHB();
                 for (var i = 0; i < buildings.length; i++) {
-                    if (this.hb.checkCollide(buildings[i].hb)) {
-                        if (lastDir == "a" || lastDir == "d") this.pt = oldPt;
+                    if (this.hb.checkCollide(buildings[i].hb)) { // if it is touching, undo the last movement
+                        if (lastDir == "a") this.pt.x += this.msX/moveWait;
+                        else if (lastDir == "d") this.pt.x -= this.msX/moveWait;
                         else if (lastDir == "w") this.moveDown(this.msY/moveWait);
                         else if (lastDir == "s") this.moveUp(this.msY/moveWait);
                     }
                 }
+                if (this.pt.x < 0) this.pt.x = 0;
+                else if (this.pt.x + this.w > canvas.width) this.pt.x = canvas.width - this.w;
             }
             if (this.frame % 11 == 0 && alive) {
                 this.animation++;
@@ -372,6 +375,7 @@ class Player extends Thing {
                         this.pt.x += this.msX * this.teleportSpeed;
                         break
                 }
+                player.updateHB();
                 for (var i = 0; i < buildings.length; i++) {
                     if (this.hb.checkCollide(buildings[i].hb)) {
                         console.log("building");

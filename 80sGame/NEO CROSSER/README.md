@@ -23,6 +23,7 @@ Features/Design Choices:
         - Random number of different textures make up the width
         - Random textures per texture in the width
         - Preserves the dimension scale
+        - Can't run through them
 - Simple Gameplay
     - Move just up/down/left/right (no diagonal)
     - Abilites are relativly straightforward to use
