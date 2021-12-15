@@ -3,8 +3,6 @@
 - High scores board
     - use canvas to display 'input name' field
         - touch screen doesn't have keyboard so can't use html input boxes
-- Need a music controls section?
-- exit button?
 - Colors/Style
     - On welcome/directions/top scores
     - font?
@@ -19,6 +17,7 @@
     - remove console.logs()
     - duplicate code/functions
     - semi-colens
+    - let/var/const
 - Prep for ipad
     - Movement are buttons by touch
         - confirm current system works

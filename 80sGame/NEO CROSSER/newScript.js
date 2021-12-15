@@ -262,7 +262,7 @@ function drawScores() {
     let maxWidth = 0;
     for (let i = 0; i < scores.length; i++) {
         let line = (i + 1) + ") ";
-        if (i < 9) line += " "; // adjust for 2 digit nums
+        if (i < 9) line = " " + line; // adjust for 2 digit nums
         if (parseInt(scores[i].substring(5)) > 0) line += scores[i];
         else line += "N/A: 0" // no player set score
         line = line.toUpperCase();
