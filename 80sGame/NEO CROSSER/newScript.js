@@ -272,6 +272,10 @@ function drawScores() {
     }
     context.textAlign = "left";
     for (let i = 0; i < txts.length; i++) {
+        if (i == 0)      context.fillStyle = "rgba(255, 215, 0, 1)"; // gold
+        else if (i == 1) context.fillStyle = "rgba(192, 192, 192, 1)"; // silver
+        else if (i == 2) context.fillStyle = "rgba(205, 127, 50, 1)"; // bronze
+        else             context.fillStyle = "rgba(255, 255, 255, 1)"; // white
         context.fillText(txts[i], canvas.width/2 - maxWidth/2, base + carHeight + carHeight * 1/2 * (3+i));
     }
 }
