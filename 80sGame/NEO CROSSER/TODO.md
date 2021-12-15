@@ -12,7 +12,8 @@
 - Clean code
     - Mr. Bloom approved code
     - Variable name conventions inside code
-    - spaces between words, brakects, etc?
+    - if/for, on one line? or not?
+        - make consistent
     - unused code/functions/vars
     - remove console.logs()
     - duplicate code/functions

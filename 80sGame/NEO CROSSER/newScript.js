@@ -121,8 +121,7 @@ function getMousePos(event) {
     var rect = canvas.getBoundingClientRect();
     mousePos.x = event.clientX - rect.left;
     mousePos.y = event.clientY - rect.top;
-    cursorHB = new HitBox(new Vector(mousePos.x - 3, mousePos.y - 3), 6, 6);
-    cursorHB.draw("#ffffff");
+    cursorHB = new HitBox(new Vector(mousePos.x - 6, mousePos.y - 6), 10, 10);
 }
 
 function mouseDownActions() {
@@ -254,8 +253,7 @@ function drawScores() {
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
     context.font = carHeight/2 + "px " + font;
     context.fillText("Touch to Go Back", canvas.width/2, base + carHeight);
-    
-    context.fillStyle = "rgba(255,255,255,1)";
+ 
     context.font = carHeight * 5/12 + "px monospace";
     let scores = getTopScores();
     let txts = [];
@@ -305,15 +303,11 @@ function drawGame() {
     for (var i = 0; i < lasers.length; i++) {
         lasers[i].update();
     }
-    for (var i = 0; i < cars.length; i++) {
-        for (var j = 0; j < buildings.length; j++) {
-            buildings[j].updateHB();
-            if (cars[i].hb.checkCollide(buildings[j].hb)) {
-                cars[i].ms = -1 * cars[i].ms;
-            }
-        }
-    }
 
+    wTrigger.draw(wDown);
+    sTrigger.draw(sDown);
+    aTrigger.draw(aDown);
+    dTrigger.draw(dDown);
     qAbility.draw();
     eAbility.draw();
     rAbility.draw();
@@ -324,11 +318,6 @@ function drawGame() {
     if (backgroundMusic.currentTime > backgroundMusic.duration - 20) {
         backgroundMusic.currentTime = 20;
     }
-
-    wTrigger.draw(wDown);
-    sTrigger.draw(sDown);
-    aTrigger.draw(aDown);
-    dTrigger.draw(dDown);
 }
 
 function drawAll() {
@@ -355,7 +344,6 @@ function drawAll() {
 function setUpContext() {
     // Get width/height of the browser window
     console.log("Window is %d by %d", window.innerWidth, window.innerHeight);
-
     // Get the canvas, set the width and height from the window
     canvas = document.getElementById("mainCanvas");
     canvas.width = window.innerWidth - 20;
@@ -388,8 +376,6 @@ const moveWait = 30;
 var textOpacity = 1;
 var opacityDir = -0.04;
 var welcomeHBs = [];
-
-var lasers = [];
 
 // Set up the canvas, context objects, and html elements
 var context = setUpContext();
@@ -521,12 +507,14 @@ var dTrigger = new Trigger(new Vector(canvas.width - carHeight, playerLevel + ca
 var scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", carHeight, carHeight/3, "Score: 0");
 
 var ufos = [];
-
 var cars = [];
-const buildingBlockCount = 5;
 var buildings = [];
+var lasers = [];
+var bar = [];
+
 const base = playerLevel - 3 * carHeight;
 var justPlaced = true; // true to skip placing one in the first row
+const buildingBlockCount = 5;
 for (var i = 0; i < 10; i++) {
     let startPosY = base - (1.5 * carHeight * i);
     let speed = (getRandomInt(i/6 + 1, i/4 + 2)/900) * canvas.width * 2/3;
@@ -544,7 +532,6 @@ for (var i = 0; i < 10; i++) {
 // to make it look like player is moving
 const barWidth = 3/4 * carHeight;
 const barHeight = (barWidth * 11) / 14; // (33/56) * carHeight
-var bar = [];
 for (i = 0; i < canvas.height/barHeight; i++) {
     bar.push(new Block(new Vector(0, i * barHeight), i, barWidth, barHeight));
     bar.push(new Block(new Vector(canvas.width - barWidth, i * barHeight), i, barWidth, barHeight));

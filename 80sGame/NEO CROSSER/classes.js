@@ -54,30 +54,11 @@ class Thing {
         this.active = true;
         this.hb = new HitBox(pt, w, h);
     }
-
     off() {
         this.active = false;
     }
     on() {
         this.active = true;
-    }
-    toggle() {
-        this.active = !this.active;
-    }
-
-    draw() {
-        context.strokeStyle = this.color;
-        context.fillStyle = this.color;
-        context.lineWidth = this.width;
-        context.beginPath();
-        context.rect(this.pt.x, this.pt.y, this.w, this.h);
-        if (this.active) {
-            context.fill();
-        }
-        context.stroke();
-    }
-    updateHB() {
-        this.hb = new HitBox(this.pt, this.w, this.h);
     }
 }
 
@@ -136,7 +117,6 @@ class Ability extends Trigger {
         context.fill();
 
         this.drawTxt();
-
         this.timer++;
     }
     use() {
@@ -246,24 +226,28 @@ class Laser extends Thing {
                 }
             }
             for (var i = 0; i < buildings.length; i++) {
-                if (this.hb.checkCollide(buildings[i].hb)) {
-                    this.off();
-                }
+                if (this.hb.checkCollide(buildings[i].hb)) this.off();
             }
-            if (["w", "a", "s", "d"].indexOf(this.dir) >= 0) {
-                this.draw();
-            }
-            else {
-                this.drawRotatedRect(this.angle);
-            }
+            if (["w", "a", "s", "d"].indexOf(this.dir) >= 0) this.drawNormalRect();
+            else this.drawRotatedRect(this.angle);
         }
     }
     drawRotatedRect(angle) {
         angle *= Math.PI / 180;
+        context.strokeStyle = this.color;
         context.lineWidth = this.w * 1.5;
         context.beginPath();
         context.moveTo(this.pt.x, this.pt.y);
         context.lineTo(this.pt.x + this.h * Math.cos(angle) * Math.sqrt(2), this.pt.y + this.h * Math.sin(angle) * Math.sqrt(2));
+        context.stroke();
+    }
+    drawNormalRect() {
+        context.strokeStyle = this.color;
+        context.fillStyle = this.color;
+        context.lineWidth = this.width;
+        context.beginPath();
+        context.rect(this.pt.x, this.pt.y, this.w, this.h);
+        context.fill();
         context.stroke();
     }
 }
@@ -492,8 +476,13 @@ class Car extends Enemy {
         this.updateStun();
         this.updateAnimation();
         if (this.hb.outOfBounds()) {
-            this.ms = this.ms * -1;
-            this.ms = this.ms * 1.001;
+            this.ms *= -1;
+            this.ms *= 1.001;
+        }
+        for (var i = 0; i < buildings.length; i++) {
+            if (this.hb.checkCollide(buildings[i].hb)) {
+                this.ms *= -1;
+            }
         }
         if (this.pt.y > canvas.height && !this.offScreen) {
             let y = this.pt.y - (1.5 * carHeight) * 10;
