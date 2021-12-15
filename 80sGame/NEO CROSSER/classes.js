@@ -434,7 +434,6 @@ class Enemy extends Thing {
     updateAnimation() {
         if (this.active) {
             this.frame++;
-            this.pt.x += this.ms;
             var animationWait = this.getAnimationWait();
             animationWait = animationWait > 0 ? animationWait : 30;
             if (this.frame % animationWait == 0) this.animation = Number(!this.animation);
@@ -471,6 +470,7 @@ class Car extends Enemy {
     update() {
         this.updateStun();
         this.updateAnimation();
+        if (this.active) this.pt.x += this.ms;
         if (this.hb.outOfBounds()) {
             this.ms *= -1;
             this.ms *= 1.001;
@@ -528,6 +528,7 @@ class Ufo extends Enemy {
     update() {
         this.updateStun();
         this.updateAnimation();
+        if (this.active) this.pt.apply(this.move);
         this.updateHB();
         if (this.hb.outOfBounds()) this.move.x *= -1;
     }
