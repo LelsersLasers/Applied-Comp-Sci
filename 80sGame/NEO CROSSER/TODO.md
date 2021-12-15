@@ -1,6 +1,4 @@
 # TODO
-- UFO
-    - sound
 - Sound levels
 - High scores board
     - use canvas to display 'input name' field
@@ -8,7 +6,9 @@
 - Center Canvas
     - Remove everything but the canvas from the html
         - will also fix the arrow keys scrolling the screen
+        - will need a music controls section?
     - exit button?
+- Clean up code
 - Colors/Style
     - On welcome/directions/top scores
     - font?
@@ -19,8 +19,6 @@
     - Variable name conventions inside code
     - spaces between words, brakects, etc?
     - unused code/functions/vars
-        - Color in thing
-        - death message
     - remove console.logs()
     - duplicate code/functions
     - semi-colens
