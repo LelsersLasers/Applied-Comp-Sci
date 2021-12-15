@@ -159,7 +159,6 @@ function writeScore() {
     let swap = 0;
     for (let i = 0; i < scores.length; i++) {
         scoresNew.push(scores[i - swap]);
-        console.log(scores[i]);
         if (topScore > parseInt(scores[i].substring(5)) && swap == 0) { // 3 lettes + ':' + ' ' = 5
             var name = localStorage.getItem("name") != null ? localStorage.getItem("name") : "";
             name = prompt("Congrats on a Top 10 Score! Enter 3 letters for your name on the score board:", name);
@@ -251,7 +250,7 @@ function drawScores() {
     context.font = carHeight/2 + "px " + font;
     context.fillText("Touch to Go Back", canvas.width/2, base + carHeight);
  
-    context.font = carHeight * 5/12 + "px monospace";
+    context.font = carHeight * 5/12 + "px " + font;
     let scores = getTopScores();
     let txts = [];
     let maxWidth = 0;
@@ -360,19 +359,24 @@ var textOpacity = 1;
 var opacityDir = -0.04;
 var welcomeHBs = [];
 
+const soundOffset = 10.0;
 // Set up the canvas, context objects, and html elements
 var context = setUpContext();
 
 var qSound = document.createElement("audio");
 qSound.src = "qSound.mp3";
+qSound.volume = 1.0/soundOffset;
 var eSound = document.createElement("audio");
-eSound.src = "eSound.mp3";
+eSound.src = "eSound.mp3"; // x2
+eSound.volume = 3.5/soundOffset;
 var rSound = document.createElement("audio");
 rSound.src = "rSound.mp3";
+rSound.volume = 1.0/soundOffset;
 
 var backgroundMusic = document.createElement("audio");
 backgroundMusic.src = "backgroundMusic.mp3";
 backgroundMusic.playing = false;
+backgroundMusic.volume = 0.9/soundOffset;
 
 var texPlayer = new Image();
 texPlayer.src = "player-10x11-4x8-1spacing.png";

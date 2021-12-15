@@ -40,6 +40,8 @@ Features/Design Choices:
         - Like old games it stores the first three characters (and shows them in upper case)
         - Will autofill the last saved name (so you just have to hit enter to re-use it)
     - Center based on the start of the numbers
+    - Different text color based on rank
+        - (first: gold, second: silver, third: bronze, rest: white)
 - Keyboard Support
     - W/A/S/D or Arrow Keys to move
         - Note: Arrow Keys might scroll the page not just act as inputs

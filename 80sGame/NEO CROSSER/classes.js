@@ -212,6 +212,7 @@ class Laser extends Thing {
         this.moveVector = moveVector;
         this.hitSound = document.createElement("audio");
         this.hitSound.src = "laserHitSound.mp3";
+        this.hitSound.volume = 0.6/soundOffset;
     }
     update() {
         if (this.active) {
@@ -463,6 +464,7 @@ class Car extends Enemy {
         let pt = new Vector(x, y);
 
         super(pt, w, h, ms, "carHitSound.mp3");
+        this.deathSound.volume = 2.0/soundOffset;
         if (type == 1) this.ms *= 1.2;
         this.offScreen = false;
         this.type = type;
@@ -513,7 +515,8 @@ class Ufo extends Enemy {
         let pt = new Vector(getRandomInt(0, canvas.width - w), y);
         let ms = score/5000 * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800) + 1;
         super(pt, w, h, ms, "ufoHitSound.mp3");
-        
+        this.deathSound.volume = soundOffset/soundOffset;
+
         if (getRandomInt(1, 3) == 1) {
             this.move = new Vector(player.pt.x + player.w/2 - this.pt.x + this.w/2, player.pt.y + player.h/2 - this.pt.y + this.h/2); // punish player for not moving
         }

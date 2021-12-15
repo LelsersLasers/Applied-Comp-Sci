@@ -1,5 +1,4 @@
 # TODO
-- Sound levels
 - High scores board
     - use canvas to display 'input name' field
         - touch screen doesn't have keyboard so can't use html input boxes
