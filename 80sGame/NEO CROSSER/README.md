@@ -24,6 +24,8 @@ Features/Design Choices:
         - Random textures per texture in the width
         - Preserves the dimension scale
         - Can't run through them
+        - Can teleport over them
+            - If you teleport into them, you are put on the side you started on
 - Simple Gameplay
     - Move just up/down/left/right (no diagonal)
     - Abilites are relativly straightforward to use
