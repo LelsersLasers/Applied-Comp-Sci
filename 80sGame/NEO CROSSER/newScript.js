@@ -289,8 +289,6 @@ function drawGame() {
         obstacles[i].draw();
         // obstacles[i].hb.draw("#ffffff");
         if (obstacles[i].hb.checkCollide(player.hb) && alive) {
-            stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
-            stateTxt.style.backgroundColor = "#e37e7b";
             scoreView.color = "#e37e7b";
             obstacles[i].deathSound.play();
             alive = false;
@@ -396,7 +394,8 @@ laserSound.src = "laser.mp3";
 var multipleLaserSound = document.createElement("audio");
 multipleLaserSound.src = "multipleLasers.mp3";
 
-var backgroundMusic = document.getElementById("backgroundMusic");
+var backgroundMusic = document.createElement("audio");
+backgroundMusic.src = "backgroundMusic.mp3";
 backgroundMusic.playing = false;
 
 var texPlayer = new Image();
