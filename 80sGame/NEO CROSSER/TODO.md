@@ -23,6 +23,9 @@
     - Variable name conventions inside code
     - spaces between words, brakects, etc?
     - unused code/functions/vars
+        - Color in thing
+        - death message
+    - remove console.logs()
     - duplicate code/functions
     - semi-colens
 - Prep for ipad

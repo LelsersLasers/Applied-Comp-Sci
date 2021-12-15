@@ -378,11 +378,10 @@ class Player extends Thing {
                 player.updateHB();
                 for (var i = 0; i < buildings.length; i++) {
                     if (this.hb.checkCollide(buildings[i].hb)) {
-                        console.log("building");
                         if (lastDir == "w") this.moveDown(buildings[i].pt.y + buildings[i].h - this.pt.y);
-                        else if (lastDir == "s") this.moveUp(buildings[i].pt.y - this.pt.y + this.h);
+                        else if (lastDir == "s") this.moveUp(this.pt.y - buildings[i].pt.y + this.h);
                         else if (lastDir == "a") this.pt.x += buildings[i].pt.x + buildings[i].w - this.pt.x;
-                        else if (lastDir == "d") this.pt.x -= buildings[i].pt.x - this.pt.x + this.w;
+                        else if (lastDir == "d") this.pt.x -= this.pt.x - buildings[i].pt.x + this.w;
                     }
                 }
                 qAbility.use();
