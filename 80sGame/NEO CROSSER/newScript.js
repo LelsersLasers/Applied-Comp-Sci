@@ -154,11 +154,6 @@ function getRandomInt(min, max) {
     return value;
 }
 
-function setLastScore(i) {
-    scoreTxt.innerText = "Score: "
-    scoreTxt.innerText += localStorage.getItem("lastScore") != null ? localStorage.getItem("lastScore") : 0;
-}
-
 function writeScore() {
     localStorage.setItem("lastScore", topScore);
     let scores = getTopScores();
@@ -221,28 +216,31 @@ function drawDirections() {
     context.textAlign = "center";
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight + "px " + font;
-    context.fillText("Directions", canvas.width/2, canvas.height * 1/3);
+    let base = canvas.height * 1/4;
+    context.fillText("Directions", canvas.width/2, base);
 
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
     context.font = carHeight/2 + "px " + font;
-    context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/3 + carHeight);
+    context.fillText("Touch to Go Back", canvas.width/2, base + carHeight);
 
     var txts = [];
     txts.push("Use 'wasd' to move. Don't get hit by cars or go out of bounds sideways.");
     txts.push("(You can also touch the w/a/s/d buttons in the bottom right.)")
     txts.push("Don't get hit by cars, buses.");
-    txts.push("Also you can't run through the buildings. Cars also can't go through the buildings.");
+    txts.push("Also you can't run through the buildings.");
+    txts.push("Cars also can't go through the buildings.");
     txts.push("You also have 3 abilities:");
     txts.push("Q which teleports a short distance,");
     txts.push("E which fires a laser that causes a small stun, and");
     txts.push("R which fires a laser in every direction.");
-    txts.push("(Abilites can be actived with their respective key, or by tapping the icon in the bottom left.)")
+    txts.push("(Abilites can be actived with their respective key,");
+    txts.push("or by tapping the icon in the bottom left.)")
     txts.push("Goal: Go as far up as possible.")
     txts.push("If you die, click the screen to restart");
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight * 5/12 + "px  " + font;
     for (var i = 0; i < txts.length; i++) {
-        context.fillText(txts[i], canvas.width/2, canvas.height * 1/3 + carHeight + carHeight * 1/2 * (3+i));
+        context.fillText(txts[i], canvas.width/2, base + carHeight + carHeight * 1/2 * (3+i));
     }
 }
 
@@ -250,11 +248,12 @@ function drawScores() {
     context.textAlign = "center";
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight + "px " + font;
-    context.fillText("Top Scores", canvas.width/2, canvas.height * 1/3);
+    let base = canvas.height * 1/4;
+    context.fillText("Top Scores", canvas.width/2, base);
 
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
     context.font = carHeight/2 + "px " + font;
-    context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/3 + carHeight);
+    context.fillText("Touch to Go Back", canvas.width/2, base + carHeight);
     
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight * 5/12 + "px monospace";
@@ -273,7 +272,7 @@ function drawScores() {
     }
     context.textAlign = "left";
     for (let i = 0; i < txts.length; i++) {
-        context.fillText(txts[i], canvas.width/2 - maxWidth/2, canvas.height * 1/3 + carHeight + carHeight * 1/2 * (3+i));
+        context.fillText(txts[i], canvas.width/2 - maxWidth/2, base + carHeight + carHeight * 1/2 * (3+i));
     }
 }
 
@@ -316,22 +315,6 @@ function drawGame() {
     qAbility.draw();
     eAbility.draw();
     rAbility.draw();
-
-    scoreTxt.innerText = "Score: " + topScore;
-    scoreView.setTxt("Score: " + topScore);
-    scoreView.draw();
-    
-    qDelay = qAbility.wait - qAbility.timer >= 0 ? qAbility.wait - qAbility.timer : 0;
-    qCD2.style.width = ((qAbility.wait - qDelay) * cdBarWidth/qAbility.wait) + "px";
-    qCD2.style.backgroundColor = qDelay == 0 ? "#9ee092" : "#5e94d1";
-
-    eDelay = eAbility.wait - eAbility.timer >= 0 ? eAbility.wait - eAbility.timer : 0;
-    eCD2.style.width = ((eAbility.wait - eDelay) * cdBarWidth/eAbility.wait) + "px";
-    eCD2.style.backgroundColor = eDelay == 0 ? "#9ee092" : "#5e94d1";
-
-    rDelay = rAbility.wait - rAbility.timer >= 0 ? rAbility.wait - rAbility.timer : 0;
-    rCD2.style.width = ((rAbility.wait - rDelay) * cdBarWidth/rAbility.wait) + "px";
-    rCD2.style.backgroundColor = rDelay == 0 ? "#9ee092" : "#5e94d1";
 
     if (backgroundMusic.currentTime > backgroundMusic.duration - 20) {
         backgroundMusic.currentTime = 20;
@@ -405,30 +388,13 @@ var lasers = [];
 
 // Set up the canvas, context objects, and html elements
 var context = setUpContext();
-var stateTxt = document.getElementById("state");
-var scoreTxt = document.getElementById("score");
-setLastScore();
 
-const cdBarWidth = 1/6 * canvas.width;
-
-var qCD1 = document.getElementById("qCD1");
-var qCD2 = document.getElementById("qCD2");
 var teleportSound = document.createElement("audio");
 teleportSound.src = "teleport.mp3";
-
-var eCD1 = document.getElementById("eCD1");
-var eCD2 = document.getElementById("eCD2");
 var laserSound = document.createElement("audio");
 laserSound.src = "laser.mp3";
-
-var rCD1 = document.getElementById("rCD1");
-var rCD2 = document.getElementById("rCD2");
 var multipleLaserSound = document.createElement("audio");
 multipleLaserSound.src = "multipleLasers.mp3";
-
-qCD1.style.width = cdBarWidth + "px";
-eCD1.style.width = cdBarWidth + "px";
-rCD1.style.width = cdBarWidth + "px";
 
 var backgroundMusic = document.getElementById("backgroundMusic");
 backgroundMusic.playing = false;
