@@ -25,7 +25,7 @@ function keyDownHandler(e) {
             lastDir = "w";
             break;
         case "s": case "ArrowDown":
-            if (screen == "welcome") screen = "directions";
+            if (screen == "welcome") screen = "scores";
             sDown = true;
             lastDir = "s";
             break;
@@ -310,6 +310,9 @@ function drawGame() {
     eAbility.draw();
     rAbility.draw();
 
+    scoreView.setTxt("Score: " + topScore);
+    scoreView.draw();
+
     if (backgroundMusic.currentTime > backgroundMusic.duration - 20) {
         backgroundMusic.currentTime = 20;
     }
@@ -347,8 +350,8 @@ function setUpContext() {
 
     // Get the canvas, set the width and height from the window
     canvas = document.getElementById("mainCanvas");
-    canvas.width = window.innerWidth - 50;
-    canvas.height = window.innerHeight - 100;
+    canvas.width = window.innerWidth - 20;
+    canvas.height = window.innerHeight - 20;
 
     canvas.onmousedown = function(event) {
         mouseDown = true;
