@@ -161,7 +161,7 @@ function writeScore() {
         scoresNew.push(scores[i - swap]);
         if (topScore > parseInt(scores[i].substring(5)) && swap == 0) { // 3 lettes + ':' + ' ' = 5
             var name = localStorage.getItem("name") != null ? localStorage.getItem("name") : "";
-            name = prompt("Congrats on a Top 10 Score! Enter 3 letters for your name on the score board:", name);
+            name = prompt("Congrats on a Top 10 Score! (Rank " + (i + 1) + "!) Enter 3 letters for your name on the score board:", name);
             if (name == null) name = "N/A";
             localStorage.setItem("name", name);
             name += "   "; // incase they entered less than 3 characters, backfill with spaces
