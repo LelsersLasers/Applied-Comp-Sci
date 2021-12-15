@@ -437,9 +437,7 @@ class Enemy extends Thing {
             this.pt.x += this.ms;
             var animationWait = this.getAnimationWait();
             animationWait = animationWait > 0 ? animationWait : 30;
-            if (this.frame % animationWait == 0) {
-                this.animation = Number(!this.animation);
-            }
+            if (this.frame % animationWait == 0) this.animation = Number(!this.animation);
         }
     }
     getAnimationWait() {
@@ -460,9 +458,7 @@ class Car extends Enemy {
             var x = getRandomInt(0, canvas.width - w);
             let tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (var i = 0; i < buildings.length; i++) {
-                if (tempHB.checkCollide(buildings[i].hb)) {
-                    badX = true;
-                }
+                if (tempHB.checkCollide(buildings[i].hb)) badX = true;
             }
         }
         let pt = new Vector(x, y);
@@ -480,9 +476,7 @@ class Car extends Enemy {
             this.ms *= 1.001;
         }
         for (var i = 0; i < buildings.length; i++) {
-            if (this.hb.checkCollide(buildings[i].hb)) {
-                this.ms *= -1;
-            }
+            if (this.hb.checkCollide(buildings[i].hb)) this.ms *= -1;
         }
         if (this.pt.y > canvas.height && !this.offScreen) {
             let y = this.pt.y - (1.5 * carHeight) * 10;
@@ -496,9 +490,8 @@ class Car extends Enemy {
                 buildings.push(new Building(y - (1.5 * carHeight) * 2));
                 justPlaced = true;
             }
-            else {
-                justPlaced = false;
-            }
+            else justPlaced = false;
+
             this.offScreen = true;
         }
     }
@@ -536,9 +529,7 @@ class Ufo extends Enemy {
         this.updateStun();
         this.updateAnimation();
         this.updateHB();
-        if (this.hb.outOfBounds()) {
-            this.move.x *= -1;
-        }
+        if (this.hb.outOfBounds()) this.move.x *= -1;
     }
     draw() {
         context.drawImage(texUfo, posSourceUfo[Number(!this.active)][this.animation][0], posSourceUfo[Number(!this.active)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
@@ -548,7 +539,7 @@ class Ufo extends Enemy {
     }
 }
 
-class Block extends Thing {
+class Block extends Thing { // "Arrows" on the side
     constructor(pt, i, w, h) {
         super(pt, w, h);
         this.animation = i % 2;
@@ -557,12 +548,8 @@ class Block extends Thing {
         context.drawImage(texBar, posSourceBar[this.animation][0], posSourceBar[this.animation][1], 14, 11, this.pt.x, this.pt.y, this.w, this.h);
     }
     update() {
-        if (this.pt.y < -this.h) {
-            this.pt.y = this.pt.y + (this.h * canvas.height/barHeight);
-        }
-        if (this.pt.y > canvas.height) {
-            this.pt.y = this.pt.y - (this.h * canvas.height/barHeight);
-        }
+        if (this.pt.y < -this.h) this.pt.y = this.pt.y + (this.h * canvas.height/barHeight);
+        if (this.pt.y > canvas.height) this.pt.y = this.pt.y - (this.h * canvas.height/barHeight);
     }
 }
 
@@ -580,9 +567,7 @@ class Building extends Thing {
             var x = getRandomInt(0, canvas.width - w);
             let tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (var i = 0; i < cars.length; i++) {
-                if (tempHB.checkCollide(cars[i].hb)) {
-                    badX = true;
-                }
+                if (tempHB.checkCollide(cars[i].hb)) badX = true;
             }
         }
         let pt = new Vector(x, y);

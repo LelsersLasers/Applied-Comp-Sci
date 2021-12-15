@@ -176,15 +176,11 @@ function writeScore() {
 function getTopScores() {
     let scoresTxt = localStorage.getItem("NEO CROSSER - Leader Board");
     let scores = [];
-    if (scoresTxt == null) { // no scores variable in localStorage
-        for (let i = 0; i < 10; i++) { // fill with blank values
-            scores.push("N/A: -1");
-        }
+    if (scoresTxt == null) { // no scores variable in localStorage -> fill with blank values
+        for (let i = 0; i < 10; i++) scores.push("N/A: -1");
         localStorage.setItem("NEO CROSSER - Leader Board", scores.toString()); // create the variable b/c it doesn't exist
     }
-    else {
-        scores = scoresTxt.split(",");
-    }
+    else scores = scoresTxt.split(",");
     return scores;
 }
 
@@ -236,6 +232,7 @@ function drawDirections() {
     txts.push("Goal: Go as far up as possible.")
     txts.push("If you die, touch the screen to restart.");
     txts.push("(Touch the click the screen to toggle the music while alive.)")
+
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight * 5/12 + "px  " + font;
     for (var i = 0; i < txts.length; i++) {
@@ -279,15 +276,11 @@ function drawScores() {
 }
 
 function drawGame() {
-    for (var i = 0; i < bar.length; i++) {
-        bar[i].draw();
-    }
+    for (var i = 0; i < bar.length; i++) bar[i].draw();
     mouseDownActions();
     player.move();
     player.draw();
-    for (var i = 0; i < buildings.length; i++) {
-        buildings[i].draw();
-    }
+    for (var i = 0; i < buildings.length; i++) buildings[i].draw();
     enemies = [...cars, ...ufos];
     for (var i = 0; i < enemies.length; i++) {
         enemies[i].update();
@@ -300,9 +293,7 @@ function drawGame() {
             player.off();
         }
     }
-    for (var i = 0; i < lasers.length; i++) {
-        lasers[i].update();
-    }
+    for (var i = 0; i < lasers.length; i++) lasers[i].update();
 
     wTrigger.draw(wDown);
     sTrigger.draw(sDown);
@@ -315,29 +306,21 @@ function drawGame() {
     scoreView.setTxt("Score: " + topScore);
     scoreView.draw();
 
-    if (backgroundMusic.currentTime > backgroundMusic.duration - 20) {
-        backgroundMusic.currentTime = 20;
-    }
+    if (backgroundMusic.currentTime > backgroundMusic.duration - 20) backgroundMusic.currentTime = 20;
 }
 
 function drawAll() {
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
-    if (screen == "welcome") {
-        drawWelcome();
-    }
-    else if (screen == "game") {
-        drawGame();
-    }
-    else if (screen == "directions") {
-        drawDirections();
-    }
-    else if (screen == "scores") {
-        drawScores();
-    }
+    if (screen == "welcome") drawWelcome();
+    else if (screen == "game") drawGame();
+    else if (screen == "directions") drawDirections();
+    else if (screen == "scores") drawScores();
+
     if (textOpacity > 1) opacityDir = -0.04;
     else if (textOpacity < 0) opacityDir = 0.04;
     textOpacity += opacityDir;
+
     window.requestAnimationFrame(drawAll);
 }
 
@@ -524,9 +507,7 @@ for (var i = 0; i < 10; i++) {
         buildings.push(new Building(startPosY));
         justPlaced = true;
     }
-    else {
-        justPlaced = false;
-    }
+    else justPlaced = false;
 }
 
 // to make it look like player is moving
