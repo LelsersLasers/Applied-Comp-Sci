@@ -456,7 +456,6 @@ class Car extends Thing {
         this.stun = 0;
         this.offScreen = false;
         this.deathMessage = "Road Kill";
-        this.deathColor = "#e37e7b";
         this.deathSound = document.createElement("audio");
         this.deathSound.src = "thunk.mp3";
         this.animation = getRandomInt(0, 2);
@@ -528,7 +527,6 @@ class Ufo extends Thing {
         this.move.scale(this.ms);
         this.stun = 0;
         this.deathMessage = "Abducted";
-        this.deathColor = "#e423eb";
         this.deathSound = document.createElement("audio");
         this.deathSound.src = "ufoSound.mp3";
         this.animation = getRandomInt(0, 2);

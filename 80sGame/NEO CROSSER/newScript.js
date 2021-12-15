@@ -291,9 +291,8 @@ function drawGame() {
         // obstacles[i].hb.draw("#ffffff");
         if (obstacles[i].hb.checkCollide(player.hb) && alive) {
             stateTxt.innerText = "Status: " + obstacles[i].deathMessage + " (DEAD)";
-            stateTxt.style.backgroundColor = obstacles[i].deathColor;
-            scoreView.color = obstacles[i].deathColor;
-            obstacles[i].deathSound.currentTime = 0;
+            stateTxt.style.backgroundColor = "#e37e7b";
+            scoreView.color = "#e37e7b";
             obstacles[i].deathSound.play();
             alive = false;
             player.off();
