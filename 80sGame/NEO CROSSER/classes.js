@@ -231,7 +231,7 @@ class Laser extends Thing {
         this.angle = angle;
         this.moveVector = moveVector;
         this.hitSound = document.createElement("audio");
-        this.hitSound.src = "laserHit.mp3";
+        this.hitSound.src = "laserHitSound.mp3";
     }
     update() {
         if (this.active) {
@@ -457,7 +457,7 @@ class Car extends Thing {
         this.offScreen = false;
         this.deathMessage = "Road Kill";
         this.deathSound = document.createElement("audio");
-        this.deathSound.src = "thunk.mp3";
+        this.deathSound.src = "carHitSound.mp3";
         this.animation = getRandomInt(0, 2);
         this.frame = 0;
         this.type = type;
@@ -528,7 +528,7 @@ class Ufo extends Thing {
         this.stun = 0;
         this.deathMessage = "Abducted";
         this.deathSound = document.createElement("audio");
-        this.deathSound.src = "ufoSound.mp3";
+        this.deathSound.src = "ufoHitSound.mp3";
         this.animation = getRandomInt(0, 2);
         this.frame = 0;
     }

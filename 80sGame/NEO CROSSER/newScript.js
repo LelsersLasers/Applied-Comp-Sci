@@ -232,8 +232,8 @@ function drawDirections() {
     txts.push("(Abilites can be actived with their respective key,");
     txts.push("or by tapping the icon in the bottom left.)")
     txts.push("Goal: Go as far up as possible.")
-    txts.push("If you die, click the screen to restart");
-    txts.push("(Touch the click the screen  to toggle the music while alive.)")
+    txts.push("If you die, touch the screen to restart.");
+    txts.push("(Touch the click the screen to toggle the music while alive.)")
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight * 5/12 + "px  " + font;
     for (var i = 0; i < txts.length; i++) {
@@ -387,12 +387,12 @@ var lasers = [];
 // Set up the canvas, context objects, and html elements
 var context = setUpContext();
 
-var teleportSound = document.createElement("audio");
-teleportSound.src = "teleport.mp3";
-var laserSound = document.createElement("audio");
-laserSound.src = "laser.mp3";
-var multipleLaserSound = document.createElement("audio");
-multipleLaserSound.src = "multipleLasers.mp3";
+var qSound = document.createElement("audio");
+qSound.src = "qSound.mp3";
+var eSound = document.createElement("audio");
+eSound.src = "eSound.mp3";
+var rSound = document.createElement("audio");
+rSound.src = "rSound.mp3";
 
 var backgroundMusic = document.createElement("audio");
 backgroundMusic.src = "backgroundMusic.mp3";
@@ -502,9 +502,9 @@ const ufoHeight = canvas.height * 1/8 * 7/9;
 const playerLevel = carHeight * 10;
 var player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight * 10/11, carHeight, canvas.width/14, 1.5 * canvas.height/14);
 
-var qAbility = new Ability(new Vector(carHeight    , playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "Q", teleportSound);
-var eAbility = new Ability(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "E", laserSound);
-var rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 240, 240, "R", multipleLaserSound);
+var qAbility = new Ability(new Vector(carHeight    , playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "Q", qSound);
+var eAbility = new Ability(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "E", eSound);
+var rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 240, 240, "R", rSound);
 
 var wTrigger = new Trigger(new Vector(canvas.width - (carHeight * 7/4), playerLevel + carHeight * 5/4), carHeight * 3/4, carHeight * 3/4, "W");
 var sTrigger = new Trigger(new Vector(canvas.width - (carHeight * 7/4), playerLevel + carHeight * 11/4), carHeight * 3/4, carHeight * 3/4, "S");
