@@ -101,13 +101,16 @@ function clickHandler(event) {
         reset();
     }
     else if (screen == "game") {
-        if (backgroundMusic.playing) {
-            backgroundMusic.pause();
-            backgroundMusic.playing = false;
-        }
-        else {
-            backgroundMusic.play();
-            backgroundMusic.playing = true;
+        // TODO: there has to be a better line that this...
+        if(!wTrigger.checkDown(cursorHB, true) && !sTrigger.checkDown(cursorHB, true) && !aTrigger.checkDown(cursorHB, true) && !dTrigger.checkDown(cursorHB, true) && !qAbility.checkDown(cursorHB, true) && !eAbility.checkDown(cursorHB, mouseDown) && !rAbility.checkDown(cursorHB, mouseDown)) {
+            if (backgroundMusic.playing) {
+                backgroundMusic.pause();
+                backgroundMusic.playing = false;
+            }
+            else {
+                backgroundMusic.play();
+                backgroundMusic.playing = true;
+            }
         }
     }
     else if (screen == "directions" || screen == "scores") {
