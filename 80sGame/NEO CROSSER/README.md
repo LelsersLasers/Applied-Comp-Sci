@@ -4,6 +4,8 @@ Features/Design Choices:
 - Visually Clarity
     - ALl art is hand drawn (mouse drawn) pixel art by me
     - No 'overlapping' colors
+    - Nothing happens "randomly" on screen
+        - Everything is predictable
     - No pointless effects
         - No particles, everything drawn has effect
     - Animated Player

@@ -448,7 +448,7 @@ class Car extends Enemy {
     constructor(y, ms) {
         let w = carWidth;
         let type = getRandomInt(1, 8) == 1 ? 1 : 0;
-        if (type == 1) w *= 1.3;
+        if (type == 1) w *= 1.2;
         let h = carHeight;
 
         let badX = true;
@@ -463,7 +463,7 @@ class Car extends Enemy {
         let pt = new Vector(x, y);
 
         super(pt, w, h, ms, "carHitSound.mp3");
-        if (type == 1) this.ms *= 1.3;
+        if (type == 1) this.ms *= 1.2;
         this.offScreen = false;
         this.type = type;
     }
