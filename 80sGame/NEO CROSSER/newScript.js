@@ -286,14 +286,14 @@ function drawGame() {
     for (var i = 0; i < buildings.length; i++) {
         buildings[i].draw();
     }
-    obstacles = [...cars, ...ufos];
-    for (var i = 0; i < obstacles.length; i++) {
-        obstacles[i].update();
-        obstacles[i].draw();
-        // obstacles[i].hb.draw("#ffffff");
-        if (obstacles[i].hb.checkCollide(player.hb) && alive) {
+    enemies = [...cars, ...ufos];
+    for (var i = 0; i < enemies.length; i++) {
+        enemies[i].update();
+        enemies[i].draw();
+        // enemies[i].hb.draw("#ffffff");
+        if (enemies[i].hb.checkCollide(player.hb) && alive) {
             scoreView.color = "#e37e7b";
-            obstacles[i].deathSound.play();
+            enemies[i].deathSound.play();
             alive = false;
             player.off();
         }

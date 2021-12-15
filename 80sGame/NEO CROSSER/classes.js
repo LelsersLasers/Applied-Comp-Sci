@@ -236,12 +236,12 @@ class Laser extends Thing {
     update() {
         if (this.active) {
             this.pt.apply(this.moveVector);
-            obstacles = [...cars, ...ufos];
-            for (var i = 0; i < obstacles.length; i++) {
-                if (this.hb.checkCollide(obstacles[i].hb)) {
+            enemies = [...cars, ...ufos];
+            for (var i = 0; i < enemies.length; i++) {
+                if (this.hb.checkCollide(enemies[i].hb)) {
                     this.off();
-                    obstacles[i].off();
-                    obstacles[i].stun += this.stunTime;
+                    enemies[i].off();
+                    enemies[i].stun += this.stunTime;
                     this.hitSound.play();
                 }
             }
