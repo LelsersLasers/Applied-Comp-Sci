@@ -46,9 +46,8 @@ class HitBox {
 }
 
 class Thing {
-    constructor(pt, color, w, h) {
+    constructor(pt, w, h) {
         this.pt = pt;
-        this.color = color;
         this.w = w;
         this.h = h;
         this.width = 3;
@@ -84,8 +83,8 @@ class Thing {
 
 class Trigger extends Thing {
     constructor(pt, w, h, txt) {
-        var color = "#5e94d1";
-        super(pt, color, w, h);
+        super(pt, w, h);
+        this.color = "#5e94d1";
         this.color2 = "#9ee092";
         this.txt = txt;
         this.down = false;
@@ -116,9 +115,8 @@ class Trigger extends Thing {
 
 class Ability extends Trigger {
     constructor(pt, w, h, timer, wait, txt, sound) {
-        var color = "#dadfe6";
         super(pt, w, h, txt);
-        this.color = color;
+        this.color = "#dadfe6";
         this.timer = timer;
         this.wait = wait;
         this.sound = sound;
@@ -150,7 +148,8 @@ class Ability extends Trigger {
 
 class GameTxt extends Thing {
     constructor(pt, color, w, h, txt) {
-        super(pt, color, w, h);
+        super(pt, w, h);
+        this.color = color;
         this.txt = txt;
     }
     draw() {
@@ -174,7 +173,6 @@ class GameTxt extends Thing {
 class Laser extends Thing {
     constructor(pt, dir, stunTime) {
         let ms = Math.sqrt((canvas.width * canvas.width + canvas.height * canvas.height)/52000);
-        let color = "#ff0055";
         switch (dir) {
             case "w":
                 var moveVector = new Vector(0, -ms);
@@ -225,7 +223,8 @@ class Laser extends Thing {
                 var angle = -135;
                 break;
         }
-        super(pt, color, w, h);
+        super(pt, w, h);
+        this.color = "#ff0055";
         this.stunTime = stunTime;
         this.ms = ms;
         this.dir = dir;
@@ -271,8 +270,7 @@ class Laser extends Thing {
 
 class Player extends Thing {
     constructor(pt, w, h, msX, msY) {
-        var color = "#00ff00";
-        super(pt, color, w, h);
+        super(pt, w, h);
         this.msX = msX;
         this.msY = msY;
         this.teleportSpeed = 3;
@@ -416,8 +414,7 @@ class Player extends Thing {
 
 class AfterImage extends Thing {
     constructor(pt, w, h, a, b, c, frames) {
-        let color = "#000000";
-        super(pt, color, w, h);
+        super(pt, w, h);
         this.a = a;
         this.b = b;
         this.c = c;
@@ -435,7 +432,6 @@ class AfterImage extends Thing {
 
 class Car extends Thing {
     constructor(y, ms) {
-        let color = "#ff0000";
         let w = carWidth;
         let type = getRandomInt(1, 8) == 1 ? 1 : 0;
         if (type == 1) w *= 1.3;
@@ -454,7 +450,7 @@ class Car extends Thing {
         }
         let pt = new Vector(x, y);
 
-        super(pt, color, w, h);
+        super(pt, w, h);
         this.ms = ms;
         if (type == 1) this.ms *= 1.3; 
         this.stun = 0;
@@ -515,13 +511,12 @@ class Car extends Thing {
 
 class Ufo extends Thing {
     constructor(y) {
-        let color = "#ff0000";
         let w = ufoWidth;
         let h = ufoHeight;
 
         let pt = new Vector(getRandomInt(0, canvas.width - w), y);
 
-        super(pt, color, w, h);
+        super(pt, w, h);
         this.ms = score/5000 * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800) + 1;
         
         if (getRandomInt(1, 3) == 1) {
@@ -569,8 +564,7 @@ class Ufo extends Thing {
 
 class Block extends Thing {
     constructor(pt, i, w, h) {
-        let color = "#000000";
-        super(pt, color, w, h);
+        super(pt, w, h);
         this.animation = i % 2;
     }
     draw() {
@@ -588,7 +582,6 @@ class Block extends Thing {
 
 class Building extends Thing {
     constructor(y) {
-        let color = "#0000ff";
         let h = carHeight * 2.5;
         let widthOfOne = (26 * h/40);
         let maxW = Math.floor((carWidth * 1.5)/widthOfOne);
@@ -607,11 +600,7 @@ class Building extends Thing {
             }
         }
         let pt = new Vector(x, y);
-        super(pt, color, w, h);
-        this.deathMessage = "Ran Into Wall";
-        this.deathColor = "#f8d498";
-        this.deathSound = document.createElement("audio");
-        this.deathSound.src = "thunk.mp3";
+        super(pt, w, h);
 
         this.buildings = [];
         for (var i = 0; i < buildingCount; i++) {
@@ -620,9 +609,6 @@ class Building extends Thing {
         }
         this.widthOfOne = widthOfOne;
     }
-
-    // update() {} // do nothing (this is here so it works with obstacles[i].update())
-
     draw() {
         for (var i = 0; i < this.buildings.length; i++) {
             context.drawImage(texBuilding, this.buildings[i][0], this.buildings[i][1], 26, 40, this.pt.x + i * this.widthOfOne, this.pt.y, this.widthOfOne, this.h);
