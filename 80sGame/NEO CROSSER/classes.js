@@ -306,6 +306,7 @@ class Player extends Thing {
     move() {
         if (this.active) {
             if (wDown || sDown || aDown || dDown) {
+                let oldPt = new Vector(this.pt.x, this.pt.y);
                 this.frame++;
                 switch (lastDir) {
                     case "w":
@@ -325,6 +326,13 @@ class Player extends Thing {
                     case "d":
                         this.pt.x += this.msX/moveWait;
                         break
+                }
+                for (var i = 0; i < buildings.length; i++) {
+                    if (this.hb.checkCollide(buildings[i].hb)) {
+                        if (lastDir == "a" || lastDir == "d") this.pt = oldPt;
+                        else if (lastDir == "w") this.moveDown(this.msY/moveWait);
+                        else if (lastDir == "s") this.moveUp(this.msY/moveWait);
+                    }
                 }
             }
             if (this.frame % 11 == 0 && alive) {
@@ -363,6 +371,15 @@ class Player extends Thing {
                         }
                         this.pt.x += this.msX * this.teleportSpeed;
                         break
+                }
+                for (var i = 0; i < buildings.length; i++) {
+                    if (this.hb.checkCollide(buildings[i].hb)) {
+                        console.log("building");
+                        if (lastDir == "w") this.moveDown(buildings[i].pt.y + buildings[i].h - this.pt.y);
+                        else if (lastDir == "s") this.moveUp(buildings[i].pt.y - this.pt.y + this.h);
+                        else if (lastDir == "a") this.pt.x += buildings[i].pt.x + buildings[i].w - this.pt.x;
+                        else if (lastDir == "d") this.pt.x -= buildings[i].pt.x - this.pt.x + this.w;
+                    }
                 }
                 qAbility.use();
             }
@@ -601,7 +618,7 @@ class Building extends Thing {
         this.widthOfOne = widthOfOne;
     }
 
-    update() {} // do nothing (this is here so it works with obstacles[i].update())
+    // update() {} // do nothing (this is here so it works with obstacles[i].update())
 
     draw() {
         for (var i = 0; i < this.buildings.length; i++) {
