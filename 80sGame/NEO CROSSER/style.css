@@ -3,58 +3,12 @@ html {
     color: #ffffff;
 }
 
-.blue {
-    /* border: 1px solid blue; */
-    border: none;
-}
-.txtCenter {
-    text-align: center;
-}
-.center {
-    margin: 0 auto;
-}
-
 canvas {
     border: 4px solid black;
-}
-
-span {
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 5px;
-}
-
-#mainTxt {
-    text-align: center;
-    width: 80%;
-    margin: 0 auto;
-}
-
-.ability {
-    margin-right: 0;
-}
-
-.CD1 {
-    background-color: #dadfe6;
-    width: 120px;
-}
-.CD2 {
-    background-color: #5e94d1;
-}
-
-#state {
-    background-color:#9ee092;    
-}
-
-#bar {
-    width: 100%;
-    vertical-align: middle;
-    height: 2em;
-}
-
-div {
-    height: 1em;
-    display: inline-block;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }

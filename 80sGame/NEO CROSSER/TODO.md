@@ -3,11 +3,8 @@
 - High scores board
     - use canvas to display 'input name' field
         - touch screen doesn't have keyboard so can't use html input boxes
-- Center Canvas
-    - Remove everything but the canvas from the html
-        - will also fix the arrow keys scrolling the screen
-        - will need a music controls section?
-    - exit button?
+- Need a music controls section?
+- exit button?
 - Colors/Style
     - On welcome/directions/top scores
     - font?
