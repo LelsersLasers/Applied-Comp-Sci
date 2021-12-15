@@ -430,7 +430,40 @@ class AfterImage extends Thing {
     }
 }
 
-class Car extends Thing {
+class Enemy extends Thing {
+    constructor(pt, w, h, ms, soundFilename) {
+        super(pt, w, h);
+        this.frame = 0;
+        this.stun = 0;
+        this.ms = ms;
+        this.deathSound = document.createElement("audio");
+        this.deathSound.src = soundFilename;
+        this.animation = getRandomInt(0, 2);
+    }
+    updateStun() {
+        this.stun--;
+        if (this.stun <= 0) {
+            this.on();
+            this.stun = 0;
+        }
+    }
+    updateAnimation() {
+        if (this.active) {
+            this.frame++;
+            this.pt.x += this.ms;
+            var animationWait = this.getAnimationWait();
+            animationWait = animationWait > 0 ? animationWait : 30;
+            if (this.frame % animationWait == 0) {
+                this.animation = Number(!this.animation);
+            }
+        }
+    }
+    getAnimationWait() {
+        return Math.abs(parseInt(30/this.ms));
+    }
+}
+
+class Car extends Enemy {
     constructor(y, ms) {
         let w = carWidth;
         let type = getRandomInt(1, 8) == 1 ? 1 : 0;
@@ -450,40 +483,23 @@ class Car extends Thing {
         }
         let pt = new Vector(x, y);
 
-        super(pt, w, h);
-        this.ms = ms;
-        if (type == 1) this.ms *= 1.3; 
-        this.stun = 0;
+        super(pt, w, h, ms, "carHitSound.mp3");
+        if (type == 1) this.ms *= 1.3;
         this.offScreen = false;
-        this.deathMessage = "Road Kill";
-        this.deathSound = document.createElement("audio");
-        this.deathSound.src = "carHitSound.mp3";
-        this.animation = getRandomInt(0, 2);
-        this.frame = 0;
         this.type = type;
     }
     update() {
-        this.stun--;
-        if (this.stun <= 0) {
-            this.on();
-            this.stun = 0;
-        }
-        if (this.active) {
-            this.frame++;
-            this.pt.x += this.ms;
-            var animationWait = Math.abs(parseInt(30/this.ms));
-            animationWait = animationWait > 0 ? animationWait : 30;
-            if (this.frame % animationWait == 0) {
-                this.animation = Number(!this.animation);
-            }
-        }
+        this.updateStun();
+        this.updateAnimation();
         if (this.hb.outOfBounds()) {
             this.ms = this.ms * -1;
             this.ms = this.ms * 1.001;
         }
         if (this.pt.y > canvas.height && !this.offScreen) {
             let y = this.pt.y - (1.5 * carHeight) * 10;
-            cars.push(new Car(y, this.ms * 1.01)); // always spawn new car
+            if (this.type == 1) var newMs = this.ms * 5/6 * 1.01;
+            else var newMs = this.ms * 1.01;
+            cars.push(new Car(y, newMs)); // always spawn new car
             if (getRandomInt(1, 15) * Math.pow(1.0001, score) >= 14) { // spawn ufo scale on score
                 ufos.push(new Ufo(y));
             }
@@ -508,15 +524,13 @@ class Car extends Thing {
     }
 }
 
-class Ufo extends Thing {
+class Ufo extends Enemy {
     constructor(y) {
         let w = ufoWidth;
         let h = ufoHeight;
-
         let pt = new Vector(getRandomInt(0, canvas.width - w), y);
-
-        super(pt, w, h);
-        this.ms = score/5000 * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800) + 1;
+        let ms = score/5000 * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800) + 1;
+        super(pt, w, h, ms, "ufoHitSound.mp3");
         
         if (getRandomInt(1, 3) == 1) {
             this.move = new Vector(player.pt.x + player.w/2 - this.pt.x + this.w/2, player.pt.y + player.h/2 - this.pt.y + this.h/2); // punish player for not moving
@@ -525,28 +539,13 @@ class Ufo extends Thing {
             this.move = new Vector(getRandomInt(-12, 12), getRandomInt(3, 5));
         }
         this.move.scale(this.ms);
-        this.stun = 0;
-        this.deathMessage = "Abducted";
-        this.deathSound = document.createElement("audio");
-        this.deathSound.src = "ufoHitSound.mp3";
-        this.animation = getRandomInt(0, 2);
-        this.frame = 0;
+    }
+    getAnimationWait() {
+        return Math.abs(parseInt(30/((this.ms/1.5))));
     }
     update() {
-        this.stun--;
-        if (this.stun <= 0) {
-            this.on();
-            this.stun = 0;
-        }
-        if (this.active) {
-            this.frame++;
-            this.pt.apply(this.move);
-            var animationWait = Math.abs(parseInt(30/((this.ms/1.5))));
-            animationWait = animationWait > 0 ? animationWait : 30;
-            if (this.frame % animationWait == 0) {
-                this.animation = Number(!this.animation);
-            }
-        }
+        this.updateStun();
+        this.updateAnimation();
         this.updateHB();
         if (this.hb.outOfBounds()) {
             this.move.x *= -1;
