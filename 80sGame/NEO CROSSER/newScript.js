@@ -25,9 +25,7 @@ function keyDownHandler(e) {
             lastDir = "w";
             break;
         case "s": case "ArrowDown":
-            if (screen == "welcome") {
-                screen = "scores";
-            }
+            if (screen == "welcome") screen = "directions";
             sDown = true;
             lastDir = "s";
             break;
@@ -36,9 +34,7 @@ function keyDownHandler(e) {
             lastDir = "a";
             break;
         case "d": case "ArrowRight":
-            if (screen == "welcome") {
-                screen = "directions";
-            }
+            if (screen == "welcome") screen = "directions";
             dDown = true;
             lastDir = "d";
             break;
