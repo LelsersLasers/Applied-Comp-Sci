@@ -280,6 +280,9 @@ function drawGame() {
     mouseDownActions();
     player.move();
     player.draw();
+    for (var i = 0; i < buildings.length; i++) {
+        buildings[i].draw();
+    }
     obstacles = [...cars, ...ufos];
     for (var i = 0; i < obstacles.length; i++) {
         obstacles[i].update();
@@ -291,9 +294,6 @@ function drawGame() {
             alive = false;
             player.off();
         }
-    }
-    for (var i = 0; i < buildings.length; i++) {
-        buildings[i].draw();
     }
     for (var i = 0; i < lasers.length; i++) {
         lasers[i].update();
