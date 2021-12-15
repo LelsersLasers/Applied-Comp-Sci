@@ -233,6 +233,7 @@ function drawDirections() {
     txts.push("or by tapping the icon in the bottom left.)")
     txts.push("Goal: Go as far up as possible.")
     txts.push("If you die, click the screen to restart");
+    txts.push("(Touch the click the screen  to toggle the music while alive.)")
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight * 5/12 + "px  " + font;
     for (var i = 0; i < txts.length; i++) {
