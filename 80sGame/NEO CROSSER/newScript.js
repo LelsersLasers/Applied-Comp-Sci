@@ -169,7 +169,7 @@ function writeScore() {
         console.log(scores[i]);
         if (topScore > parseInt(scores[i].substring(5)) && swap == 0) { // 3 lettes + ':' + ' ' = 5
             var name = localStorage.getItem("name") != null ? localStorage.getItem("name") : "";
-            name = prompt("Enter 3 letters for your name:", name);
+            name = prompt("Congrats on a Top 10 Score! Enter 3 letters for your name on the score board:", name);
             if (name == null) name = "N/A";
             localStorage.setItem("name", name);
             name += "   "; // incase they entered less than 3 characters, backfill with spaces
@@ -184,7 +184,7 @@ function getTopScores() {
     let scoresTxt = localStorage.getItem("NEO CROSSER - Leader Board");
     let scores = [];
     if (scoresTxt == null) { // no scores variable in localStorage
-        for (let i = 0; i < 10; i++) { // fill with black values
+        for (let i = 0; i < 10; i++) { // fill with blank values
             scores.push("N/A: -1");
         }
         localStorage.setItem("NEO CROSSER - Leader Board", scores.toString()); // create the variable b/c it doesn't exist
@@ -386,7 +386,7 @@ function setUpContext() {
     return context;
 }
 
-// localStorage.removeItem("NEO CROSSER - Leader Board");
+// localStorage.removeItem("NEO CROSSER - Leader Board"); // reset leard board
 
 var font = "monospace";
 

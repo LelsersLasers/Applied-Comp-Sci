@@ -8,10 +8,10 @@
         - will also fix the arrow keys scrolling the screen
         - will need a music controls section?
     - exit button?
-- Clean up code
 - Colors/Style
     - On welcome/directions/top scores
     - font?
+- Clean up code
 - Update directions/read me
 #
 - Clean code
