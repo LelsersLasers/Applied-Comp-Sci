@@ -286,9 +286,7 @@ class Player extends Thing {
                     case "w":
                         this.moveUp(this.msY/moveWait);
                         score += 1;
-                        if (score > topScore) {
-                            topScore = score;
-                        }
+                        if (score > topScore) topScore = score;
                         break;
                     case "s":
                         this.moveDown(this.msY/moveWait);
@@ -326,9 +324,7 @@ class Player extends Thing {
                         }
                         this.moveUp(this.msY * this.teleportSpeed);
                         score += moveWait * this.teleportSpeed;
-                        if (score > topScore) {
-                            topScore = score;
-                        }
+                        if (score > topScore) topScore = score;
                         break;
                     case "s":
                         for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
@@ -377,9 +373,7 @@ class Player extends Thing {
         }
     }
     draw() {
-        for (var i = 0; i < this.afterImages.length; i++) {
-            this.afterImages[i].draw();
-        }
+        for (var i = 0; i < this.afterImages.length; i++) this.afterImages[i].draw();
         if (alive) {
             let dirs = ["s", "w", "d", "a"];
             let dir = dirs.indexOf(lastDir);
