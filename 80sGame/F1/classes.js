@@ -39,23 +39,33 @@ class Car {
         this.len = len;
 
         this.speed = 0;
+        this.turnSpeed = 4;
+        this.grip = 100;
+
+        let resistanceGround = -0.05;
+        let resistanceAir = -0.05;
+        this.forces = [resistanceGround, resistanceAir];
     }
     move() {
+        for (let i = 0; i < this.forces.length; i++) {
+            this.speed += this.forces[i];
+        }
         if (wDown) {
-            this.speed += 0.1;
+            this.speed += 0.2;
         }
         if (sDown) {
             this.speed -= 0.1;
-            if (this.speed < 0) this.speed = 0;
         }
         if (this.speed > 0) {
             if (dDown) {
-                this.angle -= 4;
+                this.angle -= this.turnSpeed * this.grip/100;
             }
             if (aDown) {
-                this.angle += 4;
+                this.angle += this.turnSpeed * this.grip/100;
             }
         }
+        this.grip = 100 * Math.pow(0.95, this.speed);
+        if (this.speed < 0) this.speed = 0;
         this.pt.apply(new Vector(Math.sin(degToRad(this.angle)) * this.speed, Math.cos(degToRad(this.angle)) * this.speed));
     }
     draw() {
