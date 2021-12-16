@@ -270,21 +270,13 @@ class Player extends Thing {
     }
     moveUp(ms) {
         let obstacles = [...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
-        for (var i = 0; i < obstacles.length; i++) {
-            obstacles[i].pt.y += ms;
-        }  
-        for (var i = 0; i < bar.length; i++) {
-            bar[i].update();
-        }
+        for (var i = 0; i < obstacles.length; i++) obstacles[i].pt.y += ms;
+        for (var i = 0; i < bar.length; i++) bar[i].update();
     }
     moveDown(ms) {
         let obstacles = [...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
-        for (var i = 0; i < obstacles.length; i++) {
-            obstacles[i].pt.y -= ms;
-        }  
-        for (var i = 0; i < bar.length; i++) {
-            bar[i].update();
-        }
+        for (var i = 0; i < obstacles.length; i++) obstacles[i].pt.y -= ms;  
+        for (var i = 0; i < bar.length; i++) bar[i].update();
     }
     move() {
         if (this.active) {
@@ -307,7 +299,7 @@ class Player extends Thing {
                         break;
                     case "d":
                         this.pt.x += this.msX/moveWait;
-                        break
+                        break;
                 }
                 this.updateHB();
                 for (var i = 0; i < buildings.length; i++) {
