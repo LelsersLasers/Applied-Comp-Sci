@@ -83,7 +83,7 @@ function setUpContext() {
 
 var context = setUpContext();
 
-var player = new Spaceship(new Vector(50, 50), 30);
+var player = new Spaceship(new Vector(canvas.width/2, canvas.height/2), 30);
 
 var asteroids = [];
 

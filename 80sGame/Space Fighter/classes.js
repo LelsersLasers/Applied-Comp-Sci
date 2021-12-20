@@ -87,7 +87,12 @@ class Spaceship {
             this.angle += this.turnSpeed;
         }
         if (this.speed < 0) this.speed = 0;
-        this.pt.apply(new Vector(Math.sin(degToRad(this.angle)) * this.speed, Math.cos(degToRad(this.angle)) * this.speed));
+
+        for (var i = 0; i < asteroids.length; i++) {
+            asteroids[i].pt.apply(new Vector(-Math.sin(degToRad(this.angle)) * this.speed, -Math.cos(degToRad(this.angle)) * this.speed));
+        }
+
+        // this.pt.apply(new Vector(Math.sin(degToRad(this.angle)) * this.speed, Math.cos(degToRad(this.angle)) * this.speed));
     }
     draw() {
         context.fillStyle = this.color;
