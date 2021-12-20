@@ -160,10 +160,28 @@ class Paddle extends Thing {
         this.canHit = true;
         this.mode = false;
         this.keys = [false, false];
+        this.side = this.pt.x < canvas.width/2 ? "left" : "right";
     }
     update() {
         if (!this.mode) {
-            if (ball.pt.y > this.pt.y + this.h/2) {
+            let tempBallPt = new Vector(ball.pt.x, ball.pt.y);
+            if (this.side == "left") {
+                while (ball.pt.x >= this.pt.x + this.w) {
+                    ball.update();
+                }
+            }
+            else {
+                while (ball.pt.x <= this.pt.x) {
+                    ball.update();
+                }
+            }
+            let target = ball.pt;
+            ball.pt.x = tempBallPt.x;
+            ball.pt.y = tempBallPt.y;
+            context.beginPath();
+            context.rect(target.x, target.y, 20, 20);
+            context.fill();
+            if (target.y > this.pt.y + this.h/2) {
                 if (this.pt.y <= canvas.height - this.h) this.pt.y += this.ms; 
             }
             else {
