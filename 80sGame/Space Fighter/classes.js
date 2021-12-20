@@ -91,34 +91,39 @@ class Spaceship {
         for (var i = 0; i < asteroids.length; i++) {
             asteroids[i].pt.apply(new Vector(-Math.sin(degToRad(this.angle)) * this.speed, -Math.cos(degToRad(this.angle)) * this.speed));
         }
-
-        // this.pt.apply(new Vector(Math.sin(degToRad(this.angle)) * this.speed, Math.cos(degToRad(this.angle)) * this.speed));
     }
     draw() {
         context.fillStyle = this.color;
-        // context.lineWidth = 0.5;
         context.beginPath();
         context.moveTo(this.pt.x, this.pt.y);
         context.lineTo(this.pt.x + Math.sin(degToRad(this.angle)) * this.len, this.pt.y + Math.cos(degToRad(this.angle)) * this.len);
         context.lineTo(this.pt.x + Math.sin(degToRad(this.angle)) * this.len + Math.sin(degToRad(90 + this.angle)) * this.len/2, this.pt.y + Math.cos(degToRad(this.angle)) * this.len + Math.cos(degToRad(90 + this.angle)) * this.len/2);
         context.lineTo(this.pt.x + Math.sin(degToRad(90 + this.angle)) * this.len/2, this.pt.y + Math.cos(degToRad(90 + this.angle)) * this.len/2);
         context.fill();
-
-        // context.beginPath();
-        // context.arc(this.pt.x, this.pt.y, this.len, 0, Math.PI * 2);
-        // context.stroke();
-        this.hb.draw("#00ff00");
     }
 }
 
 
 class Asteroid {
-    constructor(pt, w, h) {
-        this.pt = pt;
-        this.w = w;
-        this.h = h;
+    constructor() {
+        this.w = 50;
+        this.h = 50;
+
+        let tempPt = new Vector(getRandomInt(0, canvas.width - this.w), getRandomInt(0, canvas.height - this.h));
+        let badPt = true;
+        while (badPt) {
+            badPt = false;
+            for (var i = 0; i < asteroids.length; i++) {
+                if (new HitBox(tempPt, this.w, this.h).checkCollide(asteroids[i].hb)) {
+                    badPt = true;
+                }
+                // if (new HitBox(tempPt, this.w, this.h).checkCollide(PLAYER.HB))
+            }
+        }
+        this.pt = tempPt;
+
         this.color = "#ff0000";
-        this.hb = new HitBox(pt, w, h);
+        this.hb = new HitBox(this.pt, this.w, this.h);
     }
     draw() {
         context.fillStyle = this.color;

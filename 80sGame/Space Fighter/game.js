@@ -88,7 +88,8 @@ var player = new Spaceship(new Vector(canvas.width/2, canvas.height/2), 30);
 var asteroids = [];
 
 for (var i = 0; i < 10; i++) {
-    asteroids.push(new Asteroid(new Vector(getRandomInt(0, canvas.width - 50), getRandomInt(0, canvas.height - 50)), 50, 50));
+    let tempAsteroid = new Asteroid();
+    asteroids.push(tempAsteroid);
 }
 
 // Fire up the animation engine
