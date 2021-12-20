@@ -63,7 +63,6 @@ function drawAll() {
 
     for (var i = 0; i < asteroids.length; i++) {
         asteroids[i].draw();
-        // console.log(asteroids[i]);
     }
 
     window.requestAnimationFrame(drawAll);

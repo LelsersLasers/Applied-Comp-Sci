@@ -68,7 +68,7 @@ class Spaceship {
         this.pt = pt;
         this.angle = 0;
         this.len = len;
-        this.turnSpeed = 5;
+        this.turnSpeed = 4;
         this.speed = 0;
         this.color = "#ffffff";
         this.hb = new HitBox(pt, this.len/2, this.len);
@@ -90,12 +90,18 @@ class Spaceship {
         this.pt.apply(new Vector(Math.sin(degToRad(this.angle)) * this.speed, Math.cos(degToRad(this.angle)) * this.speed));
     }
     draw() {
-        context.strokeStyle = this.color;
-        context.lineWidth = this.len/2;
+        context.fillStyle = this.color;
+        // context.lineWidth = 0.5;
         context.beginPath();
         context.moveTo(this.pt.x, this.pt.y);
         context.lineTo(this.pt.x + Math.sin(degToRad(this.angle)) * this.len, this.pt.y + Math.cos(degToRad(this.angle)) * this.len);
-        context.stroke();
+        context.lineTo(this.pt.x + Math.sin(degToRad(this.angle)) * this.len + Math.sin(degToRad(90 + this.angle)) * this.len/2, this.pt.y + Math.cos(degToRad(this.angle)) * this.len + Math.cos(degToRad(90 + this.angle)) * this.len/2);
+        context.lineTo(this.pt.x + Math.sin(degToRad(90 + this.angle)) * this.len/2, this.pt.y + Math.cos(degToRad(90 + this.angle)) * this.len/2);
+        context.fill();
+
+        // context.beginPath();
+        // context.arc(this.pt.x, this.pt.y, this.len, 0, Math.PI * 2);
+        // context.stroke();
         this.hb.draw("#00ff00");
     }
 }
