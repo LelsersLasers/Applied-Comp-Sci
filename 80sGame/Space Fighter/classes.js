@@ -100,6 +100,12 @@ class Spaceship {
         context.lineTo(this.pt.x + Math.sin(degToRad(this.angle)) * this.len + Math.sin(degToRad(90 + this.angle)) * this.len/2, this.pt.y + Math.cos(degToRad(this.angle)) * this.len + Math.cos(degToRad(90 + this.angle)) * this.len/2);
         context.lineTo(this.pt.x + Math.sin(degToRad(90 + this.angle)) * this.len/2, this.pt.y + Math.cos(degToRad(90 + this.angle)) * this.len/2);
         context.fill();
+
+        this.hb.draw("#00ff00");
+    }
+
+    checkHit(hb) {
+        
     }
 }
 
