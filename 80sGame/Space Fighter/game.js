@@ -21,9 +21,6 @@ function keyDownHandler(e) {
         case "d": case "ArrowRight":
             dDown = true;
             break;
-        case "q": case "1": qDown = true; break;
-        case "e": case "2": eDown = true; break;
-        case "r": case "3": rDown = true; break;
         case "z":
             reset();
             break;
@@ -39,6 +36,17 @@ function keyUpHandler(e) {
     }
 }
 
+function reset() {
+    location.reload(); // reloads the webpage
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    value = Math.floor(Math.random() * (max - min) + min); //The max is exclusive and the min is inclusive
+    return value;
+}
+
 function radToDeg(rad) {
     return rad * 180 / Math.PI;
 }
@@ -49,12 +57,14 @@ function degToRad(deg) {
 function drawAll() {
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // temp.draw();
-    // temp2.draw();
 
-    car.move();
-    car.draw();
+    player.move();
+    player.draw();
+
+    for (var i = 0; i < asteroids.length; i++) {
+        asteroids[i].draw();
+        // console.log(asteroids[i]);
+    }
 
     window.requestAnimationFrame(drawAll);
 }
@@ -74,12 +84,13 @@ function setUpContext() {
 
 var context = setUpContext();
 
-// var temp = new Vector(-100, 50);
-// console.log(temp.getAngle());
-// var temp2 = new Vector(-100, 50);
-// temp2.setAngle(-45);
+var player = new Spaceship(new Vector(50, 50), 30);
 
-var car = new Car(new Vector(50, 50), 30);
+var asteroids = [];
+
+for (var i = 0; i < 10; i++) {
+    asteroids.push(new Asteroid(new Vector(getRandomInt(0, canvas.width - 50), getRandomInt(0, canvas.height - 50)), 50, 50));
+}
 
 // Fire up the animation engine
 window.requestAnimationFrame(drawAll);
