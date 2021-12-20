@@ -308,8 +308,6 @@ class Player extends Thing {
                         else if (lastDir == "s") this.moveUp(this.msY/moveWait);
                     }
                 }
-                if (this.pt.x < 0) this.pt.x = 0;
-                else if (this.pt.x + this.w > canvas.width) this.pt.x = canvas.width - this.w;
             }
             if (this.frame % 11 == 0 && alive) {
                 this.animation++;
@@ -371,6 +369,9 @@ class Player extends Thing {
                 rAbility.use();
             }
         }
+        if (this.pt.x < 0) this.pt.x = 0;
+        else if (this.pt.x + this.w > canvas.width) this.pt.x = canvas.width - this.w;
+        player.updateHB();
     }
     draw() {
         for (var i = 0; i < this.afterImages.length; i++) this.afterImages[i].draw();
