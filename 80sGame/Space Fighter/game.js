@@ -37,6 +37,7 @@ function keyUpHandler(e) {
 }
 
 function reset() {
+    console.log("restarting...");
     location.reload(); // reloads the webpage
 }
 
@@ -61,9 +62,10 @@ function drawAll() {
     player.move();
     player.draw();
 
-    for (var i = 0; i < asteroids.length; i++) {
-        asteroids[i].draw();
-    }
+    // for (var i = 0; i < asteroids.length; i++) {
+    //     asteroids[i].draw();
+    // }
+    // console.log("current time: " + new Date().getTime() / 1000);
 
     window.requestAnimationFrame(drawAll);
 }
@@ -81,16 +83,24 @@ function setUpContext() {
     return context;
 }
 
+var startTime = new Date().getTime() / 1000;
+console.log("starting... (" + startTime + ")");
+
 var context = setUpContext();
 
 var player = new Spaceship(new Vector(canvas.width/2, canvas.height/2), 30);
 
 var asteroids = [];
 
-for (var i = 0; i < 10; i++) {
-    let tempAsteroid = new Asteroid();
-    asteroids.push(tempAsteroid);
-}
+// for (var i = 0; i < 10; i++) {
+//     let tempAsteroid = new Asteroid();
+//     asteroids.push(tempAsteroid);
+// }
+
+var endTime = new Date().getTime() / 1000;
+console.log("start up finished... (" + endTime + ")");
+
+console.log("loading time: " + (endTime - startTime));
 
 // Fire up the animation engine
 window.requestAnimationFrame(drawAll);

@@ -8,7 +8,7 @@ class Vector {
         this.y += vOther.y;
     }
     scale(len) {
-        var currentLen = Math.sqrt(this.x * this.x + this.y * this.y);
+        var currentLen = this.calcLen();
         this.x = this.x * (len/currentLen);
         this.y = this.y * (len/currentLen);
     }
@@ -16,10 +16,13 @@ class Vector {
         return radToDeg(Math.atan(this.y/this.x));
     }
     setAngle(angle) {
-        var currentLen = Math.sqrt(this.x * this.x + this.y * this.y);
+        var currentLen = this.calcLen();
         this.x = 1;
         this.y = Math.tan(angle);
         this.scale(currentLen);
+    }
+    calcLen() {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
     }
     draw() {
         context.strokeStyle = "#ffffff";
@@ -68,17 +71,23 @@ class Spaceship {
         this.pt = pt;
         this.angle = 0;
         this.len = len;
+
         this.turnSpeed = 4;
-        this.speed = 0;
+        this.thrustSpeed = 0.01;
+        this.maxSpeed = 2.0;
+
+        this.moveVector = new Vector(0, 0);
+
         this.color = "#ffffff";
         this.hb = new HitBox(pt, this.len/2, this.len);
     }
     move() {
         if (wDown) {
-            this.speed += 0.2;
+            // this.speed += 0.2;
+            console.log("w");
         }
         if (sDown) {
-            this.speed -= 0.1;
+            // this.speed -= 0.1;
         }
         if (dDown) {
             this.angle -= this.turnSpeed;
@@ -88,12 +97,18 @@ class Spaceship {
         }
         if (this.speed < 0) this.speed = 0;
 
-        for (var i = 0; i < asteroids.length; i++) {
-            asteroids[i].pt.apply(new Vector(-Math.sin(degToRad(this.angle)) * this.speed, -Math.cos(degToRad(this.angle)) * this.speed));
-        }
+        this.moveVector.apply(new Vector(Math.sin(degToRad(this.angle)) * this.thrustSpeed, Math.cos(degToRad(this.angle)) * this.thrustSpeed));
+        let currentSpeed = this.moveVector.calcLen();
+        if (currentSpeed > this.maxSpeed) this.moveVector.scale(this.maxSpeed);
+        this.pt.apply(this.moveVector);
+
+        // for (var i = 0; i < asteroids.length; i++) {
+        //     asteroids[i].pt.apply(new Vector(-Math.sin(degToRad(this.angle)) * this.speed, -Math.cos(degToRad(this.angle)) * this.speed));
+        // }
     }
     draw() {
         context.fillStyle = this.color;
+
         context.beginPath();
         context.moveTo(this.pt.x, this.pt.y);
         context.lineTo(this.pt.x + Math.sin(degToRad(this.angle)) * this.len, this.pt.y + Math.cos(degToRad(this.angle)) * this.len);
@@ -104,37 +119,37 @@ class Spaceship {
         this.hb.draw("#00ff00");
     }
 
-    checkHit(hb) {
+    // checkHit(hb) {
         
-    }
+    // }
 }
 
 
-class Asteroid {
-    constructor() {
-        this.w = 50;
-        this.h = 50;
+// class Asteroid {
+//     constructor() {
+//         this.w = 50;
+//         this.h = 50;
 
-        let tempPt = new Vector(getRandomInt(0, canvas.width - this.w), getRandomInt(0, canvas.height - this.h));
-        let badPt = true;
-        while (badPt) {
-            badPt = false;
-            for (var i = 0; i < asteroids.length; i++) {
-                if (new HitBox(tempPt, this.w, this.h).checkCollide(asteroids[i].hb)) {
-                    badPt = true;
-                }
-                // if (new HitBox(tempPt, this.w, this.h).checkCollide(PLAYER.HB))
-            }
-        }
-        this.pt = tempPt;
+//         let tempPt = new Vector(getRandomInt(0, canvas.width - this.w), getRandomInt(0, canvas.height - this.h));
+//         let badPt = true;
+//         while (badPt) {
+//             badPt = false;
+//             for (var i = 0; i < asteroids.length; i++) {
+//                 if (new HitBox(tempPt, this.w, this.h).checkCollide(asteroids[i].hb)) {
+//                     badPt = true;
+//                 }
+//                 // if (new HitBox(tempPt, this.w, this.h).checkCollide(PLAYER.HB))
+//             }
+//         }
+//         this.pt = tempPt;
 
-        this.color = "#ff0000";
-        this.hb = new HitBox(this.pt, this.w, this.h);
-    }
-    draw() {
-        context.fillStyle = this.color;
-        context.beginPath();
-        context.rect(this.pt.x, this.pt.y, this.w, this.h);
-        context.fill();
-    }
-}
+//         this.color = "#ff0000";
+//         this.hb = new HitBox(this.pt, this.w, this.h);
+//     }
+//     draw() {
+//         context.fillStyle = this.color;
+//         context.beginPath();
+//         context.rect(this.pt.x, this.pt.y, this.w, this.h);
+//         context.fill();
+//     }
+// }
