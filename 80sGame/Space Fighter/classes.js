@@ -72,39 +72,37 @@ class Spaceship {
         this.angle = 0;
         this.len = len;
 
-        this.turnSpeed = 4;
+        this.turnSpeed = 3;
         this.thrustSpeed = 0.01;
         this.maxSpeed = 2.0;
-
+ 
         this.moveVector = new Vector(0, 0);
 
         this.color = "#ffffff";
         this.hb = new HitBox(pt, this.len/2, this.len);
     }
     move() {
-        if (wDown) {
-            // this.speed += 0.2;
-            console.log("w");
-        }
-        if (sDown) {
-            // this.speed -= 0.1;
-        }
+        // if (wDown) {
+        //     this.speed += 0.1;
+        // }
+        // if (sDown) {
+        //     this.speed -= 0.1;
+        // }
         if (dDown) {
             this.angle -= this.turnSpeed;
         }
         if (aDown) {
             this.angle += this.turnSpeed;
         }
-        if (this.speed < 0) this.speed = 0;
 
         this.moveVector.apply(new Vector(Math.sin(degToRad(this.angle)) * this.thrustSpeed, Math.cos(degToRad(this.angle)) * this.thrustSpeed));
         let currentSpeed = this.moveVector.calcLen();
         if (currentSpeed > this.maxSpeed) this.moveVector.scale(this.maxSpeed);
         this.pt.apply(this.moveVector);
 
-        // for (var i = 0; i < asteroids.length; i++) {
-        //     asteroids[i].pt.apply(new Vector(-Math.sin(degToRad(this.angle)) * this.speed, -Math.cos(degToRad(this.angle)) * this.speed));
-        // }
+        for (var i = 0; i < asteroids.length; i++) {
+            asteroids[i].pt.apply(new Vector(-Math.sin(degToRad(this.angle)) * this.speed, -Math.cos(degToRad(this.angle)) * this.speed));
+        }
     }
     draw() {
         context.fillStyle = this.color;
@@ -116,7 +114,7 @@ class Spaceship {
         context.lineTo(this.pt.x + Math.sin(degToRad(90 + this.angle)) * this.len/2, this.pt.y + Math.cos(degToRad(90 + this.angle)) * this.len/2);
         context.fill();
 
-        this.hb.draw("#00ff00");
+        // this.hb.draw("#00ff00");
     }
 
     // checkHit(hb) {
@@ -125,31 +123,35 @@ class Spaceship {
 }
 
 
-// class Asteroid {
-//     constructor() {
-//         this.w = 50;
-//         this.h = 50;
+class Asteroid {
+    constructor() {
+        this.w = 50;
+        this.h = 50;
 
-//         let tempPt = new Vector(getRandomInt(0, canvas.width - this.w), getRandomInt(0, canvas.height - this.h));
-//         let badPt = true;
-//         while (badPt) {
-//             badPt = false;
-//             for (var i = 0; i < asteroids.length; i++) {
-//                 if (new HitBox(tempPt, this.w, this.h).checkCollide(asteroids[i].hb)) {
-//                     badPt = true;
-//                 }
-//                 // if (new HitBox(tempPt, this.w, this.h).checkCollide(PLAYER.HB))
-//             }
-//         }
-//         this.pt = tempPt;
+        let badPt = true;
+        var tempPt;
+        while (badPt) {
+            badPt = false;
+            tempPt = new Vector(getRandomInt(0, canvas.width - this.w), getRandomInt(0, canvas.height - this.h));
+            for (var i = 0; i < asteroids.length; i++) {
+                if (new HitBox(tempPt, this.w, this.h).checkCollide(asteroids[i].hb)) {
+                    badPt = true;
+                }
+                // if (new HitBox(tempPt, this.w, this.h).checkCollide(PLAYER.HB))
+            }
+        }
+        this.pt = new Vector(tempPt.x, tempPt.y);
 
-//         this.color = "#ff0000";
-//         this.hb = new HitBox(this.pt, this.w, this.h);
-//     }
-//     draw() {
-//         context.fillStyle = this.color;
-//         context.beginPath();
-//         context.rect(this.pt.x, this.pt.y, this.w, this.h);
-//         context.fill();
-//     }
-// }
+        this.color = "#ff0000";
+        this.hb = new HitBox(this.pt, this.w, this.h);
+
+        console.log("Asteroid created... (" + this.pt.x + "," + this.pt.y + ")");
+    }
+    draw() {
+        context.fillStyle = this.color;
+        context.beginPath();
+        context.rect(this.pt.x, this.pt.y, this.w, this.h);
+        context.fill();
+        console.log("drew");
+    }
+}
