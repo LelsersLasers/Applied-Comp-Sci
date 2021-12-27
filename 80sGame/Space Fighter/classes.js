@@ -74,7 +74,7 @@ class Spaceship {
 
         this.turnSpeed = 3;
         this.thrustSpeed = 0.01;
-        this.maxSpeed = 2.0;
+        this.maxSpeed = 4.0;
  
         this.moveVector = new Vector(0, 0);
 
@@ -82,18 +82,20 @@ class Spaceship {
         this.hb = new HitBox(pt, this.len/2, this.len);
     }
     move() {
-        // if (wDown) {
-        //     this.speed += 0.1;
-        // }
-        // if (sDown) {
-        //     this.speed -= 0.1;
-        // }
+        if (wDown) {
+            this.thrustSpeed += 0.001;
+        }
+        if (sDown) {
+            this.thrustSpeed -= 0.001;
+        }
         if (dDown) {
             this.angle -= this.turnSpeed;
         }
         if (aDown) {
             this.angle += this.turnSpeed;
         }
+
+        if (this.thrustSpeed < 0) this.thrustSpeed = 0; // no reverse
 
         this.moveVector.apply(new Vector(Math.sin(degToRad(this.angle)) * this.thrustSpeed, Math.cos(degToRad(this.angle)) * this.thrustSpeed));
         let currentSpeed = this.moveVector.calcLen();
