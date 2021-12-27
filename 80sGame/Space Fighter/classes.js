@@ -74,6 +74,7 @@ class Spaceship {
 
         this.turnSpeed = 3;
         this.thrustSpeed = 0.01;
+        this.maxThrust = 0.02;
         this.maxSpeed = 4.0;
  
         this.moveVector = new Vector(0, 0);
@@ -96,6 +97,7 @@ class Spaceship {
         }
 
         if (this.thrustSpeed < 0) this.thrustSpeed = 0; // no reverse
+        else if (this.thrustSpeed > this.maxThrust) this.thrustSpeed = this.maxThrust;
 
         this.moveVector.apply(new Vector(Math.sin(degToRad(this.angle)) * this.thrustSpeed, Math.cos(degToRad(this.angle)) * this.thrustSpeed));
         let currentSpeed = this.moveVector.calcLen();
@@ -117,6 +119,24 @@ class Spaceship {
         context.fill();
 
         // this.hb.draw("#00ff00");
+        this.drawThrustBar();
+    }
+    drawThrustBar() {
+        let x = 0;
+        let w = 50;
+        let maxHeight = 200;
+        let y = canvas.height - maxHeight;
+
+        context.fillStyle = "grey";
+        context.beginPath();
+        context.rect(x, y, w, maxHeight);
+        context.fill();
+
+        context.fillStyle = "#00ff00";
+        context.beginPath();
+        let percent = this.thrustSpeed/this.maxThrust;
+        context.rect(x, canvas.height - maxHeight * percent, w, maxHeight * percent);
+        context.fill();
     }
 
     // checkHit(hb) {
