@@ -118,6 +118,23 @@ class Spaceship {
         context.lineTo(this.pt.x + Math.sin(degToRad(90 + this.angle)) * this.len/2, this.pt.y + Math.cos(degToRad(90 + this.angle)) * this.len/2);
         context.fill();
 
+        context.strokeStyle = "#00ff00";
+        context.beginPath();
+        context.arc(this.pt.x, this.pt.y, this.len, 0, Math.PI * 2);
+        context.stroke();
+
+        context.beginPath();
+        
+        context.moveTo(this.pt.x, this.pt.y);
+        context.lineTo(this.pt.x - Math.sin(degToRad(this.angle)) * this.len, this.pt.y - Math.cos(degToRad(this.angle)) * this.len);
+        context.lineTo(this.pt.x - Math.sin(degToRad(this.angle)) * this.len + Math.sin(degToRad(90 + this.angle)) * this.len/2, this.pt.y - Math.cos(degToRad(this.angle)) * this.len + Math.cos(degToRad(90 + this.angle)) * this.len/2);
+        
+        context.lineTo(this.pt.x, this.pt.y);
+        context.lineTo(this.pt.x - Math.sin(degToRad(this.angle)) * this.len, this.pt.y - Math.cos(degToRad(this.angle)) * this.len);
+        context.lineTo(this.pt.x - Math.sin(degToRad(this.angle)) * this.len - Math.sin(degToRad(90 + this.angle)) * this.len/2, this.pt.y - Math.cos(degToRad(this.angle)) * this.len - Math.cos(degToRad(90 + this.angle)) * this.len/2);
+        context.lineTo(this.pt.x, this.pt.y);
+        context.stroke();
+
         // this.hb.draw("#00ff00");
         this.drawThrustBar();
     }
