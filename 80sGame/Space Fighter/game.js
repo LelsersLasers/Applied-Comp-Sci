@@ -62,9 +62,9 @@ function drawAll() {
     player.move();
     player.draw();
 
-    // for (var i = 0; i < asteroids.length; i++) {
-    //     asteroids[i].draw();
-    // }
+    for (var i = 0; i < asteroids.length; i++) {
+        asteroids[i].draw();
+    }
     // console.log("current time: " + new Date().getTime() / 1000);
 
     window.requestAnimationFrame(drawAll);

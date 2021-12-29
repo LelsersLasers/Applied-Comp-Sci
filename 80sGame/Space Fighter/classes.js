@@ -99,13 +99,13 @@ class Spaceship {
         if (this.thrustSpeed < 0) this.thrustSpeed = 0; // no reverse
         else if (this.thrustSpeed > this.maxThrust) this.thrustSpeed = this.maxThrust;
 
-        this.moveVector.apply(new Vector(Math.sin(degToRad(this.angle)) * this.thrustSpeed, Math.cos(degToRad(this.angle)) * this.thrustSpeed));
+        this.moveVector.apply(new Vector(-Math.sin(degToRad(this.angle)) * this.thrustSpeed, -Math.cos(degToRad(this.angle)) * this.thrustSpeed));
         let currentSpeed = this.moveVector.calcLen();
         if (currentSpeed > this.maxSpeed) this.moveVector.scale(this.maxSpeed);
-        this.pt.apply(this.moveVector);
-
+        // this.pt.apply(this.moveVector);
+        
         for (var i = 0; i < asteroids.length; i++) {
-            asteroids[i].pt.apply(new Vector(-Math.sin(degToRad(this.angle)) * this.speed, -Math.cos(degToRad(this.angle)) * this.speed));
+            asteroids[i].pt.apply(this.moveVector);
         }
     }
     draw() {
@@ -151,19 +151,17 @@ class Asteroid {
         this.h = 50;
 
         let badPt = true;
-        var tempPt;
+        this.pt = new Vector(-1, -1);
         while (badPt) {
             badPt = false;
-            tempPt = new Vector(getRandomInt(0, canvas.width - this.w), getRandomInt(0, canvas.height - this.h));
+            this.pt = new Vector(getRandomInt(0, canvas.width - this.w), getRandomInt(0, canvas.height - this.h));
             for (var i = 0; i < asteroids.length; i++) {
-                if (new HitBox(tempPt, this.w, this.h).checkCollide(asteroids[i].hb)) {
+                if (new HitBox(this.pt, this.w, this.h).checkCollide(asteroids[i].hb)) {
                     badPt = true;
                 }
                 // if (new HitBox(tempPt, this.w, this.h).checkCollide(PLAYER.HB))
             }
         }
-        this.pt = new Vector(tempPt.x, tempPt.y);
-
         this.color = "#ff0000";
         this.hb = new HitBox(this.pt, this.w, this.h);
 
@@ -174,6 +172,5 @@ class Asteroid {
         context.beginPath();
         context.rect(this.pt.x, this.pt.y, this.w, this.h);
         context.fill();
-        console.log("drew");
     }
 }
