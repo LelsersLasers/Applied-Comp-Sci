@@ -50,8 +50,20 @@ class HitBox {
         }
         return false;
     }
-    outOfBounds() {
+    outOfBoundsX() {
         if (this.pt.x < 0 || this.pt.x + this.w > canvas.width) {
+            return true;
+        }
+        return false;
+    }
+    outOfBoundsY() {
+        if (this.pt.y < 0 || this.pt.y + this.h > canvas.height) {
+            return true;
+        }
+        return false;
+    }
+    outOfBounds() {
+        if (this.outOfBoundsX() || this.outOfBoundsY()) {
             return true;
         }
         return false;
@@ -155,6 +167,9 @@ class Asteroid {
         this.w = 50;
         this.h = 50;
 
+        this.canSpawn = true;
+        this.hasSpawned = false;
+
         let badPt = true;
         this.pt = new Vector(-1, -1);
         while (badPt) {
@@ -171,6 +186,21 @@ class Asteroid {
         this.hb = new HitBox(this.pt, this.w, this.h);
 
         console.log("Asteroid created... (" + this.pt.x + "," + this.pt.y + ")");
+    }
+    update() {
+        if (this.hb.outOfBounds()) {
+            if (this.canSpawn && !this.hasSpawned) {
+                let tempAsteroid = new Asteroid();
+
+
+                tempAsteroid.canSpawn = false;
+                this.hasSpawned = true;
+                asteroids.push(tempAsteroid);
+            }
+        }
+        else {
+            this.canSpawn = true;
+        }
     }
     draw() {
         context.fillStyle = this.color;

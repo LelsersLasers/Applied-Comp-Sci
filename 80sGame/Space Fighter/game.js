@@ -63,6 +63,7 @@ function drawAll() {
     player.draw();
 
     for (var i = 0; i < asteroids.length; i++) {
+        asteroids[i].update();
         asteroids[i].draw();
     }
     // console.log("current time: " + new Date().getTime() / 1000);
