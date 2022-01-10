@@ -1,3 +1,12 @@
+class FullNote {
+    constructor(note, author) {
+        this.note = note;
+        this.author = author;
+    }
+}
+
+
+var notes = localStorage.getItem("notes") != null ? JSON.parse(localStorage.getItem("notes")) : [];
 var showAdd = false;
 
 function add() {
@@ -32,14 +41,31 @@ function view() {
 
     let lst = document.getElementById("recordList");
 
-    let noteBody = document.createElement("dt");
-    let noteTextNode = document.createTextNode("message");
-    noteBody.appendChild(noteTextNode);
-    lst.appendChild(noteBody);
+    for (let i = 0; i < notes.length; i++) {
+        let noteBody = document.createElement("dt");
+        let noteTextNode = document.createTextNode(notes[i].note);
+        noteBody.appendChild(noteTextNode);
+        lst.appendChild(noteBody);
 
-    let authorBody = document.createElement("dd");
-    let authorTextNode = document.createTextNode("author");
-    authorBody.appendChild(authorTextNode);
-    lst.appendChild(authorBody);
+        let authorBody = document.createElement("dd");
+        let authorTextNode = document.createTextNode("- " + notes[i].author);
+        authorBody.appendChild(authorTextNode);
+        lst.appendChild(authorBody);
+    }
+}
 
+function fakeSubmit(note, fullname) {
+    if (note != "" && fullname != "") {
+        let tempNote = new FullNote(note, fullname);
+        notes.push(tempNote);
+        localStorage.setItem("notes", JSON.stringify(notes));
+        location.reload();
+    }
+    else {
+        console.log("asdad");
+        let warning = document.getElementById("warning");
+        if (warning.hasAttribute("hidden")) {
+            warning.removeAttribute("hidden");
+        }
+    }
 }

@@ -1,9 +1,17 @@
 .blue {
-    border: 1px solid blue;
-    /* border: none; */
+    /* border: 1px solid blue; */
+    border: none;
 }
 
 
 h1 {
     text-align: center;
+}
+
+#warning {
+    color: red;
+}
+
+.fullWidth {
+    width: 100%;
 }

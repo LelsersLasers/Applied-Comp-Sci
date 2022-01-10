@@ -21,17 +21,24 @@
         View Records
     </button>
 
-    <form class="blue add" action="" hidden>
+    <form class="blue add" hidden>
         <label for="note">Note:</label>
         <br />
-        <textarea id="note" name="note" rows="10" cols="30"></textarea>
+        <textarea class="fullWidth" id="note" name="note" rows="30"></textarea>
         <br />
         <label for="fullname">Full name:</label>
         <br />
         <input type="text" id="fullname" name="fullname" value="">
         <br />
         <br />
-        <input type="submit" value="Submit">
+        <!-- <input type="submit" value="Submit"> -->
+        <button type="button" onclick="fakeSubmit(document.getElementById('note').value, document.getElementById('fullname').value)">
+            Submit
+        </button>
+        <br />
+        <span class="blue" id="warning" hidden>
+            Both fields must be filled in!
+        </span>
     </form>
 
     <h3 class="blue view" hidden>Records:</h3>
