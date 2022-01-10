@@ -375,7 +375,7 @@ class Player extends Thing {
     }
     draw() {
         for (var i = 0; i < this.afterImages.length; i++) this.afterImages[i].draw();
-        if (alive) {
+        if (alive && !paused) {
             let dirs = ["s", "w", "d", "a"];
             let dir = dirs.indexOf(lastDir);
             this.lastDrawDir = dir;

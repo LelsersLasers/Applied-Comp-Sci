@@ -42,7 +42,7 @@ function keyDownHandler(e) {
         case "e": case "2": eDown = true; break;
         case "r": case "3": rDown = true; break;
         case "z":
-            reset();
+            if (screen == "game") paused = !paused;
             break;
         case "Enter":
             if (screen == "welcome") {
@@ -276,23 +276,35 @@ function drawScores() {
 
 function drawGame() {
     for (var i = 0; i < bar.length; i++) bar[i].draw();
-    mouseDownActions();
-    player.move();
-    player.draw();
-    for (var i = 0; i < buildings.length; i++) buildings[i].draw();
-    enemies = [...cars, ...ufos];
-    for (var i = 0; i < enemies.length; i++) {
-        enemies[i].update();
-        enemies[i].draw();
-        // enemies[i].hb.draw("#ffffff");
-        if (enemies[i].hb.checkCollide(player.hb) && alive) {
-            scoreView.color = "#e37e7b";
-            enemies[i].deathSound.play();
-            alive = false;
-            player.off();
+    if (!paused) {
+        mouseDownActions();
+        player.move();
+        player.draw();
+        for (var i = 0; i < buildings.length; i++) buildings[i].draw();
+        enemies = [...cars, ...ufos];
+        for (var i = 0; i < enemies.length; i++) {
+            enemies[i].update();
+            enemies[i].draw();
+            // enemies[i].hb.draw("#ffffff");
+            if (enemies[i].hb.checkCollide(player.hb) && alive) {
+                scoreView.color = "#e37e7b";
+                enemies[i].deathSound.play();
+                alive = false;
+                player.off();
+            }
         }
+        for (var i = 0; i < lasers.length; i++) lasers[i].update();
     }
-    for (var i = 0; i < lasers.length; i++) lasers[i].update();
+    else {
+        player.draw();
+        obstacles = [...cars, ...ufos, ...buildings];
+        for (var i = 0; i < obstacles.length; i++) {
+            obstacles[i].draw();
+        }
+
+        context.fillStyle = "rgba(0, 0, 0, 0.7)";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+    }
 
     wTrigger.draw(wDown);
     sTrigger.draw(sDown);
@@ -348,6 +360,7 @@ function setUpContext() {
 var font = "monospace";
 
 var screen = "welcome";
+var paused = false;
 
 var alive = true;
 var score = 0;
