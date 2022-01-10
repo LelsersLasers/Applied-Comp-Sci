@@ -1,5 +1,8 @@
 # TODO
 
+- also dim the button keys (wsad, qer)
+    - dim score also?
+
 - Save game
     - Pause menu ("z", "esc")
         - Resume

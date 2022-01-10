@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        Record Keeper
+    </title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+    <h1 class="blue center">Record Keeper</h1>
+
+    <button type="button" onclick="add()">
+        Add Record
+    </button>
+    <button type="button" onclick="view()">
+        View Records
+    </button>
+
+    <form class="blue add" action="" hidden>
+        <label for="note">Note:</label>
+        <br />
+        <textarea id="note" name="note" rows="10" cols="30"></textarea>
+        <br />
+        <label for="fullname">Full name:</label>
+        <br />
+        <input type="text" id="fullname" name="fullname" value="">
+        <br />
+        <br />
+        <input type="submit" value="Submit">
+    </form>
+
+    <h3 class="blue view" hidden>Records:</h3>
+    <dl id="recordList" class="blue view"></dl>
+    
+</body>
+
+</html>
