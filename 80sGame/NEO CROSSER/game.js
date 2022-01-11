@@ -306,7 +306,7 @@ function drawPauseMenu() {
             widthHB = context.measureText(txts[i]).width;
         }
     }
-    widthHB += 20;
+    widthHB += 40;
 
     let resumeHB = new HitBox(new Vector(canvas.width/2 - widthHB/2, middle - heightHB * 3/2 - 20), widthHB, heightHB);
     resumeHB.draw("#ffffff");
@@ -315,6 +315,10 @@ function drawPauseMenu() {
     let saveHB = new HitBox(new Vector(canvas.width/2 - widthHB/2, middle - heightHB/2), widthHB, heightHB);
     saveHB.draw("#ffffff");
     context.fillText("Save", canvas.width/2, middle);
+
+    let quitHB = new HitBox(new Vector(canvas.width/2 - widthHB/2, middle + heightHB * 1/2 + 20), widthHB, heightHB);
+    quitHB.draw("#ffffff");
+    context.fillText("Quit Without Saving", canvas.width/2, middle + heightHB * 1/2 + 20 + heightHB/2);
 
     // txts = ["[D]irections", "Top [S]cores"];
     // for (i = 0; i < txts.length; i++) {

@@ -8,6 +8,9 @@
         - Save
             - Will overwrite for now
         - Quit without saving
+            - just "Quit" instead? (but keep wide buttons)
+        - Turn off music
+            - save in localStorage
     - Main menu
         - Add play button (-> play menu)
             - Replaces the touch anywhere to start
@@ -25,3 +28,9 @@
 
 - Update directions
 - Update README
+
+#
+
+- GameSave class
+- gameState var for playing, paused, over
+- MenuButton class
