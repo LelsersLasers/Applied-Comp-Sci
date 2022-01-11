@@ -274,6 +274,58 @@ function drawScores() {
     }
 }
 
+function drawPauseMenu() {
+    player.draw();
+    obstacles = [...cars, ...ufos, ...buildings, ...lasers];
+    for (var i = 0; i < obstacles.length; i++) {
+        obstacles[i].draw();
+    }
+
+    wTrigger.draw(wDown);
+    sTrigger.draw(sDown);
+    aTrigger.draw(aDown);
+    dTrigger.draw(dDown);
+    qAbility.draw();
+    eAbility.draw();
+    rAbility.draw();
+    scoreView.setTxt("Score: " + topScore);
+    scoreView.draw();
+
+    context.fillStyle = "rgba(0, 0, 0, 0.7)";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    let middle = canvas.height/2;
+    let heightHB = carHeight * 3/4 + 20;
+    let widthHB = 0;
+
+    context.fillStyle = "rgba(255,255,255,1)";
+    context.font = carHeight * 1/2 + "px " + font;
+    let txts = ["Resume", "Save", "Quit Without Saving"];
+    for (var i = 0; i < txts.length; i++) {
+        if (context.measureText(txts[i]).width > widthHB) {
+            widthHB = context.measureText(txts[i]).width;
+        }
+    }
+    widthHB += 20;
+
+    let resumeHB = new HitBox(new Vector(canvas.width/2 - widthHB/2, middle - heightHB * 3/2 - 20), widthHB, heightHB);
+    resumeHB.draw("#ffffff");
+    context.fillText("Resume", canvas.width/2, middle - heightHB * 3/2 - 20 + heightHB/2);
+
+    let saveHB = new HitBox(new Vector(canvas.width/2 - widthHB/2, middle - heightHB/2), widthHB, heightHB);
+    saveHB.draw("#ffffff");
+    context.fillText("Save", canvas.width/2, middle);
+
+    // txts = ["[D]irections", "Top [S]cores"];
+    // for (i = 0; i < txts.length; i++) {
+    //     let width = context.measureText(txts[i]).width;
+    //     let y = canvas.height * 1/3 + carHeight * 4 + i * carHeight * 1.3;
+    //     welcomeHBs.push(new HitBox(new Vector(canvas.width/2 - width/2 - 10, y - carHeight * 1/3 - 10), width + 20, carHeight * 5/12 + 20));
+    //     welcomeHBs[i].draw("#ffffff");
+    //     context.fillText(txts[i], canvas.width/2, y);
+    // }
+}
+
 function drawGame() {
     for (var i = 0; i < bar.length; i++) bar[i].draw();
     if (!paused) {
@@ -294,28 +346,19 @@ function drawGame() {
             }
         }
         for (var i = 0; i < lasers.length; i++) lasers[i].update();
+        wTrigger.draw(wDown);
+        sTrigger.draw(sDown);
+        aTrigger.draw(aDown);
+        dTrigger.draw(dDown);
+        qAbility.draw();
+        eAbility.draw();
+        rAbility.draw();
+        scoreView.setTxt("Score: " + topScore);
+        scoreView.draw();
     }
     else {
-        player.draw();
-        obstacles = [...cars, ...ufos, ...buildings];
-        for (var i = 0; i < obstacles.length; i++) {
-            obstacles[i].draw();
-        }
-
-        context.fillStyle = "rgba(0, 0, 0, 0.7)";
-        context.fillRect(0, 0, canvas.width, canvas.height);
+        drawPauseMenu();
     }
-
-    wTrigger.draw(wDown);
-    sTrigger.draw(sDown);
-    aTrigger.draw(aDown);
-    dTrigger.draw(dDown);
-    qAbility.draw();
-    eAbility.draw();
-    rAbility.draw();
-
-    scoreView.setTxt("Score: " + topScore);
-    scoreView.draw();
 
     if (backgroundMusic.currentTime > backgroundMusic.duration - 20) backgroundMusic.currentTime = 20;
 }

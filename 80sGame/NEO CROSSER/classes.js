@@ -117,7 +117,7 @@ class Ability extends Trigger {
         context.fill();
 
         this.drawTxt();
-        this.timer++;
+        if (!paused) this.timer++;
     }
     use() {
         this.timer = 0;
@@ -226,6 +226,11 @@ class Laser extends Thing {
                     this.hitSound.play();
                 }
             }
+        }
+        this.draw();
+    }
+    draw() {
+        if (this.active) {
             for (var i = 0; i < buildings.length; i++) {
                 if (this.hb.checkCollide(buildings[i].hb)) this.off();
             }

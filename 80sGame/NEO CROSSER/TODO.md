@@ -1,10 +1,9 @@
 # TODO
 
-- also dim the button keys (wsad, qer)
-    - dim score also?
+- should wasd blue/green still work, or should it freeze
 
 - Save game
-    - Pause menu ("z", "esc")
+    - Pause menu ("z", "esc", TOUCH BUTTON)
         - Resume
         - Save
             - Will overwrite for now
@@ -21,3 +20,8 @@
 - Be able to save multiple games
     - Play menu -> resume -> show list of saves
         - option to delete saves
+
+- Game over screen
+
+- Update directions
+- Update README
