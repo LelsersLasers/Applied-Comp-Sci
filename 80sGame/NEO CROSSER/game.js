@@ -105,8 +105,15 @@ function clickHandler(event) {
             if (cursorHB.checkCollide(resumeHB)) {
                 paused = false;
             }
+            else if (cursorHB.checkCollide(saveHB)) {
+                localStorage.setItem("NEO CROSSER - Saved Game", JSON.stringify(new GameSave()));
+            }
             else if (cursorHB.checkCollide(quitHB)) {
-                reset();
+                // reset();
+                // testing:
+                let savedGame = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Game"));
+                restore(savedGame);
+                console.log(savedGame);
             }
         }
         // TODO: there has to be a better line that this...
@@ -189,6 +196,23 @@ function getTopScores() {
     }
     else scores = scoresTxt.split(",");
     return scores;
+}
+
+function restore(savedGame) {
+    player = savedGame.player;
+    cars = savedGame.cars;
+    buildings = savedGame.buildings;
+    lasers = savedGame.lasers;
+    bar = savedGame.bar;
+    ufos = savedGame.ufos;
+    score = savedGame.score;
+    topScore = savedGame.topScore;
+    qAbility = savedGame.qAbility;
+    eAbility = savedGame.eAbility;
+    rAbility = savedGame.rAbility;
+    alive = savedGame.alive;
+
+    paused = true;
 }
 
 function drawWelcome() {
@@ -586,6 +610,9 @@ for (i = 0; i < canvas.height/barHeight; i++) {
     bar.push(new Block(new Vector(canvas.width - barWidth, i * barHeight), i, barWidth, barHeight));
 }
 
+if (localStorage.getItem("NEO CROSSER - Saved Game") == null) {
+    localStorage.setItem("NEO CROSSER - Saved Game", JSON.stringify(new GameSave()));
+}
 
 // Fire up the animation engine
 window.requestAnimationFrame(drawAll);

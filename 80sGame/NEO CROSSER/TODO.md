@@ -7,6 +7,8 @@
         - Resume
         - Save
             - Will overwrite for now
+            - something to show that it was saved
+                - change "save" to "saved"
         - Quit without saving
             - just "Quit" instead? (but keep wide buttons)
         - Turn off music

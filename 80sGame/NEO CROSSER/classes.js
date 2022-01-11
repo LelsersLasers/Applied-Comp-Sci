@@ -582,3 +582,37 @@ class Building extends Thing {
         }
     }
 }
+
+
+class GameSave {
+    constructor() {
+        this.player = player;
+        this.cars = cars;
+        this.buildings = buildings;
+        this.lasers = lasers;
+        this.bar = bar;
+        this.ufos = ufos;
+        this.score = score;
+        this.topScore = topScore;
+        this.qAbility = qAbility;
+        this.eAbility = eAbility;
+        this.rAbility = rAbility;
+        this.alive = alive;
+    }
+    restore() {
+        player = this.player;
+        cars = this.cars;
+        buildings = this.buildings;
+        lasers = this.lasers;
+        bar = this.bar;
+        ufos = this.ufos;
+        score = this.score;
+        topScore = this.topScore;
+        qAbility = this.qAbility;
+        eAbility = this.eAbility;
+        rAbility = this.rAbility;
+        alive = this.alive;
+
+        paused = true;
+    }
+}
