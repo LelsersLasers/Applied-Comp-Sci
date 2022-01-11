@@ -12,7 +12,6 @@
         - Quit without saving
             - just "Quit" instead? (but keep wide buttons)
         - Turn off music
-            - save in localStorage
         - Have "game paused" title
     - Main menu
         - Add play button (-> play menu)
@@ -20,6 +19,7 @@
     - Play menu
         - Resume from last save
         - New game
+    - add keybind options to navigate
 
 - Auto save?
 
@@ -41,3 +41,5 @@
 # 
 
 - move the welcomeHBs to 2 seperate buttons
+- background music has functions
+    - pause, play, start

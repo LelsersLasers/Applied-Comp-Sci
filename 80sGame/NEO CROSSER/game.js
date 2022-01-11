@@ -48,21 +48,13 @@ function keyDownHandler(e) {
             if (screen == "welcome") {
                 screen = "game";
                 backgroundMusic.currentTime = getRandomInt(20, backgroundMusic.duration);
-                backgroundMusic.play();
-                backgroundMusic.playing = true;
-            }
-            else if (screen == "game" && !alive) {
-                reset();
-            }
-            else if (screen == "game") {
-                if (backgroundMusic.playing) {
-                    backgroundMusic.pause();
-                    backgroundMusic.playing = false;
-                }
-                else {
+                if (musicShouldPlay === "true") {
                     backgroundMusic.play();
                     backgroundMusic.playing = true;
                 }
+            }
+            else if (screen == "game" && !alive) {
+                reset();
             }
             else if (screen == "directions" || screen == "scores") {
                 screen = "welcome";
@@ -93,8 +85,10 @@ function clickHandler(event) {
         else {
             screen = "game";
             backgroundMusic.currentTime = getRandomInt(20, backgroundMusic.duration);
-            backgroundMusic.play();
-            backgroundMusic.playing = true;
+            if (musicShouldPlay === "true") {
+                backgroundMusic.play();
+                backgroundMusic.playing = true;
+            }
         }
     }
     else if (screen == "game" && !alive) {
@@ -110,21 +104,21 @@ function clickHandler(event) {
             }
             else if (cursorHB.checkCollide(quitHB)) {
                 // reset();
-                // testing:
+                // TODO: testing:
                 let savedGame = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Game"));
-                restore(savedGame);
+                savedGame.restore();
                 console.log(savedGame);
             }
-        }
-        // TODO: there has to be a better line that this...
-        else if(!wTrigger.checkDown(cursorHB, true) && !sTrigger.checkDown(cursorHB, true) && !aTrigger.checkDown(cursorHB, true) && !dTrigger.checkDown(cursorHB, true) && !qAbility.checkDown(cursorHB, true) && !eAbility.checkDown(cursorHB, mouseDown) && !rAbility.checkDown(cursorHB, mouseDown)) {
-            if (backgroundMusic.playing) {
-                backgroundMusic.pause();
-                backgroundMusic.playing = false;
-            }
-            else {
-                backgroundMusic.play();
-                backgroundMusic.playing = true;
+            else if (cursorHB.checkCollide(musicHB)) {
+                if (backgroundMusic.playing) {
+                    backgroundMusic.pause();
+                    backgroundMusic.playing = false;
+                }
+                else {
+                    backgroundMusic.play();
+                    backgroundMusic.playing = true;
+                }
+                localStorage.setItem("playMusic", backgroundMusic.playing);
             }
         }
     }
@@ -198,22 +192,22 @@ function getTopScores() {
     return scores;
 }
 
-function restore(savedGame) {
-    player = savedGame.player;
-    cars = savedGame.cars;
-    buildings = savedGame.buildings;
-    lasers = savedGame.lasers;
-    bar = savedGame.bar;
-    ufos = savedGame.ufos;
-    score = savedGame.score;
-    topScore = savedGame.topScore;
-    qAbility = savedGame.qAbility;
-    eAbility = savedGame.eAbility;
-    rAbility = savedGame.rAbility;
-    alive = savedGame.alive;
+// function restore(savedGame) {
+//     player = savedGame.player;
+//     cars = savedGame.cars;
+//     buildings = savedGame.buildings;
+//     lasers = savedGame.lasers;
+//     bar = savedGame.bar;
+//     ufos = savedGame.ufos;
+//     score = savedGame.score;
+//     topScore = savedGame.topScore;
+//     qAbility = savedGame.qAbility;
+//     eAbility = savedGame.eAbility;
+//     rAbility = savedGame.rAbility;
+//     alive = savedGame.alive;
 
-    paused = true;
-}
+//     paused = true;
+// }
 
 function drawWelcome() {
     context.textAlign = "center";
@@ -332,7 +326,7 @@ function drawPauseMenu() {
 
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight * 1/2 + "px " + font;
-    let txts = ["Resume", "Save", "Quit Without Saving"];
+    let txts = ["Resume", "Save", "Quit Without Saving", "Toggle Music"];
     for (var i = 0; i < txts.length; i++) {
         if (context.measureText(txts[i]).width > widthHB) {
             widthHB = context.measureText(txts[i]).width;
@@ -351,6 +345,10 @@ function drawPauseMenu() {
     quitHB = new HitBox(new Vector(canvas.width/2 - widthHB/2, middle + heightHB * 1/2 + 20), widthHB, heightHB);
     quitHB.draw("#ffffff");
     context.fillText("Quit Without Saving", canvas.width/2, middle + heightHB * 1/2 + 20 + heightHB/2);
+
+    musicHB = new HitBox(new Vector(canvas.width/2 - widthHB/2, middle + heightHB * 3/2 + 40), widthHB, heightHB);
+    musicHB.draw("#ffffff");
+    context.fillText("Toggle Music", canvas.width/2, middle + heightHB * 3/2 + 40 + heightHB/2);
 }
 
 function drawGame() {
@@ -445,6 +443,7 @@ var welcomeHBs = [];
 var resumeHB = new HitBox(-10, -10, 1, 1);
 var saveHB = new HitBox(-10, -10, 1, 1);
 var quitHB = new HitBox(-10, -10, 1, 1);
+var musicHB = new HitBox(-10, -10, 1, 1);
 
 
 const soundOffset = 10.0;
@@ -465,6 +464,7 @@ var backgroundMusic = document.createElement("audio");
 backgroundMusic.src = "backgroundMusic.mp3";
 backgroundMusic.playing = false;
 backgroundMusic.volume = 0.9/soundOffset;
+var musicShouldPlay = localStorage.getItem("playMusic") != null ? localStorage.getItem("playMusic") : true;
 
 var texPlayer = new Image();
 texPlayer.src = "player-10x11-4x8-1spacing.png";
