@@ -351,6 +351,23 @@ function drawPauseMenu() {
     context.fillText("Toggle Music", canvas.width/2, middle + heightHB * 3/2 + 40 + heightHB/2);
 }
 
+function drawGameOver() {
+    context.fillStyle = "rgba(0, 0, 0, 0.7)";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    context.textBaseline = "bottom";
+    let middle = canvas.height/2;
+
+    context.fillStyle = "rgba(255,255,255,1)";
+    context.font = carHeight + "px " + font;
+    context.fillText("Game Over", canvas.width/2, canvas.height/2);
+
+    context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
+    context.font = carHeight/2 + "px " + font;
+    context.fillText("Touch to Exit", canvas.width/2, canvas.height/2 + carHeight);
+
+}
+
 function drawGame() {
     for (var i = 0; i < bar.length; i++) bar[i].draw();
     if (!paused) {
@@ -380,6 +397,10 @@ function drawGame() {
         rAbility.draw();
         scoreView.setTxt("Score: " + topScore);
         scoreView.draw();
+
+        if (!alive) {
+            drawGameOver();
+        }
     }
     else {
         drawPauseMenu();
@@ -464,7 +485,7 @@ var backgroundMusic = document.createElement("audio");
 backgroundMusic.src = "backgroundMusic.mp3";
 backgroundMusic.playing = false;
 backgroundMusic.volume = 0.9/soundOffset;
-var musicShouldPlay = localStorage.getItem("playMusic") != null ? localStorage.getItem("playMusic") : true;
+var musicShouldPlay = localStorage.getItem("playMusic") != null ? localStorage.getItem("playMusic") : "true";
 
 var texPlayer = new Image();
 texPlayer.src = "player-10x11-4x8-1spacing.png";

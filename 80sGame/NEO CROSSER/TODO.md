@@ -11,7 +11,6 @@
                 - change "save" to "saved"
         - Quit without saving
             - just "Quit" instead? (but keep wide buttons)
-        - Turn off music
         - Have "game paused" title
     - Main menu
         - Add play button (-> play menu)
@@ -35,11 +34,16 @@
 #
 
 - GameSave class
-- gameState var for playing, paused, over
 - MenuButton class
+    - all menu buttons same width/height?
+    - use sizes from main menu
 
 # 
 
 - move the welcomeHBs to 2 seperate buttons
 - background music has functions
     - pause, play, start
+- alive vs player.active/on/off
+
+- "clean" text code
+    - context.textBaseline = "middle"/etc
