@@ -11,6 +11,7 @@
             - just "Quit" instead? (but keep wide buttons)
         - Turn off music
             - save in localStorage
+        - Have "game paused" title
     - Main menu
         - Add play button (-> play menu)
             - Replaces the touch anywhere to start
@@ -34,3 +35,7 @@
 - GameSave class
 - gameState var for playing, paused, over
 - MenuButton class
+
+# 
+
+- move the welcomeHBs to 2 seperate buttons

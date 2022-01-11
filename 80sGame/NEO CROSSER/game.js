@@ -101,8 +101,16 @@ function clickHandler(event) {
         reset();
     }
     else if (screen == "game") {
+        if (paused) {
+            if (cursorHB.checkCollide(resumeHB)) {
+                paused = false;
+            }
+            else if (cursorHB.checkCollide(quitHB)) {
+                reset();
+            }
+        }
         // TODO: there has to be a better line that this...
-        if(!wTrigger.checkDown(cursorHB, true) && !sTrigger.checkDown(cursorHB, true) && !aTrigger.checkDown(cursorHB, true) && !dTrigger.checkDown(cursorHB, true) && !qAbility.checkDown(cursorHB, true) && !eAbility.checkDown(cursorHB, mouseDown) && !rAbility.checkDown(cursorHB, mouseDown)) {
+        else if(!wTrigger.checkDown(cursorHB, true) && !sTrigger.checkDown(cursorHB, true) && !aTrigger.checkDown(cursorHB, true) && !dTrigger.checkDown(cursorHB, true) && !qAbility.checkDown(cursorHB, true) && !eAbility.checkDown(cursorHB, mouseDown) && !rAbility.checkDown(cursorHB, mouseDown)) {
             if (backgroundMusic.playing) {
                 backgroundMusic.pause();
                 backgroundMusic.playing = false;
@@ -308,26 +316,17 @@ function drawPauseMenu() {
     }
     widthHB += 40;
 
-    let resumeHB = new HitBox(new Vector(canvas.width/2 - widthHB/2, middle - heightHB * 3/2 - 20), widthHB, heightHB);
+    resumeHB = new HitBox(new Vector(canvas.width/2 - widthHB/2, middle - heightHB * 3/2 - 20), widthHB, heightHB);
     resumeHB.draw("#ffffff");
     context.fillText("Resume", canvas.width/2, middle - heightHB * 3/2 - 20 + heightHB/2);
 
-    let saveHB = new HitBox(new Vector(canvas.width/2 - widthHB/2, middle - heightHB/2), widthHB, heightHB);
+    saveHB = new HitBox(new Vector(canvas.width/2 - widthHB/2, middle - heightHB/2), widthHB, heightHB);
     saveHB.draw("#ffffff");
     context.fillText("Save", canvas.width/2, middle);
 
-    let quitHB = new HitBox(new Vector(canvas.width/2 - widthHB/2, middle + heightHB * 1/2 + 20), widthHB, heightHB);
+    quitHB = new HitBox(new Vector(canvas.width/2 - widthHB/2, middle + heightHB * 1/2 + 20), widthHB, heightHB);
     quitHB.draw("#ffffff");
     context.fillText("Quit Without Saving", canvas.width/2, middle + heightHB * 1/2 + 20 + heightHB/2);
-
-    // txts = ["[D]irections", "Top [S]cores"];
-    // for (i = 0; i < txts.length; i++) {
-    //     let width = context.measureText(txts[i]).width;
-    //     let y = canvas.height * 1/3 + carHeight * 4 + i * carHeight * 1.3;
-    //     welcomeHBs.push(new HitBox(new Vector(canvas.width/2 - width/2 - 10, y - carHeight * 1/3 - 10), width + 20, carHeight * 5/12 + 20));
-    //     welcomeHBs[i].draw("#ffffff");
-    //     context.fillText(txts[i], canvas.width/2, y);
-    // }
 }
 
 function drawGame() {
@@ -417,7 +416,12 @@ const moveWait = 30;
 
 var textOpacity = 1;
 var opacityDir = -0.04;
+
 var welcomeHBs = [];
+var resumeHB = new HitBox(-10, -10, 1, 1);
+var saveHB = new HitBox(-10, -10, 1, 1);
+var quitHB = new HitBox(-10, -10, 1, 1);
+
 
 const soundOffset = 10.0;
 // Set up the canvas, context objects, and html elements
