@@ -60,7 +60,6 @@ Features/Design Choices:
         - no lyrics
     - Lack of clarity + high tempo = chaotic enviroment
         - Creates a sense of pressure to do something
-    - While in game, tap the screen or press Enter toggle the background music
 - 'Screens'
     - Welcome
         - Clicking on the directions/top scores button will open that screen
@@ -69,9 +68,11 @@ Features/Design Choices:
         - Directions/Top Scores
             - Click anywhere to return to welcome screen
     - Main Game
-        - Background music will auto start
-            - Clicking the screen or pressing Enter will toggle it on/off
-        - Clicking the screen while dead returns the player to the welcome screen
+        - Pause menu by pressing z or CLICKING IN TOP RIGHT OR ESC KEY
+            - Toggling the music will save the choice in localStorage
+                - Music will not auto start if the last choice was to toggle it off
+        - Dying will trigger a game over screen
+            - Press Enter or click the screen to return to the welcome screen
     - Flashing text (by opacity)
 - Everything is scaled with canvas.width or canvas.height
     - Designed around 900x700 px screen, but looks/works completely fine on (basically) any screen size

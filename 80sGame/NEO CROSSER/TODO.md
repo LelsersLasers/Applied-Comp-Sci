@@ -37,6 +37,7 @@
 - MenuButton class
     - all menu buttons same width/height?
     - use sizes from main menu
+    - click animation
 
 # 
 
@@ -47,3 +48,4 @@
 
 - "clean" text code
     - context.textBaseline = "middle"/etc
+    - context.textAlign = "center"/etc

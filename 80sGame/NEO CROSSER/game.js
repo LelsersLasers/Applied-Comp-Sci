@@ -356,7 +356,6 @@ function drawGameOver() {
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     context.textBaseline = "bottom";
-    let middle = canvas.height/2;
 
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight + "px " + font;
