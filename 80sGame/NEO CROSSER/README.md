@@ -68,7 +68,8 @@ Features/Design Choices:
         - Directions/Top Scores
             - Click anywhere to return to welcome screen
     - Main Game
-        - Pause menu by pressing z or CLICKING IN TOP RIGHT OR ESC KEY
+        - Pause menu by pressing z, escape, or click the icon in the top right
+            - Press any of the keys or the icon to resume (or the resume button)
             - Toggling the music will save the choice in localStorage
                 - Music will not auto start if the last choice was to toggle it off
         - Dying will trigger a game over screen

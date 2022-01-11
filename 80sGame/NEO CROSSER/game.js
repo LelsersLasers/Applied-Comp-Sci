@@ -95,7 +95,8 @@ function clickHandler(event) {
         reset();
     }
     else if (screen == "game") {
-        if (paused) {
+        if (cursorHB.checkCollide(pauseButton.hb)) paused = !paused;
+        else if (paused) {
             if (cursorHB.checkCollide(resumeHB)) {
                 paused = false;
             }
@@ -320,6 +321,8 @@ function drawPauseMenu() {
     context.fillStyle = "rgba(0, 0, 0, 0.7)";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
+    pauseButton.draw();
+
     let middle = canvas.height/2;
     let heightHB = carHeight * 3/4 + 20;
     let widthHB = 0;
@@ -396,6 +399,7 @@ function drawGame() {
         rAbility.draw();
         scoreView.setTxt("Score: " + topScore);
         scoreView.draw();
+        pauseButton.draw();
 
         if (!alive) {
             drawGameOver();
@@ -581,6 +585,13 @@ var posSourceBuilding = [
     [54, 0]
 ];
 
+var texPause = new Image();
+texPause.src = "pause-14x14-2x1-1spacing.png";
+var posSourcePause = [
+    [0, 0],
+    [15, 0]
+];
+
 const carWidth = canvas.width * 1/9;
 const carHeight = canvas.height * 1/14;
 
@@ -629,6 +640,8 @@ for (i = 0; i < canvas.height/barHeight; i++) {
     bar.push(new Block(new Vector(0, i * barHeight), i, barWidth, barHeight));
     bar.push(new Block(new Vector(canvas.width - barWidth, i * barHeight), i, barWidth, barHeight));
 }
+
+var pauseButton = new ButtonExtra(barWidth * 3/4, barWidth * 3/4);
 
 if (localStorage.getItem("NEO CROSSER - Saved Game") == null) {
     localStorage.setItem("NEO CROSSER - Saved Game", JSON.stringify(new GameSave()));

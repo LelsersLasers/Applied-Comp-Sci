@@ -3,7 +3,7 @@
 - should wasd blue/green still work, or should it freeze
 
 - Save game
-    - Pause menu ("z", "esc", TOUCH BUTTON)
+    - Pause menu - BY ESC ALSO
         - Resume
         - Save
             - Will overwrite for now

@@ -583,6 +583,16 @@ class Building extends Thing {
     }
 }
 
+class ButtonExtra extends Thing {
+    constructor(w, h) {
+        super(new Vector(canvas.width - w, 0), w, h);
+    }
+    draw() {
+        context.globalAlpha = 0.6;
+        context.drawImage(texPause, posSourcePause[Number(!paused)][0], posSourcePause[Number(!paused)][1], 14, 14, this.pt.x, this.pt.y, this.w, this.h);
+        context.globalAlpha = 1;
+    }
+}
 
 class GameSave {
     constructor() {
