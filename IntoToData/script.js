@@ -22,6 +22,10 @@ function add() {
             thingsToHide[i].setAttribute("hidden", "");
         }
     }
+    let addButton = document.getElementById("addButton");
+    addButton.style.background = "grey";
+    let viewButton = document.getElementById("viewButton");
+    viewButton.style.background = "lightgray";
 }
 
 function view() {
@@ -37,6 +41,10 @@ function view() {
             thingsToHide[i].setAttribute("hidden", "");
         }
     }
+    let addButton = document.getElementById("addButton");
+    addButton.style.background = "lightgray";
+    let viewButton = document.getElementById("viewButton");
+    viewButton.style.background = "grey";
 
 
     let lst = document.getElementById("recordList");

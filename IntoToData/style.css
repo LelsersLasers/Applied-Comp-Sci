@@ -15,3 +15,7 @@ h1 {
 .fullWidth {
     width: 100%;
 }
+
+button {
+    background: lightgray;
+}
