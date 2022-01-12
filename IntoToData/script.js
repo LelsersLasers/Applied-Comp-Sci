@@ -48,19 +48,14 @@ function view() {
 
 
     let lst = document.getElementById("recordsList");
-    lst.innerHTML = "\n";
+    lst.innerHTML = "<dl>";
 
     for (let i = 0; i < notes.length; i++) {
-        let noteBody = document.createElement("dt");
-        let noteTextNode = document.createTextNode(notes[i].note);
-        noteBody.appendChild(noteTextNode);
-        lst.appendChild(noteBody);
-
-        let authorBody = document.createElement("dd");
-        let authorTextNode = document.createTextNode("- by: " + notes[i].author);
-        authorBody.appendChild(authorTextNode);
-        lst.appendChild(authorBody);
+        // TODO: add a onmouseover
+        lst.innerHTML += "<dt>" + notes[i].note + "</dt>";
+        lst.innerHTML += "<dd>" + "- by: " + notes[i].author + "</dd>";
     }
+    lst.innerHTML += "</dl>";
 }
 
 function fakeSubmit(note, fullname) {
