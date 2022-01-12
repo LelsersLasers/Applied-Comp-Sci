@@ -593,6 +593,7 @@ class ButtonMenu extends Thing {
         this.hb.draw("#ffffff");
         context.fillStyle = "rgba(255,255,255,1)";
         context.font = this.textSize + "px " + font;
+        context.textBaseline = "middle";
         context.fillText(this.text, canvas.width/2, this.pt.y + this.h/2);
     }
 }

@@ -76,10 +76,10 @@ function keyUpHandler(e) {
 }
 function clickHandler(event) {
     if (screen == "welcome") {
-        if (cursorHB.checkCollide(welcomeHBs[0])) {
+        if (cursorHB.checkCollide(directionsButton.hb)) {
             screen = "directions";
         }
-        else if (cursorHB.checkCollide(welcomeHBs[1])) {
+        else if (cursorHB.checkCollide(scoresButton.hb)) {
             screen = "scores";
         }
         else {
@@ -220,16 +220,8 @@ function drawWelcome() {
     context.font = carHeight/2 + "px " + font;
     context.fillText("Touch to Start", canvas.width/2, canvas.height * 1/3 + carHeight);
 
-    context.fillStyle = "rgba(255,255,255,1)";
-    context.font = carHeight * 6/12 + "px " + font;
-    txts = ["[D]irections", "Top [S]cores"];
-    for (i = 0; i < txts.length; i++) {
-        let width = context.measureText(txts[i]).width;
-        let y = canvas.height * 1/3 + carHeight * 4 + i * carHeight * 1.3;
-        welcomeHBs.push(new HitBox(new Vector(canvas.width/2 - width/2 - 10, y - carHeight * 1/3 - 10), width + 20, carHeight * 5/12 + 20));
-        welcomeHBs[i].draw("#ffffff");
-        context.fillText(txts[i], canvas.width/2, y);
-    }
+    directionsButton.draw();
+    scoresButton.draw();
 }
 
 function drawDirections() {
@@ -594,22 +586,17 @@ var saveButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas
 var quitButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + heightHB/2 + 20), pauseWidth, heightHB, "Quit Without Saving", carHeight * 1/2);
 var musicButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + heightHB * 3/2 + 40), pauseWidth, heightHB, "Toggle Music", carHeight * 1/2);
 
-// var directionsButton = 
-// var scoresButton = 
-
-// context.font = carHeight/2 + "px " + font;
-//     context.fillText("Touch to Start", canvas.width/2, canvas.height * 1/3 + carHeight);
-
-//     context.fillStyle = "rgba(255,255,255,1)";
-//     context.font = carHeight * 5/12 + "px " + font;
-//     txts = ["[D]irections", "Top [S]cores"];
-//     for (i = 0; i < txts.length; i++) {
-//         let width = context.measureText(txts[i]).width;
-//         let y = canvas.height * 1/3 + carHeight * 4 + i * carHeight * 1.3;
-//         welcomeHBs.push(new HitBox(new Vector(canvas.width/2 - width/2 - 10, y - carHeight * 1/3 - 10), width + 20, carHeight * 5/12 + 20));
-//         welcomeHBs[i].draw("#ffffff");
-//         context.fillText(txts[i], canvas.width/2, y);
-//     }
+context.font = carHeight * 5/12 + "px " + font;
+// txts = ["[D]irections", "Top [S]cores"];
+// for (i = 0; i < txts.length; i++) {
+//     let y = canvas.height * 1/3 + carHeight * 4 + carHeight * 1.3;
+//     welcomeHBs.push(new HitBox(new Vector(canvas.width/2 - width/2 - 10, y - carHeight * 1/3 - 10), width + 20, carHeight * 5/12 + 20));
+//     welcomeHBs[i].draw("#ffffff");
+//     context.fillText(txts[i], canvas.width/2, y);
+// }
+let menuWidth = context.measureText("[D]irections").width;
+var directionsButton = new ButtonMenu(new Vector(canvas.width/2 - menuWidth/2 - 10, canvas.height * 1/3 + carHeight * 4 - carHeight * 1/3 - 10), menuWidth + 20, carHeight * 5/12 + 20, "[D]irections", carHeight * 5/12);
+var scoresButton = new ButtonMenu(new Vector(canvas.width/2 - menuWidth/2 - 10, canvas.height * 1/3 + carHeight * 4 + carHeight * 1.3 - carHeight * 1/3 - 10), menuWidth + 20, carHeight * 5/12 + 20, "Top [S]cores", carHeight * 5/12);
 
 var ufos = [];
 var cars = [];
