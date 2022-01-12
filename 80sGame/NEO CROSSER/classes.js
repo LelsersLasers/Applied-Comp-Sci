@@ -583,6 +583,20 @@ class Building extends Thing {
     }
 }
 
+class ButtonMenu extends Thing {
+    constructor(pt, w, h, text, textSize) {
+        super(pt, w, h);
+        this.text = text;
+        this.textSize = textSize;
+    }
+    draw() {
+        this.hb.draw("#ffffff");
+        context.fillStyle = "rgba(255,255,255,1)";
+        context.font = this.textSize + "px " + font;
+        context.fillText(this.text, canvas.width/2, this.pt.y + this.h/2);
+    }
+}
+
 class ButtonExtra extends Thing {
     constructor(w, h) {
         super(new Vector(canvas.width - w, 0), w, h);

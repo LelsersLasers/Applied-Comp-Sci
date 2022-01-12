@@ -97,20 +97,20 @@ function clickHandler(event) {
     else if (screen == "game") {
         if (cursorHB.checkCollide(pauseButton.hb)) paused = !paused;
         else if (paused) {
-            if (cursorHB.checkCollide(resumeHB)) {
+            if (cursorHB.checkCollide(resumeButton.hb)) {
                 paused = false;
             }
-            else if (cursorHB.checkCollide(saveHB)) {
+            else if (cursorHB.checkCollide(saveButton.hb)) {
                 localStorage.setItem("NEO CROSSER - Saved Game", JSON.stringify(new GameSave()));
             }
-            else if (cursorHB.checkCollide(quitHB)) {
+            else if (cursorHB.checkCollide(quitButton.hb)) {
                 // reset();
                 // TODO: testing:
                 let savedGame = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Game"));
                 savedGame.restore();
                 console.log(savedGame);
             }
-            else if (cursorHB.checkCollide(musicHB)) {
+            else if (cursorHB.checkCollide(musicButton.hb)) {
                 if (backgroundMusic.playing) {
                     backgroundMusic.pause();
                     backgroundMusic.playing = false;
@@ -322,36 +322,10 @@ function drawPauseMenu() {
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     pauseButton.draw();
-
-    let middle = canvas.height/2;
-    let heightHB = carHeight * 3/4 + 20;
-    let widthHB = 0;
-
-    context.fillStyle = "rgba(255,255,255,1)";
-    context.font = carHeight * 1/2 + "px " + font;
-    let txts = ["Resume", "Save", "Quit Without Saving", "Toggle Music"];
-    for (var i = 0; i < txts.length; i++) {
-        if (context.measureText(txts[i]).width > widthHB) {
-            widthHB = context.measureText(txts[i]).width;
-        }
-    }
-    widthHB += 40;
-
-    resumeHB = new HitBox(new Vector(canvas.width/2 - widthHB/2, middle - heightHB * 3/2 - 20), widthHB, heightHB);
-    resumeHB.draw("#ffffff");
-    context.fillText("Resume", canvas.width/2, middle - heightHB * 3/2 - 20 + heightHB/2);
-
-    saveHB = new HitBox(new Vector(canvas.width/2 - widthHB/2, middle - heightHB/2), widthHB, heightHB);
-    saveHB.draw("#ffffff");
-    context.fillText("Save", canvas.width/2, middle);
-
-    quitHB = new HitBox(new Vector(canvas.width/2 - widthHB/2, middle + heightHB * 1/2 + 20), widthHB, heightHB);
-    quitHB.draw("#ffffff");
-    context.fillText("Quit Without Saving", canvas.width/2, middle + heightHB * 1/2 + 20 + heightHB/2);
-
-    musicHB = new HitBox(new Vector(canvas.width/2 - widthHB/2, middle + heightHB * 3/2 + 40), widthHB, heightHB);
-    musicHB.draw("#ffffff");
-    context.fillText("Toggle Music", canvas.width/2, middle + heightHB * 3/2 + 40 + heightHB/2);
+    resumeButton.draw();
+    saveButton.draw();
+    quitButton.draw();
+    musicButton.draw();
 }
 
 function drawGameOver() {
@@ -462,13 +436,6 @@ const moveWait = 30;
 
 var textOpacity = 1;
 var opacityDir = -0.04;
-
-var welcomeHBs = [];
-var resumeHB = new HitBox(-10, -10, 1, 1);
-var saveHB = new HitBox(-10, -10, 1, 1);
-var quitHB = new HitBox(-10, -10, 1, 1);
-var musicHB = new HitBox(-10, -10, 1, 1);
-
 
 const soundOffset = 10.0;
 // Set up the canvas, context objects, and html elements
@@ -611,6 +578,23 @@ var aTrigger = new Trigger(new Vector(canvas.width - (carHeight * 10/4), playerL
 var dTrigger = new Trigger(new Vector(canvas.width - carHeight, playerLevel + carHeight * 2), carHeight * 3/4, carHeight * 3/4, "D");
 
 var scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", carHeight, carHeight/3, "Score: 0");
+
+context.font = carHeight * 1/2 + "px " + font;
+let heightHB = carHeight * 3/4 + 20;
+let widthHB = 0;
+let txts = ["Resume", "Save", "Quit Without Saving", "Toggle Music"];
+for (var i = 0; i < txts.length; i++) {
+    if (context.measureText(txts[i]).width > widthHB) {
+        widthHB = context.measureText(txts[i]).width;
+    }
+}
+widthHB += 40;
+
+var welcomeHBs = [];
+var resumeButton = new ButtonMenu(new Vector(canvas.width/2 - widthHB/2, canvas.height/2 - heightHB * 3/2 - 20), widthHB, heightHB, "Resume", carHeight * 1/2);
+var saveButton = new ButtonMenu(new Vector(canvas.width/2 - widthHB/2, canvas.height/2 - heightHB/2), widthHB, heightHB, "Save", carHeight * 1/2);
+var quitButton = new ButtonMenu(new Vector(canvas.width/2 - widthHB/2, canvas.height/2 + heightHB/2 + 20), widthHB, heightHB, "Quit Without Saving", carHeight * 1/2);
+var musicButton = new ButtonMenu(new Vector(canvas.width/2 - widthHB/2, canvas.height/2 + heightHB * 3/2 + 40), widthHB, heightHB, "Toggle Music", carHeight * 1/2);
 
 var ufos = [];
 var cars = [];
