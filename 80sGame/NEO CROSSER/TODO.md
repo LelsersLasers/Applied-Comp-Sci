@@ -23,9 +23,6 @@
 
 # 
 
-- "clean" text code
-    - context.textBaseline = "middle"/etc
-    - context.textAlign = "center"/etc
+- "clean" code
     - alive vs player.active/on/off
     - alphas
-    - stroke

@@ -19,7 +19,6 @@ class HitBox {
         this.pt = pt;
         this.w = w;
         this.h = h;
-        this.width = 3;
     }
     checkCollide(boxOther) {
         if (this.pt.x < boxOther.pt.x + boxOther.w && boxOther.pt.x < this.pt.x + this.w) {
@@ -38,7 +37,6 @@ class HitBox {
     draw(color) {
         context.strokeStyle = color;
         context.fillStyle = color;
-        context.lineWidth = this.width;
         context.beginPath();
         context.rect(this.pt.x, this.pt.y, this.w, this.h);
         context.stroke();
@@ -72,15 +70,12 @@ class Trigger extends Thing {
     draw(keyDown) {
         context.fillStyle = this.down || keyDown ? this.color : this.color2;
         context.beginPath();
-        context.rect(this.pt.x, this.pt.y, this.w, this.h);
-        context.fill();
+        context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
         this.drawTxt();
     }
     drawTxt() {
-        context.textAlign = "center";
         context.fillStyle = "#ffffff";
         context.font = carHeight/3 + "px " + font;
-        context.textBaseline = "middle";
         context.fillText(this.txt, this.pt.x + this.w/2, this.pt.y + this.h/2);
     }
     checkDown(cursorHB, mouseDown) {
@@ -104,16 +99,14 @@ class Ability extends Trigger {
     draw() {
         context.fillStyle = this.color;
         context.beginPath();
-        context.rect(this.pt.x, this.pt.y, this.w, this.h);
-        context.fill();
+        context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
         
         let delay = this.wait - this.timer >= 0 ? this.wait - this.timer : 0;
         let width = (this.wait - delay) * this.w/this.wait;
 
         context.beginPath();
         context.fillStyle = delay == 0 ? "#9ee092" : "#5e94d1";
-        context.rect(this.pt.x, this.pt.y, width, this.h);
-        context.fill();
+        context.fillRect(this.pt.x, this.pt.y, width, this.h);
 
         this.drawTxt();
         if (!paused) this.timer++;
@@ -134,13 +127,10 @@ class GameTxt extends Thing {
     draw() {
         context.beginPath();
         context.fillStyle = this.color;
-        context.rect(this.pt.x, this.pt.y, this.w, this.h);
-        context.fill();
+        context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
 
-        context.textAlign = "center";
         context.fillStyle = "#ffffff";
         context.font = carHeight/4.5 + "px " + font;
-        context.textBaseline = "middle";
         context.fillText(this.txt, this.pt.x + this.w/2, this.pt.y + this.h/2);
     }
     setTxt(txt) {
@@ -245,11 +235,11 @@ class Laser extends Thing {
         context.moveTo(this.pt.x, this.pt.y);
         context.lineTo(this.pt.x + this.h * Math.cos(angle) * Math.sqrt(2), this.pt.y + this.h * Math.sin(angle) * Math.sqrt(2));
         context.stroke();
+        context.lineWidth = 3;
     }
     drawNormalRect() {
         context.strokeStyle = this.color;
         context.fillStyle = this.color;
-        context.lineWidth = 3;
         context.beginPath();
         context.rect(this.pt.x, this.pt.y, this.w, this.h);
         context.fill();
@@ -590,13 +580,11 @@ class ButtonMenu extends Thing {
         this.clicked = 0;
     }
     draw() {
-        context.font = this.textSize + "px " + font;
-        context.textBaseline = "middle";
+        context.font = this.textSize + "px " + font;;
         if (this.clicked > 0) {
             this.hb.draw("#000000");
             context.fillStyle = "rgba(255,255,255,1)";
-            context.rect(this.pt.x, this.pt.y, this.w, this.h);
-            context.fill();
+            context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
             context.fillStyle = "rgba(0,0,0,1)";
             context.fillText(this.text, canvas.width/2, this.pt.y + this.h/2);
         }

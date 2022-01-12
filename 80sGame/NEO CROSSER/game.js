@@ -250,7 +250,6 @@ function restore(savedGame) {
 }
 
 function drawWelcome() {
-    context.textAlign = "center";
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight + "px " + font;
     context.fillText("NEO CROSSER", canvas.width/2, canvas.height * 1/3);
@@ -269,7 +268,6 @@ function drawPlayMenu() {
 }
 
 function drawDirections() {
-    context.textAlign = "center";
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight + "px " + font;
     let base = canvas.height * 1/4;
@@ -303,7 +301,6 @@ function drawDirections() {
 }
 
 function drawScores() {
-    context.textAlign = "center";
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight + "px " + font;
     let base = canvas.height * 1/4;
@@ -335,6 +332,7 @@ function drawScores() {
         else             context.fillStyle = "rgba(255, 255, 255, 1)"; // white
         context.fillText(txts[i], canvas.width/2 - maxWidth/2, base + carHeight + carHeight * 1/2 * (3+i));
     }
+    context.textAlign = "center";
 }
 
 function drawPauseMenu() {
@@ -378,6 +376,7 @@ function drawGameOver() {
     context.font = carHeight/2 + "px " + font;
     context.fillText("Touch to Exit", canvas.width/2, canvas.height/2 + carHeight);
 
+    context.textBaseline = "middle";
 }
 
 function drawGame() {
@@ -425,6 +424,7 @@ function drawGame() {
 function drawAll() {
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
+
     if (screen == "welcome") drawWelcome();
     else if (screen == "play") drawPlayMenu();
     else if (screen == "game") drawGame();
@@ -455,6 +455,11 @@ function setUpContext() {
 
     // Set up the context for the animation
     context = canvas.getContext("2d");
+
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.lineWidth = 3;
+
     return context;
 }
 
