@@ -61,16 +61,7 @@ function keyDownHandler(e) {
             break;
         case "m":
             if (paused) {
-                if (backgroundMusic.playing) {
-                    backgroundMusic.pause();
-                    backgroundMusic.playing = false;
-                }
-                else {
-                    backgroundMusic.play();
-                    backgroundMusic.playing = true;
-                }
-                musicButton.clicked = 10;
-                localStorage.setItem("playMusic", backgroundMusic.playing);
+                musicToggle();
             }
             break;
         case "g":
@@ -82,11 +73,7 @@ function keyDownHandler(e) {
             }
             else if (screen == "play") {
                 screen = "game";
-                backgroundMusic.currentTime = getRandomInt(20, backgroundMusic.duration);
-                if (musicShouldPlay === "true") {
-                    backgroundMusic.play();
-                    backgroundMusic.playing = true;
-                }
+                musicStart();
             }
             else if (screen == "game" && !alive) {
                 reset();
@@ -127,11 +114,7 @@ function clickHandler(event) {
         }
         else if (cursorHB.checkCollide(newGameButton.hb)) {
             screen = "game";
-            backgroundMusic.currentTime = getRandomInt(20, backgroundMusic.duration);
-            if (musicShouldPlay === "true") {
-                backgroundMusic.play();
-                backgroundMusic.playing = true;
-            }
+            musicStart();
         }
     }
     else if (screen == "game" && !alive) {
@@ -155,16 +138,7 @@ function clickHandler(event) {
                 console.log(savedGame);
             }
             else if (cursorHB.checkCollide(musicButton.hb)) {
-                if (backgroundMusic.playing) {
-                    backgroundMusic.pause();
-                    backgroundMusic.playing = false;
-                }
-                else {
-                    backgroundMusic.play();
-                    backgroundMusic.playing = true;
-                }
-                musicButton.clicked = 10;
-                localStorage.setItem("playMusic", backgroundMusic.playing);
+                musicToggle();
             }
         }
     }
@@ -205,6 +179,26 @@ function getRandomInt(min, max) {
     max = Math.floor(max);
     value = Math.floor(Math.random() * (max - min) + min); //The max is exclusive and the min is inclusive
     return value;
+}
+
+function musicStart() {
+    backgroundMusic.currentTime = getRandomInt(20, backgroundMusic.duration);
+    if (musicShouldPlay === "true") {
+        backgroundMusic.play();
+        backgroundMusic.playing = true;
+    }
+}
+function musicToggle() {
+    if (backgroundMusic.playing) {
+        backgroundMusic.pause();
+        backgroundMusic.playing = false;
+    }
+    else {
+        backgroundMusic.play();
+        backgroundMusic.playing = true;
+    }
+    musicButton.clicked = 10;
+    localStorage.setItem("playMusic", backgroundMusic.playing);
 }
 
 function writeScore() {
