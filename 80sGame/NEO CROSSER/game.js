@@ -41,11 +41,14 @@ function keyDownHandler(e) {
         case "q": case "1": qDown = true; break;
         case "e": case "2": eDown = true; break;
         case "r": case "3": rDown = true; break;
-        case "z":
+        case "z": case "Escape":
             if (screen == "game") paused = !paused;
             break;
         case "Enter":
             if (screen == "welcome") {
+                screen = "play";
+            }
+            else if (screen == "play") {
                 screen = "game";
                 backgroundMusic.currentTime = getRandomInt(20, backgroundMusic.duration);
                 if (musicShouldPlay === "true") {
@@ -83,6 +86,14 @@ function clickHandler(event) {
             screen = "scores";
         }
         else {
+            screen = "play";
+        }
+    }
+    else if (screen == "play") {
+        if (cursorHB.checkCollide(previousGameButton.hb)) {
+
+        }
+        else if (cursorHB.checkCollide(newGameButton.hb)) {
             screen = "game";
             backgroundMusic.currentTime = getRandomInt(20, backgroundMusic.duration);
             if (musicShouldPlay === "true") {
@@ -222,6 +233,11 @@ function drawWelcome() {
 
     directionsButton.draw();
     scoresButton.draw();
+}
+
+function drawPlayMenu() {
+    previousGameButton.draw();
+    newGameButton.draw();
 }
 
 function drawDirections() {
@@ -382,6 +398,7 @@ function drawAll() {
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
     if (screen == "welcome") drawWelcome();
+    else if (screen == "play") drawPlayMenu();
     else if (screen == "game") drawGame();
     else if (screen == "directions") drawDirections();
     else if (screen == "scores") drawScores();
@@ -573,17 +590,20 @@ var scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5)
 
 context.font = carHeight * 1/2 + "px " + font;
 let pauseWidth = 0;
-let txts = ["Resume", "Save", "Quit Without Saving", "Toggle Music"];
+let txts = ["Resume", "Save", "Quit Without Saving", "Toggle Music", "Resume Previous Game", "New Game"];
 for (var i = 0; i < txts.length; i++) {
     if (context.measureText(txts[i]).width > pauseWidth) {
         pauseWidth = context.measureText(txts[i]).width;
     }
 }
 pauseWidth += 40;
-var resumeButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20) * 3/2 - 20), pauseWidth, carHeight * 3/4 + 20, "Resume", carHeight * 1/2);
-var saveButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20)/2), pauseWidth, carHeight * 3/4 + 20, "Save", carHeight * 1/2);
-var quitButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + 20), pauseWidth, carHeight * 3/4 + 20, "Quit Without Saving", carHeight * 1/2);
-var musicButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20) * 3/2 + 40), pauseWidth, carHeight * 3/4 + 20, "Toggle Music", carHeight * 1/2);
+var resumeButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20) * 3/2 - 30), pauseWidth, carHeight * 3/4 + 20, "Resume", carHeight * 1/2);
+var saveButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20)/2 - 10), pauseWidth, carHeight * 3/4 + 20, "Save", carHeight * 1/2);
+var quitButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + 10), pauseWidth, carHeight * 3/4 + 20, "Quit Without Saving", carHeight * 1/2);
+var musicButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20) * 3/2 + 30), pauseWidth, carHeight * 3/4 + 20, "Toggle Music", carHeight * 1/2);
+
+var previousGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20)/2 - 10), pauseWidth, carHeight * 3/4 + 20, "Resume Previous Game", carHeight * 1/2);
+var newGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + 10), pauseWidth, carHeight * 3/4 + 20, "New Game", carHeight * 1/2);
 
 context.font = carHeight * 5/12 + "px " + font;
 let menuWidth = context.measureText("[D]irections").width; // both txts have the same number of characters (by pure chance)
