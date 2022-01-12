@@ -451,7 +451,7 @@ var musicShouldPlay = localStorage.getItem("playMusic") != null ? localStorage.g
 
 var texPlayer = new Image();
 texPlayer.src = "player-10x11-4x8-1spacing.png";
-var posSourceAnimation = [ // [!alive][dir][animationPlayer][x/y]
+var posSourcePlayer = [ // [!alive][dir][animationPlayer][x/y]
     [
         [[0, 0], [11, 0], [22, 0], [33, 0]], // down
         [[0, 12], [11, 12], [22, 12], [33, 12]], // up

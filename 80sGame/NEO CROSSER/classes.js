@@ -385,7 +385,7 @@ class Player extends Thing {
             let dir = dirs.indexOf(lastDir);
             this.lastDrawDir = dir;
         }
-        context.drawImage(texPlayer, posSourceAnimation[Number(!alive)][this.lastDrawDir][this.animation][0], posSourceAnimation[Number(!alive)][this.lastDrawDir][this.animation][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
+        context.drawImage(texPlayer, posSourcePlayer[Number(!alive)][this.lastDrawDir][this.animation][0], posSourcePlayer[Number(!alive)][this.lastDrawDir][this.animation][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
     }
 }
 
@@ -400,7 +400,7 @@ class AfterImage extends Thing {
     draw() {
         if (this.frames > 0) {
             context.globalAlpha = this.frames/300 * 0.6;
-            context.drawImage(texPlayer, posSourceAnimation[this.a][this.b][this.c][0], posSourceAnimation[this.a][this.b][this.c][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
+            context.drawImage(texPlayer, posSourcePlayer[this.a][this.b][this.c][0], posSourcePlayer[this.a][this.b][this.c][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
             context.globalAlpha = 1;
             this.frames--;
         }
