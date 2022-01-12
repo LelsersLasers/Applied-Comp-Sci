@@ -5,7 +5,7 @@ class FullNote {
     }
 }
 
-
+var checked = true;
 var notes = localStorage.getItem("notes") != null ? JSON.parse(localStorage.getItem("notes")) : [];
 var showAdd = false;
 
@@ -56,24 +56,36 @@ function view() {
         lst.appendChild(noteBody);
 
         let authorBody = document.createElement("dd");
-        let authorTextNode = document.createTextNode("- " + notes[i].author);
+        let authorTextNode = document.createTextNode("- by: " + notes[i].author);
         authorBody.appendChild(authorTextNode);
         lst.appendChild(authorBody);
     }
 }
 
 function fakeSubmit(note, fullname) {
-    if (note != "" && fullname != "") {
-        let tempNote = new FullNote(note, fullname);
-        notes.push(tempNote);
-        localStorage.setItem("notes", JSON.stringify(notes));
-        location.reload();
-    }
-    else {
-        console.log("asdad");
+    if (note == "" || (fullname == "" && checked)) {
+        console.log("warn");
         let warning = document.getElementById("warning");
         if (warning.hasAttribute("hidden")) {
             warning.removeAttribute("hidden");
         }
     }
+    else {
+        if (!checked) fullname = "N/A";
+        let tempNote = new FullNote(note, fullname);
+        notes.push(tempNote);
+        localStorage.setItem("notes", JSON.stringify(notes));
+        location.reload();
+    }
+}
+
+function toggleAddName() {
+    let div = document.getElementById("name");
+    if (!checked) {
+        div.removeAttribute("hidden");
+    }
+    else {
+        div.setAttribute("hidden", "");
+    }
+    checked = !checked
 }
