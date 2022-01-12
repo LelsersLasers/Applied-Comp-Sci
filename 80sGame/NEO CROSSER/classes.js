@@ -50,7 +50,6 @@ class Thing {
         this.pt = pt;
         this.w = w;
         this.h = h;
-        this.width = 3;
         this.active = true;
         this.hb = new HitBox(pt, w, h);
     }
@@ -250,7 +249,7 @@ class Laser extends Thing {
     drawNormalRect() {
         context.strokeStyle = this.color;
         context.fillStyle = this.color;
-        context.lineWidth = this.width;
+        context.lineWidth = 3;
         context.beginPath();
         context.rect(this.pt.x, this.pt.y, this.w, this.h);
         context.fill();
