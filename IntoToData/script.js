@@ -48,14 +48,15 @@ function view() {
 
 
     let lst = document.getElementById("recordsList");
-    lst.innerHTML = "<dl>";
+    lst.innerHTML = "";
 
     for (let i = 0; i < notes.length; i++) {
-        // TODO: add a onmouseover
-        lst.innerHTML += "<dt>" + notes[i].note + "</dt>";
-        lst.innerHTML += "<dd>" + "- by: " + notes[i].author + "</dd>";
+        lst.innerHTML += "<div class='blue' id='" + i + "' onmouseover='hover(" + i + ")' onmouseout='unhover(" + i + ")'>"
+        + "<p>" + notes[i].note + "</p>"
+        + "<pre>\t- by: " + notes[i].author + "</pre>"
+        + "<button type='button' onclick='del(" + i + ")'>Delete</button>"
+        + "</div>";
     }
-    lst.innerHTML += "</dl>";
 }
 
 function fakeSubmit(note, fullname) {
@@ -84,4 +85,22 @@ function toggleAddName() {
         div.setAttribute("hidden", "");
     }
     checked = !checked
+}
+
+
+function hover(id) {
+    let item = document.getElementById(id);
+    item.style.background = "lightblue";
+    console.log("hi");
+}
+
+function unhover(id) {
+    let item = document.getElementById(id);
+    item.style.background = "white";
+}
+
+function del(i) {
+    notes.splice(i, 1);
+    localStorage.setItem("notes", JSON.stringify(notes));
+    view();
 }
