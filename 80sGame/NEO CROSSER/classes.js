@@ -587,13 +587,25 @@ class ButtonMenu extends Thing {
         super(pt, w, h);
         this.text = text;
         this.textSize = textSize;
+        this.clicked = 0;
     }
     draw() {
-        this.hb.draw("#ffffff");
-        context.fillStyle = "rgba(255,255,255,1)";
         context.font = this.textSize + "px " + font;
         context.textBaseline = "middle";
-        context.fillText(this.text, canvas.width/2, this.pt.y + this.h/2);
+        if (this.clicked > 0) {
+            this.hb.draw("#000000");
+            context.fillStyle = "rgba(255,255,255,1)";
+            context.rect(this.pt.x, this.pt.y, this.w, this.h);
+            context.fill();
+            context.fillStyle = "rgba(0,0,0,1)";
+            context.fillText(this.text, canvas.width/2, this.pt.y + this.h/2);
+        }
+        else {
+            this.hb.draw("#ffffff");
+            context.fillStyle = "rgba(255,255,255,1)";
+            context.fillText(this.text, canvas.width/2, this.pt.y + this.h/2);
+        }
+        this.clicked--;
     }
 }
 

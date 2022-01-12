@@ -113,6 +113,7 @@ function clickHandler(event) {
             }
             else if (cursorHB.checkCollide(saveButton.hb)) {
                 localStorage.setItem("NEO CROSSER - Saved Game", JSON.stringify(new GameSave()));
+                saveButton.clicked = 10;
             }
             else if (cursorHB.checkCollide(quitButton.hb)) {
                 // reset();
@@ -130,6 +131,7 @@ function clickHandler(event) {
                     backgroundMusic.play();
                     backgroundMusic.playing = true;
                 }
+                musicButton.clicked = 10;
                 localStorage.setItem("playMusic", backgroundMusic.playing);
             }
         }
