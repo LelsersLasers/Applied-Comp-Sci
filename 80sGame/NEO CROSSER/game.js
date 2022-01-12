@@ -26,6 +26,10 @@ function keyDownHandler(e) {
             break;
         case "s": case "ArrowDown":
             if (screen == "welcome") screen = "scores";
+            else if (paused) {
+                localStorage.setItem("NEO CROSSER - Saved Game", JSON.stringify(new GameSave()));
+                saveButton.clicked = 10;
+            }
             sDown = true;
             lastDir = "s";
             break;
@@ -38,11 +42,39 @@ function keyDownHandler(e) {
             dDown = true;
             lastDir = "d";
             break;
-        case "q": case "1": qDown = true; break;
+        case "q": case "1":
+            if (paused) {
+                reset();
+            }
+            qDown = true;
+            break;
         case "e": case "2": eDown = true; break;
-        case "r": case "3": rDown = true; break;
-        case "z": case "Escape":
+        case "r": case "3":
+            if (paused) {
+                let savedGame = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Game"));
+                restore(savedGame);
+            }
+            rDown = true;
+            break;
+        case "z": case "Escape": case "p":
             if (screen == "game") paused = !paused;
+            break;
+        case "m":
+            if (paused) {
+                if (backgroundMusic.playing) {
+                    backgroundMusic.pause();
+                    backgroundMusic.playing = false;
+                }
+                else {
+                    backgroundMusic.play();
+                    backgroundMusic.playing = true;
+                }
+                musicButton.clicked = 10;
+                localStorage.setItem("playMusic", backgroundMusic.playing);
+            }
+            break;
+        case "g":
+            if (screen == "play") screen = game;
             break;
         case "Enter":
             if (screen == "welcome") {
@@ -119,7 +151,7 @@ function clickHandler(event) {
                 // reset();
                 // TODO: testing:
                 let savedGame = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Game"));
-                savedGame.restore();
+                restore(savedGame);
                 console.log(savedGame);
             }
             else if (cursorHB.checkCollide(musicButton.hb)) {
@@ -206,22 +238,22 @@ function getTopScores() {
     return scores;
 }
 
-// function restore(savedGame) {
-//     player = savedGame.player;
-//     cars = savedGame.cars;
-//     buildings = savedGame.buildings;
-//     lasers = savedGame.lasers;
-//     bar = savedGame.bar;
-//     ufos = savedGame.ufos;
-//     score = savedGame.score;
-//     topScore = savedGame.topScore;
-//     qAbility = savedGame.qAbility;
-//     eAbility = savedGame.eAbility;
-//     rAbility = savedGame.rAbility;
-//     alive = savedGame.alive;
+function restore(savedGame) {
+    player = savedGame.player;
+    cars = savedGame.cars;
+    buildings = savedGame.buildings;
+    lasers = savedGame.lasers;
+    bar = savedGame.bar;
+    ufos = savedGame.ufos;
+    score = savedGame.score;
+    topScore = savedGame.topScore;
+    qAbility = savedGame.qAbility;
+    eAbility = savedGame.eAbility;
+    rAbility = savedGame.rAbility;
+    alive = savedGame.alive;
 
-//     paused = true;
-// }
+    paused = true;
+}
 
 function drawWelcome() {
     context.textAlign = "center";
@@ -592,7 +624,7 @@ var scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5)
 
 context.font = carHeight * 1/2 + "px " + font;
 let pauseWidth = 0;
-let txts = ["Resume", "Save", "Quit Without Saving", "Toggle Music", "Resume Previous Game", "New Game"];
+let txts = ["Resume", "[S]ave", "[Q]uit Without Saving", "Toggle [M]usic", "Resume [P]revious Game", "New [G]ame"];
 for (var i = 0; i < txts.length; i++) {
     if (context.measureText(txts[i]).width > pauseWidth) {
         pauseWidth = context.measureText(txts[i]).width;
@@ -600,12 +632,12 @@ for (var i = 0; i < txts.length; i++) {
 }
 pauseWidth += 40;
 var resumeButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20) * 3/2 - 30), pauseWidth, carHeight * 3/4 + 20, "Resume", carHeight * 1/2);
-var saveButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20)/2 - 10), pauseWidth, carHeight * 3/4 + 20, "Save", carHeight * 1/2);
-var quitButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + 10), pauseWidth, carHeight * 3/4 + 20, "Quit Without Saving", carHeight * 1/2);
-var musicButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20) * 3/2 + 30), pauseWidth, carHeight * 3/4 + 20, "Toggle Music", carHeight * 1/2);
+var saveButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20)/2 - 10), pauseWidth, carHeight * 3/4 + 20, "[S]ave", carHeight * 1/2);
+var quitButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + 10), pauseWidth, carHeight * 3/4 + 20, "[Q]uit Without Saving", carHeight * 1/2);
+var musicButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20) * 3/2 + 30), pauseWidth, carHeight * 3/4 + 20, "Toggle [M]usic", carHeight * 1/2);
 
-var previousGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20)/2 - 10), pauseWidth, carHeight * 3/4 + 20, "Resume Previous Game", carHeight * 1/2);
-var newGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + 10), pauseWidth, carHeight * 3/4 + 20, "New Game", carHeight * 1/2);
+var previousGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20)/2 - 10), pauseWidth, carHeight * 3/4 + 20, "Resume [P]revious Game", carHeight * 1/2);
+var newGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + 10), pauseWidth, carHeight * 3/4 + 20, "New [G]ame", carHeight * 1/2);
 
 context.font = carHeight * 5/12 + "px " + font;
 let menuWidth = context.measureText("[D]irections").width; // both txts have the same number of characters (by pure chance)
