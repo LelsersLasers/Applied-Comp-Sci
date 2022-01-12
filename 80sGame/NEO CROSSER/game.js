@@ -572,7 +572,6 @@ var dTrigger = new Trigger(new Vector(canvas.width - carHeight, playerLevel + ca
 var scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", carHeight, carHeight/3, "Score: 0");
 
 context.font = carHeight * 1/2 + "px " + font;
-let heightHB = carHeight * 3/4 + 20;
 let pauseWidth = 0;
 let txts = ["Resume", "Save", "Quit Without Saving", "Toggle Music"];
 for (var i = 0; i < txts.length; i++) {
@@ -581,20 +580,13 @@ for (var i = 0; i < txts.length; i++) {
     }
 }
 pauseWidth += 40;
-var resumeButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - heightHB * 3/2 - 20), pauseWidth, heightHB, "Resume", carHeight * 1/2);
-var saveButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - heightHB/2), pauseWidth, heightHB, "Save", carHeight * 1/2);
-var quitButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + heightHB/2 + 20), pauseWidth, heightHB, "Quit Without Saving", carHeight * 1/2);
-var musicButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + heightHB * 3/2 + 40), pauseWidth, heightHB, "Toggle Music", carHeight * 1/2);
+var resumeButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20) * 3/2 - 20), pauseWidth, carHeight * 3/4 + 20, "Resume", carHeight * 1/2);
+var saveButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20)/2), pauseWidth, carHeight * 3/4 + 20, "Save", carHeight * 1/2);
+var quitButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + 20), pauseWidth, carHeight * 3/4 + 20, "Quit Without Saving", carHeight * 1/2);
+var musicButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20) * 3/2 + 40), pauseWidth, carHeight * 3/4 + 20, "Toggle Music", carHeight * 1/2);
 
 context.font = carHeight * 5/12 + "px " + font;
-// txts = ["[D]irections", "Top [S]cores"];
-// for (i = 0; i < txts.length; i++) {
-//     let y = canvas.height * 1/3 + carHeight * 4 + carHeight * 1.3;
-//     welcomeHBs.push(new HitBox(new Vector(canvas.width/2 - width/2 - 10, y - carHeight * 1/3 - 10), width + 20, carHeight * 5/12 + 20));
-//     welcomeHBs[i].draw("#ffffff");
-//     context.fillText(txts[i], canvas.width/2, y);
-// }
-let menuWidth = context.measureText("[D]irections").width;
+let menuWidth = context.measureText("[D]irections").width; // both txts have the same number of characters (by pure chance)
 var directionsButton = new ButtonMenu(new Vector(canvas.width/2 - menuWidth/2 - 10, canvas.height * 1/3 + carHeight * 4 - carHeight * 1/3 - 10), menuWidth + 20, carHeight * 5/12 + 20, "[D]irections", carHeight * 5/12);
 var scoresButton = new ButtonMenu(new Vector(canvas.width/2 - menuWidth/2 - 10, canvas.height * 1/3 + carHeight * 4 + carHeight * 1.3 - carHeight * 1/3 - 10), menuWidth + 20, carHeight * 5/12 + 20, "Top [S]cores", carHeight * 5/12);
 
