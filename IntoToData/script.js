@@ -47,7 +47,8 @@ function view() {
     viewButton.style.background = "grey";
 
 
-    let lst = document.getElementById("recordList");
+    let lst = document.getElementById("recordsList");
+    lst.innerHTML = "\n";
 
     for (let i = 0; i < notes.length; i++) {
         let noteBody = document.createElement("dt");
