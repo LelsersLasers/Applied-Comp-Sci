@@ -376,6 +376,19 @@ class Player extends Thing {
         }
         context.drawImage(texPlayer, posSourcePlayer[Number(!alive)][this.lastDrawDir][this.animation][0], posSourcePlayer[Number(!alive)][this.lastDrawDir][this.animation][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
     }
+    restore(save) {
+        this.active = save.active;
+        this.afterImages = [];
+        this.animation = save.animation;
+        this.frame = save.frame;
+        this.pt.x = save.pt.x;
+        this.pt.y = save.pt.y;
+        this.w = save.w;
+        this.h = save.h;
+        this.lastDrawDir = save.lastDrawDir;
+        this.msX = save.msX;
+        this.msY = save.msY;
+    }
 }
 
 class AfterImage extends Thing {
@@ -487,6 +500,19 @@ class Car extends Enemy {
             context.drawImage(texCar, posSourceCar[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 34, 17, this.pt.x, this.pt.y, this.w, this.h);
         }
     }
+    restore(save) {
+        this.pt.x = save.pt.x;
+        this.pt.y = save.pt.y;
+        this.w = save.w;
+        this.h = save.h;
+        this.ms = save.ms;
+        this.type = save.type;
+        this.offset = save.offset;
+        this.animation = save.animation;
+        this.frame = save.frame;
+        this.stun = save.stun; // TODO: why it no work
+        this.offScreen = save.offScreen; // TODO: why it no work
+    }
 }
 
 class Ufo extends Enemy {
@@ -569,6 +595,14 @@ class Building extends Thing {
         for (var i = 0; i < this.buildings.length; i++) {
             context.drawImage(texBuilding, this.buildings[i][0], this.buildings[i][1], 26, 40, this.pt.x + i * this.widthOfOne, this.pt.y, this.widthOfOne, this.h);
         }
+    }
+    restore(save) {
+        this.buildings = save.buildings;
+        this.pt.x = save.pt.x;
+        this.pt.y = save.pt.y;
+        this.w = save.w;
+        this.h = save.h;
+        this.widthOfOne = save.widthOfOne;
     }
 }
 

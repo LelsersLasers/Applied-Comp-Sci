@@ -233,20 +233,35 @@ function getTopScores() {
 }
 
 function restore(savedGame) {
-    player = savedGame.player;
-    cars = savedGame.cars;
-    buildings = savedGame.buildings;
-    lasers = savedGame.lasers;
-    bar = savedGame.bar;
-    ufos = savedGame.ufos;
-    score = savedGame.score;
-    topScore = savedGame.topScore;
-    qAbility = savedGame.qAbility;
-    eAbility = savedGame.eAbility;
-    rAbility = savedGame.rAbility;
-    alive = savedGame.alive;
+    player = new Player(new Vector(-1, -1), -1, -1, -1, -1);
+    player.restore(savedGame.player);
 
-    paused = true;
+    cars = [];
+    for (let i = 0; i < savedGame.cars.length; i++) {
+        cars.push(new Car(-1, -1));
+        cars[i].restore(savedGame.cars[i]);
+    }
+
+    buildings = [];
+    for (let i = 0; i < savedGame.buildings.length; i++) {
+        buildings.push(new Building(-1));
+        buildings[i].restore(savedGame.buildings[i]);
+    }
+
+    // player = savedGame.player;
+    // cars = savedGame.cars;
+    // buildings = savedGame.buildings;
+    // lasers = savedGame.lasers;
+    // bar = savedGame.bar;
+    // ufos = savedGame.ufos;
+    // score = savedGame.score;
+    // topScore = savedGame.topScore;
+    // qAbility = savedGame.qAbility;
+    // eAbility = savedGame.eAbility;
+    // rAbility = savedGame.rAbility;
+    // alive = savedGame.alive;
+
+    // paused = true;
 }
 
 function drawWelcome() {
