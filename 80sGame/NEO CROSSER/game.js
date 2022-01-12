@@ -221,7 +221,7 @@ function drawWelcome() {
     context.fillText("Touch to Start", canvas.width/2, canvas.height * 1/3 + carHeight);
 
     context.fillStyle = "rgba(255,255,255,1)";
-    context.font = carHeight * 5/12 + "px " + font;
+    context.font = carHeight * 6/12 + "px " + font;
     txts = ["[D]irections", "Top [S]cores"];
     for (i = 0; i < txts.length; i++) {
         let width = context.measureText(txts[i]).width;
@@ -581,20 +581,35 @@ var scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5)
 
 context.font = carHeight * 1/2 + "px " + font;
 let heightHB = carHeight * 3/4 + 20;
-let widthHB = 0;
+let pauseWidth = 0;
 let txts = ["Resume", "Save", "Quit Without Saving", "Toggle Music"];
 for (var i = 0; i < txts.length; i++) {
-    if (context.measureText(txts[i]).width > widthHB) {
-        widthHB = context.measureText(txts[i]).width;
+    if (context.measureText(txts[i]).width > pauseWidth) {
+        pauseWidth = context.measureText(txts[i]).width;
     }
 }
-widthHB += 40;
+pauseWidth += 40;
+var resumeButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - heightHB * 3/2 - 20), pauseWidth, heightHB, "Resume", carHeight * 1/2);
+var saveButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - heightHB/2), pauseWidth, heightHB, "Save", carHeight * 1/2);
+var quitButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + heightHB/2 + 20), pauseWidth, heightHB, "Quit Without Saving", carHeight * 1/2);
+var musicButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + heightHB * 3/2 + 40), pauseWidth, heightHB, "Toggle Music", carHeight * 1/2);
 
-var welcomeHBs = [];
-var resumeButton = new ButtonMenu(new Vector(canvas.width/2 - widthHB/2, canvas.height/2 - heightHB * 3/2 - 20), widthHB, heightHB, "Resume", carHeight * 1/2);
-var saveButton = new ButtonMenu(new Vector(canvas.width/2 - widthHB/2, canvas.height/2 - heightHB/2), widthHB, heightHB, "Save", carHeight * 1/2);
-var quitButton = new ButtonMenu(new Vector(canvas.width/2 - widthHB/2, canvas.height/2 + heightHB/2 + 20), widthHB, heightHB, "Quit Without Saving", carHeight * 1/2);
-var musicButton = new ButtonMenu(new Vector(canvas.width/2 - widthHB/2, canvas.height/2 + heightHB * 3/2 + 40), widthHB, heightHB, "Toggle Music", carHeight * 1/2);
+// var directionsButton = 
+// var scoresButton = 
+
+// context.font = carHeight/2 + "px " + font;
+//     context.fillText("Touch to Start", canvas.width/2, canvas.height * 1/3 + carHeight);
+
+//     context.fillStyle = "rgba(255,255,255,1)";
+//     context.font = carHeight * 5/12 + "px " + font;
+//     txts = ["[D]irections", "Top [S]cores"];
+//     for (i = 0; i < txts.length; i++) {
+//         let width = context.measureText(txts[i]).width;
+//         let y = canvas.height * 1/3 + carHeight * 4 + i * carHeight * 1.3;
+//         welcomeHBs.push(new HitBox(new Vector(canvas.width/2 - width/2 - 10, y - carHeight * 1/3 - 10), width + 20, carHeight * 5/12 + 20));
+//         welcomeHBs[i].draw("#ffffff");
+//         context.fillText(txts[i], canvas.width/2, y);
+//     }
 
 var ufos = [];
 var cars = [];
