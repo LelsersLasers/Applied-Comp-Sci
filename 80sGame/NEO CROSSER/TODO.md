@@ -7,12 +7,14 @@
     - Play menu -> resume -> show list of saves
         - option to delete saves
 
-- Update directions
-- Update README
-
 # 
 
 - "clean" code
     - alive vs player.active/on/off
     - alphas
     - restores bugtest
+
+- Update directions
+- Update README
+
+- Update and redo libary ipad code
