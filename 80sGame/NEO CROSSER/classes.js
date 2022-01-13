@@ -116,6 +116,10 @@ class Ability extends Trigger {
         this.sound.currentTime = 0;
         this.sound.play();
     }
+    restore(save) {
+        this.wait = save.wait;
+        this.timer = save.timer;
+    }
 }
 
 class GameTxt extends Thing {
@@ -244,6 +248,19 @@ class Laser extends Thing {
         context.rect(this.pt.x, this.pt.y, this.w, this.h);
         context.fill();
         context.stroke();
+    }
+    restore(save) {
+        this.active = save.active;
+        this.dir = save.dir;
+        this.stunTime = save.stunTime;
+        this.ms = save.ms;
+        this.angle = save.angle;
+        this.moveVector.x = save.moveVector.x;
+        this.moveVector.y = save.moveVector.y;
+        this.pt.x = save.pt.x;
+        this.pt.y = save.pt.y;
+        this.w = save.w;
+        this.h = save.h;
     }
 }
 
@@ -404,7 +421,7 @@ class AfterImage extends Thing {
             context.globalAlpha = this.frames/300 * 0.6;
             context.drawImage(texPlayer, posSourcePlayer[this.a][this.b][this.c][0], posSourcePlayer[this.a][this.b][this.c][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
             context.globalAlpha = 1;
-            this.frames--;
+            if (!paused) this.frames--;
         }
     }
 }
@@ -510,8 +527,9 @@ class Car extends Enemy {
         this.offset = save.offset;
         this.animation = save.animation;
         this.frame = save.frame;
-        this.stun = save.stun; // TODO: why it no work
-        this.offScreen = save.offScreen; // TODO: why it no work
+        this.stun = save.stun;
+        this.active = save.active;
+        this.offScreen = save.offScreen;
     }
 }
 
@@ -548,6 +566,18 @@ class Ufo extends Enemy {
     updateHB() {
         this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
     }
+    restore(save) {
+        this.active = save.active;
+        this.animation = save.animation;
+        this.frame = save.frame;
+        this.move.x = save.move.x;
+        this.move.y = save.move.y;
+        this.stun = save.stun;
+        this.pt.x = save.pt.x;
+        this.pt.y = save.pt.y;
+        this.w = save.w;
+        this.h = save.h;
+    }
 }
 
 class Block extends Thing { // "Arrows" on the side
@@ -561,6 +591,13 @@ class Block extends Thing { // "Arrows" on the side
     update() {
         if (this.pt.y < -this.h) this.pt.y = this.pt.y + (this.h * canvas.height/barHeight);
         if (this.pt.y > canvas.height) this.pt.y = this.pt.y - (this.h * canvas.height/barHeight);
+    }
+    restore(save) {
+        this.animation = save.animation;
+        this.pt.x = save.pt.x;
+        this.pt.y = save.pt.y;
+        this.w = save.w;
+        this.h = save.h;
     }
 }
 
@@ -652,25 +689,10 @@ class GameSave {
         this.ufos = ufos;
         this.score = score;
         this.topScore = topScore;
+        this.topScore = topScore;
         this.qAbility = qAbility;
         this.eAbility = eAbility;
         this.rAbility = rAbility;
         this.alive = alive;
-    }
-    restore() {
-        player = this.player;
-        cars = this.cars;
-        buildings = this.buildings;
-        lasers = this.lasers;
-        bar = this.bar;
-        ufos = this.ufos;
-        score = this.score;
-        topScore = this.topScore;
-        qAbility = this.qAbility;
-        eAbility = this.eAbility;
-        rAbility = this.rAbility;
-        alive = this.alive;
-
-        paused = true;
     }
 }

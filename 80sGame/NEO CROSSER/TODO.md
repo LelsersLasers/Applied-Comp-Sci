@@ -26,3 +26,6 @@
 - "clean" code
     - alive vs player.active/on/off
     - alphas
+    - restores
+        - don't do w/h/etc
+        - will assume same screen size

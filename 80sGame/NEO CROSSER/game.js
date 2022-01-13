@@ -50,14 +50,20 @@ function keyDownHandler(e) {
             break;
         case "e": case "2": eDown = true; break;
         case "r": case "3":
-            if (paused) {
-                let savedGame = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Game"));
-                restore(savedGame);
-            }
+            if (paused) paused = false;
             rDown = true;
             break;
-        case "z": case "Escape": case "p":
+        case "z": case "Escape":
             if (screen == "game") paused = !paused;
+            break;
+        case "p":
+            if (screen == "play") {
+                if (screen == "play") {
+                    let savedGame = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Game"));
+                    restore(savedGame);
+                    screen = "game";
+                }
+            }
             break;
         case "m":
             if (paused) {
@@ -65,7 +71,7 @@ function keyDownHandler(e) {
             }
             break;
         case "g":
-            if (screen == "play") screen = game;
+            if (screen == "play") screen = "game";
             break;
         case "Enter":
             if (screen == "welcome") {
@@ -110,7 +116,9 @@ function clickHandler(event) {
     }
     else if (screen == "play") {
         if (cursorHB.checkCollide(previousGameButton.hb)) {
-
+            let savedGame = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Game"));
+            restore(savedGame);
+            screen = "game";
         }
         else if (cursorHB.checkCollide(newGameButton.hb)) {
             screen = "game";
@@ -131,11 +139,7 @@ function clickHandler(event) {
                 saveButton.clicked = 10;
             }
             else if (cursorHB.checkCollide(quitButton.hb)) {
-                // reset();
-                // TODO: testing:
-                let savedGame = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Game"));
-                restore(savedGame);
-                console.log(savedGame);
+                reset();
             }
             else if (cursorHB.checkCollide(musicButton.hb)) {
                 musicToggle();
@@ -233,7 +237,6 @@ function getTopScores() {
 }
 
 function restore(savedGame) {
-    player = new Player(new Vector(-1, -1), -1, -1, -1, -1);
     player.restore(savedGame.player);
 
     cars = [];
@@ -248,20 +251,33 @@ function restore(savedGame) {
         buildings[i].restore(savedGame.buildings[i]);
     }
 
-    // player = savedGame.player;
-    // cars = savedGame.cars;
-    // buildings = savedGame.buildings;
-    // lasers = savedGame.lasers;
-    // bar = savedGame.bar;
-    // ufos = savedGame.ufos;
-    // score = savedGame.score;
-    // topScore = savedGame.topScore;
-    // qAbility = savedGame.qAbility;
-    // eAbility = savedGame.eAbility;
-    // rAbility = savedGame.rAbility;
-    // alive = savedGame.alive;
+    lasers = [];
+    for (let i = 0; i < savedGame.lasers.length; i++) {
+        lasers.push(new Laser(new Vector(-1, -1), "s", -1));
+        lasers[i].restore(savedGame.lasers[i]);
+    }
 
-    // paused = true;
+    bar = [];
+    for (let i = 0; i < savedGame.bar.length; i++) {
+        bar.push(new Block(new Vector(-1, -1), -1, -1, -1));
+        bar[i].restore(savedGame.bar[i]);
+    }
+
+    ufos = [];
+    for (let i = 0; i < savedGame.ufos.length; i++) {
+        ufos.push(new Ufo(-1));
+        ufos[i].restore(savedGame.ufos[i]);
+    }
+
+    qAbility.restore(savedGame.qAbility);
+    eAbility.restore(savedGame.eAbility);
+    rAbility.restore(savedGame.rAbility);
+
+    score = savedGame.score;
+    topScore = savedGame.topScore;
+    alive = savedGame.alive;
+
+    pause = true;
 }
 
 function drawWelcome() {
