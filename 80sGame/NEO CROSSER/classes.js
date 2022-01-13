@@ -259,8 +259,6 @@ class Laser extends Thing {
         this.moveVector.y = save.moveVector.y;
         this.pt.x = save.pt.x;
         this.pt.y = save.pt.y;
-        this.w = save.w;
-        this.h = save.h;
     }
 }
 
@@ -398,13 +396,11 @@ class Player extends Thing {
         this.afterImages = [];
         this.animation = save.animation;
         this.frame = save.frame;
-        this.pt.x = save.pt.x;
-        this.pt.y = save.pt.y;
-        this.w = save.w;
-        this.h = save.h;
         this.lastDrawDir = save.lastDrawDir;
         this.msX = save.msX;
         this.msY = save.msY;
+        this.pt.x = save.pt.x;
+        this.pt.y = save.pt.y;
     }
 }
 
@@ -518,10 +514,6 @@ class Car extends Enemy {
         }
     }
     restore(save) {
-        this.pt.x = save.pt.x;
-        this.pt.y = save.pt.y;
-        this.w = save.w;
-        this.h = save.h;
         this.ms = save.ms;
         this.type = save.type;
         this.offset = save.offset;
@@ -530,6 +522,8 @@ class Car extends Enemy {
         this.stun = save.stun;
         this.active = save.active;
         this.offScreen = save.offScreen;
+        this.pt.x = save.pt.x;
+        this.pt.y = save.pt.y;
     }
 }
 
@@ -575,8 +569,6 @@ class Ufo extends Enemy {
         this.stun = save.stun;
         this.pt.x = save.pt.x;
         this.pt.y = save.pt.y;
-        this.w = save.w;
-        this.h = save.h;
     }
 }
 
@@ -596,8 +588,6 @@ class Block extends Thing { // "Arrows" on the side
         this.animation = save.animation;
         this.pt.x = save.pt.x;
         this.pt.y = save.pt.y;
-        this.w = save.w;
-        this.h = save.h;
     }
 }
 
@@ -635,11 +625,9 @@ class Building extends Thing {
     }
     restore(save) {
         this.buildings = save.buildings;
+        this.widthOfOne = save.widthOfOne;
         this.pt.x = save.pt.x;
         this.pt.y = save.pt.y;
-        this.w = save.w;
-        this.h = save.h;
-        this.widthOfOne = save.widthOfOne;
     }
 }
 
