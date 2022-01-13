@@ -3,9 +3,16 @@
 - should wasd blue/green still work, or should it freeze when in pause
 -all menu buttons same width/height?
 
-- Be able to save multiple games ?
+- Be able to save multiple games
     - Play menu -> resume -> show list of saves
         - option to delete saves
+    - Title as directions
+        - press enter to restore
+            - mouse click to restore
+        - x to delete
+    - touch to go back
+    - fancy scrolling thing
+
 
 # 
 

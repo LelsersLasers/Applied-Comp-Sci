@@ -207,6 +207,7 @@ function getName(message) {
     if (name == null) name = "N/A";
     localStorage.setItem("name", name);
     name += "   "; // incase they entered less than 3 characters, backfill with spaces
+    name = name.substring(0, 3).toUpperCase()
     return name;
 }
 
@@ -220,7 +221,7 @@ function writeScore() {
         if (topScore > parseInt(scores[i].substring(5)) && swap == 0) { // 3 lettes + ':' + ' ' = 5
             let name = getName("Congrats on a Top 10 Score! (Rank " + (i + 1) + "!) Enter 3 letters for your name on the score board:");
             swap = 1;
-            scoresNew[i] = name.substring(0,3) + ": " + topScore;
+            scoresNew[i] = name + ": " + topScore;
         }
     }
     localStorage.setItem("NEO CROSSER - Leader Board", scoresNew);
@@ -238,7 +239,9 @@ function getTopScores() {
 }
 
 function save() {
+    let date = new Date();
     let name = getName("Enter 3 letters for your name to save:");
+    name += "-" + date.getHours() + ":" + date.getMinutes() + "-" + (date.getMonth() + 1) + "/" + date.getDate();
     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
     games.push(new GameSave(name));
     localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
@@ -308,7 +311,6 @@ function drawPlayMenu() {
 
 function drawRestoreMenu() {
     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
-    // selectedIndex = games.length > 3 ? 2 : games.length;
     restoreButtons = []
 
     for (var i = 0; i < games.length; i++) {
@@ -373,7 +375,6 @@ function drawScores() {
         if (i < 9) line = " " + line; // adjust for 2 digit nums
         if (parseInt(scores[i].substring(5)) > 0) line += scores[i];
         else line += "N/A: 0" // no player set score
-        line = line.toUpperCase();
         let width = context.measureText(line).width;
         if (width > maxWidth) maxWidth = width; // aline by longest line
         txts.push(line);
@@ -694,7 +695,7 @@ var previousGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2
 var newGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + 10), pauseWidth, carHeight * 3/4 + 20, "New [G]ame", carHeight * 1/2);
 
 var restoreButtons = [];
-var selectedIndex = 2;
+var selectedIndex = 0;
 
 context.font = carHeight * 5/12 + "px " + font;
 let menuWidth = context.measureText("[D]irections").width; // both txts have the same number of characters (by pure chance)
