@@ -26,18 +26,21 @@
         <br />
         <textarea class="fullWidth" id="note" name="note" rows="30"></textarea>
         <br />
-        <input type="checkbox" id="submitName" name="submitName" value="AddName" checked onclick="toggleAddName()">
+        <label for="textColor">Pick color for text:</label>
+        <input type="color" id="textColor" name="textColor" onchange="changeColor()" />
+        <br />
+        <input type="checkbox" id="submitName" name="submitName" value="AddName" checked onclick="toggleAddName()" />
         <label for="submitName"> Submit my name with the note</label>
         <br />
         <div id="name">
             <label for="fullname">Full name:</label>
             <br />
-            <input type="text" id="fullname" name="fullname" value="">
+            <input type="text" id="fullname" name="fullname" value="" />
             <br />
         </div>
         <br />
         <!-- <input type="submit" value="Submit"> -->
-        <button type="button" onclick="fakeSubmit(document.getElementById('note').value, document.getElementById('fullname').value)">
+        <button type="button" onclick="fakeSubmit()">
             Submit
         </button>
         <br />

@@ -1,7 +1,8 @@
 class FullNote {
-    constructor(note, author) {
+    constructor(note, author, color) {
         this.note = note;
         this.author = author;
+        this.color = color;
     }
 }
 
@@ -52,16 +53,19 @@ function view() {
 
     for (let i = 0; i < notes.length; i++) {
         lst.innerHTML += "<div class='blue' id='" + i + "' onmouseover='hover(" + i + ")' onmouseout='unhover(" + i + ")'>"
-        + "<p>" + notes[i].note + "</p>"
+        + "<p style='color: " + notes[i].color + ";'>" + notes[i].note + "</p>"
         + "<pre>\t- by: " + notes[i].author + "</pre>"
         + "<button type='button' onclick='del(" + i + ")'>Delete</button>"
         + "</div>";
     }
 }
 
-function fakeSubmit(note, fullname) {
+function fakeSubmit() {
+    let note = document.getElementById("note").value
+    let fullname = document.getElementById("fullname").value;
+    let color = document.getElementById("textColor").value;
+
     if (note == "" || (fullname == "" && checked)) {
-        console.log("warn");
         let warning = document.getElementById("warning");
         if (warning.hasAttribute("hidden")) {
             warning.removeAttribute("hidden");
@@ -69,7 +73,7 @@ function fakeSubmit(note, fullname) {
     }
     else {
         if (!checked) fullname = "N/A";
-        let tempNote = new FullNote(note, fullname);
+        let tempNote = new FullNote(note, fullname, color);
         notes.push(tempNote);
         localStorage.setItem("notes", JSON.stringify(notes));
         location.reload();
@@ -91,7 +95,6 @@ function toggleAddName() {
 function hover(id) {
     let item = document.getElementById(id);
     item.style.background = "lightblue";
-    console.log("hi");
 }
 
 function unhover(id) {
@@ -103,4 +106,10 @@ function del(i) {
     notes.splice(i, 1);
     localStorage.setItem("notes", JSON.stringify(notes));
     view();
+}
+
+function changeColor() {
+    let color = document.getElementById("textColor");
+    let text = document.getElementById("note");
+    text.style.color = color.value;
 }
