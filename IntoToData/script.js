@@ -55,7 +55,7 @@ function view() {
         lst.innerHTML += "<div class='blue' id='" + i + "' onmouseover='hover(" + i + ")' onmouseout='unhover(" + i + ")'>"
         + "<p style='color: " + notes[i].color + ";'>" + notes[i].note + "</p>"
         + "<pre>\t- by: " + notes[i].author + "</pre>"
-        + "<button type='button' onclick='del(" + i + ")'>Delete</button>"
+        + "<button id='" + i + "del' type='button' onclick='del(" + i + ")' hidden>Delete</button>"
         + "</div>";
     }
 }
@@ -100,6 +100,8 @@ function hover(id) {
 function unhover(id) {
     let item = document.getElementById(id);
     item.style.background = "white";
+    let button = document.getElementById(id + "del");
+    button.setAttribute("hidden", "");
 }
 
 function del(i) {
