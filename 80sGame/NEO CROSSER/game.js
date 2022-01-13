@@ -59,18 +59,24 @@ function keyDownHandler(e) {
             if (screen == "game") paused = !paused;
             break;
         case "p":
-            if (screen == "play") {
-                screen = "restore";
-            }
+            if (screen == "play") screen = "restore";
             break;
         case "m":
-            if (paused) {
-                musicToggle();
-            }
+            if (paused) musicToggle();
             break;
         case "g":
             if (screen == "play") screen = "game";
             break;
+        case "x":
+            if (screen == "restore") {
+                // TODO
+            }
+        case "y":
+            if (screen == "restore") {
+                let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+                if (games != []) games.splice(selectedIndex, 1);
+                localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
+            }
         case "Enter":
             if (screen == "welcome") {
                 screen = "play";
@@ -312,6 +318,17 @@ function drawPlayMenu() {
 function drawRestoreMenu() {
     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
     restoreButtons = []
+
+    if (selectedIndex > games.length - 1) selectedIndex = games.length - 1;
+    else if (selectedIndex < 0) selectedIndex = 0;
+
+    context.fillStyle = "rgba(255,255,255,1)";
+    context.font = carHeight * 3/4 + "px " + font;
+    context.fillText("Press X to Delete, Press Y to Resume", canvas.width/2, canvas.height * 1/4 - carHeight * 1.8);
+
+    context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
+    context.font = carHeight/2 + "px " + font;
+    context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/4 - carHeight);
 
     for (var i = 0; i < games.length; i++) {
         let y = canvas.height/2 - (carHeight * 3/4 + 20) * 5/2 - 50 + i * (carHeight * 3/4 + 40);
