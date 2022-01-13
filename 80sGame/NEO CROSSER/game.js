@@ -27,7 +27,7 @@ function keyDownHandler(e) {
         case "s": case "ArrowDown":
             if (screen == "welcome") screen = "scores";
             else if (paused) {
-                localStorage.setItem("NEO CROSSER - Saved Game", JSON.stringify(new GameSave()));
+                save();
                 saveButton.clicked = 10;
             }
             sDown = true;
@@ -135,7 +135,7 @@ function clickHandler(event) {
                 paused = false;
             }
             else if (cursorHB.checkCollide(saveButton.hb)) {
-                localStorage.setItem("NEO CROSSER - Saved Game", JSON.stringify(new GameSave()));
+                save();
                 saveButton.clicked = 10;
             }
             else if (cursorHB.checkCollide(quitButton.hb)) {
@@ -205,6 +205,14 @@ function musicToggle() {
     localStorage.setItem("playMusic", backgroundMusic.playing);
 }
 
+function getName(prompt) {
+    let name = localStorage.getItem("name") != null ? localStorage.getItem("name") : "";
+    name = prompt(prompt, name);
+    if (name == null) name = "N/A";
+    localStorage.setItem("name", name);
+    name += "   "; // incase they entered less than 3 characters, backfill with spaces
+}
+
 function writeScore() {
     localStorage.setItem("lastScore", topScore);
     let scores = getTopScores();
@@ -213,11 +221,7 @@ function writeScore() {
     for (let i = 0; i < scores.length; i++) {
         scoresNew.push(scores[i - swap]);
         if (topScore > parseInt(scores[i].substring(5)) && swap == 0) { // 3 lettes + ':' + ' ' = 5
-            var name = localStorage.getItem("name") != null ? localStorage.getItem("name") : "";
-            name = prompt("Congrats on a Top 10 Score! (Rank " + (i + 1) + "!) Enter 3 letters for your name on the score board:", name);
-            if (name == null) name = "N/A";
-            localStorage.setItem("name", name);
-            name += "   "; // incase they entered less than 3 characters, backfill with spaces
+            let name = getName("Congrats on a Top 10 Score! (Rank " + (i + 1) + "!) Enter 3 letters for your name on the score board:");
             swap = 1;
             scoresNew[i] = name.substring(0,3) + ": " + topScore;
         }
@@ -234,6 +238,10 @@ function getTopScores() {
     }
     else scores = scoresTxt.split(",");
     return scores;
+}
+
+function save() {
+    localStorage.setItem("NEO CROSSER - Saved Game", JSON.stringify(new GameSave()));
 }
 
 function restore(savedGame) {
