@@ -91,10 +91,11 @@ function toggleAddName() {
     checked = !checked
 }
 
-
 function hover(id) {
     let item = document.getElementById(id);
     item.style.background = "lightblue";
+    let button = document.getElementById(id + "del");
+    button.removeAttribute("hidden");
 }
 
 function unhover(id) {
