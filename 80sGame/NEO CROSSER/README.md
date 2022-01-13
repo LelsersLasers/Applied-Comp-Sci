@@ -49,6 +49,7 @@ Features/Design Choices:
         - Note: Arrow Keys might scroll the page not just act as inputs
     - Q/E/R or 1/2/3 for abilites
     - Enter to continue/move between screens (mouse click also works)
+    - Any [key] on buttons means pressing that key will be equvialnt to pressing that button with the mouse
 - Touch/Mouse support Support
     - Touch the movement keys (bottom right) to move
     - Touch the ability keys (bottom left) to activate them
@@ -80,6 +81,11 @@ Features/Design Choices:
     - The player is a squares and scales off the height
         - (player is technically 10:11, but to keep the ratio both numbers have to scale off of 1 number) 
         - Same with on screen buttons
+- Ability to save
+    - When in game, press pause then save
+        - Saves to a JSON of a custom class in localStorage
+    - From main menu pressing enter/touching the screen then clicking resume
+        - If there is no previously saved game it will be a random one (same as clicking "new game")
 
 Other Things:
 - Bars on sides to give the impression the player is moving up and down, not the cars/waters
@@ -87,7 +93,7 @@ Other Things:
     - 'Safe zones' on the other sides of buildings
 - Stunned cars will still hurt the player
 - Stuns stack additively
-- When a car goes offscreen:
+- When a car goes offscreen (off the bottom):
     - It always spawns a new car slightly above the top of the screen
     - Might spawn a ufo (based on score and random)
     - Might spawn a building (based on chance)

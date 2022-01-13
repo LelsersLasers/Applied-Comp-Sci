@@ -309,9 +309,8 @@ function drawDirections() {
     context.fillText("Touch to Go Back", canvas.width/2, base + carHeight);
 
     var txts = [];
-    txts.push("Use 'wasd' to move. Don't get hit by cars or go out of bounds sideways.");
+    txts.push("Use 'wasd' to move. Don't get hit by cars.");
     txts.push("(You can also touch the w/a/s/d buttons in the bottom right.)")
-    txts.push("Don't get hit by cars, buses.");
     txts.push("Also you can't run through the buildings.");
     txts.push("Cars also can't go through the buildings.");
     txts.push("You also have 3 abilities:");
@@ -321,8 +320,8 @@ function drawDirections() {
     txts.push("(Abilites can be actived with their respective key,");
     txts.push("or by tapping the icon in the bottom left.)")
     txts.push("Goal: Go as far up as possible.")
-    txts.push("If you die, touch the screen to restart.");
-    txts.push("(Touch the click the screen to toggle the music while alive.)")
+    txts.push("Touch button in top right (or press Esc) to show the pause menu.")
+    txts.push("From the pause menu you can toggle the music, save, or quit.")
 
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight * 5/12 + "px  " + font;
