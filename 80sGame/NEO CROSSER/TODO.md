@@ -13,6 +13,8 @@
     - alive vs player.active/on/off
     - alphas
     - restores bugtest
+    - replace 10/20/30/40/50 spacings
+        - canvas.height * 1/70 = 10
 
 - Update directions
 - Update README

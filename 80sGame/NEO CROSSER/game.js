@@ -21,11 +21,13 @@ document.addEventListener("mousemove", getMousePos, false);
 function keyDownHandler(e) {
     switch (e.key) {
         case "w": case "ArrowUp":
+            if (screen == "restore") selectedIndex -= 1; 
             wDown = true;
             lastDir = "w";
             break;
         case "s": case "ArrowDown":
             if (screen == "welcome") screen = "scores";
+            else if (screen == "restore") selectedIndex += 1; 
             else if (paused) {
                 save();
                 saveButton.clicked = 10;
@@ -58,11 +60,7 @@ function keyDownHandler(e) {
             break;
         case "p":
             if (screen == "play") {
-                if (screen == "play") {
-                    let savedGame = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Game"));
-                    restore(savedGame);
-                    screen = "game";
-                }
+                screen = "restore";
             }
             break;
         case "m":
@@ -116,9 +114,7 @@ function clickHandler(event) {
     }
     else if (screen == "play") {
         if (cursorHB.checkCollide(previousGameButton.hb)) {
-            let savedGame = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Game"));
-            restore(savedGame);
-            screen = "game";
+            screen = "restore";
         }
         else if (cursorHB.checkCollide(newGameButton.hb)) {
             screen = "game";
@@ -205,12 +201,13 @@ function musicToggle() {
     localStorage.setItem("playMusic", backgroundMusic.playing);
 }
 
-function getName(prompt) {
+function getName(message) {
     let name = localStorage.getItem("name") != null ? localStorage.getItem("name") : "";
-    name = prompt(prompt, name);
+    name = prompt(message, name);
     if (name == null) name = "N/A";
     localStorage.setItem("name", name);
     name += "   "; // incase they entered less than 3 characters, backfill with spaces
+    return name;
 }
 
 function writeScore() {
@@ -241,7 +238,10 @@ function getTopScores() {
 }
 
 function save() {
-    localStorage.setItem("NEO CROSSER - Saved Game", JSON.stringify(new GameSave()));
+    let name = getName("Enter 3 letters for your name to save:");
+    let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+    games.push(new GameSave(name));
+    localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
 }
 
 function restore(savedGame) {
@@ -304,6 +304,22 @@ function drawWelcome() {
 function drawPlayMenu() {
     previousGameButton.draw();
     newGameButton.draw();
+}
+
+function drawRestoreMenu() {
+    let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+    // selectedIndex = games.length > 3 ? 2 : games.length;
+    restoreButtons = []
+
+    for (var i = 0; i < games.length; i++) {
+        let y = canvas.height/2 - (carHeight * 3/4 + 20) * 5/2 - 50 + i * (carHeight * 3/4 + 40);
+        let button = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, y), pauseWidth, carHeight * 3/4 + 20, games[i].name, carHeight * 1/2);
+        restoreButtons.push(button);
+        if (i == selectedIndex) {
+            restoreButtons[i].clicked = 1;
+        }
+        restoreButtons[i].draw();
+    }
 }
 
 function drawDirections() {
@@ -465,6 +481,7 @@ function drawAll() {
 
     if (screen == "welcome") drawWelcome();
     else if (screen == "play") drawPlayMenu();
+    else if (screen == "restore") drawRestoreMenu();
     else if (screen == "game") drawGame();
     else if (screen == "directions") drawDirections();
     else if (screen == "scores") drawScores();
@@ -676,6 +693,9 @@ var musicButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canva
 var previousGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20)/2 - 10), pauseWidth, carHeight * 3/4 + 20, "Resume [P]revious Game", carHeight * 1/2);
 var newGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + 10), pauseWidth, carHeight * 3/4 + 20, "New [G]ame", carHeight * 1/2);
 
+var restoreButtons = [];
+var selectedIndex = 2;
+
 context.font = carHeight * 5/12 + "px " + font;
 let menuWidth = context.measureText("[D]irections").width; // both txts have the same number of characters (by pure chance)
 var directionsButton = new ButtonMenu(new Vector(canvas.width/2 - menuWidth/2 - 10, canvas.height * 1/3 + carHeight * 4 - carHeight * 1/3 - 10), menuWidth + 20, carHeight * 5/12 + 20, "[D]irections", carHeight * 5/12);
@@ -712,8 +732,8 @@ for (i = 0; i < canvas.height/barHeight; i++) {
 
 var pauseButton = new ButtonExtra(barWidth * 3/4, barWidth * 3/4);
 
-if (localStorage.getItem("NEO CROSSER - Saved Game") == null) {
-    localStorage.setItem("NEO CROSSER - Saved Game", JSON.stringify(new GameSave()));
+if (localStorage.getItem("NEO CROSSER - Saved Games") == null) {
+    localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify([]));
 }
 
 // Fire up the animation engine
