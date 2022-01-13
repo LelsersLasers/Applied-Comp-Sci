@@ -86,6 +86,8 @@ Features/Design Choices:
         - Saves to a JSON of a custom class in localStorage
     - From main menu pressing enter/touching the screen then clicking resume
         - If there is no previously saved game it will be a random one (same as clicking "new game")
+    - You can only save one game (saving will overwrite the previous one)
+        - However, if you get close to getting a good score, you can save and keep reattempting from that same spot
 
 Other Things:
 - Bars on sides to give the impression the player is moving up and down, not the cars/waters
