@@ -21,13 +21,19 @@ document.addEventListener("mousemove", getMousePos, false);
 function keyDownHandler(e) {
     switch (e.key) {
         case "w": case "ArrowUp":
-            if (screen == "restore") selectedIndex -= 1; 
+            if (screen == "restore") {
+                selectedIndex -= 1;
+                deleteCount = 0;
+            }
             wDown = true;
             lastDir = "w";
             break;
         case "s": case "ArrowDown":
             if (screen == "welcome") screen = "scores";
-            else if (screen == "restore") selectedIndex += 1; 
+            else if (screen == "restore") {
+                selectedIndex += 1;
+                deleteCount = 0;
+            }
             else if (paused) {
                 save();
                 saveButton.clicked = 10;
@@ -147,6 +153,7 @@ function clickHandler(event) {
                     screen = "game";
                 }
                 selectedIndex = i;
+                deleteCount = 0;
                 buttonHit = true;
             }
         }
@@ -203,12 +210,13 @@ function mouseDownActions() {
     else if (screen == "restore") {
         for (var i = 0; i < restoreButtons.length; i++) {
             if (cursorHB.checkCollide(restoreButtons[i].hb) && i == selectedIndex) {
-                restoreButtons[i].clicked++;
-                console.log(restoreButtons[i].clicked);
-                if (restoreButtons[i].clicked > 30) {
+                deleteCount++;
+                console.log(deleteCount);
+                if (deleteCount > 30) {
                     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
                     games.splice(selectedIndex, 1);
                     localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
+                    deleteCount = 0;
                 }
             }
         }
@@ -363,8 +371,14 @@ function drawRestoreMenu() {
     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
     restoreButtons = []
 
-    if (selectedIndex > games.length - 1) selectedIndex = games.length - 1;
-    else if (selectedIndex < 0) selectedIndex = 0;
+    if (selectedIndex > games.length - 1) {
+        selectedIndex = games.length - 1;
+        deleteCount = 0;
+    }
+    else if (selectedIndex < 0) {
+        selectedIndex = 0;
+        deleteCount = 0;
+    }
 
     for (var i = 0; i < games.length; i++) {
         let y = canvas.height/2 - (carHeight * 3/4 + 20) * 1/2 - 10 + (i - selectedIndex) * (carHeight * 3/4 + 40);
@@ -763,6 +777,7 @@ var previousGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2
 var newGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + 10), pauseWidth, carHeight * 3/4 + 20, "New [G]ame", carHeight * 1/2);
 
 var restoreButtons = [];
+var deleteCount = 0;
 { // so games ('let') stops in here
     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
     var selectedIndex = games.length > 3 ? 2 : games.length;
