@@ -668,7 +668,8 @@ class ButtonExtra extends Thing {
 }
 
 class GameSave {
-    constructor() {
+    constructor(name) {
+        this.name = name;
         this.player = player;
         this.cars = cars;
         this.buildings = buildings;

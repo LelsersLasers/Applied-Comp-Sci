@@ -21,13 +21,21 @@ document.addEventListener("mousemove", getMousePos, false);
 function keyDownHandler(e) {
     switch (e.key) {
         case "w": case "ArrowUp":
+            if (screen == "restore") {
+                selectedIndex -= 1;
+                deleteCount = 0;
+            }
             wDown = true;
             lastDir = "w";
             break;
         case "s": case "ArrowDown":
             if (screen == "welcome") screen = "scores";
+            else if (screen == "restore") {
+                selectedIndex += 1;
+                deleteCount = 0;
+            }
             else if (paused) {
-                localStorage.setItem("NEO CROSSER - Saved Game", JSON.stringify(new GameSave()));
+                save();
                 saveButton.clicked = 10;
             }
             sDown = true;
@@ -57,29 +65,40 @@ function keyDownHandler(e) {
             if (screen == "game") paused = !paused;
             break;
         case "p":
+            if (screen == "play") screen = "restore";
+            break;
+        case "m":
+            if (paused) musicToggle();
+            break;
+        case "g":
             if (screen == "play") {
-                if (screen == "play") {
-                    let savedGame = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Game"));
-                    restore(savedGame);
+                screen = "game";
+                musicStart();
+            }
+            break;
+        case "x":
+            if (screen == "restore") {
+                let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+                if (games != []) games.splice(selectedIndex, 1);
+                localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
+            }
+            break;
+        case "y":
+            if (screen == "restore") {
+                let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+                if (games != []) {
+                    restore(games[selectedIndex]);
                     screen = "game";
                 }
             }
-            break;
-        case "m":
-            if (paused) {
-                musicToggle();
-            }
-            break;
-        case "g":
-            if (screen == "play") screen = "game";
             break;
         case "Enter":
             if (screen == "welcome") {
                 screen = "play";
             }
-            else if (screen == "play") {
-                screen = "game";
-                musicStart();
+            else if (screen == "play") screen = "welcome";
+            else if (screen == "restore") {
+                screen = "play";
             }
             else if (screen == "game" && !alive) {
                 reset();
@@ -116,14 +135,29 @@ function clickHandler(event) {
     }
     else if (screen == "play") {
         if (cursorHB.checkCollide(previousGameButton.hb)) {
-            let savedGame = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Game"));
-            restore(savedGame);
-            screen = "game";
+            screen = "restore";
         }
         else if (cursorHB.checkCollide(newGameButton.hb)) {
             screen = "game";
             musicStart();
         }
+        else screen = "welcome";
+    }
+    else if (screen == "restore") {
+        let buttonHit = false;
+        for (var i = 0; i < restoreButtons.length; i++) {
+            if (cursorHB.checkCollide(restoreButtons[i].hb)) {
+                if (i == selectedIndex) {
+                    let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+                    restore(games[selectedIndex]);
+                    screen = "game";
+                }
+                selectedIndex = i;
+                deleteCount = 0;
+                buttonHit = true;
+            }
+        }
+        if (!buttonHit) screen = "play";
     }
     else if (screen == "game" && !alive) {
         reset();
@@ -135,7 +169,7 @@ function clickHandler(event) {
                 paused = false;
             }
             else if (cursorHB.checkCollide(saveButton.hb)) {
-                localStorage.setItem("NEO CROSSER - Saved Game", JSON.stringify(new GameSave()));
+                save();
                 saveButton.clicked = 10;
             }
             else if (cursorHB.checkCollide(quitButton.hb)) {
@@ -158,18 +192,34 @@ function getMousePos(event) {
 }
 
 function mouseDownActions() {
-    if (inputMode != "key") {
-        wDown = wTrigger.checkDown(cursorHB, mouseDown);
-        sDown = sTrigger.checkDown(cursorHB, mouseDown);
-        aDown = aTrigger.checkDown(cursorHB, mouseDown);
-        dDown = dTrigger.checkDown(cursorHB, mouseDown);
-        qDown = qAbility.checkDown(cursorHB, mouseDown);
-        eDown = eAbility.checkDown(cursorHB, mouseDown);
-        rDown = rAbility.checkDown(cursorHB, mouseDown);
-        if (wDown) lastDir = "w";
-        if (sDown) lastDir = "s";
-        if (aDown) lastDir = "a";
-        if (dDown) lastDir = "d";
+    if (screen == "game") {
+        if (inputMode != "key") {
+            wDown = wTrigger.checkDown(cursorHB, mouseDown);
+            sDown = sTrigger.checkDown(cursorHB, mouseDown);
+            aDown = aTrigger.checkDown(cursorHB, mouseDown);
+            dDown = dTrigger.checkDown(cursorHB, mouseDown);
+            qDown = qAbility.checkDown(cursorHB, mouseDown);
+            eDown = eAbility.checkDown(cursorHB, mouseDown);
+            rDown = rAbility.checkDown(cursorHB, mouseDown);
+            if (wDown) lastDir = "w";
+            if (sDown) lastDir = "s";
+            if (aDown) lastDir = "a";
+            if (dDown) lastDir = "d";
+        }
+    }
+    else if (screen == "restore") {
+        for (var i = 0; i < restoreButtons.length; i++) {
+            if (cursorHB.checkCollide(restoreButtons[i].hb) && i == selectedIndex) {
+                deleteCount++;
+                console.log(deleteCount);
+                if (deleteCount > 30) {
+                    let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+                    games.splice(selectedIndex, 1);
+                    localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
+                    deleteCount = 0;
+                }
+            }
+        }
     }
 }
 
@@ -205,6 +255,16 @@ function musicToggle() {
     localStorage.setItem("playMusic", backgroundMusic.playing);
 }
 
+function getName(message) {
+    let name = localStorage.getItem("name") != null ? localStorage.getItem("name") : "";
+    name = prompt(message, name);
+    if (name == null) name = "N/A";
+    localStorage.setItem("name", name);
+    name += "   "; // incase they entered less than 3 characters, backfill with spaces
+    name = name.substring(0, 3).toUpperCase()
+    return name;
+}
+
 function writeScore() {
     localStorage.setItem("lastScore", topScore);
     let scores = getTopScores();
@@ -213,13 +273,9 @@ function writeScore() {
     for (let i = 0; i < scores.length; i++) {
         scoresNew.push(scores[i - swap]);
         if (topScore > parseInt(scores[i].substring(5)) && swap == 0) { // 3 lettes + ':' + ' ' = 5
-            var name = localStorage.getItem("name") != null ? localStorage.getItem("name") : "";
-            name = prompt("Congrats on a Top 10 Score! (Rank " + (i + 1) + "!) Enter 3 letters for your name on the score board:", name);
-            if (name == null) name = "N/A";
-            localStorage.setItem("name", name);
-            name += "   "; // incase they entered less than 3 characters, backfill with spaces
+            let name = getName("Congrats on a Top 10 Score! (Rank " + (i + 1) + "!) Enter 3 letters for your name on the score board:");
             swap = 1;
-            scoresNew[i] = name.substring(0,3) + ": " + topScore;
+            scoresNew[i] = name + ": " + topScore;
         }
     }
     localStorage.setItem("NEO CROSSER - Leader Board", scoresNew);
@@ -234,6 +290,15 @@ function getTopScores() {
     }
     else scores = scoresTxt.split(",");
     return scores;
+}
+
+function save() {
+    let date = new Date();
+    let name = getName("Enter 3 letters for your name to save:");
+    name += ": " + topScore + " " + date.getHours() + ":" + date.getMinutes() + "-" + (date.getMonth() + 1) + "/" + date.getDate();
+    let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+    games.push(new GameSave(name));
+    localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
 }
 
 function restore(savedGame) {
@@ -294,8 +359,50 @@ function drawWelcome() {
 }
 
 function drawPlayMenu() {
+    context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
+    context.font = carHeight/2 + "px " + font;
+    context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/4 + carHeight);
+
     previousGameButton.draw();
     newGameButton.draw();
+}
+
+function drawRestoreMenu() {
+    let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+    restoreButtons = []
+
+    if (selectedIndex > games.length - 1) {
+        selectedIndex = games.length - 1;
+        deleteCount = 0;
+    }
+    else if (selectedIndex < 0) {
+        selectedIndex = 0;
+        deleteCount = 0;
+    }
+
+    for (var i = 0; i < games.length; i++) {
+        let y = canvas.height/2 - (carHeight * 3/4 + 20) * 1/2 - 10 + (i - selectedIndex) * (carHeight * 3/4 + 40);
+        let button = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, y), pauseWidth, carHeight * 3/4 + 20, games[i].name, carHeight * 1/2);
+        restoreButtons.push(button);
+        if (i == selectedIndex) {
+            restoreButtons[i].clicked = 1;
+        }
+        restoreButtons[i].draw();
+    }
+
+    context.font = carHeight * 3/4 + "px " + font;
+    context.fillStyle = "#000000";
+    context.fillRect(0, 0, canvas.width, canvas.height * 1/4 - carHeight);
+    context.fillStyle = "rgba(255,255,255,1)";
+    context.fillText("Press X to Delete, Press Y to Resume", canvas.width/2, canvas.height * 1/4 - carHeight * 1.8);
+
+    context.font = carHeight/2 + "px " + font;
+    context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
+    context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/4 - carHeight);
+
+    if (mouseDown) {
+        mouseDownActions();
+    }
 }
 
 function drawDirections() {
@@ -348,8 +455,8 @@ function drawScores() {
         let line = (i + 1) + ") ";
         if (i < 9) line = " " + line; // adjust for 2 digit nums
         if (parseInt(scores[i].substring(5)) > 0) line += scores[i];
-        else line += "N/A: 0" // no player set score
-        line = line.toUpperCase();
+        else line += "N/A: 0" // no player set 
+        line = line.toUpperCase() // in case name was set before uppercase was enforced // TODO, on reset leader board remove this line
         let width = context.measureText(line).width;
         if (width > maxWidth) maxWidth = width; // aline by longest line
         txts.push(line);
@@ -457,6 +564,7 @@ function drawAll() {
 
     if (screen == "welcome") drawWelcome();
     else if (screen == "play") drawPlayMenu();
+    else if (screen == "restore") drawRestoreMenu();
     else if (screen == "game") drawGame();
     else if (screen == "directions") drawDirections();
     else if (screen == "scores") drawScores();
@@ -668,6 +776,13 @@ var musicButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canva
 var previousGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20)/2 - 10), pauseWidth, carHeight * 3/4 + 20, "Resume [P]revious Game", carHeight * 1/2);
 var newGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + 10), pauseWidth, carHeight * 3/4 + 20, "New [G]ame", carHeight * 1/2);
 
+var restoreButtons = [];
+var deleteCount = 0;
+{ // so games ('let') stops in here
+    let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+    var selectedIndex = games.length > 3 ? 2 : games.length;
+}
+
 context.font = carHeight * 5/12 + "px " + font;
 let menuWidth = context.measureText("[D]irections").width; // both txts have the same number of characters (by pure chance)
 var directionsButton = new ButtonMenu(new Vector(canvas.width/2 - menuWidth/2 - 10, canvas.height * 1/3 + carHeight * 4 - carHeight * 1/3 - 10), menuWidth + 20, carHeight * 5/12 + 20, "[D]irections", carHeight * 5/12);
@@ -704,8 +819,8 @@ for (i = 0; i < canvas.height/barHeight; i++) {
 
 var pauseButton = new ButtonExtra(barWidth * 3/4, barWidth * 3/4);
 
-if (localStorage.getItem("NEO CROSSER - Saved Game") == null) {
-    localStorage.setItem("NEO CROSSER - Saved Game", JSON.stringify(new GameSave()));
+if (localStorage.getItem("NEO CROSSER - Saved Games") == null) {
+    localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify([]));
 }
 
 // Fire up the animation engine
