@@ -69,14 +69,20 @@ function keyDownHandler(e) {
             break;
         case "x":
             if (screen == "restore") {
-                // TODO
-            }
-        case "y":
-            if (screen == "restore") {
                 let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
                 if (games != []) games.splice(selectedIndex, 1);
                 localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
             }
+            break;
+        case "y":
+            if (screen == "restore") {
+                let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+                if (games != []) {
+                    restore(games[selectedIndex]);
+                    screen = "game";
+                }
+            }
+            break;
         case "Enter":
             if (screen == "welcome") {
                 screen = "play";
@@ -84,6 +90,9 @@ function keyDownHandler(e) {
             else if (screen == "play") {
                 screen = "game";
                 musicStart();
+            }
+            else if (screen == "restore") {
+                screen = "play";
             }
             else if (screen == "game" && !alive) {
                 reset();
@@ -126,6 +135,9 @@ function clickHandler(event) {
             screen = "game";
             musicStart();
         }
+    }
+    else if (screen == "restore") {
+        screen = "play";
     }
     else if (screen == "game" && !alive) {
         reset();
