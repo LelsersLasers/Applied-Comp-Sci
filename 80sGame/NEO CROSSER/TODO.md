@@ -4,17 +4,11 @@
 -all menu buttons same width/height?
 
 - Be able to save multiple games
-    - Play menu -> resume -> show list of saves
-        - option to delete saves
-    - Title as directions
-        - press y to restore
-            - mouse click to restore
-        - x to delete
-            - DELETE BY TOUCH???
-                - long press?
-    - touch to go back
-    - fancy scrolling thing
-
+    - press y to restore
+        - mouse click to restore?
+    - x to delete
+        - DELETE BY TOUCH???
+            - long press?
 
 # 
 

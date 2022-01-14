@@ -65,7 +65,10 @@ function keyDownHandler(e) {
             if (paused) musicToggle();
             break;
         case "g":
-            if (screen == "play") screen = "game";
+            if (screen == "play") {
+                screen = "game";
+                musicStart();
+            }
             break;
         case "x":
             if (screen == "restore") {
@@ -87,10 +90,7 @@ function keyDownHandler(e) {
             if (screen == "welcome") {
                 screen = "play";
             }
-            else if (screen == "play") {
-                screen = "game";
-                musicStart();
-            }
+            else if (screen == "play") screen = "welcome";
             else if (screen == "restore") {
                 screen = "play";
             }
@@ -135,6 +135,7 @@ function clickHandler(event) {
             screen = "game";
             musicStart();
         }
+        else screen = "welcome";
     }
     else if (screen == "restore") {
         screen = "play";
@@ -323,6 +324,10 @@ function drawWelcome() {
 }
 
 function drawPlayMenu() {
+    context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
+    context.font = carHeight/2 + "px " + font;
+    context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/4 + carHeight);
+
     previousGameButton.draw();
     newGameButton.draw();
 }
