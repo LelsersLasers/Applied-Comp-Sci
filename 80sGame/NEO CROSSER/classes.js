@@ -586,6 +586,8 @@ class Block extends Thing { // "Arrows" on the side
     }
     restore(save) {
         this.animation = save.animation;
+        this.w = save.w;
+        this.h = save.h;
         this.pt.x = save.pt.x;
         this.pt.y = save.pt.y;
     }
