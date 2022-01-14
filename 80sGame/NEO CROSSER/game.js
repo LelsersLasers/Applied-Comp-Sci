@@ -259,7 +259,7 @@ function getTopScores() {
 function save() {
     let date = new Date();
     let name = getName("Enter 3 letters for your name to save:");
-    name += "-" + date.getHours() + ":" + date.getMinutes() + "-" + (date.getMonth() + 1) + "/" + date.getDate();
+    name += ": " + topScore + " " + date.getHours() + ":" + date.getMinutes() + "-" + (date.getMonth() + 1) + "/" + date.getDate();
     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
     games.push(new GameSave(name));
     localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
@@ -403,7 +403,8 @@ function drawScores() {
         let line = (i + 1) + ") ";
         if (i < 9) line = " " + line; // adjust for 2 digit nums
         if (parseInt(scores[i].substring(5)) > 0) line += scores[i];
-        else line += "N/A: 0" // no player set score
+        else line += "N/A: 0" // no player set 
+        line = line.toUpperCase() // in case name was set before uppercase was enforced // TODO, on reset leader board remove this line
         let width = context.measureText(line).width;
         if (width > maxWidth) maxWidth = width; // aline by longest line
         txts.push(line);
