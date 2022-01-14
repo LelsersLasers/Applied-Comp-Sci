@@ -296,8 +296,26 @@ function save() {
     let date = new Date();
     let name = getName("Enter 3 letters for your name to save:");
     name += ": " + topScore + " " + date.getHours() + ":" + date.getMinutes() + "-" + (date.getMonth() + 1) + "/" + date.getDate();
+    
+    let gameSave = {
+        "name": name,
+        "player": player,
+        "cars": cars,
+        "buildings": buildings,
+        "lasers": lasers,
+        "bar": bar,
+        "ufos": ufos,
+        "score": score,
+        "topScore": topScore,
+        "topScore": topScore,
+        "qAbility": qAbility,
+        "eAbility": eAbility,
+        "rAbility": rAbility,
+        "alive": alive,
+    }
+
     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
-    games.push(new GameSave(name));
+    games.push(gameSave);
     localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
 }
 
@@ -527,7 +545,6 @@ function drawGame() {
         for (var i = 0; i < enemies.length; i++) {
             enemies[i].update();
             enemies[i].draw();
-            // enemies[i].hb.draw("#ffffff");
             if (enemies[i].hb.checkCollide(player.hb) && alive) {
                 scoreView.color = "#e37e7b";
                 enemies[i].deathSound.play();
@@ -536,6 +553,10 @@ function drawGame() {
             }
         }
         for (var i = 0; i < lasers.length; i++) lasers[i].update();
+        // obstacles = [...cars, ...ufos, ...buildings, ...lasers];
+        // for (var i = 0; i < obstacles.length; i++) {
+        //     obstacles[i].hb.draw("#ff0000");
+        // }
         wTrigger.draw(wDown);
         sTrigger.draw(sDown);
         aTrigger.draw(aDown);

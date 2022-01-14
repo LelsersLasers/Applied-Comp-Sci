@@ -628,6 +628,8 @@ class Building extends Thing {
     restore(save) {
         this.buildings = save.buildings;
         this.widthOfOne = save.widthOfOne;
+        this.w = save.w;
+        this.hb.w = this.w;
         this.pt.x = save.pt.x;
         this.pt.y = save.pt.y;
     }
