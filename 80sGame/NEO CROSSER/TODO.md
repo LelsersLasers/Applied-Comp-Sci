@@ -5,10 +5,12 @@
 
 - Be able to save multiple games
     - press y to restore
-        - mouse click to restore?
+        - click to select
+        - double click to restore
     - x to delete
         - DELETE BY TOUCH???
             - long press?
+    - display those directions also
 
 # 
 
@@ -18,6 +20,7 @@
     - restores bugtest
     - replace 10/20/30/40/50 spacings
         - canvas.height * 1/70 = 10
+    - duplicate code
 
 - Update directions
 - Update README

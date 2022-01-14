@@ -138,7 +138,19 @@ function clickHandler(event) {
         else screen = "welcome";
     }
     else if (screen == "restore") {
-        screen = "play";
+        let buttonHit = false;
+        for (var i = 0; i < restoreButtons.length; i++) {
+            if (cursorHB.checkCollide(restoreButtons[i].hb)) {
+                if (i == selectedIndex) {
+                    let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+                    restore(games[selectedIndex]);
+                    screen = "game";
+                }
+                selectedIndex = i;
+                buttonHit = true;
+            }
+        }
+        if (!buttonHit) screen = "play";
     }
     else if (screen == "game" && !alive) {
         reset();
@@ -173,18 +185,33 @@ function getMousePos(event) {
 }
 
 function mouseDownActions() {
-    if (inputMode != "key") {
-        wDown = wTrigger.checkDown(cursorHB, mouseDown);
-        sDown = sTrigger.checkDown(cursorHB, mouseDown);
-        aDown = aTrigger.checkDown(cursorHB, mouseDown);
-        dDown = dTrigger.checkDown(cursorHB, mouseDown);
-        qDown = qAbility.checkDown(cursorHB, mouseDown);
-        eDown = eAbility.checkDown(cursorHB, mouseDown);
-        rDown = rAbility.checkDown(cursorHB, mouseDown);
-        if (wDown) lastDir = "w";
-        if (sDown) lastDir = "s";
-        if (aDown) lastDir = "a";
-        if (dDown) lastDir = "d";
+    if (screen == "game") {
+        if (inputMode != "key") {
+            wDown = wTrigger.checkDown(cursorHB, mouseDown);
+            sDown = sTrigger.checkDown(cursorHB, mouseDown);
+            aDown = aTrigger.checkDown(cursorHB, mouseDown);
+            dDown = dTrigger.checkDown(cursorHB, mouseDown);
+            qDown = qAbility.checkDown(cursorHB, mouseDown);
+            eDown = eAbility.checkDown(cursorHB, mouseDown);
+            rDown = rAbility.checkDown(cursorHB, mouseDown);
+            if (wDown) lastDir = "w";
+            if (sDown) lastDir = "s";
+            if (aDown) lastDir = "a";
+            if (dDown) lastDir = "d";
+        }
+    }
+    else if (screen == "restore") {
+        for (var i = 0; i < restoreButtons.length; i++) {
+            if (cursorHB.checkCollide(restoreButtons[i].hb) && i == selectedIndex) {
+                restoreButtons[i].clicked++;
+                console.log(restoreButtons[i].clicked);
+                if (restoreButtons[i].clicked > 30) {
+                    let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+                    games.splice(selectedIndex, 1);
+                    localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
+                }
+            }
+        }
     }
 }
 
@@ -358,6 +385,10 @@ function drawRestoreMenu() {
     context.font = carHeight/2 + "px " + font;
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
     context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/4 - carHeight);
+
+    if (mouseDown) {
+        mouseDownActions();
+    }
 }
 
 function drawDirections() {
@@ -732,7 +763,7 @@ var previousGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2
 var newGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + 10), pauseWidth, carHeight * 3/4 + 20, "New [G]ame", carHeight * 1/2);
 
 var restoreButtons = [];
-{ // so games var ('let') stops in here
+{ // so games ('let') stops in here
     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
     var selectedIndex = games.length > 3 ? 2 : games.length;
 }
