@@ -3,6 +3,9 @@
 - should wasd blue/green still work, or should it freeze when in pause?
 
 - display restore touch directions
+- display use w/s up/down to change the selected save
+
+- mouse hover over buttons in restore screen
 
 
 # 

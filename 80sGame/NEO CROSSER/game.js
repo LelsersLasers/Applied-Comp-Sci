@@ -363,6 +363,23 @@ function restore(savedGame) {
     pause = true;
 }
 
+function buttonHover() {
+    if (screen == "welcome") {
+        if (cursorHB.checkCollide(directionsButton.hb)) directionsButton.clicked = 1;
+        else if (cursorHB.checkCollide(scoresButton.hb)) scoresButton.clicked = 1;
+    }
+    else if (screen == "play") {
+        if (cursorHB.checkCollide(previousGameButton.hb)) previousGameButton.clicked = 1;
+        else if (cursorHB.checkCollide(newGameButton.hb)) newGameButton.clicked = 1;
+    }
+    else if (paused) {
+        if (cursorHB.checkCollide(resumeButton.hb)) resumeButton.clicked = 1;
+        else if (cursorHB.checkCollide(saveButton.hb)) saveButton.clicked = 1;
+        else if (cursorHB.checkCollide(quitButton.hb)) quitButton.clicked = 1;
+        else if (cursorHB.checkCollide(musicButton.hb)) musicButton.clicked = 1;
+    }
+}
+
 function drawWelcome() {
     context.fillStyle = "rgba(255,255,255,1)";
     context.font = carHeight + "px " + font;
@@ -580,6 +597,8 @@ function drawGame() {
 }
 
 function drawAll() {
+    buttonHover();
+
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
