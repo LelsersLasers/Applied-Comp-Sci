@@ -1,11 +1,3 @@
-class FullNote {
-    constructor(note, author, color) {
-        this.note = note;
-        this.author = author;
-        this.color = color;
-    }
-}
-
 var checked = true;
 var notes = localStorage.getItem("notes") != null ? JSON.parse(localStorage.getItem("notes")) : [];
 var showAdd = false;
@@ -73,7 +65,11 @@ function fakeSubmit() {
     }
     else {
         if (!checked) fullname = "N/A";
-        let tempNote = new FullNote(note, fullname, color);
+        let tempNote = {
+            "note": note,
+            "author": fullname,
+            "color": color,
+        };
         notes.push(tempNote);
         localStorage.setItem("notes", JSON.stringify(notes));
         location.reload();
