@@ -334,16 +334,8 @@ function drawRestoreMenu() {
     if (selectedIndex > games.length - 1) selectedIndex = games.length - 1;
     else if (selectedIndex < 0) selectedIndex = 0;
 
-    context.fillStyle = "rgba(255,255,255,1)";
-    context.font = carHeight * 3/4 + "px " + font;
-    context.fillText("Press X to Delete, Press Y to Resume", canvas.width/2, canvas.height * 1/4 - carHeight * 1.8);
-
-    context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
-    context.font = carHeight/2 + "px " + font;
-    context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/4 - carHeight);
-
     for (var i = 0; i < games.length; i++) {
-        let y = canvas.height/2 - (carHeight * 3/4 + 20) * 5/2 - 50 + i * (carHeight * 3/4 + 40);
+        let y = canvas.height/2 - (carHeight * 3/4 + 20) * 1/2 - 10 + (i - selectedIndex) * (carHeight * 3/4 + 40);
         let button = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, y), pauseWidth, carHeight * 3/4 + 20, games[i].name, carHeight * 1/2);
         restoreButtons.push(button);
         if (i == selectedIndex) {
@@ -351,6 +343,19 @@ function drawRestoreMenu() {
         }
         restoreButtons[i].draw();
     }
+
+    context.font = carHeight * 3/4 + "px " + font;
+    let w = context.measureText("Press X to Delete, Press Y to Resume").width;
+    context.fillStyle = "#000000";
+    context.fillRect(canvas.width/2 - w/2, canvas.height * 1/4 - carHeight * 1.8 - (carHeight * 3/4)/2, w, carHeight * 3/4);
+    context.fillStyle = "rgba(255,255,255,1)";
+    context.fillText("Press X to Delete, Press Y to Resume", canvas.width/2, canvas.height * 1/4 - carHeight * 1.8);
+
+    context.font = carHeight/2 + "px " + font;
+    context.fillStyle = "#000000";
+    context.fillRect(canvas.width/2 - w/2, canvas.height * 1/4 - carHeight - (carHeight * 1/2)/2, w, carHeight * 1/2);
+    context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
+    context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/4 - carHeight);
 }
 
 function drawDirections() {
@@ -725,7 +730,10 @@ var previousGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2
 var newGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + 10), pauseWidth, carHeight * 3/4 + 20, "New [G]ame", carHeight * 1/2);
 
 var restoreButtons = [];
-var selectedIndex = 0;
+{ // so games var ('let') stops in here
+    let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+    var selectedIndex = games.length > 3 ? 2 : games.length;
+}
 
 context.font = carHeight * 5/12 + "px " + font;
 let menuWidth = context.measureText("[D]irections").width; // both txts have the same number of characters (by pure chance)
