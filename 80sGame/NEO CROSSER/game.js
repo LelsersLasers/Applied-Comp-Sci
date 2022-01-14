@@ -312,7 +312,7 @@ function save() {
         "eAbility": eAbility,
         "rAbility": rAbility,
         "alive": alive,
-    }
+    };
 
     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
     games.push(gameSave);

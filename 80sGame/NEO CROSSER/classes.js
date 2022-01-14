@@ -522,6 +522,8 @@ class Car extends Enemy {
         this.stun = save.stun;
         this.active = save.active;
         this.offScreen = save.offScreen;
+        this.w = save.w;
+        this.hb.w = save.hb.w;
         this.pt.x = save.pt.x;
         this.pt.y = save.pt.y;
     }
