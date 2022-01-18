@@ -427,7 +427,7 @@ function drawRestoreMenu() {
 
     context.font = carHeight * 3/4 + "px " + font;
     context.fillStyle = "#000000";
-    context.fillRect(0, 0, canvas.width, canvas.height * 1/4 - carHeight);
+    context.fillRect(0, 0, canvas.width, canvas.height * 1/4 - carHeight/4);
     context.fillStyle = "#ffffff";
     context.fillText("Press X to Delete, Press Y to Resume", canvas.width/2, canvas.height * 1/4 - carHeight * 1.8);
 
