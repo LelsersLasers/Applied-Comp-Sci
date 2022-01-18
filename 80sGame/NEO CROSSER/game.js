@@ -777,6 +777,8 @@ const carHeight = canvas.height * 1/14;
 const ufoWidth = canvas.width * 1/8;
 const ufoHeight = canvas.height * 1/8 * 7/9;
 
+const spacer = canvas.height * 1/70;
+
 const playerLevel = carHeight * 10;
 var player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight * 10/11, carHeight, canvas.width/14, 1.5 * canvas.height/14);
 
@@ -800,13 +802,13 @@ for (var i = 0; i < txts.length; i++) {
     }
 }
 pauseWidth += 40;
-var resumeButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20) * 3/2 - 30), pauseWidth, carHeight * 3/4 + 20, "Resume", carHeight * 1/2);
-var saveButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20)/2 - 10), pauseWidth, carHeight * 3/4 + 20, "[S]ave", carHeight * 1/2);
-var quitButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + 10), pauseWidth, carHeight * 3/4 + 20, "[Q]uit Without Saving", carHeight * 1/2);
-var musicButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20) * 3/2 + 30), pauseWidth, carHeight * 3/4 + 20, "Toggle [M]usic", carHeight * 1/2);
+var resumeButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + spacer * 2) * 3/2 - spacer * 3), pauseWidth, carHeight * 3/4 + spacer * 2, "Resume", carHeight * 1/2);
+var saveButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + spacer * 2)/2 - spacer), pauseWidth, carHeight * 3/4 + spacer * 2, "[S]ave", carHeight * 1/2);
+var quitButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + spacer * 2)/2 + spacer), pauseWidth, carHeight * 3/4 + spacer * 2, "[Q]uit Without Saving", carHeight * 1/2);
+var musicButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + spacer * 2) * 3/2 + spacer * 3), pauseWidth, carHeight * 3/4 + spacer * 2, "Toggle [M]usic", carHeight * 1/2);
 
-var previousGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20)/2 - 10), pauseWidth, carHeight * 3/4 + 20, "Resume [P]revious Game", carHeight * 1/2);
-var newGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + 10), pauseWidth, carHeight * 3/4 + 20, "New [G]ame", carHeight * 1/2);
+var previousGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20)/2 - spacer), pauseWidth, carHeight * 3/4 + spacer * 2, "Resume [P]revious Game", carHeight * 1/2);
+var newGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + spacer), pauseWidth, carHeight * 3/4 + spacer * 2, "New [G]ame", carHeight * 1/2);
 
 var restoreButtons = [];
 var deleteCount = 0;
@@ -821,8 +823,8 @@ var deleteCount = 0;
 
 context.font = carHeight * 5/12 + "px " + font;
 let menuWidth = context.measureText("[D]irections").width; // both txts have the same number of characters (by pure chance)
-var directionsButton = new ButtonMenu(new Vector(canvas.width/2 - menuWidth/2 - 10, canvas.height * 1/3 + carHeight * 4 - carHeight * 1/3 - 10), menuWidth + 20, carHeight * 5/12 + 20, "[D]irections", carHeight * 5/12);
-var scoresButton = new ButtonMenu(new Vector(canvas.width/2 - menuWidth/2 - 10, canvas.height * 1/3 + carHeight * 4 + carHeight * 1.3 - carHeight * 1/3 - 10), menuWidth + 20, carHeight * 5/12 + 20, "Top [S]cores", carHeight * 5/12);
+var directionsButton = new ButtonMenu(new Vector(canvas.width/2 - menuWidth/2 - spacer, canvas.height * 1/3 + carHeight * 4 - carHeight * 1/3 - spacer), menuWidth + spacer * 2, carHeight * 5/12 + spacer * 2, "[D]irections", carHeight * 5/12);
+var scoresButton = new ButtonMenu(new Vector(canvas.width/2 - menuWidth/2 - spacer, canvas.height * 1/3 + carHeight * 4 + carHeight * 1.3 - carHeight * 1/3 - spacer), menuWidth + spacer * 2, carHeight * 5/12 + spacer * 2, "Top [S]cores", carHeight * 5/12);
 
 var ufos = [];
 var cars = [];

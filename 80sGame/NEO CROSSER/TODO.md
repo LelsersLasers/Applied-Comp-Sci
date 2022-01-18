@@ -13,9 +13,8 @@
     - restores bugtest
         - restore w/h?
             - update hb with w/h
-    - replace 10/20/30/40/50 spacings
-        - canvas.height * 1/70 = 10
     - duplicate code
+    - for loop type
 
 - Update directions
 - Update README
