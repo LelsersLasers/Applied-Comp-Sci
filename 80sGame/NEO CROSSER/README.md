@@ -53,6 +53,7 @@ Features/Design Choices:
 - Touch/Mouse support Support
     - Touch the movement keys (bottom right) to move
     - Touch the ability keys (bottom left) to activate them
+    - Menu Buttons change color when the mouse is hovered over it
 - SOUND
     - Less 'clear' than visuals
     - Focus on many sounds at once
@@ -75,6 +76,13 @@ Features/Design Choices:
                 - Music will not auto start if the last choice was to toggle it off
         - Dying will trigger a game over screen
             - Press Enter or click the screen to return to the welcome screen
+    - Restore Screen
+        - Use w/s (or arrow keys) to do a fancy scrolly thing through saved games
+        - Press X to delete a saved game and Y to start as that game
+            - Game will start paused so you don't insta die
+        - Click/touch on a save to focus it
+            - Click on the focused/centered save to start from that save
+            - Long press on the focused/centered save to delete that save
     - Flashing text (by opacity)
 - Everything is scaled with canvas.width or canvas.height
     - Designed around 900x700 px screen, but looks/works completely fine on (basically) any screen size
@@ -83,21 +91,22 @@ Features/Design Choices:
         - Same with on screen buttons
 - Ability to save
     - When in game, press pause then save
-        - Saves to a JSON of a custom class in localStorage
-    - From main menu pressing enter/touching the screen then clicking resume
-        - If there is no previously saved game it will be a random one (same as clicking "new game")
-    - You can only save one game (saving will overwrite the previous one)
-        - However, if you get close to getting a good score, you can save and keep reattempting from that same spot
+        - Saves to a list of JSONs in localStorage
+    - Restore screen will show a list of saves
+    - Restoring a save does not delete it
+        - If you get a high score then save, you can forever start from there
+        - Everything on screen and "down" of the screen will be saved
+        - Everything above will be random (so can't "memorize" a way up)
 
 Other Things:
-- Bars on sides to give the impression the player is moving up and down, not the cars/waters
+- Bars on sides to give the impression the player is moving up and down
 - Cars will bounce off the edges and the buildings
     - 'Safe zones' on the other sides of buildings
 - Stunned cars will still hurt the player
 - Stuns stack additively
 - When a car goes offscreen (off the bottom):
     - It always spawns a new car slightly above the top of the screen
-    - Might spawn a ufo (based on score and random)
+    - Might spawn a ufo (based on score and chance)
     - Might spawn a building (based on chance)
         - Will not spawn a building if the last row had a building
 

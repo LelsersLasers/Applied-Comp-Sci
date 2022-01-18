@@ -360,7 +360,7 @@ function restore(savedGame) {
     topScore = savedGame.topScore;
     alive = savedGame.alive;
 
-    pause = true;
+    paused = true;
 }
 
 function buttonHover() {
