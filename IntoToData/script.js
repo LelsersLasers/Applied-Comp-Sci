@@ -47,7 +47,7 @@ function view() {
     for (let i = 0; i < notes.length; i++) {
         lst.innerHTML += "<div class='blue' id='" + i + "' onmouseover='hover(" + i + ")' onmouseout='unhover(" + i + ")'>"
         + "<p style='color: " + notes[i].color + ";'>" + notes[i].note + "</p>"
-        + "<pre>\t- by: " + notes[i].author + " (" + notes[i].job + ")</pre>"
+        + "<pre>\t- by: " + notes[i].author + " (" + notes[i].job + "), " + notes[i].date + "</pre>"
         + "<button id='" + i + "del' type='button' onclick='del(" + i + ")' hidden>Delete Record</button>"
         + "</div>";
     }
@@ -66,11 +66,14 @@ function fakeSubmit() {
     }
     else {
         if (!checked) fullname = "N/A";
+        let d = new Date();
+        let date = (d.getMonth() + 1) + "/" + d.getDate() + "/"  + d.getFullYear();
         let tempNote = {
             "note": note,
             "author": fullname,
             "color": color,
             "job": job,
+            "date": date,
         };
         notes.push(tempNote);
         localStorage.setItem("notes", JSON.stringify(notes));
