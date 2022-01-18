@@ -507,33 +507,6 @@ function drawScores() {
     context.textAlign = "center";
 }
 
-function drawPauseMenu() {
-    player.draw();
-    obstacles = [...cars, ...ufos, ...buildings, ...lasers];
-    for (var i = 0; i < obstacles.length; i++) {
-        obstacles[i].draw();
-    }
-
-    wTrigger.draw(wDown);
-    sTrigger.draw(sDown);
-    aTrigger.draw(aDown);
-    dTrigger.draw(dDown);
-    qAbility.draw();
-    eAbility.draw();
-    rAbility.draw();
-    scoreView.setTxt("Score: " + topScore);
-    scoreView.draw();
-
-    context.fillStyle = "rgba(0, 0, 0, 0.7)";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
-    pauseButton.draw();
-    resumeButton.draw();
-    saveButton.draw();
-    quitButton.draw();
-    musicButton.draw();
-}
-
 function drawGameOver() {
     context.fillStyle = "rgba(0, 0, 0, 0.7)";
     context.fillRect(0, 0, canvas.width, canvas.height);
@@ -549,6 +522,37 @@ function drawGameOver() {
     context.fillText("Touch to Exit", canvas.width/2, canvas.height/2 + carHeight);
 
     context.textBaseline = "middle";
+}
+
+function drawPauseMenu() {
+    player.draw();
+    obstacles = [...cars, ...ufos, ...buildings, ...lasers];
+    for (var i = 0; i < obstacles.length; i++) {
+        obstacles[i].draw();
+    }
+
+    drawHUD();
+
+    context.fillStyle = "rgba(0, 0, 0, 0.7)";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    resumeButton.draw();
+    saveButton.draw();
+    quitButton.draw();
+    musicButton.draw();
+}
+
+function drawHUD() {
+    wTrigger.draw(wDown);
+    sTrigger.draw(sDown);
+    aTrigger.draw(aDown);
+    dTrigger.draw(dDown);
+    qAbility.draw();
+    eAbility.draw();
+    rAbility.draw();
+    scoreView.setTxt("Score: " + topScore);
+    scoreView.draw();
+    pauseButton.draw();
 }
 
 function drawGame() {
@@ -570,20 +574,8 @@ function drawGame() {
             }
         }
         for (var i = 0; i < lasers.length; i++) lasers[i].update();
-        // obstacles = [...cars, ...ufos, ...buildings, ...lasers];
-        // for (var i = 0; i < obstacles.length; i++) {
-        //     obstacles[i].hb.draw("#ff0000");
-        // }
-        wTrigger.draw(wDown);
-        sTrigger.draw(sDown);
-        aTrigger.draw(aDown);
-        dTrigger.draw(dDown);
-        qAbility.draw();
-        eAbility.draw();
-        rAbility.draw();
-        scoreView.setTxt("Score: " + topScore);
-        scoreView.draw();
-        pauseButton.draw();
+        
+        drawHUD();
 
         if (!alive) {
             drawGameOver();
@@ -820,6 +812,10 @@ var restoreButtons = [];
 var deleteCount = 0;
 { // so games ('let') stops in here
     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+    if (games == null) {
+        games = [];
+        localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
+    }
     var selectedIndex = games.length > 3 ? 2 : games.length;
 }
 
@@ -858,10 +854,6 @@ for (i = 0; i < canvas.height/barHeight; i++) {
 }
 
 var pauseButton = new ButtonExtra(barWidth * 3/4, barWidth * 3/4);
-
-if (localStorage.getItem("NEO CROSSER - Saved Games") == null) {
-    localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify([]));
-}
 
 // Fire up the animation engine
 window.requestAnimationFrame(drawAll);
