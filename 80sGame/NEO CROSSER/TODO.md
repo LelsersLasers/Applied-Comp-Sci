@@ -10,7 +10,6 @@
 
 - "clean" code
     - alive vs player.active/on/off
-    - alphas
     - restores bugtest
         - restore w/h?
             - update hb with w/h

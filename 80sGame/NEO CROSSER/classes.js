@@ -648,14 +648,14 @@ class ButtonMenu extends Thing {
         context.font = this.textSize + "px " + font;;
         if (this.clicked > 0) {
             this.hb.draw("#000000");
-            context.fillStyle = "rgba(255,255,255,1)";
+            context.fillStyle = "#ffffff";
             context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
-            context.fillStyle = "rgba(0,0,0,1)";
+            context.fillStyle = "#000000";
             context.fillText(this.text, canvas.width/2, this.pt.y + this.h/2);
         }
         else {
             this.hb.draw("#ffffff");
-            context.fillStyle = "rgba(255,255,255,1)";
+            context.fillStyle = "#ffffff";
             context.fillText(this.text, canvas.width/2, this.pt.y + this.h/2);
         }
         this.clicked--;

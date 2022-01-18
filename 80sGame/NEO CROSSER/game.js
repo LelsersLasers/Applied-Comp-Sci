@@ -381,7 +381,7 @@ function buttonHover() {
 }
 
 function drawWelcome() {
-    context.fillStyle = "rgba(255,255,255,1)";
+    context.fillStyle = "#ffffff";
     context.font = carHeight + "px " + font;
     context.fillText("NEO CROSSER", canvas.width/2, canvas.height * 1/3);
 
@@ -428,7 +428,7 @@ function drawRestoreMenu() {
     context.font = carHeight * 3/4 + "px " + font;
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height * 1/4 - carHeight);
-    context.fillStyle = "rgba(255,255,255,1)";
+    context.fillStyle = "#ffffff";
     context.fillText("Press X to Delete, Press Y to Resume", canvas.width/2, canvas.height * 1/4 - carHeight * 1.8);
 
     context.font = carHeight/2 + "px " + font;
@@ -441,7 +441,7 @@ function drawRestoreMenu() {
 }
 
 function drawDirections() {
-    context.fillStyle = "rgba(255,255,255,1)";
+    context.fillStyle = "#ffffff";
     context.font = carHeight + "px " + font;
     let base = canvas.height * 1/4;
     context.fillText("Directions", canvas.width/2, base);
@@ -465,7 +465,7 @@ function drawDirections() {
     txts.push("Touch button in top right (or press Esc) to show the pause menu.")
     txts.push("From the pause menu you can toggle the music, save, or quit.")
 
-    context.fillStyle = "rgba(255,255,255,1)";
+    context.fillStyle = "#ffffff";
     context.font = carHeight * 5/12 + "px  " + font;
     for (var i = 0; i < txts.length; i++) {
         context.fillText(txts[i], canvas.width/2, base + carHeight + carHeight * 1/2 * (3+i));
@@ -473,7 +473,7 @@ function drawDirections() {
 }
 
 function drawScores() {
-    context.fillStyle = "rgba(255,255,255,1)";
+    context.fillStyle = "#ffffff";
     context.font = carHeight + "px " + font;
     let base = canvas.height * 1/4;
     context.fillText("Top Scores", canvas.width/2, base);
@@ -501,7 +501,7 @@ function drawScores() {
         if (i == 0)      context.fillStyle = "rgba(255, 215, 0, 1)"; // gold
         else if (i == 1) context.fillStyle = "rgba(192, 192, 192, 1)"; // silver
         else if (i == 2) context.fillStyle = "rgba(205, 127, 50, 1)"; // bronze
-        else             context.fillStyle = "rgba(255, 255, 255, 1)"; // white
+        else             context.fillStyle = "rgba(255, 255, 255, " + (1 - i/10 + 0.2) + ")"; // white
         context.fillText(txts[i], canvas.width/2 - maxWidth/2, base + carHeight + carHeight * 1/2 * (3+i));
     }
     context.textAlign = "center";
@@ -513,7 +513,7 @@ function drawGameOver() {
 
     context.textBaseline = "bottom";
 
-    context.fillStyle = "rgba(255,255,255,1)";
+    context.fillStyle = "#ffffff";
     context.font = carHeight + "px " + font;
     context.fillText("Game Over", canvas.width/2, canvas.height/2);
 
