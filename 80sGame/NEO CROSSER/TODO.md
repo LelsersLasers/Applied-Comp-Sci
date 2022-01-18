@@ -9,12 +9,13 @@
 # 
 
 - "clean" code
-    - alive vs player.active/on/off
     - restores bugtest
         - restore w/h?
             - update hb with w/h
-    - duplicate code
+    - duplicate code?
     - for var i vs let i
+    - const/let/var
+        - scope
 
 - Update directions
 - Update README
