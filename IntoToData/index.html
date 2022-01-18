@@ -26,12 +26,16 @@
         <br />
         <textarea class="fullWidth" id="note" name="note" rows="30"></textarea>
         <br />
+
         <label for="textColor">Pick color for text:</label>
         <input type="color" id="textColor" name="textColor" onchange="changeColor()" />
         <br />
+        <br />
+
         <input type="checkbox" id="submitName" name="submitName" value="AddName" checked onclick="toggleAddName()" />
         <label for="submitName"> Submit my name with the note</label>
         <br />
+
         <div id="name">
             <label for="fullname">Full name:</label>
             <br />
@@ -39,11 +43,26 @@
             <br />
         </div>
         <br />
-        <!-- <input type="submit" value="Submit"> -->
+
+        <label for="job">I am a: </label>
+        <br />
+        <input type="radio" id="student" name="job" onchange="changeJob('Student')" />
+        <label for="student">Student</label>
+        <br />
+        <input type="radio" id="teacher" name="job" onchange="changeJob('Teacher')" />
+        <label for="teacher">Teacher</label>
+        <br />
+        <input type="radio" id="other" name="job" checked onchange="changeJob('Other')" />
+        <label for="other">Other</label>
+        <br />
+
+        <br />
+        <!-- <input type="submit" value="Submit" /> -->
         <button type="button" onclick="fakeSubmit()">
             Submit
         </button>
         <br />
+
         <span class="blue" id="warning" hidden>
             Both fields must be filled in!
         </span>

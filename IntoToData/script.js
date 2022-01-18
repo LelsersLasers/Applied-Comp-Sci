@@ -1,6 +1,7 @@
 var checked = true;
 var notes = localStorage.getItem("notes") != null ? JSON.parse(localStorage.getItem("notes")) : [];
 var showAdd = false;
+var job = "Other";
 
 function add() {
     let thingsToShow = document.getElementsByClassName("add");
@@ -46,8 +47,8 @@ function view() {
     for (let i = 0; i < notes.length; i++) {
         lst.innerHTML += "<div class='blue' id='" + i + "' onmouseover='hover(" + i + ")' onmouseout='unhover(" + i + ")'>"
         + "<p style='color: " + notes[i].color + ";'>" + notes[i].note + "</p>"
-        + "<pre>\t- by: " + notes[i].author + "</pre>"
-        + "<button id='" + i + "del' type='button' onclick='del(" + i + ")' hidden>Delete</button>"
+        + "<pre>\t- by: " + notes[i].author + " (" + notes[i].job + ")</pre>"
+        + "<button id='" + i + "del' type='button' onclick='del(" + i + ")' hidden>Delete Record</button>"
         + "</div>";
     }
 }
@@ -69,6 +70,7 @@ function fakeSubmit() {
             "note": note,
             "author": fullname,
             "color": color,
+            "job": job,
         };
         notes.push(tempNote);
         localStorage.setItem("notes", JSON.stringify(notes));
@@ -111,4 +113,8 @@ function changeColor() {
     let color = document.getElementById("textColor");
     let text = document.getElementById("note");
     text.style.color = color.value;
+}
+
+function changeJob(value) {
+    job = value;
 }
