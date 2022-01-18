@@ -4,6 +4,7 @@ var fs = require('fs');
 
 http.createServer(function (req, res) {
   if (req.url == '/fileuploaded') {
+    console.log('upload');
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
       var oldpath = files.filetoupload.filepath;
