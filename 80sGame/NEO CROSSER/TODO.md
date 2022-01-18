@@ -14,7 +14,7 @@
         - restore w/h?
             - update hb with w/h
     - duplicate code
-    - for loop type
+    - for var i vs let i
 
 - Update directions
 - Update README

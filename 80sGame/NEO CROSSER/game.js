@@ -527,9 +527,7 @@ function drawGameOver() {
 function drawPauseMenu() {
     player.draw();
     obstacles = [...cars, ...ufos, ...buildings, ...lasers];
-    for (var i = 0; i < obstacles.length; i++) {
-        obstacles[i].draw();
-    }
+    for (var i in obstacles) obstacles[i].draw();
 
     drawHUD();
 
@@ -556,14 +554,14 @@ function drawHUD() {
 }
 
 function drawGame() {
-    for (var i = 0; i < bar.length; i++) bar[i].draw();
+    for (var i in bar) bar[i].draw();
     if (!paused) {
         mouseDownActions();
         player.move();
         player.draw();
-        for (var i = 0; i < buildings.length; i++) buildings[i].draw();
+        for (var i in buildings) buildings[i].draw();
         enemies = [...cars, ...ufos];
-        for (var i = 0; i < enemies.length; i++) {
+        for (var i in enemies) {
             enemies[i].update();
             enemies[i].draw();
             if (enemies[i].hb.checkCollide(player.hb) && alive) {
@@ -573,7 +571,7 @@ function drawGame() {
                 player.off();
             }
         }
-        for (var i = 0; i < lasers.length; i++) lasers[i].update();
+        for (var i in lasers) lasers[i].update();
         
         drawHUD();
 
@@ -796,7 +794,7 @@ var scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5)
 context.font = carHeight * 1/2 + "px " + font;
 let pauseWidth = 0;
 let txts = ["Resume", "[S]ave", "[Q]uit Without Saving", "Toggle [M]usic", "Resume [P]revious Game", "New [G]ame"];
-for (var i = 0; i < txts.length; i++) {
+for (var i in txts) {
     if (context.measureText(txts[i]).width > pauseWidth) {
         pauseWidth = context.measureText(txts[i]).width;
     }

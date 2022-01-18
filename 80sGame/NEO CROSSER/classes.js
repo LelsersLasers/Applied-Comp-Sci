@@ -211,7 +211,7 @@ class Laser extends Thing {
         if (this.active) {
             this.pt.apply(this.moveVector);
             enemies = [...cars, ...ufos];
-            for (var i = 0; i < enemies.length; i++) {
+            for (var i in enemies) {
                 if (this.hb.checkCollide(enemies[i].hb)) {
                     this.off();
                     enemies[i].off();
@@ -224,7 +224,7 @@ class Laser extends Thing {
     }
     draw() {
         if (this.active) {
-            for (var i = 0; i < buildings.length; i++) {
+            for (var i in buildings) {
                 if (this.hb.checkCollide(buildings[i].hb)) this.off();
             }
             if (["w", "a", "s", "d"].indexOf(this.dir) >= 0) this.drawNormalRect();
@@ -277,15 +277,10 @@ class Player extends Thing {
     updateHB() { // player sprite doesn't take up full rectangle
         this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
     }
-    moveUp(ms) {
+    moveVertical(ms) {
         let obstacles = [...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
-        for (var i = 0; i < obstacles.length; i++) obstacles[i].pt.y += ms;
-        for (var i = 0; i < bar.length; i++) bar[i].update();
-    }
-    moveDown(ms) {
-        let obstacles = [...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
-        for (var i = 0; i < obstacles.length; i++) obstacles[i].pt.y -= ms;  
-        for (var i = 0; i < bar.length; i++) bar[i].update();
+        for (var i in obstacles) obstacles[i].pt.y += ms;
+        for (var i in bar) bar[i].update();
     }
     move() {
         if (this.active) {
@@ -293,12 +288,12 @@ class Player extends Thing {
                 this.frame++;
                 switch (lastDir) {
                     case "w":
-                        this.moveUp(this.msY/moveWait);
+                        this.moveVertical(this.msY/moveWait);
                         score += 1;
                         if (score > topScore) topScore = score;
                         break;
                     case "s":
-                        this.moveDown(this.msY/moveWait);
+                        this.moveVertical(-this.msY/moveWait);
                         score -= 1;
                         break;
                     case "a":
@@ -309,12 +304,12 @@ class Player extends Thing {
                         break;
                 }
                 this.updateHB();
-                for (var i = 0; i < buildings.length; i++) {
+                for (var i in buildings) {
                     if (this.hb.checkCollide(buildings[i].hb)) { // if it is touching, undo the last movement
                         if (lastDir == "a") this.pt.x += this.msX/moveWait;
                         else if (lastDir == "d") this.pt.x -= this.msX/moveWait;
-                        else if (lastDir == "w") this.moveDown(this.msY/moveWait);
-                        else if (lastDir == "s") this.moveUp(this.msY/moveWait);
+                        else if (lastDir == "w") this.moveVertical(-this.msY/moveWait);
+                        else if (lastDir == "s") this.moveVertical(this.msY/moveWait);
                     }
                 }
             }
@@ -329,7 +324,7 @@ class Player extends Thing {
                         for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
                             this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y - i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
                         }
-                        this.moveUp(this.msY * this.teleportSpeed);
+                        this.moveVertical(this.msY * this.teleportSpeed);
                         score += moveWait * this.teleportSpeed;
                         if (score > topScore) topScore = score;
                         break;
@@ -337,7 +332,7 @@ class Player extends Thing {
                         for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
                             this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y + i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
                         }
-                        this.moveDown(this.msY * this.teleportSpeed);
+                        this.moveVertical(-this.msY * this.teleportSpeed);
                         score -= moveWait * this.teleportSpeed;
                         break;
                     case "a":
@@ -354,10 +349,10 @@ class Player extends Thing {
                         break
                 }
                 player.updateHB();
-                for (var i = 0; i < buildings.length; i++) {
+                for (var i in buildings) {
                     if (this.hb.checkCollide(buildings[i].hb)) {
-                        if (lastDir == "w") this.moveDown(buildings[i].pt.y + buildings[i].h - this.pt.y);
-                        else if (lastDir == "s") this.moveUp(this.pt.y - buildings[i].pt.y + this.h);
+                        if (lastDir == "w") this.moveVertical(-(buildings[i].pt.y + buildings[i].h - this.pt.y));
+                        else if (lastDir == "s") this.moveVertical(this.pt.y - buildings[i].pt.y + this.h);
                         else if (lastDir == "a") this.pt.x += buildings[i].pt.x + buildings[i].w - this.pt.x;
                         else if (lastDir == "d") this.pt.x -= this.pt.x - buildings[i].pt.x + this.w;
                     }
@@ -383,7 +378,7 @@ class Player extends Thing {
         player.updateHB();
     }
     draw() {
-        for (var i = 0; i < this.afterImages.length; i++) this.afterImages[i].draw();
+        for (var i in this.afterImages) this.afterImages[i].draw();
         if (alive && !paused) {
             let dirs = ["s", "w", "d", "a"];
             let dir = dirs.indexOf(lastDir);
@@ -464,7 +459,7 @@ class Car extends Enemy {
             badX = false;
             var x = getRandomInt(0, canvas.width - w);
             let tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
-            for (var i = 0; i < buildings.length; i++) {
+            for (var i in buildings) {
                 if (tempHB.checkCollide(buildings[i].hb)) badX = true;
             }
         }
@@ -484,7 +479,7 @@ class Car extends Enemy {
             this.ms *= -1;
             this.ms *= 1.001;
         }
-        for (var i = 0; i < buildings.length; i++) {
+        for (var i in buildings) {
             if (this.hb.checkCollide(buildings[i].hb)) this.ms *= -1;
         }
         if (this.pt.y > canvas.height && !this.offScreen) {
@@ -608,7 +603,7 @@ class Building extends Thing {
             badX = false;
             var x = getRandomInt(0, canvas.width - w);
             let tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
-            for (var i = 0; i < cars.length; i++) {
+            for (var i in cars) {
                 if (tempHB.checkCollide(cars[i].hb)) badX = true;
             }
         }
