@@ -78,8 +78,9 @@ Features/Design Choices:
             - Press Enter or click the screen to return to the welcome screen
     - Restore Screen
         - Use w/s (or arrow keys) to do a fancy scrolly thing through saved games
-        - Press X to delete a saved game and Y to start as that game
+        - Press X to delete a saved game and Enter to start as that game
             - Game will start paused so you don't insta die
+            - Note: because Enter is used as an 'action' button, Y is used to go back
         - Click/touch on a save to focus it
             - Click on the focused/centered save to start from that save
             - Long press on the focused/centered save to delete that save
@@ -109,6 +110,7 @@ Other Things:
     - Might spawn a ufo (based on score and chance)
     - Might spawn a building (based on chance)
         - Will not spawn a building if the last row had a building
+- Restoring from a save will assume that the save was taken on the same sized window
 
 
 - This code is also on github at: https://github.com/Lord-Lelsers/Applied-Comp-Sci

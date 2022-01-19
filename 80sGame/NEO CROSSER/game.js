@@ -84,13 +84,7 @@ function keyDownHandler(e) {
             }
             break;
         case "y":
-            if (screen == "restore") {
-                let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
-                if (games != []) {
-                    restore(games[selectedIndex]);
-                    screen = "game";
-                }
-            }
+            if (screen == "restore") screen = "play";
             break;
         case "Enter":
             if (screen == "welcome") {
@@ -98,7 +92,11 @@ function keyDownHandler(e) {
             }
             else if (screen == "play") screen = "welcome";
             else if (screen == "restore") {
-                screen = "play";
+                let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+                if (games != []) {
+                    restore(games[selectedIndex]);
+                    screen = "game";
+                }
             }
             else if (screen == "game" && !alive) {
                 reset();
@@ -429,11 +427,11 @@ function drawRestoreMenu() {
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height * 1/4 - carHeight/4);
     context.fillStyle = "#ffffff";
-    context.fillText("Press X to Delete, Press Y to Resume", canvas.width/2, canvas.height * 1/4 - carHeight * 1.8);
+    context.fillText("Press X to Delete, Enter to Resume", canvas.width/2, canvas.height * 1/4 - carHeight * 1.8);
 
     context.font = carHeight/2 + "px " + font;
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
-    context.fillText("Touch to Go Back", canvas.width/2, canvas.height * 1/4 - carHeight);
+    context.fillText("Touch to Go Back (or Y)", canvas.width/2, canvas.height * 1/4 - carHeight);
 
     if (mouseDown) {
         mouseDownActions();
