@@ -79,7 +79,7 @@ function keyDownHandler(e) {
         case "x":
             if (screen == "restore") {
                 let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
-                if (games != []) games.splice(selectedIndex, 1);
+                if (games.length > 0) games.splice(selectedIndex, 1);
                 localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
             }
             break;
@@ -93,7 +93,7 @@ function keyDownHandler(e) {
             else if (screen == "play") screen = "welcome";
             else if (screen == "restore") {
                 let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
-                if (games != []) {
+                if (games.length > 0) {
                     restore(games[selectedIndex]);
                     screen = "game";
                 }
