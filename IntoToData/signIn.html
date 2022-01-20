@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>
+        Record Keeper
+    </title>
+    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+    <h1>Sign In</h1>
+
+    <form class="blue">
+        <label for="username">Username:</label>
+        <br />
+        <input type="text" id="username" name="username">
+        <br />
+        <label for="password">Password:</label>
+        <br />
+        <input type="password" id="password" name="password">
+        <br />
+        <br />
+        <button type="button" onclick="logIn()">
+            Log In
+        </button>
+        <br />
+        <span class="blue notice" id="warning" hidden>
+            Both fields must be filled in!
+        </span>
+        <br />
+        <span class="blue notice" id="fail" hidden>
+            Incorrect Login info
+        </span>
+
+        <br />
+        <a href="signUp.html">
+            <button type="button" id="signUp">
+                Sign Up
+            </button>
+        </a>
+        <br />
+        <a href="index.html">
+            <button type="button">
+                Back to Main page
+            </button>
+        </a>
+    </form>
+
+
+</body>

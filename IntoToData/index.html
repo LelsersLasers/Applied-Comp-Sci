@@ -6,13 +6,31 @@
     <title>
         Record Keeper
     </title>
-    <script src="script.js"></script>
+    <script defer src="script.js"></script>
     <link rel="stylesheet" href="style.css">
 
 </head>
-<body>
+<body onload="setName()">
 
     <h1 class="blue center">Record Keeper</h1>
+
+    <p id="currentUser">Current User:</p>
+
+    <a href="signIn.html">
+        <button type="button" id="signIn">
+            Sign In
+        </button>
+    </a>
+    <a href="signUp.html">
+        <button type="button" id="signUp">
+            Sign Up
+        </button>
+    </a>
+    <button type="button" id="logOut" hidden onclick="logOut()">
+        Log Out
+    </button>
+    <br />
+    <br />
 
     <button type="button" id="addButton" onclick="add()">
         Add Record
@@ -63,7 +81,7 @@
         </button>
         <br />
 
-        <span class="blue" id="warning" hidden>
+        <span class="blue notice" id="warning" hidden>
             Both fields must be filled in!
         </span>
     </form>

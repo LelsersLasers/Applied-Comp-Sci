@@ -1,7 +1,9 @@
 var checked = true;
-var notes = localStorage.getItem("notes") != null ? JSON.parse(localStorage.getItem("notes")) : [];
 var showAdd = false;
 var job = "Other";
+
+var notes = localStorage.getItem("notes") != null ? JSON.parse(localStorage.getItem("notes")) : [];
+var accounts = localStorage.getItem("accounts") != null ? JSON.parse(localStorage.getItem("accounts")) : [];
 
 function add() {
     let thingsToShow = document.getElementsByClassName("add");
@@ -120,4 +122,81 @@ function changeColor() {
 
 function changeJob(value) {
     job = value;
+}
+
+function setName() {
+    var currentUser = localStorage.getItem("user") != null ? JSON.parse(localStorage.getItem("user")).username : "Not Signed In";
+    var currentUserTxt = document.getElementById("currentUser");
+    currentUserTxt.innerHTML = "Current User: " + currentUser;
+
+    if (localStorage.getItem("user") != null) {
+        let but = document.getElementById("logOut");
+        if (but.hasAttribute("hidden")) {
+            but.removeAttribute("hidden");
+        }
+    }
+}
+
+function logIn() {
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+    if (username == "" || password == "") {
+        let warning = document.getElementById("warning");
+        if (warning.hasAttribute("hidden")) {
+            warning.removeAttribute("hidden");
+        }
+    }
+    else {
+        let found = -1;
+        for (var i = 0; i < accounts.length; i++) {
+            if (accounts[i].username == username && accounts[i].password == password) {
+                found = i;
+            }
+        }
+        if (found == -1) {
+            let warning = document.getElementById("fail");
+            if (warning.hasAttribute("hidden")) {
+                warning.removeAttribute("hidden");
+            }
+        }
+        else {
+            localStorage.setItem("user", JSON.stringify(accounts[found]));
+            window.location.href = "index.html";
+        }
+    }
+}
+
+function createAccount() {
+    let username = document.getElementById("username").value;
+    let password1 = document.getElementById("password1").value;
+    let password2 = document.getElementById("password2").value;
+    console.log(password1, password2);
+
+    if (username == "" || password1 == "" || password2 == "") {
+        let warning = document.getElementById("warning");
+        if (warning.hasAttribute("hidden")) {
+            warning.removeAttribute("hidden");
+        }
+    }
+    else if (password1 != password2) {
+        let warning = document.getElementById("passwordWarning");
+        if (warning.hasAttribute("hidden")) {
+            warning.removeAttribute("hidden");
+        }
+    }
+    else {
+        let newAcc = {
+            "username": username,
+            "password": password1
+        };
+        accounts.push(newAcc);
+        localStorage.setItem("user", JSON.stringify(newAcc));
+        localStorage.setItem("accounts", JSON.stringify(accounts));
+        window.location.href = "index.html";
+    }
+}
+
+function logOut() {
+    localStorage.removeItem("user");
+    setName();
 }
