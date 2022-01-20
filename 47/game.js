@@ -1,13 +1,13 @@
 // CHANGE THESE IF WANTED
 // NOTE: keep a 2:3 ratio between coinSize and lineSpacing as described by the problem 
 var settings = {
-    "coinSize": 20,
+    "coinSize": 20, // current sizing is that 1 px = 1 mm
     "lineSpacing": 30,
     "lineWidth": 0.0001,
     "lineStartOffset": true,
     "decimalPlaces": 1
 };
-
+// Don't change below this
 
 
 function getRandomInt(min, max) {
@@ -21,7 +21,7 @@ function drawAll() {
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    coins.push(new Coin());
+    coins.push(new Coin()); // create 1 coin each frame
     total++;
 
     for (var i in lines) lines[i].draw();
@@ -37,14 +37,10 @@ function drawAll() {
 }
 
 function setUpContext() {
-    // Get width/height of the browser window
     console.log("Window is %d by %d", window.innerWidth, window.innerHeight);
-    // Get the canvas, set the width and height from the window
     canvas = document.getElementById("mainCanvas");
     canvas.width = window.innerWidth - 20;
     canvas.height = window.innerHeight - 20;
-
-    // Set up the context for the animation
     context = canvas.getContext("2d");
     return context;
 }
@@ -63,6 +59,8 @@ var coins = [];
 
 context.font = 1/20 * canvas.height + "px monospace";
 context.textAlign = "left";
+
+console.log("Current Settings (change at the top of 'game.js'):" + JSON.stringify(settings));
 
 // Fire up the animation engine
 window.requestAnimationFrame(drawAll);

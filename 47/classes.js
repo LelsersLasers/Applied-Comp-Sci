@@ -37,6 +37,7 @@ class Coin {
         context.beginPath();
         context.arc(this.x, this.y, settings.coinSize/2, 0, 2 * Math.PI);
         context.fill();
+        context.stroke();
     }
 }
 
