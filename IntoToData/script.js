@@ -1,5 +1,4 @@
 var checked = true;
-var showAdd = false;
 var job = "Other";
 
 var notes = localStorage.getItem("notes") != null ? JSON.parse(localStorage.getItem("notes")) : [];
@@ -72,7 +71,8 @@ function fakeSubmit() {
         }
     }
     else {
-        let acc = localStorage.getItem("user");
+        let acc = JSON.parse(localStorage.getItem("user"));
+        console.log(acc);
         let d = new Date();
         let date = (d.getMonth() + 1) + "/" + d.getDate() + "/"  + d.getFullYear();
         let tempNote = {
@@ -83,8 +83,9 @@ function fakeSubmit() {
             "date": date,
         };
         notes.push(tempNote);
+        console.log(tempNote);
         localStorage.setItem("notes", JSON.stringify(notes));
-        location.reload();
+        // location.reload();
     }
 }
 
