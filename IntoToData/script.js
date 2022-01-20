@@ -57,24 +57,29 @@ function view() {
 
 function fakeSubmit() {
     let note = document.getElementById("note").value
-    let fullname = document.getElementById("fullname").value;
     let color = document.getElementById("textColor").value;
 
-    if (note == "" || (fullname == "" && checked)) {
+    if (localStorage.getItem("user") == null){
+        let warning = document.getElementById("accountWarning");
+        if (warning.hasAttribute("hidden")) {
+            warning.removeAttribute("hidden");
+        }
+    }
+    else if (note == "") {
         let warning = document.getElementById("warning");
         if (warning.hasAttribute("hidden")) {
             warning.removeAttribute("hidden");
         }
     }
     else {
-        if (!checked) fullname = "N/A";
+        let acc = localStorage.getItem("user");
         let d = new Date();
         let date = (d.getMonth() + 1) + "/" + d.getDate() + "/"  + d.getFullYear();
         let tempNote = {
             "note": note,
-            "author": fullname,
+            "author": checked ? acc.fullname : "N/A",
             "color": color,
-            "job": job,
+            "job": acc.job,
             "date": date,
         };
         notes.push(tempNote);
@@ -125,7 +130,7 @@ function changeJob(value) {
 }
 
 function setName() {
-    var currentUser = localStorage.getItem("user") != null ? JSON.parse(localStorage.getItem("user")).username : "Not Signed In";
+    var currentUser = localStorage.getItem("user") != null ? JSON.parse(localStorage.getItem("user")).fullname : "Not Signed In";
     var currentUserTxt = document.getElementById("currentUser");
     currentUserTxt.innerHTML = "Current User: " + currentUser;
 
@@ -170,9 +175,10 @@ function createAccount() {
     let username = document.getElementById("username").value;
     let password1 = document.getElementById("password1").value;
     let password2 = document.getElementById("password2").value;
+    let name = document.getElementById("fullname").value;
     console.log(password1, password2);
 
-    if (username == "" || password1 == "" || password2 == "") {
+    if (username == "" || password1 == "" || password2 == "" || name == "") {
         let warning = document.getElementById("warning");
         if (warning.hasAttribute("hidden")) {
             warning.removeAttribute("hidden");
@@ -187,7 +193,9 @@ function createAccount() {
     else {
         let newAcc = {
             "username": username,
-            "password": password1
+            "password": password1,
+            "fullname": name,
+            "job": job
         };
         accounts.push(newAcc);
         localStorage.setItem("user", JSON.stringify(newAcc));

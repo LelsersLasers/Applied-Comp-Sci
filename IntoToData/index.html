@@ -54,35 +54,18 @@
         <label for="submitName"> Submit my name with the note</label>
         <br />
 
-        <div id="name">
-            <label for="fullname">Full name:</label>
-            <br />
-            <input type="text" id="fullname" name="fullname" value="" />
-            <br />
-        </div>
         <br />
-
-        <label for="job">I am a: </label>
-        <br />
-        <input type="radio" id="student" name="job" onchange="changeJob('Student')" />
-        <label for="student">Student</label>
-        <br />
-        <input type="radio" id="teacher" name="job" onchange="changeJob('Teacher')" />
-        <label for="teacher">Teacher</label>
-        <br />
-        <input type="radio" id="other" name="job" checked onchange="changeJob('Other')" />
-        <label for="other">Other</label>
-        <br />
-
-        <br />
-        <!-- <input type="submit" value="Submit" /> -->
         <button type="button" onclick="fakeSubmit()">
             Submit
         </button>
         <br />
 
         <span class="blue notice" id="warning" hidden>
-            Both fields must be filled in!
+            Note can not be blank!
+        </span>
+        <br />
+        <span class="blue notice" id="accountWarning" hidden>
+            You Must be logged in!
         </span>
     </form>
 
