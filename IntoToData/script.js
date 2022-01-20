@@ -4,30 +4,20 @@ var job = "Other";
 var notes = localStorage.getItem("notes") != null ? JSON.parse(localStorage.getItem("notes")) : [];
 var accounts = localStorage.getItem("accounts") != null ? JSON.parse(localStorage.getItem("accounts")) : [];
 
-function add() {
-    let toShow = document.getElementById("add");
+
+function swap(show, hide) {
+    let toShow = document.getElementById(show);
     toShow.removeAttribute("hidden");
-    let toHide = document.getElementById("view");
+    let toHide = document.getElementById(hide);
     toHide.setAttribute("hidden", "");
 
-    let addButton = document.getElementById("addButton");
-    addButton.style.background = "grey";
-    let viewButton = document.getElementById("viewButton");
-    viewButton.style.background = "lightgray";
+    let showButton = document.getElementById(show + "Button");
+    showButton.style.background = "grey";
+    let hideButton = document.getElementById(hide + "Button");
+    hideButton.style.background = "lightgray";
 }
 
 function view() {
-    let toShow = document.getElementById("view");
-    toShow.removeAttribute("hidden");
-    let toHide = document.getElementById("add");
-    toHide.setAttribute("hidden", "");
-
-    let addButton = document.getElementById("addButton");
-    addButton.style.background = "lightgray";
-    let viewButton = document.getElementById("viewButton");
-    viewButton.style.background = "grey";
-
-
     let lst = document.getElementById("recordsList");
     lst.innerHTML = "";
 
@@ -44,7 +34,7 @@ function fakeSubmit() {
     let note = document.getElementById("note").value
     let color = document.getElementById("textColor").value;
 
-    if (localStorage.getItem("user") == null){
+    if (localStorage.getItem("user") == null) {
         let warning = document.getElementById("accountWarning");
         if (warning.hasAttribute("hidden")) {
             warning.removeAttribute("hidden");
