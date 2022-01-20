@@ -1,3 +1,10 @@
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    value = Math.floor(Math.random() * (max - min) + min); //The max is exclusive and the min is inclusive
+    return value;
+}
+
 function drawAll() {
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
@@ -20,12 +27,6 @@ function drawAll() {
     window.requestAnimationFrame(drawAll);
 }
 
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    value = Math.floor(Math.random() * (max - min) + min); //The max is exclusive and the min is inclusive
-    return value;
-}
 function setUpContext() {
     // Get width/height of the browser window
     console.log("Window is %d by %d", window.innerWidth, window.innerHeight);
