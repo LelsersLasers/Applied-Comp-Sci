@@ -34,6 +34,8 @@ class Coin {
     }
     draw() {
         context.fillStyle = this.color;
+        context.strokeStyle = "#ffffff";
+        context.lineWidth = settings.coinOutline;
         context.beginPath();
         context.arc(this.x, this.y, settings.coinSize/2, 0, 2 * Math.PI);
         context.fill();
@@ -47,8 +49,8 @@ class Line {
         this.hb = new HitBox(this.x, 0, settings.lineWidth, canvas.height);
     }
     draw() {
-        context.strokeStyle = "#ffffff";
-        context.lineWidth = 1;
+        context.strokeStyle = settings.drawnLineColor;
+        context.lineWidth = settings.drawnLineWidth;
         context.beginPath();
         context.moveTo(this.x, 0);
         context.lineTo(this.x, canvas.height);

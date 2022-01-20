@@ -5,7 +5,10 @@ var settings = {
     "lineSpacing": 60,
     "lineWidth": 0.0001,
     "lineStartOffset": true,
-    "decimalPlaces": 1
+    "decimalPlaces": 1,
+    "coinOutline": 1,
+    "drawnLineWidth": 1,
+    "drawnLineColor": "#ffffff"
 };
 // Don't change below this
 
@@ -23,9 +26,9 @@ function drawAll() {
 
     coins.push(new Coin()); // create 1 coin each frame
     total++;
-
-    for (var i in lines) lines[i].draw();
+    
     for (var i in coins) coins[i].draw();
+    for (var i in lines) lines[i].draw();
 
     let percent = (noTouching/total) * 100;
     percent = percent.toFixed(settings.decimalPlaces);
