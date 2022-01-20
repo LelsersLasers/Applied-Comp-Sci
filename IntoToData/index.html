@@ -39,26 +39,28 @@
         View Records
     </button>
 
-    <form class="blue add" hidden>
-        <label for="note">Note:</label>
-        <br />
-        <textarea class="fullWidth" id="note" name="note" rows="30"></textarea>
-        <br />
-
-        <label for="textColor">Pick color for text:</label>
-        <input type="color" id="textColor" name="textColor" onchange="changeColor()" />
-        <br />
-        <br />
-
-        <input type="checkbox" id="submitName" name="submitName" value="AddName" checked onclick="toggleAddName()" />
-        <label for="submitName"> Submit my name with the note</label>
-        <br />
-
-        <br />
-        <button type="button" onclick="fakeSubmit()">
-            Submit
-        </button>
-        <br />
+    <div id="add" hidden>
+        <form class="blue">
+            <label for="note">Note:</label>
+            <br />
+            <textarea class="fullWidth" id="note" name="note" rows="30"></textarea>
+            <br />
+    
+            <label for="textColor">Pick color for text:</label>
+            <input type="color" id="textColor" name="textColor" onchange="changeColor()" />
+            <br />
+            <br />
+    
+            <input type="checkbox" id="submitName" name="submitName" value="AddName" checked onclick="toggleAddName()" />
+            <label for="submitName"> Submit my name with the note</label>
+            <br />
+    
+            <br />
+            <button type="button" onclick="fakeSubmit()">
+                Submit
+            </button>
+            <br />
+        </form>
 
         <span class="blue notice" id="warning" hidden>
             Note can not be blank!
@@ -67,10 +69,12 @@
         <span class="blue notice" id="accountWarning" hidden>
             You Must be logged in!
         </span>
-    </form>
+    </div>
 
-    <h3 class="blue view" hidden>Records:</h3>
-    <div id="recordsList" class="view" hidden></div>
+    <div id="view" hidden>
+        <h3 class="blue view">Records:</h3>
+        <div id="recordsList" class="view"></div>
+    </div>
     
 </body>
 

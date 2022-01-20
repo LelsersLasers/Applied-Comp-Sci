@@ -5,18 +5,11 @@ var notes = localStorage.getItem("notes") != null ? JSON.parse(localStorage.getI
 var accounts = localStorage.getItem("accounts") != null ? JSON.parse(localStorage.getItem("accounts")) : [];
 
 function add() {
-    let thingsToShow = document.getElementsByClassName("add");
-    for (let i = 0; i < thingsToShow.length; i++) {
-        if (thingsToShow[i].hasAttribute("hidden")) {
-            thingsToShow[i].removeAttribute("hidden");
-        }
-    }
-    let thingsToHide = document.getElementsByClassName("view");
-    for (let i = 0; i < thingsToHide.length; i++) {
-        if (!thingsToHide[i].hasAttribute("hidden")) {
-            thingsToHide[i].setAttribute("hidden", "");
-        }
-    }
+    let toShow = document.getElementById("add");
+    toShow.removeAttribute("hidden");
+    let toHide = document.getElementById("view");
+    toHide.setAttribute("hidden", "");
+
     let addButton = document.getElementById("addButton");
     addButton.style.background = "grey";
     let viewButton = document.getElementById("viewButton");
@@ -24,18 +17,11 @@ function add() {
 }
 
 function view() {
-    let thingsToShow = document.getElementsByClassName("view");
-    for (let i = 0; i < thingsToShow.length; i++) {
-        if (thingsToShow[i].hasAttribute("hidden")) {
-            thingsToShow[i].removeAttribute("hidden");
-        }
-    }
-    let thingsToHide = document.getElementsByClassName("add");
-    for (let i = 0; i < thingsToHide.length; i++) {
-        if (!thingsToHide[i].hasAttribute("hidden")) {
-            thingsToHide[i].setAttribute("hidden", "");
-        }
-    }
+    let toShow = document.getElementById("view");
+    toShow.removeAttribute("hidden");
+    let toHide = document.getElementById("add");
+    toHide.setAttribute("hidden", "");
+
     let addButton = document.getElementById("addButton");
     addButton.style.background = "lightgray";
     let viewButton = document.getElementById("viewButton");
