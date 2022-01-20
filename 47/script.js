@@ -1,6 +1,6 @@
 // CHANGE THESE IF WANTED
 // NOTE: keep a 2:3 ratio between coinSize and lineSpacing as described by the problem 
-var settings = {
+const settings = {
     "coinSize": 40, // current scale is 1px = 0.5 mm
     "lineSpacing": 60,
     "lineWidth": 0.0001,
@@ -13,19 +13,21 @@ var settings = {
 };
 // Don't change below this
 
+function drawWelcome() {
+    context.fillStyle = "#ffffff";
+    context.font = carHeight + "px " + font;
+    context.fillText("NEO CROSSER", canvas.width/2, canvas.height * 1/3);
 
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    let value = Math.floor(Math.random() * (max - min) + min); //The max is exclusive and the min is inclusive
-    return value;
+    context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
+    context.font = carHeight/2 + "px " + font;
+    context.fillText("Touch to Start", canvas.width/2, canvas.height * 1/3 + carHeight);
+
+    directionsButton.draw();
+    scoresButton.draw();
 }
 
-function drawAll() {
-    context.fillStyle = "#000000";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
-    if (frame % settings.spawnSpeed == 0) {
+function drawSimulation() {
+    if (simFrame % settings.spawnSpeed == 0) {
         coins.push(new Coin());
         total++;
     }
@@ -39,7 +41,27 @@ function drawAll() {
     context.fillText(percent + "%", 20, canvas.height/40 + 20);
     context.fillText(noTouching + "/" + total, 20, canvas.height/20 + 40);
 
-    frame++;
+    simFrame++;
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    let value = Math.floor(Math.random() * (max - min) + min); //The max is exclusive and the min is inclusive
+    return value;
+}
+
+function drawAll() {
+    context.fillStyle = "#000000";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    if (screen == "welcome") drawWelcome();
+    else if (screen == "simulation") drawSimulation();
+    
+
+    if (textOpacity > 1) opacityDir = -0.04;
+    else if (textOpacity < 0) opacityDir = 0.04;
+    textOpacity += opacityDir;
 
     window.requestAnimationFrame(drawAll);
 }
@@ -61,9 +83,15 @@ for (var i = 0; i < canvas.width/settings.lineSpacing; i++) {
     lines.push(new Line(y));
 }
 
+var screen = "simulation";
+
 var noTouching = 0;
 var total = 0;
-var frame = 0;
+var simFrame = 0;
+
+var textOpacity = 1;
+var opacityDir = -0.04;
+
 var coins = [];
 
 context.font = 1/20 * canvas.height + "px monospace";
