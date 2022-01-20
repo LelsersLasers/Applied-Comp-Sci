@@ -8,7 +8,8 @@ var settings = {
     "decimalPlaces": 1,
     "coinOutline": 1,
     "drawnLineWidth": 1,
-    "drawnLineColor": "#ffffff"
+    "drawnLineColor": "#ffffff",
+    "spawnSpeed": 10 // higher = slower, must be a int and > 1
 };
 // Don't change below this
 
@@ -24,8 +25,10 @@ function drawAll() {
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    coins.push(new Coin()); // create 1 coin each frame
-    total++;
+    if (frame % settings.spawnSpeed == 0) {
+        coins.push(new Coin());
+        total++;
+    }
     
     for (var i in coins) coins[i].draw();
     for (var i in lines) lines[i].draw();
@@ -35,6 +38,8 @@ function drawAll() {
     context.fillStyle = "#ffffff";
     context.fillText(percent + "%", 20, canvas.height/40 + 20);
     context.fillText(noTouching + "/" + total, 20, canvas.height/20 + 40);
+
+    frame++;
 
     window.requestAnimationFrame(drawAll);
 }
@@ -58,6 +63,7 @@ for (var i = 0; i < canvas.width/settings.lineSpacing; i++) {
 
 var noTouching = 0;
 var total = 0;
+var frame = 0;
 var coins = [];
 
 context.font = 1/20 * canvas.height + "px monospace";
