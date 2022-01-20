@@ -16,8 +16,6 @@ function drawAll() {
     context.fillStyle = "#ffffff";
     context.fillText(percent + "%", 20, canvas.height/40 + 20);
     context.fillText(fails + "/" + total, 20, canvas.height/20 + 40);
-    
-    console.log("Percent red (touching a line) rounded to nearest percent = "  + percent + "%");
 
     window.requestAnimationFrame(drawAll);
 }
@@ -45,7 +43,7 @@ var context = setUpContext();
 
 var lines = [];
 for (var i = 0; i < canvas.width/12; i++) {
-    lines.push(new Line(i * 12));
+    lines.push(new Line(6 + i * 12));
 }
 
 var fails = 0;
