@@ -1,8 +1,8 @@
 // CHANGE THESE IF WANTED
 // NOTE: keep a 2:3 ratio between coinSize and lineSpacing as described by the problem 
 var settings = {
-    "coinSize": 20, // current sizing is that 1 px = 1 mm
-    "lineSpacing": 30,
+    "coinSize": 40, // current scale is 1px = 0.5 mm
+    "lineSpacing": 60,
     "lineWidth": 0.0001,
     "lineStartOffset": true,
     "decimalPlaces": 1

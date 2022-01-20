@@ -10,3 +10,4 @@ Baisc Info:
 - Basic settings for the game can be found at the top of 'game.js'
 - Window size does not matter, it should work on almost any sized screen
 - The random function avoids the use of the % ('modulo') operation
+    - Because of the use of random, it might take some time before it gets to the "correct" value
