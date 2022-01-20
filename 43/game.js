@@ -1,7 +1,7 @@
 function drawAll() {
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
-    if (total < 10000) coins.push(new Coin());
+    coins.push(new Coin());
     total++;
 
     for (var i = 0; i < lines.length; i++) {
@@ -17,7 +17,7 @@ function drawAll() {
     context.fillText(percent + "%", 20, canvas.height/40 + 20);
     context.fillText(fails + "/" + total, 20, canvas.height/20 + 40);
     
-    console.log("final percent red = " + percent + "%");
+    console.log("Percent red (touching a line) rounded to nearest percent = "  + percent + "%");
 
     window.requestAnimationFrame(drawAll);
 }
