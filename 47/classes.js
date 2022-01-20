@@ -13,20 +13,13 @@ class HitBox {
         }
         return false;
     }
-    draw(color) {
-        context.strokeStyle = "#0000ff";
-        context.lineWidth = 1;
-        context.beginPath();
-        context.rect(this.pt.x, this.pt.y, this.w, this.h);
-        context.stroke();
-    }
 }
 
 class Coin {
     constructor() {
         this.x = getRandomInt(settings.coinSize/2, canvas.width - settings.coinSize/2); // center of circle
         this.y = getRandomInt(settings.coinSize/2, canvas.height - settings.coinSize/2); // center of circle
-        this.color = "#00ff00";
+        this.color = "#ff0000";
         this.hb = new HitBox(this.x - settings.coinSize/2, this.y - settings.coinSize/2, settings.coinSize, settings.coinSize);
         let collides = false;
         for (let i = 0; i < lines.length; i++) {
@@ -34,9 +27,9 @@ class Coin {
                 collides = true;
             }
         }
-        if (collides) {
-            this.color = "#ff0000";
-            fails++;
+        if (!collides) {
+            this.color = "#00ff00";
+            noTouching++;
         }
     }
     draw() {

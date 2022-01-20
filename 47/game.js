@@ -1,9 +1,13 @@
+// CHANGE THESE IF WANTED
+// NOTE: keep a 2:3 ratio between coinSize and lineSpacing as described by the problem 
 var settings = {
     "coinSize": 20,
     "lineSpacing": 30,
     "lineWidth": 0.0001,
     "lineStartOffset": true,
+    "decimalPlaces": 1
 };
+
 
 
 function getRandomInt(min, max) {
@@ -23,11 +27,11 @@ function drawAll() {
     for (var i in lines) lines[i].draw();
     for (var i in coins) coins[i].draw();
 
-    let percent = (fails/total) * 100;
-    percent = percent.toFixed(0);
+    let percent = (noTouching/total) * 100;
+    percent = percent.toFixed(settings.decimalPlaces);
     context.fillStyle = "#ffffff";
     context.fillText(percent + "%", 20, canvas.height/40 + 20);
-    context.fillText(fails + "/" + total, 20, canvas.height/20 + 40);
+    context.fillText(noTouching + "/" + total, 20, canvas.height/20 + 40);
 
     window.requestAnimationFrame(drawAll);
 }
@@ -53,7 +57,7 @@ for (var i = 0; i < canvas.width/settings.lineSpacing; i++) {
     lines.push(new Line(y));
 }
 
-var fails = 0;
+var noTouching = 0;
 var total = 0;
 var coins = [];
 
