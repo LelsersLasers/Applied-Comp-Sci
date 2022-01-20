@@ -72,7 +72,6 @@ function fakeSubmit() {
     }
     else {
         let acc = JSON.parse(localStorage.getItem("user"));
-        console.log(acc);
         let d = new Date();
         let date = (d.getMonth() + 1) + "/" + d.getDate() + "/"  + d.getFullYear();
         let tempNote = {
@@ -83,20 +82,12 @@ function fakeSubmit() {
             "date": date,
         };
         notes.push(tempNote);
-        console.log(tempNote);
         localStorage.setItem("notes", JSON.stringify(notes));
-        // location.reload();
+        location.reload();
     }
 }
 
 function toggleAddName() {
-    let div = document.getElementById("name");
-    if (!checked) {
-        div.removeAttribute("hidden");
-    }
-    else {
-        div.setAttribute("hidden", "");
-    }
     checked = !checked
 }
 
@@ -177,7 +168,6 @@ function createAccount() {
     let password1 = document.getElementById("password1").value;
     let password2 = document.getElementById("password2").value;
     let name = document.getElementById("fullname").value;
-    console.log(password1, password2);
 
     if (username == "" || password1 == "" || password2 == "" || name == "") {
         let warning = document.getElementById("warning");
