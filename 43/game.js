@@ -1,22 +1,27 @@
+var settings = {
+    "coinSize": 20,
+    "lineSpacing": 30,
+    "lineWidth": 0.0001,
+    "lineStartOffset": true,
+};
+
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    value = Math.floor(Math.random() * (max - min) + min); //The max is exclusive and the min is inclusive
+    let value = Math.floor(Math.random() * (max - min) + min); //The max is exclusive and the min is inclusive
     return value;
 }
 
 function drawAll() {
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
+
     coins.push(new Coin());
     total++;
 
-    for (var i = 0; i < lines.length; i++) {
-        lines[i].draw();
-    }
-    for (var i = 0; i < coins.length; i++) {
-        coins[i].draw();
-    }
+    for (var i in lines) lines[i].draw();
+    for (var i in coins) coins[i].draw();
 
     let percent = (fails/total) * 100;
     percent = percent.toFixed(0);
@@ -43,8 +48,9 @@ function setUpContext() {
 var context = setUpContext();
 
 var lines = [];
-for (var i = 0; i < canvas.width/12; i++) {
-    lines.push(new Line(6 + i * 12));
+for (var i = 0; i < canvas.width/settings.lineSpacing; i++) {
+    let y = i * settings.lineSpacing + (settings.lineStartOffset ? settings.lineSpacing/2 : 0);
+    lines.push(new Line(y));
 }
 
 var fails = 0;
