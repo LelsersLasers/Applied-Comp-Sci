@@ -17,7 +17,7 @@ var server = net.createServer(function (conn) {
         console.log("Response from client: %s", data.response);
     });
 
-    // Let's response with a hello message
+    // response
     conn.write(
         JSON.stringify(
             { response: "Hey there client!" }
