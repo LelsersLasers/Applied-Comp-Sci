@@ -2,7 +2,7 @@ class Coin {
     constructor() {
         this.x = getRandomInt(4, canvas.width - 4);
         this.w = 8;
-        this.y = getRandomInt(4, canvas.width - 4);
+        this.y = getRandomInt(4, canvas.height - 4);
         this.color = "#00ff00";
         let a = this.x % 12;
         if (a < 4 || a > 8) {
