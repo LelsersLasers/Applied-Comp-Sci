@@ -19,3 +19,7 @@ h1 {
 button {
     background: lightgray;
 }
+
+body {
+    padding: 1em;
+}
