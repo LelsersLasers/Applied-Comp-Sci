@@ -122,6 +122,48 @@ class Ability extends Trigger {
     }
 }
 
+class Buff extends Ability {
+    constructor(pt, w, h, timer, wait, activeTime, txt, sound) {
+        super(pt, w, h, timer, wait, txt, sound);
+        this.active = 0;
+        this.activeTime = activeTime;
+        this.activeColor = "#e37e7b";
+    }
+    draw() {
+        if (this.active > 0) {
+            context.fillStyle = this.activeColor;
+            context.beginPath();
+            context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
+            this.active--;
+        }
+        else {
+            context.fillStyle = this.color;
+            context.beginPath();
+            context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
+            
+            let delay = this.wait - this.timer >= 0 ? this.wait - this.timer : 0;
+            let width = (this.wait - delay) * this.w/this.wait;
+
+            context.beginPath();
+            context.fillStyle = delay == 0 ? "#9ee092" : "#5e94d1";
+            context.fillRect(this.pt.x, this.pt.y, width, this.h);
+
+            if (!paused) this.timer++;
+        }
+        this.drawTxt();
+    }
+    use() {
+        this.active = this.activeTime;
+        this.timer = 0;
+        this.sound.currentTime = 0;
+        this.sound.play();
+    }
+    restore(save) {
+        this.wait = save.wait;
+        this.timer = save.timer;
+    }
+}
+
 class GameTxt extends Thing {
     constructor(pt, color, w, h, txt) {
         super(pt, w, h);
@@ -268,6 +310,7 @@ class Player extends Thing {
         this.msX = msX;
         this.msY = msY;
         this.teleportSpeed = 3;
+        this.sprintSpeed = 1.5;
         this.animation = 0;
         this.lastDrawDir = -1;
         this.updateHB();
@@ -288,19 +331,19 @@ class Player extends Thing {
                 this.frame++;
                 switch (lastDir) {
                     case "w":
-                        this.moveVertical(this.msY/moveWait);
+                        this.moveVertical(this.msY/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1));
                         score += 1;
                         if (score > topScore) topScore = score;
                         break;
                     case "s":
-                        this.moveVertical(-this.msY/moveWait);
+                        this.moveVertical(-this.msY/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1));
                         score -= 1;
                         break;
                     case "a":
-                        this.pt.x -= this.msX/moveWait;
+                        this.pt.x -= this.msX/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1);
                         break;
                     case "d":
-                        this.pt.x += this.msX/moveWait;
+                        this.pt.x += this.msX/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1);
                         break;
                 }
                 this.updateHB();
@@ -359,9 +402,7 @@ class Player extends Thing {
                 }
                 qAbility.use();
             }
-            if (eDown && eAbility.timer > eAbility.wait) { // laser ability
-                let startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
-                lasers.push(new Laser(startPos, lastDir, 60));
+            if (eDown && eAbility.timer > eAbility.wait) { // sprint ability
                 eAbility.use();
             }
             if (rDown && rAbility.timer > rAbility.wait) { // laser grenade ability
