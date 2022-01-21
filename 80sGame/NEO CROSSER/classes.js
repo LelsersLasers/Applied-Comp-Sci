@@ -89,10 +89,10 @@ class Trigger extends Thing {
 }
 
 class Ability extends Trigger {
-    constructor(pt, w, h, timer, wait, txt, sound) {
+    constructor(pt, w, h, wait, txt, sound) {
         super(pt, w, h, txt);
         this.color = "#dadfe6";
-        this.timer = timer;
+        this.timer = wait;
         this.wait = wait;
         this.sound = sound;
     }
@@ -123,8 +123,8 @@ class Ability extends Trigger {
 }
 
 class Buff extends Ability {
-    constructor(pt, w, h, timer, wait, activeTime, txt, sound) {
-        super(pt, w, h, timer, wait, txt, sound);
+    constructor(pt, w, h, wait, activeTime, txt, sound) {
+        super(pt, w, h, wait, txt, sound);
         this.active = 0;
         this.activeTime = activeTime;
         this.activeColor = "#e37e7b";

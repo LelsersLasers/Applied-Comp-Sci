@@ -455,7 +455,7 @@ function drawDirections() {
     txts.push("Cars also can't go through the buildings.");
     txts.push("You also have 3 abilities:");
     txts.push("Q which teleports a short distance,");
-    txts.push("E which fires a laser that causes a small stun, and");
+    txts.push("E which increases your speed (press again to turn off), and");
     txts.push("R which fires a laser in every direction.");
     txts.push("(Abilites can be actived with their respective key,");
     txts.push("or by tapping the icon in the bottom left.)")
@@ -778,9 +778,9 @@ const spacer = canvas.height * 1/70;
 const playerLevel = carHeight * 10;
 var player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight * 10/11, carHeight, canvas.width/14, 1.5 * canvas.height/14);
 
-var qAbility = new Ability(new Vector(carHeight, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, "Q", qSound);
-var eAbility = new Buff(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, 120, 60, "E", eSound);
-var rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 240, 240, "R", rSound);
+var qAbility = new Ability(new Vector(carHeight, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, "Q", qSound);
+var eAbility = new Buff(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 240, 120, "E", eSound);
+var rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 240, "R", rSound);
 
 var wTrigger = new Trigger(new Vector(canvas.width - (carHeight * 7/4), playerLevel + carHeight * 5/4), carHeight * 3/4, carHeight * 3/4, "W");
 var sTrigger = new Trigger(new Vector(canvas.width - (carHeight * 7/4), playerLevel + carHeight * 11/4), carHeight * 3/4, carHeight * 3/4, "S");
