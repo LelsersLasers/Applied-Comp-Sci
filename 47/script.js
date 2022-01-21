@@ -14,16 +14,17 @@ const settings = {
 // Don't change below this
 
 function drawWelcome() {
+    context.textAlign = "center";
     context.fillStyle = "#ffffff";
-    context.font = carHeight + "px " + font;
-    context.fillText("NEO CROSSER", canvas.width/2, canvas.height * 1/3);
+    context.font = 1/15 * canvas.height + "px " + font;
+    context.fillText("Problem 47", canvas.width/2, canvas.height * 1/3);
 
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
-    context.font = carHeight/2 + "px " + font;
-    context.fillText("Touch to Start", canvas.width/2, canvas.height * 1/3 + carHeight);
+    context.font = 1/30 * canvas.height + "px " + font;
+    context.fillText("Touch to Start", canvas.width/2, canvas.height * 1/3 + 1/15 * canvas.height);
 
-    directionsButton.draw();
-    scoresButton.draw();
+    // directionsButton.draw();
+    // scoresButton.draw();
 }
 
 function drawSimulation() {
@@ -37,7 +38,10 @@ function drawSimulation() {
 
     let percent = (noTouching/total) * 100;
     percent = percent.toFixed(settings.decimalPlaces);
+
+    context.font = 1/20 * canvas.height + "px " + font;
     context.fillStyle = "#ffffff";
+    context.textAlign = "left";
     context.fillText(percent + "%", 20, canvas.height/40 + 20);
     context.fillText(noTouching + "/" + total, 20, canvas.height/20 + 40);
 
@@ -83,7 +87,10 @@ for (var i = 0; i < canvas.width/settings.lineSpacing; i++) {
     lines.push(new Line(y));
 }
 
-var screen = "simulation";
+
+const font = "monospace";
+
+var screen = "welcome";
 
 var noTouching = 0;
 var total = 0;
@@ -93,9 +100,6 @@ var textOpacity = 1;
 var opacityDir = -0.04;
 
 var coins = [];
-
-context.font = 1/20 * canvas.height + "px monospace";
-context.textAlign = "left";
 
 console.log("Current Settings (change at the top of 'game.js'):" + JSON.stringify(settings));
 

@@ -74,3 +74,42 @@ class Line {
         context.stroke();
     }
 }
+
+class ButtonMenu {
+    constructor(pt, w, h, text, textSize) {
+        this.pt = pt;
+        this.w = w;
+        this.h = h;
+        this.hb = new HitBox(pt, w, h);
+        this.text = text;
+        this.textSize = textSize;
+        this.clicked = 0;
+    }
+    draw() {
+        context.font = this.textSize + "px " + font;;
+        if (this.clicked > 0) {
+            this.hb.draw("#000000");
+            context.fillStyle = "#ffffff";
+            context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
+            context.fillStyle = "#000000";
+            context.fillText(this.text, canvas.width/2, this.pt.y + this.h/2);
+        }
+        else {
+            this.hb.draw("#ffffff");
+            context.fillStyle = "#ffffff";
+            context.fillText(this.text, canvas.width/2, this.pt.y + this.h/2);
+        }
+        this.clicked--;
+    }
+}
+
+class ButtonExtra extends Thing {
+    constructor(w, h) {
+        super(new Vector(canvas.width - w, 0), w, h);
+    }
+    draw() {
+        context.globalAlpha = 0.8;
+        context.drawImage(texPause, posSourcePause[Number(!paused)][0], posSourcePause[Number(!paused)][1], 14, 14, this.pt.x, this.pt.y, this.w, this.h);
+        context.globalAlpha = 1;
+    }
+}

@@ -4,7 +4,7 @@ html {
 }
 
 canvas {
-    border: 1px solid wheat;
+    border: 2px solid wheat;
     margin: 0;
     position: absolute;
     top: 50%;
