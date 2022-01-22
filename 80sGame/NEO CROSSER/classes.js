@@ -148,8 +148,7 @@ class Buff extends Ability {
         if (!paused && this.timer < this.wait) this.timer++;
         if (this.active) this.timer -= this.drain;
         this.doubleClickProtection--;
-        console.log(this.doubleClickProtection);
-
+        
         this.drawTxt();
     }
     use() {
