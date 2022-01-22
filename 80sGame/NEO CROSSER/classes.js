@@ -116,6 +116,9 @@ class Ability extends Trigger {
         this.sound.currentTime = 0;
         this.sound.play();
     }
+    canUse() {
+        return this.timer > this.wait;
+    }
     restore(save) {
         this.wait = save.wait;
         this.timer = save.timer;
@@ -361,7 +364,7 @@ class Player extends Thing {
                 this.frame++; // so if player stops on a %11, it doesn't freak out
                 if (player.animation > 3) player.animation = 0;
             }
-            if (qDown && qAbility.timer > qAbility.wait) { // teleport ability
+            if (qDown && qAbility.canUse()) { // teleport ability
                 switch (lastDir) {
                     case "w":
                         for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
@@ -402,10 +405,10 @@ class Player extends Thing {
                 }
                 qAbility.use();
             }
-            if (eDown && eAbility.timer > eAbility.wait) { // sprint ability
+            if (eDown && eAbility.canUse()) { // sprint ability
                 eAbility.use();
             }
-            if (rDown && rAbility.timer > rAbility.wait) { // laser grenade ability
+            if (rDown && rAbility.canUse()) { // laser grenade ability
                 let dirs = ["w", "a", "s", "d", "sd", "wd", "sa", "wa"];
                 for (var i = 0; i < dirs.length; i++) {
                     var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
