@@ -1,8 +1,6 @@
 # TODO
 
-
-- make E toggle
-- 
+- clean ability code
 
 - display restore touch directions
 - display use w/s up/down to change the selected save

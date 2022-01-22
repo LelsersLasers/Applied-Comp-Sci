@@ -126,40 +126,42 @@ class Ability extends Trigger {
 }
 
 class Buff extends Ability {
-    constructor(pt, w, h, wait, activeTime, txt, sound) {
+    constructor(pt, w, h, wait, drain, txt, sound) {
         super(pt, w, h, wait, txt, sound);
-        this.active = 0;
-        this.activeTime = activeTime;
-        this.activeColor = "#e37e7b";
+        this.drain = drain;
+        this.active = false;
+        this.doubleClickProtection = 0;
     }
     draw() {
-        if (this.active > 0) {
-            context.fillStyle = this.activeColor;
-            context.beginPath();
-            context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
-            this.active--;
-        }
-        else {
-            context.fillStyle = this.color;
-            context.beginPath();
-            context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
-            
-            let delay = this.wait - this.timer >= 0 ? this.wait - this.timer : 0;
-            let width = (this.wait - delay) * this.w/this.wait;
+        context.fillStyle = this.color;
+        context.beginPath();
+        context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
+        
+        let delay = this.wait - this.timer >= 0 ? this.wait - this.timer : 0;
+        let width = (this.wait - delay) * this.w/this.wait;
 
-            context.beginPath();
-            context.fillStyle = delay == 0 ? "#9ee092" : "#5e94d1";
-            context.fillRect(this.pt.x, this.pt.y, width, this.h);
+        context.beginPath();
+        context.fillStyle = delay == 0 ? "#9ee092" : (this.active ? "#e37e7b" :"#5e94d1");
+        context.fillRect(this.pt.x, this.pt.y, width, this.h);
 
-            if (!paused) this.timer++;
-        }
+        if (this.timer <= 0) this.active = false;
+        if (!paused && this.timer < this.wait) this.timer++;
+        if (this.active) this.timer -= this.drain;
+        this.doubleClickProtection--;
+        console.log(this.doubleClickProtection);
+
         this.drawTxt();
     }
     use() {
-        this.active = this.activeTime;
-        this.timer = 0;
-        this.sound.currentTime = 0;
-        this.sound.play();
+        if (this.doubleClickProtection <= 0) {
+            if (this.active) this.active = false;
+            else if (this.timer >= this.drain){
+                this.active = true;
+                this.sound.currentTime = 0;
+                this.sound.play();
+            }
+            this.doubleClickProtection = 20;
+        }
     }
     restore(save) {
         this.wait = save.wait;
@@ -313,7 +315,7 @@ class Player extends Thing {
         this.msX = msX;
         this.msY = msY;
         this.teleportSpeed = 3;
-        this.sprintSpeed = 1.5;
+        this.sprintSpeed = 1.3;
         this.animation = 0;
         this.lastDrawDir = -1;
         this.updateHB();
@@ -405,7 +407,7 @@ class Player extends Thing {
                 }
                 qAbility.use();
             }
-            if (eDown && eAbility.canUse()) { // sprint ability
+            if (eDown) { // sprint ability
                 eAbility.use();
             }
             if (rDown && rAbility.canUse()) { // laser grenade ability
