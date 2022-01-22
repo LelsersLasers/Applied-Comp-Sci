@@ -152,7 +152,7 @@ class Buff extends Ability {
                 this.sound.currentTime = 0;
                 this.sound.play();
             }
-            this.doubleClickProtection = 20;
+            this.doubleClickProtection = 60;
         }
     }
     restore(save) {
