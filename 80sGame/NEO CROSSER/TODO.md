@@ -1,6 +1,6 @@
 # TODO
 
-- clean ability code
+- E SOUND
 
 - display restore touch directions
 - display use w/s up/down to change the selected save

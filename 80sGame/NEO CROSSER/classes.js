@@ -91,13 +91,15 @@ class Trigger extends Thing {
 class Ability extends Trigger {
     constructor(pt, w, h, wait, txt, sound) {
         super(pt, w, h, txt);
-        this.color = "#dadfe6";
         this.timer = wait;
         this.wait = wait;
         this.sound = sound;
+        this.backgroundColor = "#dadfe6";
+        this.canUseColor = "#9ee092";
+        this.rechargingColor = "#5e94d1"
     }
     draw() {
-        context.fillStyle = this.color;
+        context.fillStyle = this.backgroundColor;
         context.beginPath();
         context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
         
@@ -105,11 +107,11 @@ class Ability extends Trigger {
         let width = (this.wait - delay) * this.w/this.wait;
 
         context.beginPath();
-        context.fillStyle = delay == 0 ? "#9ee092" : "#5e94d1";
+        context.fillStyle = delay == 0 ? this.canUseColor : this.rechargingColor;
         context.fillRect(this.pt.x, this.pt.y, width, this.h);
 
         this.drawTxt();
-        if (!paused) this.timer++;
+        if (!paused && this.timer < this.wait) this.timer++;
     }
     use() {
         this.timer = 0;
@@ -117,7 +119,7 @@ class Ability extends Trigger {
         this.sound.play();
     }
     canUse() {
-        return this.timer > this.wait;
+        return this.timer >= this.wait;
     }
     restore(save) {
         this.wait = save.wait;
@@ -133,23 +135,14 @@ class Buff extends Ability {
         this.doubleClickProtection = 0;
     }
     draw() {
-        context.fillStyle = this.color;
-        context.beginPath();
-        context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
+        if (this.active) this.rechargingColor = "#e37e7b";
+        else this.rechargingColor = "#5e94d1";
+
+        super.draw();
         
-        let delay = this.wait - this.timer >= 0 ? this.wait - this.timer : 0;
-        let width = (this.wait - delay) * this.w/this.wait;
-
-        context.beginPath();
-        context.fillStyle = delay == 0 ? "#9ee092" : (this.active ? "#e37e7b" :"#5e94d1");
-        context.fillRect(this.pt.x, this.pt.y, width, this.h);
-
         if (this.timer <= 0) this.active = false;
-        if (!paused && this.timer < this.wait) this.timer++;
         if (this.active) this.timer -= this.drain;
         this.doubleClickProtection--;
-        
-        this.drawTxt();
     }
     use() {
         if (this.doubleClickProtection <= 0) {
