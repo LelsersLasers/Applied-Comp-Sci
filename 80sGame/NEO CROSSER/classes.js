@@ -141,7 +141,7 @@ class Buff extends Ability {
         super.draw();
         
         if (this.timer <= 0) this.active = false;
-        if (this.active) this.timer -= this.drain;
+        if (this.active && !paused) this.timer -= this.drain;
         this.doubleClickProtection--;
     }
     use() {
