@@ -152,7 +152,7 @@ class Buff extends Ability {
                 this.sound.currentTime = 0;
                 this.sound.play();
             }
-            this.doubleClickProtection = 60;
+            this.doubleClickProtection = 40;
         }
     }
     restore(save) {
@@ -307,7 +307,7 @@ class Player extends Thing {
         this.msX = msX;
         this.msY = msY;
         this.teleportSpeed = 3;
-        this.sprintSpeed = 1.3;
+        this.sprintSpeed = 1.5;
         this.animation = 0;
         this.lastDrawDir = -1;
         this.updateHB();
