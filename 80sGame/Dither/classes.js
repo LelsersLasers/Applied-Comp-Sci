@@ -65,9 +65,9 @@ class Light {
         this.pt = pt;
         this.strength = strength;
     }
-    calcStrength(px) {
+    calcDist(px) {
         let xDif = this.pt.x - px.x;
         let yDif = this.pt.y - px.y;
-        return Math.sqrt(xDif * xDif + yDif * yDif);
+        return this.strength - Math.sqrt(xDif * xDif + yDif * yDif);
     }
 }

@@ -47,7 +47,15 @@ function getRandomInt(min, max) {
     return value;
 }
 
+function moveLight() {
+    if (wDown) lights[0].pt.y -= 5;
+    else if (sDown) lights[0].pt.y += 5;
+    else if (aDown) lights[0].pt.x -= 5;
+    else if (dDown) lights[0].pt.x += 5;
+}
+
 function drawAll() {
+    moveLight();
     context.fillStyle = "#383434";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -55,14 +63,16 @@ function drawAll() {
 
     for (var i = 0; i < canvas.height; i += pxSize) {
         for (var j = 0; j < canvas.width; j += pxSize) {
+            let totalDist = 0;
             let totalLight = 0;
             for (var l in lights) {
-                totalLight += lights[l].calcStrength(new Vector(j * pxSize, i * pxSize));
+                totalDist += lights[l].calcDist(new Vector(j * pxSize, i * pxSize));
+                totalLight += lights[l].strength;
             }
             totalLight *= ditherMatrix[matrixPos[0]][matrixPos[1]];
-            if (totalLight - minLight > 0) {
+            if (totalLight - totalDist > 0) {
                 context.beginPath();
-                context.fillStyle = "#000000";
+                context.fillStyle = "#ff0000";
                 context.fillRect(j * pxSize, i * pxSize, pxSize, pxSize);
             }
             if (matrixPos[0] == 0) matrixPos[0] = 1;
@@ -91,12 +101,12 @@ function setUpContext() {
 var context = setUpContext();
 
 var lights = [
-    new Light(new Vector(50, 50), 300)
+    new Light(new Vector(50, 50), 300),
+    // new Light(new Vector(300, 50), 200)
 ];
 
 
-const pxSize = 2;
-const minLight = 50;
+const pxSize = 1;
 const ditherMatrix = [
     [0.25, 0.75],
     [1, 0.5]
