@@ -36,15 +36,11 @@ function fakeSubmit() {
 
     if (localStorage.getItem("user") == null) {
         let warning = document.getElementById("accountWarning");
-        if (warning.hasAttribute("hidden")) {
-            warning.removeAttribute("hidden");
-        }
+        warning.removeAttribute("hidden");
     }
     else if (note == "") {
-        let warning = document.getElementById("warning");
-        if (warning.hasAttribute("hidden")) {
-            warning.removeAttribute("hidden");
-        }
+        let warning = document.getElementById("blankWarning");
+        warning.removeAttribute("hidden");
     }
     else {
         let acc = JSON.parse(localStorage.getItem("user"));
@@ -104,9 +100,7 @@ function setName() {
 
     if (localStorage.getItem("user") != null) {
         let but = document.getElementById("logOut");
-        if (but.hasAttribute("hidden")) {
-            but.removeAttribute("hidden");
-        }
+        but.removeAttribute("hidden");
     }
 }
 
@@ -114,10 +108,8 @@ function logIn() {
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
     if (username == "" || password == "") {
-        let warning = document.getElementById("warning");
-        if (warning.hasAttribute("hidden")) {
-            warning.removeAttribute("hidden");
-        }
+        let warning = document.getElementById("blankWarning");
+        warning.removeAttribute("hidden");
     }
     else {
         let found = -1;
@@ -127,10 +119,8 @@ function logIn() {
             }
         }
         if (found == -1) {
-            let warning = document.getElementById("fail");
-            if (warning.hasAttribute("hidden")) {
-                warning.removeAttribute("hidden");
-            }
+            let warning = document.getElementById("incorrectInfo");
+            warning.removeAttribute("hidden");
         }
         else {
             localStorage.setItem("user", JSON.stringify(accounts[found]));
@@ -146,16 +136,12 @@ function createAccount() {
     let name = document.getElementById("fullname").value;
 
     if (username == "" || password1 == "" || password2 == "" || name == "") {
-        let warning = document.getElementById("warning");
-        if (warning.hasAttribute("hidden")) {
-            warning.removeAttribute("hidden");
-        }
+        let warning = document.getElementById("blankWarning");
+        warning.removeAttribute("hidden");
     }
     else if (password1 != password2) {
         let warning = document.getElementById("passwordWarning");
-        if (warning.hasAttribute("hidden")) {
-            warning.removeAttribute("hidden");
-        }
+        warning.removeAttribute("hidden");
     }
     else {
         let newAcc = {
