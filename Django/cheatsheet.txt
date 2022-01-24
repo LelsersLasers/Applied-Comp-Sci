@@ -1,0 +1,5 @@
+to exit virtual env:
+deactive
+to start virtual env:
+work on
+py manage.py sunserver
