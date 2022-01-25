@@ -572,8 +572,9 @@ function drawGame() {
         mouseDownActions();
         player.move();
         player.draw();
-        player.hb.draw("#ffffff");
         for (var i in buildings) buildings[i].draw();
+        for (var i in buildings) buildings[i].hb.draw("#ff0000");
+        player.hb.draw("#ffffff");
         enemies = [...cars, ...ufos];
         for (var i in enemies) {
             enemies[i].update();
