@@ -1,12 +1,16 @@
 # TODO
 
+LandSlide:
+- Texture
+- Sound
+- Clean player touching building
+
 - E SOUND
 
 - display restore touch directions
 - display use w/s up/down to change the selected save
 
 - mouse hover over buttons in restore screen
-
 
 # 
 

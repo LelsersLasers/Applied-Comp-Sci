@@ -303,6 +303,7 @@ function save() {
         "lasers": lasers,
         "bar": bar,
         "ufos": ufos,
+        "landSlides": landSlides,
         "score": score,
         "topScore": topScore,
         "topScore": topScore,
@@ -310,7 +311,8 @@ function save() {
         "eAbility": eAbility,
         "rAbility": rAbility,
         "alive": alive,
-        "justPlaced": justPlaced
+        "justPlaced": justPlaced,
+        "landSlideWait": landSlideWait
     };
 
     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
@@ -332,6 +334,7 @@ function restore(savedGame) {
         buildings.push(new Building(-1));
         buildings[i].restore(savedGame.buildings[i]);
     }
+    justPlaced = savedGame.justPlaced;
 
     lasers = [];
     for (let i = 0; i < savedGame.lasers.length; i++) {
@@ -351,6 +354,13 @@ function restore(savedGame) {
         ufos[i].restore(savedGame.ufos[i]);
     }
 
+    landSlides = [];
+    for (let i = 0; i < savedGame.landSlides.length; i++) {
+        landSlides.push(new LandSlide(-1));
+        landSlides[i].restore(savedGame.landSlides[i]);
+    }
+    landSlideWait = savedGame.landSlideWait;
+
     qAbility.restore(savedGame.qAbility);
     eAbility.restore(savedGame.eAbility);
     rAbility.restore(savedGame.rAbility);
@@ -358,7 +368,6 @@ function restore(savedGame) {
     score = savedGame.score;
     topScore = savedGame.topScore;
     alive = savedGame.alive;
-    justPlaced = savedGame.justPlaced;
 
     paused = true;
 }
@@ -835,7 +844,7 @@ var lasers = [];
 var bar = [];
 var landSlides = [];
 
-var landSlideWait = 15;
+var landSlideWait = 20;
 
 const base = playerLevel - 3 * carHeight;
 var justPlaced = true; // true to skip placing one in the first row

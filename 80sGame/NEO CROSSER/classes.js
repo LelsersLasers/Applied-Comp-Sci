@@ -535,7 +535,7 @@ class Car extends Enemy {
             else justPlaced = false;
 
             if (Math.random() < 1/20 && landSlideWait < 0) {
-                landSlides.push(new LandSlide(new Vector(canvas.width, y), canvas.width, canvas.height * 0.60, -5));
+                landSlides.push(new LandSlide(y + 1.5 * carHeight));
                 landSlideWait = 15;
             }
             else landSlideWait--;
@@ -712,18 +712,26 @@ class ButtonExtra extends Thing {
     }
 }
 
-class LandSlide extends Thing {
-    constructor(pt, w, h, ms) {
-        super(pt, w, h);
-        this.frame = 0;
-        this.ms = ms;
+class LandSlide extends Enemy {
+    constructor(y) {
+        let w = canvas.width;
+        let h = carHeight * 9;
+
+        let Xs = [0 - w, canvas.width]
+        let MSs = [w/200, -w/200];
+        let dir = getRandomInt(0, 2);
+
+        super(new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + score/5000), "TODO.mp3");
+        this.deathSound.volume = 2.0/soundOffset;
+        this.deathSound.play();
     }
     update() {
+        this.updateAnimation();
         this.pt.x += this.ms;
         let obstacles = [...cars, player];
         for (var i in obstacles) {
             if (this.hb.checkCollide(obstacles[i].hb)) {
-                obstacles[i].pt.x += this.ms/2;
+                obstacles[i].pt.x += this.ms/4;
                 for (var j in buildings) {
                     if (obstacles[i].hb.checkCollide(buildings[j].hb)) {
                         obstacles[i].pt.x = this.ms > 0 ? buildings[j].pt.x - obstacles[i].w : buildings[j].pt.x + buildings[j].hb.w;
@@ -734,10 +742,18 @@ class LandSlide extends Thing {
                 }
             }
         }
+        this.ms *= 0.999;
     }
     draw() {
         context.fillStyle = "#FFA500";
         context.beginPath();
         context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
+    }
+    restore(save) {
+        this.pt.x = save.pt.x;
+        this.pt.y = save.pt.y;
+        this.ms = save.ms;
+        this.animation = save.animation;
+        this.frame = save.frame;
     }
 }
