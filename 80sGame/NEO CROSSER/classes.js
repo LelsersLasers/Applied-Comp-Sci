@@ -318,7 +318,7 @@ class Player extends Thing {
         this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
     }
     moveVertical(ms) {
-        let obstacles = [...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
+        let obstacles = [...landSlides, ...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
         for (var i in obstacles) obstacles[i].pt.y += ms;
         for (var i in bar) bar[i].update();
     }
@@ -513,26 +513,32 @@ class Car extends Enemy {
         this.updateStun();
         this.updateAnimation();
         if (this.active) this.pt.x += this.ms;
-        if (this.hb.outOfBounds()) {
-            this.ms *= -1;
-            this.ms *= 1.001;
-        }
+        if (this.hb.outOfBounds()) this.ms *= -1.001;
         for (var i in buildings) {
             if (this.hb.checkCollide(buildings[i].hb)) this.ms *= -1;
         }
         if (this.pt.y > canvas.height && !this.offScreen) {
             let y = this.pt.y - (1.5 * carHeight) * 10;
+
             if (this.type == 1) var newMs = this.ms * 5/6 * 1.01;
             else var newMs = this.ms * 1.01;
             cars.push(new Car(y, newMs)); // always spawn new car
+
             if (getRandomInt(1, 15) * Math.pow(1.0001, score) >= 14) { // spawn ufo scale on score
                 ufos.push(new Ufo(y));
             }
+
             if (Math.random() < buildingBlockCount/10 && !justPlaced) {
                 buildings.push(new Building(y - (1.5 * carHeight) * 2));
                 justPlaced = true;
             }
             else justPlaced = false;
+
+            if (Math.random() < 1/20 && landSlideWait < 0) {
+                landSlides.push(new LandSlide(new Vector(canvas.width, y), canvas.width, canvas.height * 0.60, -5));
+                landSlideWait = 15;
+            }
+            else landSlideWait--;
 
             this.offScreen = true;
         }
@@ -706,21 +712,32 @@ class ButtonExtra extends Thing {
     }
 }
 
-class GameSave {
-    constructor(name) {
-        this.name = name;
-        this.player = player;
-        this.cars = cars;
-        this.buildings = buildings;
-        this.lasers = lasers;
-        this.bar = bar;
-        this.ufos = ufos;
-        this.score = score;
-        this.topScore = topScore;
-        this.topScore = topScore;
-        this.qAbility = qAbility;
-        this.eAbility = eAbility;
-        this.rAbility = rAbility;
-        this.alive = alive;
+class LandSlide extends Thing {
+    constructor(pt, w, h, ms) {
+        super(pt, w, h);
+        this.frame = 0;
+        this.ms = ms;
+    }
+    update() {
+        this.pt.x += this.ms;
+        let obstacles = [...cars, player];
+        for (var i in obstacles) {
+            if (this.hb.checkCollide(obstacles[i].hb)) {
+                obstacles[i].pt.x += this.ms/2;
+                for (var j in buildings) {
+                    if (obstacles[i].hb.checkCollide(buildings[j].hb)) {
+                        obstacles[i].pt.x = this.ms > 0 ? buildings[j].pt.x - obstacles[i].w : buildings[j].pt.x + buildings[j].hb.w;
+                    }
+                }
+                if (obstacles[i].hb.outOfBounds()) {
+                    obstacles[i].pt.x = this.ms > 0 ? canvas.width - obstacles[i].w : 0;
+                }
+            }
+        }
+    }
+    draw() {
+        context.fillStyle = "#FFA500";
+        context.beginPath();
+        context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
     }
 }

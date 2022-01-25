@@ -310,6 +310,7 @@ function save() {
         "eAbility": eAbility,
         "rAbility": rAbility,
         "alive": alive,
+        "justPlaced": justPlaced
     };
 
     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
@@ -357,6 +358,7 @@ function restore(savedGame) {
     score = savedGame.score;
     topScore = savedGame.topScore;
     alive = savedGame.alive;
+    justPlaced = savedGame.justPlaced;
 
     paused = true;
 }
@@ -524,7 +526,7 @@ function drawGameOver() {
 
 function drawPauseMenu() {
     player.draw();
-    obstacles = [...cars, ...ufos, ...buildings, ...lasers];
+    obstacles = [...landSlides, ...cars, ...ufos, ...buildings, ...lasers];
     for (var i in obstacles) obstacles[i].draw();
 
     drawHUD();
@@ -553,6 +555,10 @@ function drawHUD() {
 
 function drawGame() {
     for (var i in bar) bar[i].draw();
+    for (var i in landSlides) {
+        landSlides[i].update();
+        landSlides[i].draw();
+    }
     if (!paused) {
         mouseDownActions();
         player.move();
@@ -827,6 +833,9 @@ var cars = [];
 var buildings = [];
 var lasers = [];
 var bar = [];
+var landSlides = [];
+
+var landSlideWait = 15;
 
 const base = playerLevel - 3 * carHeight;
 var justPlaced = true; // true to skip placing one in the first row
