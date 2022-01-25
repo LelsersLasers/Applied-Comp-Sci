@@ -353,7 +353,8 @@ class Player extends Thing {
                     }
                 }
             }
-            if (this.frame % 11 == 0 && alive) {
+            let animationWait = eAbility.active ? 7 : 11;
+            if (this.frame % animationWait == 0 && alive) {
                 this.animation++;
                 this.frame++; // so if player stops on a %11, it doesn't freak out
                 if (player.animation > 3) player.animation = 0;
