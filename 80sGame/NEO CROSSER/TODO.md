@@ -3,7 +3,6 @@
 LandSlide:
 - Texture
 - Sound
-- Clean player touching building
 
 - E SOUND
 

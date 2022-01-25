@@ -535,7 +535,7 @@ class Car extends Enemy {
             }
             else justPlaced = false;
 
-            if (Math.random() < 1 && landSlideWait < 0) {
+            if (Math.random() < 1/20 && landSlideWait < 0) {
                 landSlides.push(new LandSlide(y + 1.5 * carHeight));
                 landSlideWait = 10;
             }
@@ -716,7 +716,7 @@ class ButtonExtra extends Thing {
 class LandSlide extends Enemy {
     constructor(y) {
         let w = canvas.width;
-        let h = carHeight * 9;
+        let h = carHeight * 8.5;
 
         let Xs = [0 - w, canvas.width]
         let MSs = [w/200, -w/200];
@@ -733,10 +733,11 @@ class LandSlide extends Enemy {
         for (var i in obstacles) {
             if (this.hb.checkCollide(obstacles[i].hb)) {
                 obstacles[i].pt.x += this.ms/4;
+                player.updateHB();
                 for (var j in buildings) {
                     if (obstacles[i].hb.checkCollide(buildings[j].hb)) {
                         obstacles[i].pt.x = this.ms > 0 ? buildings[j].pt.x - obstacles[i].hb.w : buildings[j].pt.x + buildings[j].hb.w;
-                        obstacles[i].pt.x += obstacles[i].pt.x - obstacles[i].hb.pt.x;
+                        obstacles[i].pt.x -= (obstacles[i].w - obstacles[i].hb.w)/2; // for player
                     }
                 }
                 if (obstacles[i].hb.outOfBounds()) {
