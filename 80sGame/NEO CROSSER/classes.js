@@ -535,9 +535,9 @@ class Car extends Enemy {
             }
             else justPlaced = false;
 
-            if (Math.random() < 1/20 && landSlideWait < 0) {
+            if (Math.random() < 1 && landSlideWait < 0) {
                 landSlides.push(new LandSlide(y + 1.5 * carHeight));
-                landSlideWait = 15;
+                landSlideWait = 10;
             }
             else landSlideWait--;
 
@@ -735,7 +735,8 @@ class LandSlide extends Enemy {
                 obstacles[i].pt.x += this.ms/4;
                 for (var j in buildings) {
                     if (obstacles[i].hb.checkCollide(buildings[j].hb)) {
-                        obstacles[i].pt.x = this.ms > 0 ? buildings[j].pt.x - obstacles[i].w : buildings[j].pt.x + buildings[j].hb.w;
+                        obstacles[i].pt.x = obstacles[i].pt.x - obstacles[i].hb.pt.x;
+                        obstacles[i].pt.x += (this.ms > 0 ? buildings[j].pt.x - obstacles[i].hb.w : buildings[j].pt.x + buildings[j].hb.w);
                     }
                 }
                 if (obstacles[i].hb.outOfBounds()) {

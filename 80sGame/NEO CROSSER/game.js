@@ -572,6 +572,7 @@ function drawGame() {
         mouseDownActions();
         player.move();
         player.draw();
+        player.hb.draw("#ffffff");
         for (var i in buildings) buildings[i].draw();
         enemies = [...cars, ...ufos];
         for (var i in enemies) {
@@ -580,8 +581,8 @@ function drawGame() {
             if (enemies[i].hb.checkCollide(player.hb) && alive) {
                 scoreView.color = "#e37e7b";
                 enemies[i].deathSound.play();
-                alive = false;
-                player.off();
+                // alive = false;
+                // player.off();
             }
         }
         for (var i in lasers) lasers[i].update();
@@ -844,7 +845,7 @@ var lasers = [];
 var bar = [];
 var landSlides = [];
 
-var landSlideWait = 20;
+var landSlideWait = 5;
 
 const base = playerLevel - 3 * carHeight;
 var justPlaced = true; // true to skip placing one in the first row
