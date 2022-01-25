@@ -309,17 +309,17 @@ class Player extends Thing {
         this.teleportSpeed = 3;
         this.sprintSpeed = 1.5;
         this.animation = 0;
-        this.lastDrawDir = -1;
+        this.lastDrawDir = 0;
         this.updateHB();
         this.afterImages = [];
         this.frame = 0;
     }
     updateHB() { // player sprite doesn't take up full rectangle
-        this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
+        // this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
     }
     moveVertical(ms) {
         let obstacles = [...landSlides, ...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
-        for (var i in obstacles) obstacles[i].pt.y += ms;
+        for (var i in obstacles) obstacles[i].pt.y += ms * (eAbility.active > 0 ? this.sprintSpeed : 1);
         for (var i in bar) bar[i].update();
     }
     move() {
@@ -328,12 +328,12 @@ class Player extends Thing {
                 this.frame++;
                 switch (lastDir) {
                     case "w":
-                        this.moveVertical(this.msY/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1));
+                        this.moveVertical(this.msY/moveWait);
                         score += 1;
                         if (score > topScore) topScore = score;
                         break;
                     case "s":
-                        this.moveVertical(-this.msY/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1));
+                        this.moveVertical(-this.msY/moveWait);
                         score -= 1;
                         break;
                     case "a":
@@ -346,8 +346,8 @@ class Player extends Thing {
                 this.updateHB();
                 for (var i in buildings) {
                     if (this.hb.checkCollide(buildings[i].hb)) { // if it is touching, undo the last movement
-                        if (lastDir == "a") this.pt.x += this.msX/moveWait;
-                        else if (lastDir == "d") this.pt.x -= this.msX/moveWait;
+                        if (lastDir == "a") this.pt.x += this.msX/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1);
+                        else if (lastDir == "d") this.pt.x -= this.msX/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1);
                         else if (lastDir == "w") this.moveVertical(-this.msY/moveWait);
                         else if (lastDir == "s") this.moveVertical(this.msY/moveWait);
                     }
@@ -735,14 +735,16 @@ class LandSlide extends Enemy {
                 obstacles[i].pt.x += this.ms/4;
                 for (var j in buildings) {
                     if (obstacles[i].hb.checkCollide(buildings[j].hb)) {
-                        obstacles[i].pt.x = obstacles[i].pt.x - obstacles[i].hb.pt.x;
-                        obstacles[i].pt.x += (this.ms > 0 ? buildings[j].pt.x - obstacles[i].hb.w : buildings[j].pt.x + buildings[j].hb.w);
+                        obstacles[i].pt.x = this.ms > 0 ? buildings[j].pt.x - obstacles[i].hb.w : buildings[j].pt.x + buildings[j].hb.w;
                     }
                 }
                 if (obstacles[i].hb.outOfBounds()) {
                     obstacles[i].pt.x = this.ms > 0 ? canvas.width - obstacles[i].w : 0;
                 }
             }
+        }
+        if (this.hb.checkCollide(player.hb)) {
+            player.lastDrawDir = this.ms > 0 ? 2 : 3;
         }
         this.ms *= 0.999;
     }

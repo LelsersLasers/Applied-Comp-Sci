@@ -564,11 +564,11 @@ function drawHUD() {
 
 function drawGame() {
     for (var i in bar) bar[i].draw();
-    for (var i in landSlides) {
-        landSlides[i].update();
-        landSlides[i].draw();
-    }
     if (!paused) {
+        for (var i in landSlides) {
+            landSlides[i].update();
+            landSlides[i].draw();
+        }
         mouseDownActions();
         player.move();
         player.draw();
@@ -586,16 +586,10 @@ function drawGame() {
             }
         }
         for (var i in lasers) lasers[i].update();
-        
         drawHUD();
-
-        if (!alive) {
-            drawGameOver();
-        }
+        if (!alive) drawGameOver();
     }
-    else {
-        drawPauseMenu();
-    }
+    else drawPauseMenu();
 
     if (backgroundMusic.currentTime > backgroundMusic.duration - 20) backgroundMusic.currentTime = 20;
 }
