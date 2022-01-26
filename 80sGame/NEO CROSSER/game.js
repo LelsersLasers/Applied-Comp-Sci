@@ -233,6 +233,13 @@ function getRandomInt(min, max) {
     return value;
 }
 
+function radToDeg(rad) {
+    return rad * 180 / Math.PI;
+}
+function degToRad(deg) {
+    return deg * Math.PI / 180;
+}
+
 function musicStart() {
     backgroundMusic.currentTime = getRandomInt(20, backgroundMusic.duration);
     if (musicShouldPlay === "true") {
@@ -581,8 +588,8 @@ function drawGame() {
             if (enemies[i].hb.checkCollide(player.hb) && alive) {
                 scoreView.color = "#e37e7b";
                 enemies[i].deathSound.play();
-                alive = false;
-                player.off();
+                // alive = false;
+                // player.off();
             }
         }
         for (var i in lasers) lasers[i].update();

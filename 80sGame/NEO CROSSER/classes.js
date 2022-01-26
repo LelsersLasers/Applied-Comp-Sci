@@ -183,58 +183,59 @@ class GameTxt extends Thing {
 }
 
 class Laser extends Thing {
-    constructor(pt, dir, stunTime, friendly) {
+    constructor(pt, angle, stunTime, friendly) {
         let ms = Math.sqrt((canvas.width * canvas.width + canvas.height * canvas.height)/52000);
-        switch (dir) {
-            case "w":
-                var moveVector = new Vector(0, -ms);
-                var h = ms * 2;
-                var w = ms;
-                pt.x -= w/2;
-                break;
-            case "s":
-                var moveVector = new Vector(0, ms);
-                var h = ms * 2;
-                var w = ms;
-                pt.x -= w/2;
-                break;
-            case "a":
-                var moveVector = new Vector(-ms, 0);
-                var h = ms;
-                var w = ms * 2;
-                pt.y -= h/2;
-                break
-            case "d":
-                var moveVector = new Vector(ms, 0);
-                var h = ms;
-                var w = ms * 2;
-                pt.y -= h/2;
-                break;
-            case "sd":
-                var moveVector = new Vector(ms * Math.sqrt(2) * 0.5, ms * Math.sqrt(2) * 0.5);
-                var h = ms * 2;
-                var w = ms;
-                var angle = 45;
-                break;
-            case "wd":
-                var moveVector = new Vector(ms * Math.sqrt(2) * 0.5, -ms * Math.sqrt(2) * 0.5);
-                var h = ms * 2;
-                var w = ms;
-                var angle = -45;
-                break;
-            case "sa":
-                var moveVector = new Vector(-ms * Math.sqrt(2) * 0.5, ms * Math.sqrt(2) * 0.5);
-                var h = ms * 2;
-                var w = ms;
-                var angle = 135;
-                break;
-            case "wa":
-                var moveVector = new Vector(-ms * Math.sqrt(2) * 0.5, -ms * Math.sqrt(2) * 0.5);
-                var h = ms * 2;
-                var w = ms;
-                var angle = -135;
-                break;
-        }
+        // switch (dir) {
+        //     case "w":
+        //         var moveVector = new Vector(0, -ms);
+        //         var h = ms * 2;
+        //         var w = ms;
+        //         pt.x -= w/2;
+        //         break;
+        //     case "s":
+        //         var moveVector = new Vector(0, ms);
+        //         var h = ms * 2;
+        //         var w = ms;
+        //         pt.x -= w/2;
+        //         break;
+        //     case "a":
+        //         var moveVector = new Vector(-ms, 0);
+        //         var h = ms;
+        //         var w = ms * 2;
+        //         pt.y -= h/2;
+        //         break
+        //     case "d":
+        //         var moveVector = new Vector(ms, 0);
+        //         var h = ms;
+        //         var w = ms * 2;
+        //         pt.y -= h/2;
+        //         break;
+        //     case "sd":
+        //         var moveVector = new Vector(ms * Math.sqrt(2) * 0.5, ms * Math.sqrt(2) * 0.5);
+        //         var h = ms * 2;
+        //         var w = ms;
+        //         var angle = 45;
+        //         break;
+        //     case "wd":
+        //         var moveVector = new Vector(ms * Math.sqrt(2) * 0.5, -ms * Math.sqrt(2) * 0.5);
+        //         var h = ms * 2;
+        //         var w = ms;
+        //         var angle = -45;
+        //         break;
+        //     case "sa":
+        //         var moveVector = new Vector(-ms * Math.sqrt(2) * 0.5, ms * Math.sqrt(2) * 0.5);
+        //         var h = ms * 2;
+        //         var w = ms;
+        //         var angle = 135;
+        //         break;
+        //     case "wa":
+        //         var moveVector = new Vector(-ms * Math.sqrt(2) * 0.5, -ms * Math.sqrt(2) * 0.5);
+        //         var h = ms * 2;
+        //         var w = ms;
+        //         var angle = -135;
+        //         break;
+        // }
+        var move = new Vector(Math.sin(degToRad(angle)) * ms, Math.cos(degToRad(angle)) * ms);
         super(pt, w, h);
         this.friendly = friendly;
         this.color = friendly ? "#ff0055" : "#0000ff";
@@ -292,7 +293,6 @@ class Laser extends Thing {
     }
     restore(save) {
         this.active = save.active;
-        this.dir = save.dir;
         this.stunTime = save.stunTime;
         this.ms = save.ms;
         this.angle = save.angle;

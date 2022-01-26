@@ -2,11 +2,9 @@
 
 WHY DON'T UFO LASERS SHOOT STRAIGHT
 
-Change updateHB from a player/ufo to a class HitBox
-- "useSmallHB()"
-
 UFOs shoot lasers when score > 10k (softcap)
 - draw lasers at correct angle
+    - laser takes in an angle (not dir)
 - stun player
     - this.stun same as enemy class
     - new stun texture (with just outline)
@@ -22,6 +20,9 @@ Pick "soft caps" for score to balance:
     - land slide speed
     - land slide pull rate
     - car speed
+
+Change updateHB from a player/ufo to a class HitBox
+- "useSmallHB()"
 
 LandSlide:
 - Texture
