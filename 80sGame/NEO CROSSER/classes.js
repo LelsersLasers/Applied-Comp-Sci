@@ -537,7 +537,7 @@ class Car extends Enemy {
 
             if (Math.random() < 1/20 && landSlideWait < 0) {
                 landSlides.push(new LandSlide(y + 1.5 * carHeight));
-                landSlideWait = 10;
+                landSlideWait = 20;
             }
             else landSlideWait--;
 
