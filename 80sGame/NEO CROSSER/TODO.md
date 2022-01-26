@@ -1,18 +1,17 @@
 # TODO
 
-WHY DON'T UFO LASERS SHOOT STRAIGHT
-
 UFOs shoot lasers when score > 10k (softcap)
 - draw lasers at correct angle
     - laser takes in an angle (not dir)
 - stun player
-    - new stun texture (with just outline)
     - stop perma stun
 - restore ufo lasers
 - visual clarity
     - ligher blue
         - same as the red laser (#ff000 -> #ff0055" but for blue)
-    - targeting indicator - COLOR?
+    - targeting indicator
+        - COLOR?
+        - only show when not obstructed?
 
 Pick "soft caps" for score to balance:
 - "CONST SOFTCAP = {SCORE}"

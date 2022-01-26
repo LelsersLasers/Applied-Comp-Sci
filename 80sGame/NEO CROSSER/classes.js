@@ -221,7 +221,7 @@ class Laser extends Thing {
             context.lineWidth = this.ms * 1.5;
             context.beginPath();
             context.moveTo(this.pt.x + this.hb.w/2, this.pt.y + this.hb.h/2);
-            context.lineTo(this.pt.x + this.hb.w/2 + this.moveVector.x * 3, this.pt.y + this.hb.h/2 + this.moveVector.y * 3);
+            context.lineTo(this.pt.x + this.hb.w/2 - this.moveVector.x * 3, this.pt.y + this.hb.h/2 - this.moveVector.y * 3);
             context.stroke();
             context.lineWidth = 3;
         }
@@ -363,12 +363,12 @@ class Player extends Thing {
     }
     draw() {
         for (var i in this.afterImages) this.afterImages[i].draw();
-        if (alive && !paused) {
+        if (alive && !paused && this.active) {
             let dirs = ["s", "w", "d", "a"];
             let dir = dirs.indexOf(lastDir);
             this.lastDrawDir = dir;
         }
-        context.drawImage(texPlayer, posSourcePlayer[Number(!alive)][this.lastDrawDir][this.animation][0], posSourcePlayer[Number(!alive)][this.lastDrawDir][this.animation][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
+        context.drawImage(texPlayer, posSourcePlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][0], posSourcePlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
     }
     restore(save) {
         this.active = save.active;
@@ -395,7 +395,7 @@ class AfterImage extends Thing {
     draw() {
         if (this.frames > 0) {
             context.globalAlpha = this.frames/300 * 0.6;
-            context.drawImage(texPlayer, posSourcePlayer[this.a][this.b][this.c][0], posSourcePlayer[this.a][this.b][this.c][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
+            context.drawImage(texPlayer, posSourcePlayer[this.a][0][this.b][this.c][0], posSourcePlayer[this.a][0][this.b][this.c][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
             context.globalAlpha = 1;
             if (!paused) this.frames--;
         }
