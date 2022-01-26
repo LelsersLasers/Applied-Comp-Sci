@@ -3,9 +3,11 @@
 Restore ufo lasers
 
 
-Visual clarity
+Clarity
 - targeting indicator for ufos
-    - COLOR?
+    - Targeting noise
+    - Use different texture rather than than red sqaure for ufo
+    - line between ufo and player?
     - only show when not obstructed?
 - General colors/hitboxes
     - Check w/ Jerry/Andrew

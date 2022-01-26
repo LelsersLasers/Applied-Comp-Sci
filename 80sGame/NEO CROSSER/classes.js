@@ -188,7 +188,7 @@ class Laser extends Thing {
         var moveVector = new Vector(Math.sin(degToRad(angle)) * ms, Math.cos(degToRad(angle)) * ms);
         super(pt, ms, ms);
         this.friendly = friendly;
-        this.color = friendly ? "#ff0055" : "#03b1fc";
+        this.color = friendly ? "#03b1fc" : "#ff0055";
         this.stunTime = stunTime;
         this.ms = ms;
         this.angle = angle;
@@ -236,6 +236,7 @@ class Laser extends Thing {
         this.pt.x = save.pt.x;
         this.pt.y = save.pt.y;
         this.friendly = save.friendly;
+        this.color = save.color;
     }
 }
 
@@ -542,6 +543,7 @@ class Ufo extends Enemy {
         }
         this.move.scale(this.ms);
         this.canShoot = score > 100;
+        // this.canShoot = score > softCap;
         this.lasers = [];
     }
     getAnimationWait() {
@@ -551,6 +553,7 @@ class Ufo extends Enemy {
         this.updateStun();
         this.updateAnimation();
         this.canShoot = score > 100 && Math.abs(player.pt.y - this.pt.y) < canvas.height;
+        // this.canShoot = score > softCap && Math.abs(player.pt.y - this.pt.y) < canvas.height;
         if (this.active) {
             this.pt.apply(this.move);
             this.updateHB();
@@ -575,6 +578,13 @@ class Ufo extends Enemy {
                 if (!paused) this.lasers[i].update();
                 else this.lasers[i].draw();
             }
+
+            context.strokeStyle = "#03b1fc";
+            context.beginPath();
+            context.moveTo(this.pt.x + this.w/2, this.pt.y + this.h/2);
+            context.lineTo(player.pt.x + player.w/2, player.pt.y + player.h/2);
+            context.stroke();
+
             context.fillStyle = "#ff0055";
             context.fillRect(player.pt.x + player.w * 2/5, player.pt.y + player.h * 2/5, player.w * 1/5, player.h * 1/5);
             context.fillRect(this.pt.x + (this.w - player.w * 1/5)/2, this.pt.y + (this.h - player.w * 1/5)/2, player.w * 1/5, player.h * 1/5);
