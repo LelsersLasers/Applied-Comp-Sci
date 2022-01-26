@@ -185,60 +185,10 @@ class GameTxt extends Thing {
 class Laser extends Thing {
     constructor(pt, angle, stunTime, friendly) {
         let ms = Math.sqrt((canvas.width * canvas.width + canvas.height * canvas.height)/52000);
-        // switch (dir) {
-        //     case "w":
-        //         var moveVector = new Vector(0, -ms);
-        //         var h = ms * 2;
-        //         var w = ms;
-        //         pt.x -= w/2;
-        //         break;
-        //     case "s":
-        //         var moveVector = new Vector(0, ms);
-        //         var h = ms * 2;
-        //         var w = ms;
-        //         pt.x -= w/2;
-        //         break;
-        //     case "a":
-        //         var moveVector = new Vector(-ms, 0);
-        //         var h = ms;
-        //         var w = ms * 2;
-        //         pt.y -= h/2;
-        //         break
-        //     case "d":
-        //         var moveVector = new Vector(ms, 0);
-        //         var h = ms;
-        //         var w = ms * 2;
-        //         pt.y -= h/2;
-        //         break;
-        //     case "sd":
-        //         var moveVector = new Vector(ms * Math.sqrt(2) * 0.5, ms * Math.sqrt(2) * 0.5);
-        //         var h = ms * 2;
-        //         var w = ms;
-        //         var angle = 45;
-        //         break;
-        //     case "wd":
-        //         var moveVector = new Vector(ms * Math.sqrt(2) * 0.5, -ms * Math.sqrt(2) * 0.5);
-        //         var h = ms * 2;
-        //         var w = ms;
-        //         var angle = -45;
-        //         break;
-        //     case "sa":
-        //         var moveVector = new Vector(-ms * Math.sqrt(2) * 0.5, ms * Math.sqrt(2) * 0.5);
-        //         var h = ms * 2;
-        //         var w = ms;
-        //         var angle = 135;
-        //         break;
-        //     case "wa":
-        //         var moveVector = new Vector(-ms * Math.sqrt(2) * 0.5, -ms * Math.sqrt(2) * 0.5);
-        //         var h = ms * 2;
-        //         var w = ms;
-        //         var angle = -135;
-        //         break;
-        // }
         var moveVector = new Vector(Math.sin(degToRad(angle)) * ms, Math.cos(degToRad(angle)) * ms);
         super(pt, ms, ms);
         this.friendly = friendly;
-        this.color = friendly ? "#ff0055" : "#0000ff";
+        this.color = friendly ? "#ff0055" : "#5500ff";
         this.stunTime = stunTime;
         this.ms = ms;
         this.angle = angle;
@@ -285,6 +235,7 @@ class Laser extends Thing {
         this.moveVector.y = save.moveVector.y;
         this.pt.x = save.pt.x;
         this.pt.y = save.pt.y;
+        this.friendly = save.friendly;
     }
 }
 
@@ -300,6 +251,7 @@ class Player extends Thing {
         this.updateHB();
         this.afterImages = [];
         this.frame = 0;
+        this.stun = 0;
     }
     updateHB() { // player sprite doesn't take up full rectangle
         this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
@@ -312,6 +264,11 @@ class Player extends Thing {
         for (var i in bar) bar[i].update();
     }
     move() {
+        this.stun--;
+        if (this.stun <= 0) {
+            this.on();
+            this.stun = 0;
+        }
         if (this.active) {
             if (wDown || sDown || aDown || dDown) {
                 this.frame++;
@@ -423,6 +380,7 @@ class Player extends Thing {
         this.msY = save.msY;
         this.pt.x = save.pt.x;
         this.pt.y = save.pt.y;
+        this.stun = 0;
     }
 }
 
@@ -582,6 +540,7 @@ class Ufo extends Enemy {
     update() {
         this.updateStun();
         this.updateAnimation();
+        this.canShoot = score > 100 && Math.abs(player.pt.y - this.pt.y) < canvas.height;
         if (this.active) {
             this.pt.apply(this.move);
             this.updateHB();
@@ -601,8 +560,14 @@ class Ufo extends Enemy {
     }
     draw() {
         context.drawImage(texUfo, posSourceUfo[Number(!this.active)][this.animation][0], posSourceUfo[Number(!this.active)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
-        if(this.canShoot) {
-            for (var i in this.lasers) this.lasers[i].update();
+        if (this.canShoot) {
+            for (var i in this.lasers) {
+                if (!paused) this.lasers[i].update();
+                else this.lasers[i].draw();
+            }
+            context.fillStyle = "#ff0055";
+            context.fillRect(player.pt.x + player.w * 2/5, player.pt.y + player.h * 2/5, player.w * 1/5, player.h * 1/5);
+            context.fillRect(this.pt.x + (this.w - player.w * 1/5)/2, this.pt.y + (this.h - player.w * 1/5)/2, player.w * 1/5, player.h * 1/5);
         }
     }
     updateHB() {
@@ -617,7 +582,7 @@ class Ufo extends Enemy {
         this.stun = save.stun;
         this.pt.x = save.pt.x;
         this.pt.y = save.pt.y;
-        this.friendly = save.friendly;
+        this.canShoot = save.canShoot;
     }
 }
 
