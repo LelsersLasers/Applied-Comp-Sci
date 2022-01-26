@@ -647,7 +647,10 @@ function setUpContext() {
 
 // localStorage.removeItem("NEO CROSSER - Leader Board"); // reset leard board
 
-var font = "monospace";
+const softCap = 10000;
+const ufoBase = Math.pow(2, 1/softCap); // double ufo spawn rate
+
+const font = "monospace";
 
 var screen = "welcome";
 var paused = false;
@@ -862,10 +865,10 @@ var bar = [];
 var landSlides = [];
 
 var landSlideWait = 20;
+const buildingBlockCount = 5;
 
 const base = playerLevel - 3 * carHeight;
 var justPlaced = true; // true to skip placing one in the first row
-const buildingBlockCount = 5;
 for (var i = 0; i < 10; i++) {
     let startPosY = base - (1.5 * carHeight * i);
     let speed = (getRandomInt(i/6 + 1, i/4 + 2)/900) * canvas.width * 2/3;

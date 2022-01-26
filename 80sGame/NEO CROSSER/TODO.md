@@ -14,16 +14,14 @@ UFOs shoot lasers when score > 10k (softcap)
         - only show when not obstructed?
 
 Pick "soft caps" for score to balance:
-- "CONST SOFTCAP = {SCORE}"
-    - ufo spawn rates
-    - ufo speed
-    - when ufos start shooting lasers
-        - shoot rate
-        - laser speed
-    - land slide spawn rates
-    - land slide speed
-    - land slide pull rate
-    - car speed
+- "CONST SOFTCAP = {SCORE TO SOFT CAP AY}"
+    - [x] ufo spawn rates
+    - [x] ufo speed
+    - [x] when ufos start shooting lasers
+    - [ ] land slide spawn rates ?
+    - [x] land slide speed
+    - [ ] land slide pull rate ?
+    - [ ] car speed ?
 
 Change updateHB from a player/ufo to a class HitBox
 - "useSmallHB()"

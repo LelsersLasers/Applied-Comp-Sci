@@ -471,7 +471,7 @@ class Car extends Enemy {
             else var newMs = this.ms * 1.01;
             cars.push(new Car(y, newMs)); // always spawn new car
 
-            if (getRandomInt(1, 15) * Math.pow(1.0001, score) >= 14) { // spawn ufo scale on score
+            if (getRandomInt(1, 15) * Math.pow(ufoBase, score) >= 14) { // spawn ufo scale on score
                 ufos.push(new Ufo(y));
             }
 
@@ -482,7 +482,7 @@ class Car extends Enemy {
             else justPlaced = false;
 
             if (Math.random() < 1/20 && landSlideWait < 0) {
-                landSlides.push(new LandSlide(y + 1.5 * carHeight));
+                landSlides.push(new LandSlide(y + 3 * carHeight));
                 landSlideWait = 20;
             }
             else landSlideWait--;
@@ -520,7 +520,7 @@ class Ufo extends Enemy {
         let w = ufoWidth;
         let h = ufoHeight;
         let pt = new Vector(getRandomInt(0, canvas.width - w), y);
-        let ms = score/5000 * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800) + 1;
+        let ms = score/softCap * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800) + 1;
         super(pt, w, h, ms, "ufoHitSound.mp3");
         this.deathSound.volume = soundOffset/soundOffset;
 
@@ -531,8 +531,7 @@ class Ufo extends Enemy {
             this.move = new Vector(getRandomInt(-12, 12), getRandomInt(3, 5));
         }
         this.move.scale(this.ms);
-        this.canShoot = score > 100;
-        if (this.canShoot) this.lasers = [];
+        this.lasers = [];
     }
     getAnimationWait() {
         return Math.abs(parseInt(30/((this.ms/1.5))));
@@ -540,7 +539,7 @@ class Ufo extends Enemy {
     update() {
         this.updateStun();
         this.updateAnimation();
-        this.canShoot = score > 100 && Math.abs(player.pt.y - this.pt.y) < canvas.height;
+        this.canShoot = score > softCap && Math.abs(player.pt.y - this.pt.y) < canvas.height;
         if (this.active) {
             this.pt.apply(this.move);
             this.updateHB();
@@ -582,7 +581,6 @@ class Ufo extends Enemy {
         this.stun = save.stun;
         this.pt.x = save.pt.x;
         this.pt.y = save.pt.y;
-        this.canShoot = save.canShoot;
     }
 }
 
@@ -694,7 +692,7 @@ class LandSlide extends Enemy {
         let MSs = [w/200, -w/200];
         let dir = getRandomInt(0, 2);
 
-        super(new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + score/5000), "TODO.mp3");
+        super(new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + score/softCap), "TODO.mp3");
         this.deathSound.volume = 2.0/soundOffset;
         this.deathSound.play();
     }
