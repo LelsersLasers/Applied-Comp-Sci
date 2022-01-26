@@ -345,7 +345,7 @@ function restore(savedGame) {
 
     lasers = [];
     for (let i = 0; i < savedGame.lasers.length; i++) {
-        lasers.push(new Laser(new Vector(-1, -1), "s", -1, true));
+        lasers.push(new Laser(new Vector(-1, -1), -1, -1, true));
         lasers[i].restore(savedGame.lasers[i]);
     }
 
@@ -584,7 +584,6 @@ function drawGame() {
         for (var i in enemies) {
             enemies[i].update();
             enemies[i].draw();
-            console.log(enemies);
             if (enemies[i].hb.checkCollide(player.hb) && alive) {
                 scoreView.color = "#e37e7b";
                 enemies[i].deathSound.play();

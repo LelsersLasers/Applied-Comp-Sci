@@ -235,13 +235,12 @@ class Laser extends Thing {
         //         var angle = -135;
         //         break;
         // }
-        var move = new Vector(Math.sin(degToRad(angle)) * ms, Math.cos(degToRad(angle)) * ms);
-        super(pt, w, h);
+        var moveVector = new Vector(Math.sin(degToRad(angle)) * ms, Math.cos(degToRad(angle)) * ms);
+        super(pt, ms, ms);
         this.friendly = friendly;
         this.color = friendly ? "#ff0055" : "#0000ff";
         this.stunTime = stunTime;
         this.ms = ms;
-        this.dir = dir;
         this.angle = angle;
         this.moveVector = moveVector;
         this.hitSound = document.createElement("audio");
@@ -268,28 +267,14 @@ class Laser extends Thing {
     }
     draw() {
         if (this.active) {
-            if (["w", "a", "s", "d"].indexOf(this.dir) >= 0) this.drawNormalRect();
-            else this.drawRotatedRect(this.angle);
-            this.hb.draw("#ffffff");
+            context.strokeStyle = this.color;
+            context.lineWidth = this.ms * 1.5;
+            context.beginPath();
+            context.moveTo(this.pt.x + this.hb.w/2, this.pt.y + this.hb.h/2);
+            context.lineTo(this.pt.x + this.hb.w/2 + this.moveVector.x * 3, this.pt.y + this.hb.h/2 + this.moveVector.y * 3);
+            context.stroke();
+            context.lineWidth = 3;
         }
-    }
-    drawRotatedRect(angle) {
-        angle *= Math.PI / 180;
-        context.strokeStyle = this.color;
-        context.lineWidth = this.w * 1.5;
-        context.beginPath();
-        context.moveTo(this.pt.x, this.pt.y);
-        context.lineTo(this.pt.x + this.h * Math.cos(angle) * Math.sqrt(2), this.pt.y + this.h * Math.sin(angle) * Math.sqrt(2));
-        context.stroke();
-        context.lineWidth = 3;
-    }
-    drawNormalRect() {
-        context.strokeStyle = this.color;
-        context.fillStyle = this.color;
-        context.beginPath();
-        context.rect(this.pt.x, this.pt.y, this.w, this.h);
-        context.fill();
-        context.stroke();
     }
     restore(save) {
         this.active = save.active;
@@ -408,10 +393,9 @@ class Player extends Thing {
                 eAbility.use();
             }
             if (rDown && rAbility.canUse()) { // laser ability
-                let dirs = ["w", "a", "s", "d", "sd", "wd", "sa", "wa"];
-                for (var i = 0; i < dirs.length; i++) {
+                for (var i = 0; i < 8; i++) {
                     var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
-                    lasers.push(new Laser(startPos, dirs[i], 120, true));
+                    lasers.push(new Laser(startPos, i * 45, 120, true));
                 }
                 rAbility.use();
             }
@@ -583,7 +567,7 @@ class Ufo extends Enemy {
         this.deathSound.volume = soundOffset/soundOffset;
 
         if (getRandomInt(1, 3) == 1) {
-            this.move = new Vector(player.pt.x + player.w/2 - this.pt.x + this.w/2, player.pt.y + player.h/2 - this.pt.y + this.h/2); // punish player for not moving
+            this.move = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2); // punish player for not moving
         }
         else {
             this.move = new Vector(getRandomInt(-12, 12), getRandomInt(3, 5));
@@ -598,41 +582,27 @@ class Ufo extends Enemy {
     update() {
         this.updateStun();
         this.updateAnimation();
-        if (this.active) this.pt.apply(this.move);
-        this.updateHB();
-        if (this.hb.outOfBounds()) this.move.x *= -1;
+        if (this.active) {
+            this.pt.apply(this.move);
+            this.updateHB();
+            if (this.hb.outOfBounds()) this.move.x *= -1;
 
-        if (this.canShoot) {
-            this.frame++;
-            var animationWait = this.getAnimationWait() * 4;
-            animationWait = animationWait > 0 ? animationWait : 30;
-            if (this.frame % animationWait == 0) {
-                this.lasers.push(new Laser(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), "w", 60, false));
-                this.lasers[this.lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - this.pt.x + this.w/2, player.pt.y + player.h/2 - this.pt.y + this.h/2);
-                this.lasers[this.lasers.length - 1].moveVector.scale(this.lasers[this.lasers.length - 1].ms);
+            if (this.canShoot) {
+                this.frame++;
+                var animationWait = this.getAnimationWait() * 4;
+                animationWait = animationWait > 0 ? animationWait : 30;
+                if (this.frame % animationWait == 0) {
+                    this.lasers.push(new Laser(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), 45, 60, false));
+                    this.lasers[this.lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
+                    this.lasers[this.lasers.length - 1].moveVector.scale(this.lasers[this.lasers.length - 1].ms);
+                }
             }
         }
     }
     draw() {
         context.drawImage(texUfo, posSourceUfo[Number(!this.active)][this.animation][0], posSourceUfo[Number(!this.active)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
-        for (var i in this.lasers) this.lasers[i].update();
-        
-        context.fillStyle = "#ff0000";
-        context.fillRect(player.pt.x + player.w/2 - 4, player.pt.y + player.h/2 - 4, 8, 8);
-        context.fillRect(this.pt.x + this.w/2 - 4, this.pt.y + this.h/2 - 4, 8, 8);
-        
-        context.beginPath();
-        context.moveTo(this.pt.x + this.w/2, this.pt.y + this.h/2);
-        context.lineTo(player.pt.x + player.w/2, player.pt.y + player.h/2);
-        context.stroke();
-
-        for (var i in this.lasers) {
-            if (this.lasers[i].active) {
-                context.beginPath();
-                context.moveTo(this.pt.x + this.w/2, this.pt.y + this.h/2);
-                context.lineTo(this.lasers[i].pt.x, this.lasers[i].pt.y);
-                context.stroke();
-            }
+        if(this.canShoot) {
+            for (var i in this.lasers) this.lasers[i].update();
         }
     }
     updateHB() {

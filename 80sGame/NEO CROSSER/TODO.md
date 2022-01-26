@@ -8,6 +8,7 @@ UFOs shoot lasers when score > 10k (softcap)
 - stun player
     - this.stun same as enemy class
     - new stun texture (with just outline)
+- restore ufo lasers
 
 Pick "soft caps" for score to balance:
 - "CONST SOFTCAP = {SCORE}"
