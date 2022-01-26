@@ -1,5 +1,28 @@
 # TODO
 
+WHY DON'T UFO LASERS SHOOT STRAIGHT
+
+Change updateHB from a player/ufo to a class HitBox
+- "useSmallHB()"
+
+UFOs shoot lasers when score > 10k (softcap)
+- draw lasers at correct angle
+- stun player
+    - this.stun same as enemy class
+    - new stun texture (with just outline)
+
+Pick "soft caps" for score to balance:
+- "CONST SOFTCAP = {SCORE}"
+    - ufo spawn rates
+    - ufo speed
+    - when ufos start shooting lasers
+        - shoot rate
+        - laser speed
+    - land slide spawn rates
+    - land slide speed
+    - land slide pull rate
+    - car speed
+
 LandSlide:
 - Texture
 - Sound
@@ -14,6 +37,7 @@ LandSlide:
 # 
 
 - "clean" code
+    - LET
     - restores bugtest
         - restore w/h?
             - update hb with w/h

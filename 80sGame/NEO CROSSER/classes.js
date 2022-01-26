@@ -183,7 +183,7 @@ class GameTxt extends Thing {
 }
 
 class Laser extends Thing {
-    constructor(pt, dir, stunTime) {
+    constructor(pt, dir, stunTime, friendly) {
         let ms = Math.sqrt((canvas.width * canvas.width + canvas.height * canvas.height)/52000);
         switch (dir) {
             case "w":
@@ -236,7 +236,8 @@ class Laser extends Thing {
                 break;
         }
         super(pt, w, h);
-        this.color = "#ff0055";
+        this.friendly = friendly;
+        this.color = friendly ? "#ff0055" : "#0000ff";
         this.stunTime = stunTime;
         this.ms = ms;
         this.dir = dir;
@@ -249,7 +250,7 @@ class Laser extends Thing {
     update() {
         if (this.active) {
             this.pt.apply(this.moveVector);
-            enemies = [...cars, ...ufos];
+            let enemies = this.friendly ? [...cars, ...ufos] : [player];
             for (var i in enemies) {
                 if (this.hb.checkCollide(enemies[i].hb)) {
                     this.off();
@@ -258,16 +259,17 @@ class Laser extends Thing {
                     this.hitSound.play();
                 }
             }
+            for (var i in buildings) {
+                if (this.hb.checkCollide(buildings[i].hb)) this.off();
+            }
         }
         this.draw();
     }
     draw() {
         if (this.active) {
-            for (var i in buildings) {
-                if (this.hb.checkCollide(buildings[i].hb)) this.off();
-            }
             if (["w", "a", "s", "d"].indexOf(this.dir) >= 0) this.drawNormalRect();
             else this.drawRotatedRect(this.angle);
+            this.hb.draw("#ffffff");
         }
     }
     drawRotatedRect(angle) {
@@ -318,7 +320,9 @@ class Player extends Thing {
         this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
     }
     moveVertical(ms) {
-        let obstacles = [...landSlides, ...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
+        let ufoLasers = [];
+        for (var i in ufos) ufoLasers = [...ufoLasers, ...ufos[i].lasers];
+        let obstacles = [...landSlides, ...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos, ...ufoLasers];
         for (var i in obstacles) obstacles[i].pt.y += ms * (eAbility.active > 0 ? this.sprintSpeed : 1);
         for (var i in bar) bar[i].update();
     }
@@ -403,11 +407,11 @@ class Player extends Thing {
             if (eDown) { // sprint ability
                 eAbility.use();
             }
-            if (rDown && rAbility.canUse()) { // laser grenade ability
+            if (rDown && rAbility.canUse()) { // laser ability
                 let dirs = ["w", "a", "s", "d", "sd", "wd", "sa", "wa"];
                 for (var i = 0; i < dirs.length; i++) {
                     var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
-                    lasers.push(new Laser(startPos, dirs[i], 120));
+                    lasers.push(new Laser(startPos, dirs[i], 120, true));
                 }
                 rAbility.use();
             }
@@ -585,6 +589,8 @@ class Ufo extends Enemy {
             this.move = new Vector(getRandomInt(-12, 12), getRandomInt(3, 5));
         }
         this.move.scale(this.ms);
+        this.canShoot = score > 100;
+        if (this.canShoot) this.lasers = [];
     }
     getAnimationWait() {
         return Math.abs(parseInt(30/((this.ms/1.5))));
@@ -595,9 +601,39 @@ class Ufo extends Enemy {
         if (this.active) this.pt.apply(this.move);
         this.updateHB();
         if (this.hb.outOfBounds()) this.move.x *= -1;
+
+        if (this.canShoot) {
+            this.frame++;
+            var animationWait = this.getAnimationWait() * 4;
+            animationWait = animationWait > 0 ? animationWait : 30;
+            if (this.frame % animationWait == 0) {
+                this.lasers.push(new Laser(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), "w", 60, false));
+                this.lasers[this.lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - this.pt.x + this.w/2, player.pt.y + player.h/2 - this.pt.y + this.h/2);
+                this.lasers[this.lasers.length - 1].moveVector.scale(this.lasers[this.lasers.length - 1].ms);
+            }
+        }
     }
     draw() {
         context.drawImage(texUfo, posSourceUfo[Number(!this.active)][this.animation][0], posSourceUfo[Number(!this.active)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
+        for (var i in this.lasers) this.lasers[i].update();
+        
+        context.fillStyle = "#ff0000";
+        context.fillRect(player.pt.x + player.w/2 - 4, player.pt.y + player.h/2 - 4, 8, 8);
+        context.fillRect(this.pt.x + this.w/2 - 4, this.pt.y + this.h/2 - 4, 8, 8);
+        
+        context.beginPath();
+        context.moveTo(this.pt.x + this.w/2, this.pt.y + this.h/2);
+        context.lineTo(player.pt.x + player.w/2, player.pt.y + player.h/2);
+        context.stroke();
+
+        for (var i in this.lasers) {
+            if (this.lasers[i].active) {
+                context.beginPath();
+                context.moveTo(this.pt.x + this.w/2, this.pt.y + this.h/2);
+                context.lineTo(this.lasers[i].pt.x, this.lasers[i].pt.y);
+                context.stroke();
+            }
+        }
     }
     updateHB() {
         this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
@@ -611,6 +647,7 @@ class Ufo extends Enemy {
         this.stun = save.stun;
         this.pt.x = save.pt.x;
         this.pt.y = save.pt.y;
+        this.friendly = save.friendly;
     }
 }
 
