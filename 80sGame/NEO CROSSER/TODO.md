@@ -1,27 +1,23 @@
 # TODO
 
-UFOs shoot lasers when score > 10k (softcap)
-- draw lasers at correct angle
-    - laser takes in an angle (not dir)
-- stun player
-    - stop perma stun
-- restore ufo lasers
-- visual clarity
-    - ligher blue
-        - same as the red laser (#ff000 -> #ff0055" but for blue)
-    - targeting indicator
-        - COLOR?
-        - only show when not obstructed?
+Restore ufo lasers
+
+
+Visual clarity
+- targeting indicator for ufos
+    - COLOR?
+    - only show when not obstructed?
+- General colors/hitboxes
+    - Check w/ Jerry/Andrew
 
 Pick "soft caps" for score to balance:
-- "CONST SOFTCAP = {SCORE TO SOFT CAP AY}"
-    - [x] ufo spawn rates
-    - [x] ufo speed
-    - [x] when ufos start shooting lasers
-    - [ ] land slide spawn rates ?
-    - [x] land slide speed
-    - [ ] land slide pull rate ?
-    - [ ] car speed ?
+- [x] ufo spawn rates
+- [x] ufo speed
+- [x] when ufos start shooting lasers
+- [ ] land slide spawn rates ?
+- [x] land slide speed
+- [ ] land slide pull rate ?
+- [ ] car speed ?
 
 Change updateHB from a player/ufo to a class HitBox
 - "useSmallHB()"
@@ -30,7 +26,11 @@ LandSlide:
 - Texture
 - Sound
 
-- E SOUND
+E SOUND
+
+On Demand Scaling
+- on restore
+- on screen change size
 
 - display restore touch directions
 - display use w/s up/down to change the selected save
@@ -41,6 +41,7 @@ LandSlide:
 
 - "clean" code
     - LET
+    - stun protection
     - restores bugtest
         - restore w/h?
             - update hb with w/h

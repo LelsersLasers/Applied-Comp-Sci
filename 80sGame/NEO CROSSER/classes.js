@@ -188,7 +188,7 @@ class Laser extends Thing {
         var moveVector = new Vector(Math.sin(degToRad(angle)) * ms, Math.cos(degToRad(angle)) * ms);
         super(pt, ms, ms);
         this.friendly = friendly;
-        this.color = friendly ? "#ff0055" : "#5500ff";
+        this.color = friendly ? "#ff0055" : "#03b1fc";
         this.stunTime = stunTime;
         this.ms = ms;
         this.angle = angle;
@@ -252,6 +252,8 @@ class Player extends Thing {
         this.afterImages = [];
         this.frame = 0;
         this.stun = 0;
+        this.lastStun = 0;
+        this.stunProtection = 0;
     }
     updateHB() { // player sprite doesn't take up full rectangle
         this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
@@ -264,7 +266,15 @@ class Player extends Thing {
         for (var i in bar) bar[i].update();
     }
     move() {
+        if (this.stun != this.lastStun && this.stunProtection <= 0) {
+            this.stunProtection = this.stun * 2;
+        }
+        else if (this.stun != this.lastStun) {
+            this.stun = this.lastStun;
+        }
         this.stun--;
+        this.stunProtection--;
+        this.lastStun = this.stun;
         if (this.stun <= 0) {
             this.on();
             this.stun = 0;
@@ -531,6 +541,7 @@ class Ufo extends Enemy {
             this.move = new Vector(getRandomInt(-12, 12), getRandomInt(3, 5));
         }
         this.move.scale(this.ms);
+        this.canShoot = score > 100;
         this.lasers = [];
     }
     getAnimationWait() {
@@ -539,7 +550,7 @@ class Ufo extends Enemy {
     update() {
         this.updateStun();
         this.updateAnimation();
-        this.canShoot = score > softCap && Math.abs(player.pt.y - this.pt.y) < canvas.height;
+        this.canShoot = score > 100 && Math.abs(player.pt.y - this.pt.y) < canvas.height;
         if (this.active) {
             this.pt.apply(this.move);
             this.updateHB();
