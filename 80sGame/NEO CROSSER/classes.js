@@ -552,7 +552,7 @@ class Ufo extends Enemy {
         this.updateStun();
         this.updateAnimation();
         let dist = Math.sqrt((this.pt.x - player.pt.x) * (this.pt.x - player.pt.x) + (this.pt.y - player.pt.y) * (this.pt.y - player.pt.y));
-        this.canShoot = score > 100 && this.hasLOS() && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * 100;
+        this.canShoot = score > 100 && this.hasLOS() && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * 100 && this.active;
         if (this.active) {
             this.pt.apply(this.move);
             this.updateHB();
@@ -564,7 +564,7 @@ class Ufo extends Enemy {
                 animationWait = animationWait > 0 ? animationWait : 120;
                 if (this.frame % animationWait == 0) {
                     // WHY DOESN'T THIS ALWAYS WORK
-                    this.lasers.push(new Laser(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), 45, 60, false));
+                    this.lasers.push(new Laser(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19), 45, 60, false));
                     console.log("laser");
                     this.lasers[this.lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
                     this.lasers[this.lasers.length - 1].moveVector.scale(this.lasers[this.lasers.length - 1].ms);
@@ -573,7 +573,7 @@ class Ufo extends Enemy {
         }
     }
     draw() {
-        context.drawImage(texUfo, posSourceUfo[Number(!this.active)][this.animation][0], posSourceUfo[Number(!this.active)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
+        context.drawImage(texUfo, posSourceUfo[Number(!this.active)][Number(this.canShoot)][this.animation][0], posSourceUfo[Number(!this.active)][Number(this.canShoot)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
         for (var i in this.lasers) {
             if (!paused) this.lasers[i].update();
             else this.lasers[i].draw();
@@ -581,13 +581,12 @@ class Ufo extends Enemy {
         if (this.canShoot) {
             context.strokeStyle = "#03b1fc";
             context.beginPath();
-            context.moveTo(this.pt.x + this.w/2, this.pt.y + this.h/2);
+            context.moveTo(this.pt.x + this.w/2, this.pt.y + this.h * 8/19);
             context.lineTo(player.pt.x + player.w/2, player.pt.y + player.h/2);
             context.stroke();
 
             context.fillStyle = "#ff0055";
             context.fillRect(player.pt.x + player.w * 2/5, player.pt.y + player.h * 2/5, player.w * 1/5, player.h * 1/5);
-            context.fillRect(this.pt.x + (this.w - player.w * 1/5)/2, this.pt.y + (this.h - player.w * 1/5)/2, player.w * 1/5, player.h * 1/5);
         }
     }
     hasLOS() {

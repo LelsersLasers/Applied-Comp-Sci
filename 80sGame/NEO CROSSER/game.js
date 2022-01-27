@@ -768,15 +768,27 @@ var posSourceBus = [ // [active][dir][animation][x/y]
 ];
 
 var texUfo = new Image();
-texUfo.src = "ufo-20x19-2x2-1spacing.png";
+texUfo.src = "ufo-20x19-4x2-1spacing.png";
 var posSourceUfo = [
-    [
-        [0, 0],
-        [21, 0]
+    [ // active
+        [ // can't shoot
+            [0, 0],
+            [21, 0]
+        ],
+        [ // can shoot
+            [42, 0],
+            [63, 0]
+        ],
     ],
-    [
-        [0, 20],
-        [21, 20]
+    [ // not active
+        [
+            [0, 20],
+            [21, 20]
+        ],
+        [ // same for can/can't shoot while stunned
+            [0, 20],
+            [21, 20]
+        ]
     ]
 ];
 

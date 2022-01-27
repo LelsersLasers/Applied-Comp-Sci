@@ -1,12 +1,13 @@
 # TODO
 
+Why don't ufos always shoot
 Restore ufo lasers
+Scale off of topScore, not score!
 
 
 Clarity
 - targeting indicator for ufos
     - Targeting noise
-    - Use different texture rather than than red sqaure for ufo
     - line between ufo and player
         - [X] only show when not obstructed
         - [X] only target when in range
@@ -49,16 +50,17 @@ On Demand Scaling
 - on restore
 - on screen change size
 
-- display restore touch directions
-- display use w/s up/down to change the selected save
+display restore touch directions
+display use w/s up/down to change the selected save
 
-- mouse hover over buttons in restore screen
+mouse hover over buttons in restore screen
 
 # 
 
 - "clean" code
     - LET
     - stun protection
+    - animation code
     - restores bugtest
         - restore w/h?
             - update hb with w/h
