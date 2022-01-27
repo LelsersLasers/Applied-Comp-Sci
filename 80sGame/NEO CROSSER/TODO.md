@@ -7,17 +7,26 @@ Clarity
 - targeting indicator for ufos
     - Targeting noise
     - Use different texture rather than than red sqaure for ufo
-    - line between ufo and player?
-    - only show when not obstructed?
+    - line between ufo and player
+        - [X] only show when not obstructed
+        - only target when in range
+            - circle around player
 - General colors/hitboxes
     - Check w/ Jerry/Andrew
 
 Pick "soft caps" for score to balance:
-- [x] ufo spawn rates
-- [x] ufo speed
-- [x] when ufos start shooting lasers
+- [ ] ufo spawn rates
+    - base is 1/15 per car
+    - double at softCap
+        - not linear
+- [ ] ufo speed
+    - base ?????
+    - double at softCap
+        - linear
+- [ ] when ufos start shooting lasers
+    - start at 1/2 of softCap
 - [ ] land slide spawn rates ?
-- [x] land slide speed
+- [ ] land slide speed
 - [ ] land slide pull rate ?
 - [ ] car speed ?
 
@@ -29,6 +38,13 @@ LandSlide:
 - Sound
 
 E SOUND
+
+TANKS
+    - Start at 1/2 softCap
+    - Stun imunne
+    - Shoots lasers at player
+    - Works like the buses
+        - use this.type in class Car
 
 On Demand Scaling
 - on restore

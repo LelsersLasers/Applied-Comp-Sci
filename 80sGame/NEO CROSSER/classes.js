@@ -552,8 +552,8 @@ class Ufo extends Enemy {
     update() {
         this.updateStun();
         this.updateAnimation();
-        this.canShoot = score > 100 && Math.abs(player.pt.y - this.pt.y) < canvas.height;
-        // this.canShoot = score > softCap && Math.abs(player.pt.y - this.pt.y) < canvas.height;
+        this.canShoot = score > 100 && this.hasLOS();
+        // this.canShoot = score > softCap && Math.abs(player.pt.y - this.pt.y) < canvas.height && this.hasLOS();
         if (this.active) {
             this.pt.apply(this.move);
             this.updateHB();
@@ -565,6 +565,7 @@ class Ufo extends Enemy {
                 animationWait = animationWait > 0 ? animationWait : 30;
                 if (this.frame % animationWait == 0) {
                     this.lasers.push(new Laser(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), 45, 60, false));
+                    console.log("laser");
                     this.lasers[this.lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
                     this.lasers[this.lasers.length - 1].moveVector.scale(this.lasers[this.lasers.length - 1].ms);
                 }
@@ -573,12 +574,12 @@ class Ufo extends Enemy {
     }
     draw() {
         context.drawImage(texUfo, posSourceUfo[Number(!this.active)][this.animation][0], posSourceUfo[Number(!this.active)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
-        if (this.canShoot) {
-            for (var i in this.lasers) {
-                if (!paused) this.lasers[i].update();
-                else this.lasers[i].draw();
-            }
+        for (var i in this.lasers) {
+            if (!paused) this.lasers[i].update();
+            else this.lasers[i].draw();
+        }
 
+        if (this.canShoot) {
             context.strokeStyle = "#03b1fc";
             context.beginPath();
             context.moveTo(this.pt.x + this.w/2, this.pt.y + this.h/2);
@@ -589,6 +590,19 @@ class Ufo extends Enemy {
             context.fillRect(player.pt.x + player.w * 2/5, player.pt.y + player.h * 2/5, player.w * 1/5, player.h * 1/5);
             context.fillRect(this.pt.x + (this.w - player.w * 1/5)/2, this.pt.y + (this.h - player.w * 1/5)/2, player.w * 1/5, player.h * 1/5);
         }
+    }
+    hasLOS() {
+        let checkObstructed = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
+        checkObstructed.scale(1);
+        let tempHB = new HitBox(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), 1, 1);
+        while (!tempHB.outOfBounds()) {
+            tempHB.pt.apply(checkObstructed);
+            if (tempHB.checkCollide(player.hb))  return true;
+            for (var i in buildings) {
+                if (tempHB.checkCollide(buildings[i].hb)) return false;
+            }
+        }
+        return true;
     }
     updateHB() {
         this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
