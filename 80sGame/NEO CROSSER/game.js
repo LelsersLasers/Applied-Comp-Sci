@@ -313,7 +313,6 @@ function save() {
         "landSlides": landSlides,
         "score": score,
         "topScore": topScore,
-        "topScore": topScore,
         "qAbility": qAbility,
         "eAbility": eAbility,
         "rAbility": rAbility,

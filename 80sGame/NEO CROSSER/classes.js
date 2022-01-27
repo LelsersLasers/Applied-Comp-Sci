@@ -34,6 +34,12 @@ class HitBox {
         }
         return false;
     }
+    useSmallHB(pt, w, h) {
+        this.pt.x = pt.x + w/5;
+        this.pt.y = pt.y + h/5;
+        this.w = w * 3/5;
+        this.h = h * 3/5;
+    }
     draw(color) {
         context.strokeStyle = color;
         context.fillStyle = color;
@@ -249,15 +255,13 @@ class Player extends Thing {
         this.sprintSpeed = 1.5;
         this.animation = 0;
         this.lastDrawDir = 0;
-        this.updateHB();
+        this.hb.pt = new Vector(-1, -1); // break reference to this.pt
+        this.hb.useSmallHB(this.pt, this.w, this.h);
         this.afterImages = [];
         this.frame = 0;
         this.stun = 0;
         this.lastStun = 0;
         this.stunProtection = 0;
-    }
-    updateHB() { // player sprite doesn't take up full rectangle
-        this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
     }
     moveVertical(ms) {
         let obstacles = [...landSlides, ...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
@@ -297,7 +301,7 @@ class Player extends Thing {
                         this.pt.x += this.msX/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1);
                         break;
                 }
-                this.updateHB();
+                this.hb.useSmallHB(this.pt, this.w, this.h);
                 for (var i in buildings) {
                     if (this.hb.checkCollide(buildings[i].hb)) { // if it is touching, undo the last movement
                         if (lastDir == "a") this.pt.x += this.msX/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1);
@@ -340,7 +344,7 @@ class Player extends Thing {
                         this.pt.x += this.msX * this.teleportSpeed;
                         break
                 }
-                player.updateHB();
+                this.hb.useSmallHB(this.pt, this.w, this.h);
                 for (var i in buildings) {
                     if (this.hb.checkCollide(buildings[i].hb)) {
                         if (lastDir == "w") this.moveVertical(-(buildings[i].pt.y + buildings[i].h - this.pt.y));
@@ -364,7 +368,7 @@ class Player extends Thing {
         }
         if (this.pt.x < 0) this.pt.x = 0;
         else if (this.pt.x + this.w > canvas.width) this.pt.x = canvas.width - this.w;
-        player.updateHB();
+        this.hb.useSmallHB(this.pt, this.w, this.h);
     }
     draw() {
         for (var i in this.afterImages) this.afterImages[i].draw();
@@ -539,6 +543,8 @@ class Ufo extends Enemy {
         else {
             this.move = new Vector(getRandomInt(-12, 12), getRandomInt(3, 5));
         }
+        this.hb.pt = new Vector(-1, -1); // break reference to this.pt
+        this.hb.useSmallHB(this.pt, this.w, this.h);
         this.move.scale(this.ms);
         this.canShoot = false;
     }
@@ -552,7 +558,7 @@ class Ufo extends Enemy {
         this.canShoot = topScore > softCap/2 && this.hasLOS() && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * 100 && this.active;
         if (this.active) {
             this.pt.apply(this.move);
-            this.updateHB();
+            this.hb.useSmallHB(this.pt, this.w, this.h);
             if (this.hb.outOfBounds()) this.move.x *= -1;
 
             if (this.canShoot) {
@@ -593,9 +599,6 @@ class Ufo extends Enemy {
             }
         }
         return true;
-    }
-    updateHB() {
-        this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
     }
     restore(save) {
         this.active = save.active;
@@ -728,7 +731,7 @@ class LandSlide extends Enemy {
         for (var i in obstacles) {
             if (this.hb.checkCollide(obstacles[i].hb)) {
                 obstacles[i].pt.x += this.ms/4;
-                player.updateHB();
+                player.hb.useSmallHB(player.pt, player.w, player.h);
                 for (var j in buildings) {
                     if (obstacles[i].hb.checkCollide(buildings[j].hb)) {
                         obstacles[i].pt.x = this.ms > 0 ? buildings[j].pt.x - obstacles[i].hb.w : buildings[j].pt.x + buildings[j].hb.w;

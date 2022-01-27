@@ -4,13 +4,8 @@ Why don't ufos always shoot
 
 
 Clarity
-- targeting indicator for ufos
 - General colors/hitboxes
     - Check w/ Jerry/Andrew
-
-Pick "soft caps" for score to balance:
-
-- [ ] car speed ?
 
 Change updateHB from a player/ufo to a class HitBox
 - "useSmallHB()"
@@ -48,6 +43,7 @@ mouse hover over buttons in restore screen\
 
 - "clean" code
     - LET
+        - scope
     - stun protection
     - animation code
     - restores bugtest
@@ -55,8 +51,7 @@ mouse hover over buttons in restore screen\
             - update hb with w/h
     - duplicate code?
     - for var i vs let i
-    - const/let/var
-        - scope
+    - softCap
 
 - Update directions
 - Update README
