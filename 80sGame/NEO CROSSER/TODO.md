@@ -7,9 +7,6 @@ Clarity
 - General colors/hitboxes
     - Check w/ Jerry/Andrew
 
-Change updateHB from a player/ufo to a class HitBox
-- "useSmallHB()"
-
 LandSlide:
 - Texture
 - Sound
