@@ -1,7 +1,6 @@
 # TODO
 
 Why don't ufos always shoot
-Restore ufo lasers
 Scale off of topScore, not score!
 
 

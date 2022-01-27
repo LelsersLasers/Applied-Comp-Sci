@@ -260,9 +260,9 @@ class Player extends Thing {
         this.hb = new HitBox(new Vector(this.pt.x + this.w * 1/5, this.pt.y + this.h * 1/10), this.w * 3/5, this.h * 4/5);
     }
     moveVertical(ms) {
-        let ufoLasers = [];
-        for (var i in ufos) ufoLasers = [...ufoLasers, ...ufos[i].lasers];
-        let obstacles = [...landSlides, ...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos, ...ufoLasers];
+        // let ufoLasers = [];
+        // for (var i in ufos) ufoLasers = [...ufoLasers, ...ufos[i].lasers];
+        let obstacles = [...landSlides, ...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
         for (var i in obstacles) obstacles[i].pt.y += ms * (eAbility.active > 0 ? this.sprintSpeed : 1);
         for (var i in bar) bar[i].update();
     }
@@ -543,7 +543,6 @@ class Ufo extends Enemy {
         }
         this.move.scale(this.ms);
         this.canShoot = false;
-        this.lasers = [];
     }
     getAnimationWait() {
         return Math.abs(parseInt(30/((this.ms/1.5))));
@@ -564,20 +563,16 @@ class Ufo extends Enemy {
                 animationWait = animationWait > 0 ? animationWait : 120;
                 if (this.frame % animationWait == 0) {
                     // WHY DOESN'T THIS ALWAYS WORK
-                    this.lasers.push(new Laser(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19), 45, 60, false));
+                    lasers.push(new Laser(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19), 45, 60, false));
                     console.log("laser");
-                    this.lasers[this.lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
-                    this.lasers[this.lasers.length - 1].moveVector.scale(this.lasers[this.lasers.length - 1].ms);
+                    lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
+                    lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);
                 }
             }
         }
     }
     draw() {
         context.drawImage(texUfo, posSourceUfo[Number(!this.active)][Number(this.canShoot)][this.animation][0], posSourceUfo[Number(!this.active)][Number(this.canShoot)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
-        for (var i in this.lasers) {
-            if (!paused) this.lasers[i].update();
-            else this.lasers[i].draw();
-        }
         if (this.canShoot) {
             context.strokeStyle = "#03b1fc";
             context.beginPath();

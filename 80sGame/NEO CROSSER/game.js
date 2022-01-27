@@ -301,7 +301,7 @@ function save() {
     let date = new Date();
     let name = getName("Enter 3 letters for your name to save:");
     name += ": " + topScore + " " + date.getHours() + ":" + date.getMinutes() + "-" + (date.getMonth() + 1) + "/" + date.getDate();
-    
+
     let gameSave = {
         "name": name,
         "player": player,
