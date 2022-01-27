@@ -9,8 +9,7 @@ Clarity
     - Use different texture rather than than red sqaure for ufo
     - line between ufo and player
         - [X] only show when not obstructed
-        - only target when in range
-            - circle around player
+        - [X] only target when in range
 - General colors/hitboxes
     - Check w/ Jerry/Andrew
 

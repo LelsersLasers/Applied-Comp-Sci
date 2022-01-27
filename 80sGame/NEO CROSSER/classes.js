@@ -542,8 +542,7 @@ class Ufo extends Enemy {
             this.move = new Vector(getRandomInt(-12, 12), getRandomInt(3, 5));
         }
         this.move.scale(this.ms);
-        this.canShoot = score > 100;
-        // this.canShoot = score > softCap;
+        this.canShoot = false;
         this.lasers = [];
     }
     getAnimationWait() {
@@ -552,8 +551,8 @@ class Ufo extends Enemy {
     update() {
         this.updateStun();
         this.updateAnimation();
-        this.canShoot = score > 100 && this.hasLOS();
-        // this.canShoot = score > softCap && Math.abs(player.pt.y - this.pt.y) < canvas.height && this.hasLOS();
+        let dist = Math.sqrt((this.pt.x - player.pt.x) * (this.pt.x - player.pt.x) + (this.pt.y - player.pt.y) * (this.pt.y - player.pt.y));
+        this.canShoot = score > 100 && this.hasLOS() && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * 100;
         if (this.active) {
             this.pt.apply(this.move);
             this.updateHB();
@@ -562,8 +561,9 @@ class Ufo extends Enemy {
             if (this.canShoot) {
                 this.frame++;
                 var animationWait = this.getAnimationWait() * 4;
-                animationWait = animationWait > 0 ? animationWait : 30;
+                animationWait = animationWait > 0 ? animationWait : 120;
                 if (this.frame % animationWait == 0) {
+                    // WHY DOESN'T THIS ALWAYS WORK
                     this.lasers.push(new Laser(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), 45, 60, false));
                     console.log("laser");
                     this.lasers[this.lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
@@ -578,7 +578,6 @@ class Ufo extends Enemy {
             if (!paused) this.lasers[i].update();
             else this.lasers[i].draw();
         }
-
         if (this.canShoot) {
             context.strokeStyle = "#03b1fc";
             context.beginPath();
