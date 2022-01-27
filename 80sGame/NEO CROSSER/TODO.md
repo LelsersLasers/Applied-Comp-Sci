@@ -1,7 +1,6 @@
 # TODO
 
 Why don't ufos always shoot
-Scale off of topScore, not score!
 
 
 Clarity
@@ -10,19 +9,7 @@ Clarity
     - Check w/ Jerry/Andrew
 
 Pick "soft caps" for score to balance:
-- [ ] ufo spawn rates
-    - base is 1/15 per car
-    - double at softCap
-        - not linear
-- [ ] ufo speed
-    - base ?????
-    - double at softCap
-        - linear
-- [ ] when ufos start shooting lasers
-    - start at 1/2 of softCap
-- [ ] land slide spawn rates ?
-- [ ] land slide speed
-- [ ] land slide pull rate ?
+
 - [ ] car speed ?
 
 Change updateHB from a player/ufo to a class HitBox

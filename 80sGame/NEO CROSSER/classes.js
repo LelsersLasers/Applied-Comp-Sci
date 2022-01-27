@@ -263,6 +263,8 @@ class Player extends Thing {
         let obstacles = [...landSlides, ...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
         for (var i in obstacles) obstacles[i].pt.y += ms * (eAbility.active > 0 ? this.sprintSpeed : 1);
         for (var i in bar) bar[i].update();
+        score += ms * moveWait/this.msY;
+        if (score > topScore) topScore = score;
     }
     move() {
         if (this.stun != this.lastStun && this.stunProtection <= 0) {
@@ -284,12 +286,9 @@ class Player extends Thing {
                 switch (lastDir) {
                     case "w":
                         this.moveVertical(this.msY/moveWait);
-                        score += 1;
-                        if (score > topScore) topScore = score;
                         break;
                     case "s":
                         this.moveVertical(-this.msY/moveWait);
-                        score -= 1;
                         break;
                     case "a":
                         this.pt.x -= this.msX/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1);
@@ -321,15 +320,12 @@ class Player extends Thing {
                             this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y - i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
                         }
                         this.moveVertical(this.msY * this.teleportSpeed);
-                        score += moveWait * this.teleportSpeed;
-                        if (score > topScore) topScore = score;
                         break;
                     case "s":
                         for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
                             this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y + i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
                         }
                         this.moveVertical(-this.msY * this.teleportSpeed);
-                        score -= moveWait * this.teleportSpeed;
                         break;
                     case "a":
                         for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
@@ -480,7 +476,7 @@ class Car extends Enemy {
             else var newMs = this.ms * 1.01;
             cars.push(new Car(y, newMs)); // always spawn new car
 
-            if (getRandomInt(1, 15) * Math.pow(ufoBase, score) >= 14) { // spawn ufo scale on score
+            if (getRandomInt(1, 16) * Math.pow(ufoBase, topScore) >= 15) { // spawn ufo scale on score
                 ufos.push(new Ufo(y));
             }
 
@@ -529,7 +525,7 @@ class Ufo extends Enemy {
         let w = ufoWidth;
         let h = ufoHeight;
         let pt = new Vector(getRandomInt(0, canvas.width - w), y);
-        let ms = score/softCap * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800) + 1;
+        let ms = topScore/softCap * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800) + 1;
         super(pt, w, h, ms, "ufoHitSound.mp3");
         this.deathSound.volume = soundOffset/soundOffset;
 
@@ -553,7 +549,7 @@ class Ufo extends Enemy {
         this.updateStun();
         this.updateAnimation();
         let dist = Math.sqrt((this.pt.x - player.pt.x) * (this.pt.x - player.pt.x) + (this.pt.y - player.pt.y) * (this.pt.y - player.pt.y));
-        this.canShoot = score > 100 && this.hasLOS() && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * 100 && this.active;
+        this.canShoot = topScore > softCap/2 && this.hasLOS() && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * 100 && this.active;
         if (this.active) {
             this.pt.apply(this.move);
             this.updateHB();
@@ -721,7 +717,7 @@ class LandSlide extends Enemy {
         let MSs = [w/200, -w/200];
         let dir = getRandomInt(0, 2);
 
-        super(new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + score/softCap), "TODO.mp3");
+        super(new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + topScore/softCap), "TODO.mp3");
         this.deathSound.volume = 2.0/soundOffset;
         this.deathSound.play();
     }
