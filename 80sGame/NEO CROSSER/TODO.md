@@ -6,10 +6,6 @@ Scale off of topScore, not score!
 
 Clarity
 - targeting indicator for ufos
-    - Targeting noise
-    - line between ufo and player
-        - [X] only show when not obstructed
-        - [X] only target when in range
 - General colors/hitboxes
     - Check w/ Jerry/Andrew
 
@@ -44,6 +40,13 @@ TANKS
     - Shoots lasers at player
     - Works like the buses
         - use this.type in class Car
+    
+SETTINGS SCREEN
+    - toggle ufos
+        - and if they can shoot
+    - toggle tanks/buses
+    - landslides
+    - softcap
 
 On Demand Scaling
 - on restore
@@ -52,7 +55,7 @@ On Demand Scaling
 display restore touch directions
 display use w/s up/down to change the selected save
 
-mouse hover over buttons in restore screen
+mouse hover over buttons in restore screen\
 
 # 
 

@@ -565,7 +565,6 @@ class Ufo extends Enemy {
                 if (this.frame % animationWait == 0) {
                     // WHY DOESN'T THIS ALWAYS WORK
                     lasers.push(new Laser(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19), 45, 60, false));
-                    console.log("laser");
                     lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
                     lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);
                     this.laserFireSound.play();
