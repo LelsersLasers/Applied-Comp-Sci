@@ -195,7 +195,7 @@ class Laser extends Thing {
         this.moveVector = moveVector;
         this.hitSound = document.createElement("audio");
         this.hitSound.src = "laserHitSound.mp3";
-        this.hitSound.volume = 0.6/soundOffset;
+        this.hitSound.volume = 0.8/soundOffset;
     }
     update() {
         if (this.active) {
@@ -533,6 +533,10 @@ class Ufo extends Enemy {
         super(pt, w, h, ms, "ufoHitSound.mp3");
         this.deathSound.volume = soundOffset/soundOffset;
 
+        this.laserFireSound = document.createElement("audio");
+        this.laserFireSound.src = "targetingSound.mp3";
+        this.laserFireSound.volume = 4.5/soundOffset;
+
         if (getRandomInt(1, 3) == 1) {
             this.move = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2); // punish player for not moving
         }
@@ -556,8 +560,7 @@ class Ufo extends Enemy {
             if (this.hb.outOfBounds()) this.move.x *= -1;
 
             if (this.canShoot) {
-                this.frame++;
-                var animationWait = this.getAnimationWait() * 4;
+                let animationWait = this.getAnimationWait() * 4;
                 animationWait = animationWait > 0 ? animationWait : 120;
                 if (this.frame % animationWait == 0) {
                     // WHY DOESN'T THIS ALWAYS WORK
@@ -565,6 +568,7 @@ class Ufo extends Enemy {
                     console.log("laser");
                     lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
                     lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);
+                    this.laserFireSound.play();
                 }
             }
         }
