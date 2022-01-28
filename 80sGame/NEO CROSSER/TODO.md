@@ -1,12 +1,7 @@
 # TODO
 
-Why don't ufos always shoot
+Why don't ufos/tanks always shoot
     - FIXED?
-
-
-Clarity
-- General colors/hitboxes
-    - Check w/ Jerry/Andrew
 
 LandSlide:
 - Texture
@@ -34,6 +29,7 @@ SETTINGS SCREEN
     - toggle tanks/buses
     - landslides
     - softcap
+    - only set leaderboard if on max settings
 
 On Demand Scaling
 - on restore
@@ -42,29 +38,31 @@ On Demand Scaling
 display restore touch directions
 display use w/s up/down to change the selected save
 
-mouse hover over buttons in restore screen\
+mouse hover over buttons in restore screen
 
-# 
 
-- "clean" code
-    - LET
-        - scope
-    - stun protection
-    - animation code
-    - restores bugtest
-        - restore w/h?
-            - update hb with w/h
-    - duplicate code?
-    - for var i vs let i
-    - softCap
+Clarity
+- General colors/hitboxes
+    - Check w/ Jerry/Andrew
 
-- Redo any art?
-    - tanks/buses
-    - demensions of the textures
-- Update HitBoxes to match the art
-    - cars, tanks
+"clean" code
+- LET
+    - scope
+- stun protection
+- animation code
+- restores bugtest
+    - restore w/h?
+        - update hb with w/h
+- duplicate code?
+- for var i vs let i
+- softCap
 
-- Update directions
-- Update README
+Redo any art?
+- tanks/buses
+- demensions of the textures
+Update HitBoxes to match the art
+- cars, tanks
 
-- Update and redo libary ipad code
+Update directions
+Update README
+Update and redo libary ipad code

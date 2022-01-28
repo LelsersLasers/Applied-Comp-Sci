@@ -420,6 +420,7 @@ class Enemy extends Thing {
         this.deathSound = document.createElement("audio");
         this.deathSound.src = soundFilename;
         this.animation = getRandomInt(0, 2);
+        this.animationWaitBase = 30;
     }
     updateStun() {
         this.stun--;
@@ -432,12 +433,12 @@ class Enemy extends Thing {
         if (this.active) {
             this.frame++;
             var animationWait = this.getAnimationWait();
-            animationWait = animationWait > 0 ? animationWait : 30;
+            animationWait = animationWait > 0 ? animationWait : this.animationWaitBase;
             if (this.frame % animationWait == 0) this.animation = Number(!this.animation);
         }
     }
     getAnimationWait() {
-        return Math.abs(parseInt(30/this.ms));
+        return Math.abs(parseInt(this.animationWaitBase/this.ms));
     }
     hasLOS() {
         let checkObstructed = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
@@ -501,9 +502,8 @@ class Car extends Enemy {
             this.canShoot = this.type == 2 && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * 80 && this.hasLOS();
             if (this.canShoot) {
                 let animationWait = this.getAnimationWait() * 4;
-                animationWait = animationWait > 0 ? animationWait : 30 * 4;
+                animationWait = animationWait > 0 ? animationWait : this.animationWaitBase * 4;
                 if (this.frame % animationWait == 0) {
-                    // WHY DOESN'T THIS ALWAYS WORK
                     lasers.push(new Laser(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19), 45, 60, false));
                     lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
                     lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);
@@ -594,6 +594,8 @@ class Ufo extends Enemy {
         this.laserFireSound.src = "targetingSound.mp3";
         this.laserFireSound.volume = 4.5/soundOffset;
 
+        this.animationWaitBase = 15;
+
         if (getRandomInt(1, 3) == 1) {
             this.move = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2); // punish player for not moving
         }
@@ -604,9 +606,6 @@ class Ufo extends Enemy {
         this.hb.useSmallHB(this.pt, this.w, this.h);
         this.move.scale(this.ms);
         this.canShoot = false;
-    }
-    getAnimationWait() {
-        return Math.abs(parseInt(30/((this.ms/1.5))));
     }
     update() {
         this.updateStun();
@@ -622,9 +621,8 @@ class Ufo extends Enemy {
 
             if (this.canShoot) {
                 let animationWait = this.getAnimationWait() * 4;
-                animationWait = animationWait > 0 ? animationWait : 120;
+                animationWait = animationWait > 0 ? animationWait : this.animationWaitBase * 4;
                 if (this.frame % animationWait == 0) {
-                    // WHY DOESN'T THIS ALWAYS WORK
                     lasers.push(new Laser(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19), 45, 60, false));
                     lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
                     lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);
