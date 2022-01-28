@@ -586,8 +586,8 @@ function drawGame() {
             if (enemies[i].hb.checkCollide(player.hb) && alive) {
                 scoreView.color = "#e37e7b";
                 enemies[i].deathSound.play();
-                // alive = false;
-                // player.off();
+                alive = false;
+                player.off();
             }
         }
         for (var i in lasers) lasers[i].update();

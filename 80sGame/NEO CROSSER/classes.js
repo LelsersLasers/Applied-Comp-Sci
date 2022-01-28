@@ -36,9 +36,9 @@ class HitBox {
     }
     useSmallHB(pt, w, h) {
         this.pt.x = pt.x + w/5;
-        this.pt.y = pt.y + h/5;
+        this.pt.y = pt.y + h/10;
         this.w = w * 3/5;
-        this.h = h * 3/5;
+        this.h = h * 4/5;
     }
     draw(color) {
         context.strokeStyle = color;
@@ -284,7 +284,7 @@ class Player extends Thing {
             this.on();
             this.stun = 0;
         }
-        if (this.active) {
+        if (alive && this.active) {
             if (wDown || sDown || aDown || dDown) {
                 this.frame++;
                 switch (lastDir) {
@@ -466,7 +466,7 @@ class Enemy extends Thing {
     }
     hasLOS() {
         let checkObstructed = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
-        checkObstructed.scale(1); // If game runs way to slow once lasers are being fired, increase to 2+
+        checkObstructed.scale(2); // If game runs way to slow once lasers are being fired, increase to 2+
         let tempHB = new HitBox(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), 1, 1);
         while (!tempHB.outOfBounds()) {
             tempHB.pt.apply(checkObstructed);
