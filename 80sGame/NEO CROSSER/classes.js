@@ -549,7 +549,7 @@ class Car extends Enemy {
             context.drawImage(texBus, posSourceBus[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 35, 17, this.pt.x, this.pt.y, this.w, this.h);
         }
         else if (this.type == 2) {
-            context.drawImage(texTank, posSourceTank[Number(!this.active)][dir][this.animation][0], posSourceTank[Number(!this.active)][dir][this.animation][1], 33, 16, this.pt.x, this.pt.y, this.w, this.h);
+            context.drawImage(texTank, posSourceTank[Number(this.canShoot)][dir][this.animation][0], posSourceTank[Number(this.canShoot)][dir][this.animation][1], 33, 16, this.pt.x, this.pt.y, this.w, this.h);
             if (this.canShoot) {
                 context.strokeStyle = "#03b1fc";
                 context.beginPath();

@@ -23,6 +23,10 @@ TANKS
 
     - turn barrel red for canShoot
         - start laser from there
+
+BUS/TANK seperate class than cars
+    - tanks/ufos also based on different class
+        - "Class CanShoot"?
     
 SETTINGS SCREEN
     - toggle ufos

@@ -770,9 +770,9 @@ var posSourceBus = [ // [active][dir][animation][x/y]
 ];
 
 var texTank = new Image();
-texTank.src = "tank-33x16-2x2-1spacing.png";
+texTank.src = "tank-33x16-2x4-1spacing.png";
 var posSourceTank = [
-    [ // if active
+    [ // can't shoot
         [ // if dir == right
             [0, 0],
             [34, 0]
@@ -780,6 +780,16 @@ var posSourceTank = [
         [ // if dir == left
             [0, 17],
             [34, 17]
+        ]
+    ],
+    [ // can shoot
+        [ // if dir == right
+            [0, 34],
+            [34, 34]
+        ],
+        [ // if dir == left
+            [0, 51],
+            [34, 51]
         ]
     ]
 ];
