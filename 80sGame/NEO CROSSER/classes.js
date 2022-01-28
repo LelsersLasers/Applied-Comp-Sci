@@ -412,15 +412,23 @@ class AfterImage extends Thing {
 }
 
 class Enemy extends Thing {
-    constructor(pt, w, h, ms, soundFilename) {
+    constructor(pt, w, h, ms, soundFilename, vol) {
         super(pt, w, h);
         this.frame = 0;
         this.stun = 0;
         this.ms = ms;
+        
         this.deathSound = document.createElement("audio");
         this.deathSound.src = soundFilename;
+        this.deathSound.volume = vol/soundOffset;
+
+        this.laserFireSound = document.createElement("audio");
+        this.laserFireSound.src = "targetingSound.mp3";
+        this.laserFireSound.volume = 4.5/soundOffset;
+
         this.animation = getRandomInt(0, 2);
         this.animationWaitBase = 30;
+        this.canShoot = false;
     }
     updateStun() {
         this.stun--;
@@ -440,9 +448,25 @@ class Enemy extends Thing {
     getAnimationWait() {
         return Math.abs(parseInt(this.animationWaitBase/this.ms));
     }
+    updateCanShoot(speciality, laserDist) {
+        let dist = Math.sqrt((this.pt.x - player.pt.x) * (this.pt.x - player.pt.x) + (this.pt.y - player.pt.y) * (this.pt.y - player.pt.y));
+        this.canShoot = speciality && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * laserDist && this.hasLOS();
+    }
+    checkShoot(startPt) {
+        if (this.canShoot) {
+            let animationWait = this.getAnimationWait() * 4;
+            animationWait = animationWait > 0 ? animationWait : this.animationWaitBase * 4;
+            if (this.frame % animationWait == 0) {
+                lasers.push(new Laser(startPt, 45, 60, false));
+                lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - startPt.x, player.pt.y + player.h/2 - startPt.y);
+                lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);
+                this.laserFireSound.play();
+            }
+        }
+    }
     hasLOS() {
         let checkObstructed = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
-        checkObstructed.scale(1);
+        checkObstructed.scale(1); // If game runs way to slow once lasers are being fired, increase to 2+
         let tempHB = new HitBox(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), 1, 1);
         while (!tempHB.outOfBounds()) {
             tempHB.pt.apply(checkObstructed);
@@ -453,16 +477,27 @@ class Enemy extends Thing {
         }
         return true;
     }
+    drawTarget(startPt) {
+        if (this.canShoot) {
+            context.strokeStyle = "#03b1fc";
+            context.beginPath();
+            context.moveTo(startPt.x, startPt.y);
+            context.lineTo(player.pt.x + player.w/2, player.pt.y + player.h/2);
+            context.stroke();
+
+            context.fillStyle = "#ff0055";
+            context.fillRect(player.pt.x + player.w * 2/5, player.pt.y + player.h * 2/5, player.w * 1/5, player.h * 1/5);
+        }   
+    }
 }
 
 class Car extends Enemy {
     constructor(y, ms) {
         let w = carWidth;
-        // let type = getRandomInt(1, 8) == 1 ? 1 : 0;
-        // if (type == 1 && topScore > softCap/2) {
-        //     type = getRandomInt(1, 3) == 1 ? 1 : 2;
-        // }
-        let type = 2;
+        let type = getRandomInt(1, 8) == 1 ? 1 : 0;
+        if (type == 1 && topScore > softCap/2) {
+            type = getRandomInt(1, 3) == 1 ? 1 : 2;
+        }
         if (type == 1) w *= 6/5;
         else if (type == 2) w *= 9/10;
         let h = carHeight;
@@ -478,18 +513,12 @@ class Car extends Enemy {
         }
         let pt = new Vector(x, y);
 
-        super(pt, w, h, ms, "carHitSound.mp3");
-        this.deathSound.volume = 2.0/soundOffset;
-
-        this.laserFireSound = document.createElement("audio");
-        this.laserFireSound.src = "targetingSound.mp3";
-        this.laserFireSound.volume = 4.5/soundOffset;
+        super(pt, w, h, ms, "carHitSound.mp3", 2.0);
 
         if (type == 1) this.ms *= 1.2;
         else if (type == 2) this.ms *= 3/4;
         this.offScreen = false;
         this.type = type;
-        this.canShoot = this.type == 2;
     }
     update() {
         if (this.type == 2) this.stun = 0;
@@ -497,21 +526,10 @@ class Car extends Enemy {
         this.updateAnimation();
         if (this.active) {
             this.pt.x += this.ms;
-
-            let dist = Math.sqrt((this.pt.x - player.pt.x) * (this.pt.x - player.pt.x) + (this.pt.y - player.pt.y) * (this.pt.y - player.pt.y));
-            this.canShoot = this.type == 2 && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * 80 && this.hasLOS();
-            if (this.canShoot) {
-                let animationWait = this.getAnimationWait() * 4;
-                animationWait = animationWait > 0 ? animationWait : this.animationWaitBase * 4;
-                if (this.frame % animationWait == 0) {
-                    lasers.push(new Laser(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19), 45, 60, false));
-                    lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
-                    lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);
-                    this.laserFireSound.play();
-                }
-            }
+            this.updateCanShoot(this.type == 2, 80);
+            this.checkShoot(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19));
+            if (this.hb.outOfBounds()) this.ms *= -1.001;
         }
-        if (this.hb.outOfBounds()) this.ms *= -1.001;
         for (var i in buildings) {
             if (this.hb.checkCollide(buildings[i].hb)) this.ms *= -1;
         }
@@ -550,16 +568,7 @@ class Car extends Enemy {
         }
         else if (this.type == 2) {
             context.drawImage(texTank, posSourceTank[Number(this.canShoot)][dir][this.animation][0], posSourceTank[Number(this.canShoot)][dir][this.animation][1], 33, 16, this.pt.x, this.pt.y, this.w, this.h);
-            if (this.canShoot) {
-                context.strokeStyle = "#03b1fc";
-                context.beginPath();
-                context.moveTo(this.pt.x + this.w/2, this.pt.y + this.h * 8/19);
-                context.lineTo(player.pt.x + player.w/2, player.pt.y + player.h/2);
-                context.stroke();
-    
-                context.fillStyle = "#ff0055";
-                context.fillRect(player.pt.x + player.w * 2/5, player.pt.y + player.h * 2/5, player.w * 1/5, player.h * 1/5);
-            }
+            this.drawTarget(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19));
         }
         else {
             context.drawImage(texCar, posSourceCar[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 34, 17, this.pt.x, this.pt.y, this.w, this.h);
@@ -587,14 +596,9 @@ class Ufo extends Enemy {
         let h = ufoHeight;
         let pt = new Vector(getRandomInt(0, canvas.width - w), y);
         let ms = topScore/softCap * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800) + 1;
-        super(pt, w, h, ms, "ufoHitSound.mp3");
-        this.deathSound.volume = soundOffset/soundOffset;
+        super(pt, w, h, ms, "ufoHitSound.mp3", soundOffset);
 
-        this.laserFireSound = document.createElement("audio");
-        this.laserFireSound.src = "targetingSound.mp3";
-        this.laserFireSound.volume = 4.5/soundOffset;
-
-        this.animationWaitBase = 15;
+        this.animationWaitBase = 45;
 
         if (getRandomInt(1, 3) == 1) {
             this.move = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2); // punish player for not moving
@@ -605,7 +609,6 @@ class Ufo extends Enemy {
         this.hb.pt = new Vector(-1, -1); // break reference to this.pt
         this.hb.useSmallHB(this.pt, this.w, this.h);
         this.move.scale(this.ms);
-        this.canShoot = false;
     }
     update() {
         this.updateStun();
@@ -615,34 +618,13 @@ class Ufo extends Enemy {
             this.pt.apply(this.move);
             this.hb.useSmallHB(this.pt, this.w, this.h);
             if (this.hb.outOfBounds()) this.move.x *= -1;
-
-            let dist = Math.sqrt((this.pt.x - player.pt.x) * (this.pt.x - player.pt.x) + (this.pt.y - player.pt.y) * (this.pt.y - player.pt.y));
-            this.canShoot = topScore > softCap/2 && this.hasLOS() && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * 100;
-
-            if (this.canShoot) {
-                let animationWait = this.getAnimationWait() * 4;
-                animationWait = animationWait > 0 ? animationWait : this.animationWaitBase * 4;
-                if (this.frame % animationWait == 0) {
-                    lasers.push(new Laser(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19), 45, 60, false));
-                    lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
-                    lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);
-                    this.laserFireSound.play();
-                }
-            }
+            this.updateCanShoot(topScore > softCap/2, 100);
+            this.checkShoot(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19));
         }
     }
     draw() {
         context.drawImage(texUfo, posSourceUfo[Number(!this.active)][Number(this.canShoot)][this.animation][0], posSourceUfo[Number(!this.active)][Number(this.canShoot)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
-        if (this.canShoot) {
-            context.strokeStyle = "#03b1fc";
-            context.beginPath();
-            context.moveTo(this.pt.x + this.w/2, this.pt.y + this.h * 8/19);
-            context.lineTo(player.pt.x + player.w/2, player.pt.y + player.h/2);
-            context.stroke();
-
-            context.fillStyle = "#ff0055";
-            context.fillRect(player.pt.x + player.w * 2/5, player.pt.y + player.h * 2/5, player.w * 1/5, player.h * 1/5);
-        }
+        this.drawTarget(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19));
     }
     restore(save) {
         this.active = save.active;
@@ -764,8 +746,7 @@ class LandSlide extends Enemy {
         let MSs = [w/200, -w/200];
         let dir = getRandomInt(0, 2);
 
-        super(new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + topScore/softCap), "TODO.mp3");
-        this.deathSound.volume = 2.0/soundOffset;
+        super(new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + topScore/softCap), "TODO.mp3", 2.0);
         this.deathSound.play();
     }
     update() {
