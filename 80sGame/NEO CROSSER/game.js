@@ -769,6 +769,21 @@ var posSourceBus = [ // [active][dir][animation][x/y]
     ],
 ];
 
+var texTank = new Image();
+texTank.src = "tank-33x16-2x2-1spacing.png";
+var posSourceTank = [
+    [ // if active
+        [ // if dir == right
+            [0, 0],
+            [34, 0]
+        ],
+        [ // if dir == left
+            [0, 17],
+            [34, 17]
+        ]
+    ]
+];
+
 var texUfo = new Image();
 texUfo.src = "ufo-20x19-4x2-1spacing.png";
 var posSourceUfo = [

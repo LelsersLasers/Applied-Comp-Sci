@@ -445,7 +445,11 @@ class Car extends Enemy {
     constructor(y, ms) {
         let w = carWidth;
         let type = getRandomInt(1, 8) == 1 ? 1 : 0;
+        if (type == 1 && topScore > softCap/2) {
+            type = getRandomInt(1, 3) == 1 ? 1 : 2;
+        }
         if (type == 1) w *= 1.2;
+        else if (type == 2) w *= 0.9;
         let h = carHeight;
 
         let badX = true;
@@ -462,10 +466,12 @@ class Car extends Enemy {
         super(pt, w, h, ms, "carHitSound.mp3");
         this.deathSound.volume = 2.0/soundOffset;
         if (type == 1) this.ms *= 1.2;
+        else if (type == 2) this.ms *= 0.5;
         this.offScreen = false;
         this.type = type;
     }
     update() {
+        if (this.type == 2) this.stun = 0;
         this.updateStun();
         this.updateAnimation();
         if (this.active) this.pt.x += this.ms;
@@ -477,6 +483,7 @@ class Car extends Enemy {
             let y = this.pt.y - (1.5 * carHeight) * 10;
 
             if (this.type == 1) var newMs = this.ms * 5/6 * 1.01;
+            else if (this.type == 2) var newMs = this.ms * 2 * 1.01;
             else var newMs = this.ms * 1.01;
             cars.push(new Car(y, newMs)); // always spawn new car
 
@@ -503,6 +510,9 @@ class Car extends Enemy {
         let dir = this.ms > 0 ? 0 : 1;
         if (this.type == 1) {
             context.drawImage(texBus, posSourceBus[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 35, 17, this.pt.x, this.pt.y, this.w, this.h);
+        }
+        else if (this.type == 2) {
+            context.drawImage(texTank, posSourceTank[Number(!this.active)][dir][this.animation][0], posSourceTank[Number(!this.active)][dir][this.animation][1], 33, 16, this.pt.x, this.pt.y, this.w, this.h);
         }
         else {
             context.drawImage(texCar, posSourceCar[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 34, 17, this.pt.x, this.pt.y, this.w, this.h);

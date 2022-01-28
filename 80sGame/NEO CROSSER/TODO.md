@@ -1,6 +1,7 @@
 # TODO
 
 Why don't ufos always shoot
+    - FIXED?
 
 
 Clarity
@@ -49,6 +50,12 @@ mouse hover over buttons in restore screen\
     - duplicate code?
     - for var i vs let i
     - softCap
+
+- Redo any art?
+    - tanks/buses
+    - demensions of the textures
+- Update HitBoxes to match the art
+    - cars, tanks
 
 - Update directions
 - Update README
