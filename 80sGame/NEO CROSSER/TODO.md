@@ -20,6 +20,9 @@ TANKS
     - Shoots lasers at player
     - Works like the buses
         - use this.type in class Car
+
+    - turn barrel red for canShoot
+        - start laser from there
     
 SETTINGS SCREEN
     - toggle ufos

@@ -439,17 +439,31 @@ class Enemy extends Thing {
     getAnimationWait() {
         return Math.abs(parseInt(30/this.ms));
     }
+    hasLOS() {
+        let checkObstructed = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
+        checkObstructed.scale(1);
+        let tempHB = new HitBox(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), 1, 1);
+        while (!tempHB.outOfBounds()) {
+            tempHB.pt.apply(checkObstructed);
+            if (tempHB.checkCollide(player.hb))  return true;
+            for (var i in buildings) {
+                if (tempHB.checkCollide(buildings[i].hb)) return false;
+            }
+        }
+        return true;
+    }
 }
 
 class Car extends Enemy {
     constructor(y, ms) {
         let w = carWidth;
-        let type = getRandomInt(1, 8) == 1 ? 1 : 0;
-        if (type == 1 && topScore > softCap/2) {
-            type = getRandomInt(1, 3) == 1 ? 1 : 2;
-        }
-        if (type == 1) w *= 1.2;
-        else if (type == 2) w *= 0.9;
+        // let type = getRandomInt(1, 8) == 1 ? 1 : 0;
+        // if (type == 1 && topScore > softCap/2) {
+        //     type = getRandomInt(1, 3) == 1 ? 1 : 2;
+        // }
+        let type = 2;
+        if (type == 1) w *= 6/5;
+        else if (type == 2) w *= 9/10;
         let h = carHeight;
 
         let badX = true;
@@ -465,25 +479,48 @@ class Car extends Enemy {
 
         super(pt, w, h, ms, "carHitSound.mp3");
         this.deathSound.volume = 2.0/soundOffset;
+
+        this.laserFireSound = document.createElement("audio");
+        this.laserFireSound.src = "targetingSound.mp3";
+        this.laserFireSound.volume = 4.5/soundOffset;
+
         if (type == 1) this.ms *= 1.2;
-        else if (type == 2) this.ms *= 0.5;
+        else if (type == 2) this.ms *= 3/4;
         this.offScreen = false;
         this.type = type;
+        this.canShoot = this.type == 2;
     }
     update() {
         if (this.type == 2) this.stun = 0;
         this.updateStun();
         this.updateAnimation();
-        if (this.active) this.pt.x += this.ms;
+        if (this.active) {
+            this.pt.x += this.ms;
+
+            let dist = Math.sqrt((this.pt.x - player.pt.x) * (this.pt.x - player.pt.x) + (this.pt.y - player.pt.y) * (this.pt.y - player.pt.y));
+            this.canShoot = this.type == 2 && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * 80 && this.hasLOS();
+            if (this.canShoot) {
+                let animationWait = this.getAnimationWait() * 4;
+                animationWait = animationWait > 0 ? animationWait : 30 * 4;
+                if (this.frame % animationWait == 0) {
+                    // WHY DOESN'T THIS ALWAYS WORK
+                    lasers.push(new Laser(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19), 45, 60, false));
+                    lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
+                    lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);
+                    this.laserFireSound.play();
+                }
+            }
+        }
         if (this.hb.outOfBounds()) this.ms *= -1.001;
         for (var i in buildings) {
             if (this.hb.checkCollide(buildings[i].hb)) this.ms *= -1;
         }
+
         if (this.pt.y > canvas.height && !this.offScreen) {
             let y = this.pt.y - (1.5 * carHeight) * 10;
 
             if (this.type == 1) var newMs = this.ms * 5/6 * 1.01;
-            else if (this.type == 2) var newMs = this.ms * 2 * 1.01;
+            else if (this.type == 2) var newMs = this.ms * 4/3 * 1.01;
             else var newMs = this.ms * 1.01;
             cars.push(new Car(y, newMs)); // always spawn new car
 
@@ -513,6 +550,16 @@ class Car extends Enemy {
         }
         else if (this.type == 2) {
             context.drawImage(texTank, posSourceTank[Number(!this.active)][dir][this.animation][0], posSourceTank[Number(!this.active)][dir][this.animation][1], 33, 16, this.pt.x, this.pt.y, this.w, this.h);
+            if (this.canShoot) {
+                context.strokeStyle = "#03b1fc";
+                context.beginPath();
+                context.moveTo(this.pt.x + this.w/2, this.pt.y + this.h * 8/19);
+                context.lineTo(player.pt.x + player.w/2, player.pt.y + player.h/2);
+                context.stroke();
+    
+                context.fillStyle = "#ff0055";
+                context.fillRect(player.pt.x + player.w * 2/5, player.pt.y + player.h * 2/5, player.w * 1/5, player.h * 1/5);
+            }
         }
         else {
             context.drawImage(texCar, posSourceCar[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 34, 17, this.pt.x, this.pt.y, this.w, this.h);
@@ -564,12 +611,14 @@ class Ufo extends Enemy {
     update() {
         this.updateStun();
         this.updateAnimation();
-        let dist = Math.sqrt((this.pt.x - player.pt.x) * (this.pt.x - player.pt.x) + (this.pt.y - player.pt.y) * (this.pt.y - player.pt.y));
-        this.canShoot = topScore > softCap/2 && this.hasLOS() && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * 100 && this.active;
+        
         if (this.active) {
             this.pt.apply(this.move);
             this.hb.useSmallHB(this.pt, this.w, this.h);
             if (this.hb.outOfBounds()) this.move.x *= -1;
+
+            let dist = Math.sqrt((this.pt.x - player.pt.x) * (this.pt.x - player.pt.x) + (this.pt.y - player.pt.y) * (this.pt.y - player.pt.y));
+            this.canShoot = topScore > softCap/2 && this.hasLOS() && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * 100;
 
             if (this.canShoot) {
                 let animationWait = this.getAnimationWait() * 4;
@@ -596,19 +645,6 @@ class Ufo extends Enemy {
             context.fillStyle = "#ff0055";
             context.fillRect(player.pt.x + player.w * 2/5, player.pt.y + player.h * 2/5, player.w * 1/5, player.h * 1/5);
         }
-    }
-    hasLOS() {
-        let checkObstructed = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
-        checkObstructed.scale(1);
-        let tempHB = new HitBox(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), 1, 1);
-        while (!tempHB.outOfBounds()) {
-            tempHB.pt.apply(checkObstructed);
-            if (tempHB.checkCollide(player.hb))  return true;
-            for (var i in buildings) {
-                if (tempHB.checkCollide(buildings[i].hb)) return false;
-            }
-        }
-        return true;
     }
     restore(save) {
         this.active = save.active;
