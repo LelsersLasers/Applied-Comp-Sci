@@ -1,7 +1,6 @@
 # TODO
 
-Why don't ufos/tanks always shoot
-    - FIXED?
+Update restore to work with latest changes
 
 LandSlide:
 - Texture
@@ -19,9 +18,9 @@ TANKS
     - turn barrel red for canShoot
         - start laser from there
 
-BUS/TANK seperate class than cars
-    - tanks/ufos also based on different class
-        - "Class CanShoot"?
+BUS/TANK seperate class than cars ???
+- tanks/ufos also based on different class ???
+    - "Class CanShoot" vs leave in enemy class ???
     
 SETTINGS SCREEN
     - toggle ufos
@@ -40,16 +39,16 @@ display use w/s up/down to change the selected save
 
 mouse hover over buttons in restore screen
 
-
 Clarity
 - General colors/hitboxes
     - Check w/ Jerry/Andrew
 
-"clean" code
+"Clean" code
 - LET
     - scope
 - stun protection
 - animation code
+- shooting code
 - restores bugtest
     - restore w/h?
         - update hb with w/h
