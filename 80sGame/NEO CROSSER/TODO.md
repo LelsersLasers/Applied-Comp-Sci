@@ -1,22 +1,10 @@
 # TODO
 
-Update restore to work with latest changes
-
 LandSlide:
 - Texture
 - Sound
 
 E SOUND
-
-TANKS
-    - Start at 1/2 softCap
-    - Stun imunne
-    - Shoots lasers at player
-    - Works like the buses
-        - use this.type in class Car
-
-    - turn barrel red for canShoot
-        - start laser from there
 
 BUS/TANK seperate class than cars ???
 - tanks/ufos also based on different class ???

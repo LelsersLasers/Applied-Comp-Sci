@@ -527,7 +527,7 @@ class Car extends Enemy {
         if (this.active) {
             this.pt.x += this.ms;
             this.updateCanShoot(this.type == 2, 80);
-            this.checkShoot(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19));
+            this.checkShoot(new Vector(this.ms > 0 ? this.pt.x + this.w : this.pt.x, this.pt.y + this.h * 4/17));
             if (this.hb.outOfBounds()) this.ms *= -1.001;
         }
         for (var i in buildings) {
@@ -568,7 +568,7 @@ class Car extends Enemy {
         }
         else if (this.type == 2) {
             context.drawImage(texTank, posSourceTank[Number(this.canShoot)][dir][this.animation][0], posSourceTank[Number(this.canShoot)][dir][this.animation][1], 33, 16, this.pt.x, this.pt.y, this.w, this.h);
-            this.drawTarget(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19));
+            this.drawTarget(new Vector(this.ms > 0 ? this.pt.x + this.w : this.pt.x, this.pt.y + this.h * 4/17));
         }
         else {
             context.drawImage(texCar, posSourceCar[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 34, 17, this.pt.x, this.pt.y, this.w, this.h);
@@ -577,7 +577,6 @@ class Car extends Enemy {
     restore(save) {
         this.ms = save.ms;
         this.type = save.type;
-        this.offset = save.offset;
         this.animation = save.animation;
         this.frame = save.frame;
         this.stun = save.stun;
