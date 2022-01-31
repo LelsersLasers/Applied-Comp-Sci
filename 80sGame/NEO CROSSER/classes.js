@@ -450,7 +450,7 @@ class Enemy extends Thing {
     }
     updateCanShoot(speciality, laserDist) {
         let dist = Math.sqrt((this.pt.x - player.pt.x) * (this.pt.x - player.pt.x) + (this.pt.y - player.pt.y) * (this.pt.y - player.pt.y));
-        this.canShoot = speciality && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * laserDist && this.active
+        this.canShoot = speciality && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * laserDist && this.active;
         if (this.canShoot) this.canShoot = this.hasLOS(); // hasLOS is very costly to run, so only run when nessissary
     }
     checkShoot(startPt) {
@@ -467,7 +467,7 @@ class Enemy extends Thing {
     }
     hasLOS() {
         let checkObstructed = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
-        checkObstructed.scale(2); // If game runs way to slow once lasers are being fired, increase to 2+
+        checkObstructed.scale(5); // If game runs way to slow once lasers are being fired, increase
         let tempHB = new HitBox(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), 1, 1);
         while (!tempHB.outOfBounds()) {
             tempHB.pt.apply(checkObstructed);
@@ -494,13 +494,13 @@ class Enemy extends Thing {
 
 class Car extends Enemy {
     constructor(y, ms) {
-        if (topScore < softCap/2) {
+        if (topScore < softCap * 3/4) {
             var busChance = 1/(10 - (4/(softCap/2)) * topScore);
             var tankChance = 0;
         }
         else {
             var busChance = 1/6;
-            let a = (topScore - softCap/2)/(softCap/2);
+            let a = (topScore - softCap * 3/4)/(softCap * 3/4);
             let b = 1 / (1 + Math.exp(-a)) * 4;
             console.log(b);
             var tankChance =  1/(10 - b);
