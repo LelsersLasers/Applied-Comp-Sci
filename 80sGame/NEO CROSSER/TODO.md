@@ -37,6 +37,7 @@ Clarity
 - stun protection
 - animation code
 - shooting code
+    - optimize
 - restores bugtest
     - restore w/h?
         - update hb with w/h
