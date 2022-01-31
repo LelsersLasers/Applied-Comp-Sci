@@ -745,26 +745,26 @@ var posSourceCar = [ // [active][dir][animation][x/y]
 ];
 
 var texBus = new Image();
-texBus.src = "bus-35x17-2x4-1spacing.png";
+texBus.src = "bus-40x17-2x4-1spacing.png";
 var posSourceBus = [ // [active][dir][animation][x/y]
     [ // if active
         [ // if dir == right
             [0, 0], // animation 1
-            [36, 0] // animation 2
+            [41, 0] // animation 2
         ],
         [ // if dir == left
             [0, 18], // animation 1
-            [36, 18] // animation 2
+            [41, 18] // animation 2
         ]
     ],
     [ // if not active
         [ // if dir == right
             [0, 36], // animation 1
-            [36, 36] // animation 2
+            [41, 36] // animation 2
         ],
         [ // if dir == left
             [0, 54], // animation 1
-            [36, 54] // animation 2
+            [41, 54] // animation 2
         ]
     ],
 ];

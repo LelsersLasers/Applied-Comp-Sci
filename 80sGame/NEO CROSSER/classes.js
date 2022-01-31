@@ -578,7 +578,7 @@ class Car extends Enemy {
     draw() {
         let dir = this.ms > 0 ? 0 : 1;
         if (this.type == 1) {
-            context.drawImage(texBus, posSourceBus[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 35, 17, this.pt.x, this.pt.y, this.w, this.h);
+            context.drawImage(texBus, posSourceBus[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 40, 17, this.pt.x, this.pt.y, this.w, this.h);
         }
         else if (this.type == 2) {
             context.drawImage(texTank, posSourceTank[Number(this.canShoot)][dir][this.animation][0], posSourceTank[Number(this.canShoot)][dir][this.animation][1], 33, 16, this.pt.x, this.pt.y, this.w, this.h);
