@@ -450,7 +450,8 @@ class Enemy extends Thing {
     }
     updateCanShoot(speciality, laserDist) {
         let dist = Math.sqrt((this.pt.x - player.pt.x) * (this.pt.x - player.pt.x) + (this.pt.y - player.pt.y) * (this.pt.y - player.pt.y));
-        this.canShoot = speciality && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * laserDist && this.hasLOS();
+        this.canShoot = speciality && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * laserDist
+        if (this.canShoot) this.canShoot = this.hasLOS(); // hasLOS is very costly to run, so only run when nessissary
     }
     checkShoot(startPt) {
         if (this.canShoot) {
@@ -493,12 +494,26 @@ class Enemy extends Thing {
 
 class Car extends Enemy {
     constructor(y, ms) {
-        let w = carWidth;
-        let type = getRandomInt(1, 8) == 1 ? 1 : 0;
-        if (type == 1 && topScore > softCap/2) {
-            type = getRandomInt(1, 3) == 1 ? 1 : 2;
+        if (topScore < softCap/2) {
+            var busChance = 1/(10 - (4/(softCap/2)) * topScore);
+            var tankChance = 0;
         }
-        if (type == 1) w *= 6/5;
+        else {
+            var busChance = 1/6;
+            let b = (topScore - softCap/2)/(softCap/2);
+            let a = 1 / (1 + Math.exp(-b) * 4);
+            console.log(a);
+            var tankChance =  1/(10 - a);
+        }
+        let carChance = 1 - busChance - tankChance;
+        
+        let rand = Math.random();
+        if (rand < tankChance) type = 2;
+        else if (rand - tankChance < busChance) type = 1;
+        else type = 0;
+
+        let w = carWidth;
+        if (type == 1) w *= 7/5;
         else if (type == 2) w *= 9/10;
         let h = carHeight;
 
@@ -515,7 +530,7 @@ class Car extends Enemy {
 
         super(pt, w, h, ms, "carHitSound.mp3", 2.0);
 
-        if (type == 1) this.ms *= 1.2;
+        if (type == 1) this.ms *= 7/5;
         else if (type == 2) this.ms *= 3/4;
         this.offScreen = false;
         this.type = type;
@@ -537,7 +552,7 @@ class Car extends Enemy {
         if (this.pt.y > canvas.height && !this.offScreen) {
             let y = this.pt.y - (1.5 * carHeight) * 10;
 
-            if (this.type == 1) var newMs = this.ms * 5/6 * 1.01;
+            if (this.type == 1) var newMs = this.ms * 5/7 * 1.01;
             else if (this.type == 2) var newMs = this.ms * 4/3 * 1.01;
             else var newMs = this.ms * 1.01;
             cars.push(new Car(y, newMs)); // always spawn new car
