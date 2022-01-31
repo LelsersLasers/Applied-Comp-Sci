@@ -646,7 +646,7 @@ function setUpContext() {
 
 // localStorage.removeItem("NEO CROSSER - Leader Board"); // reset leard board
 
-const softCap = 2000;
+const softCap = 10000;
 const ufoBase = Math.pow(2, 1/softCap); // double ufo spawn rate at softCap
 const buildingBlockCount = 5;
 
