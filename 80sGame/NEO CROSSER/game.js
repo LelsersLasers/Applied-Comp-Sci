@@ -583,12 +583,12 @@ function drawGame() {
         for (var i in enemies) {
             enemies[i].update();
             enemies[i].draw();
-            if (enemies[i].hb.checkCollide(player.hb) && alive) {
-                scoreView.color = "#e37e7b";
-                enemies[i].deathSound.play();
-                alive = false;
-                player.off();
-            }
+            // if (enemies[i].hb.checkCollide(player.hb) && alive) {
+            //     scoreView.color = "#e37e7b";
+            //     enemies[i].deathSound.play();
+            //     alive = false;
+            //     player.off();
+            // }
         }
         for (var i in lasers) lasers[i].update();
         drawHUD();

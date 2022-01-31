@@ -450,7 +450,7 @@ class Enemy extends Thing {
     }
     updateCanShoot(speciality, laserDist) {
         let dist = Math.sqrt((this.pt.x - player.pt.x) * (this.pt.x - player.pt.x) + (this.pt.y - player.pt.y) * (this.pt.y - player.pt.y));
-        this.canShoot = speciality && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * laserDist
+        this.canShoot = speciality && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * laserDist && this.active
         if (this.canShoot) this.canShoot = this.hasLOS(); // hasLOS is very costly to run, so only run when nessissary
     }
     checkShoot(startPt) {
@@ -500,17 +500,16 @@ class Car extends Enemy {
         }
         else {
             var busChance = 1/6;
-            let b = (topScore - softCap/2)/(softCap/2);
-            let a = 1 / (1 + Math.exp(-b) * 4);
-            console.log(a);
-            var tankChance =  1/(10 - a);
+            let a = (topScore - softCap/2)/(softCap/2);
+            let b = 1 / (1 + Math.exp(-a)) * 4;
+            console.log(b);
+            var tankChance =  1/(10 - b);
         }
-        let carChance = 1 - busChance - tankChance;
-        
+
         let rand = Math.random();
+        let type = 0;
         if (rand < tankChance) type = 2;
         else if (rand - tankChance < busChance) type = 1;
-        else type = 0;
 
         let w = carWidth;
         if (type == 1) w *= 7/5;
