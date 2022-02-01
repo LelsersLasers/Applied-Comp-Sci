@@ -587,7 +587,7 @@ function drawGame() {
             //     scoreView.color = "#e37e7b";
             //     enemies[i].deathSound.play();
             //     alive = false;
-            //     player.off();
+            //     player.active = false;
             // }
         }
         for (var i in lasers) lasers[i].update();

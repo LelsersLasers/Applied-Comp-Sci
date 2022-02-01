@@ -1,5 +1,9 @@
 # TODO
 
+On Demand Scaling
+- on restore
+- on screen change size
+
 LandSlide:
 - Texture
 - Sound
@@ -17,10 +21,6 @@ SETTINGS SCREEN
     - landslides
     - softcap
     - only set leaderboard if on max settings
-
-On Demand Scaling
-- on restore
-- on screen change size
 
 display restore touch directions
 display use w/s up/down to change the selected save

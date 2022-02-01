@@ -57,12 +57,6 @@ class Thing {
         this.active = true;
         this.hb = new HitBox(pt, w, h);
     }
-    off() {
-        this.active = false;
-    }
-    on() {
-        this.active = true;
-    }
 }
 
 class Trigger extends Thing {
@@ -209,14 +203,14 @@ class Laser extends Thing {
             let enemies = this.friendly ? [...cars, ...ufos] : [player];
             for (var i in enemies) {
                 if (this.hb.checkCollide(enemies[i].hb)) {
-                    this.off();
-                    enemies[i].off();
+                    this.active = false;
+                    enemies[i].active = false;
                     enemies[i].stun += this.stunTime;
                     this.hitSound.play();
                 }
             }
             for (var i in buildings) {
-                if (this.hb.checkCollide(buildings[i].hb)) this.off();
+                if (this.hb.checkCollide(buildings[i].hb)) this.active = false;
             }
         }
         this.draw();
@@ -281,7 +275,7 @@ class Player extends Thing {
         this.stunProtection--;
         this.lastStun = this.stun;
         if (this.stun <= 0) {
-            this.on();
+            this.active = true;
             this.stun = 0;
         }
         if (alive && this.active) {
@@ -433,7 +427,7 @@ class Enemy extends Thing {
     updateStun() {
         this.stun--;
         if (this.stun <= 0) {
-            this.on();
+            this.active = true;
             this.stun = 0;
         }
     }
