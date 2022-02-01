@@ -268,7 +268,7 @@ class Player extends Thing {
         for (var i in obstacles) obstacles[i].pt.y += ms * (eAbility.active > 0 ? this.sprintSpeed : 1);
         for (var i in bar) bar[i].update();
         score += ms * moveWait/this.msY;
-        if (score > topScore) topScore = score;
+        if (score > topScore) topScore = Number(score);
     }
     move() {
         if (this.stun != this.lastStun && this.stunProtection <= 0) {
@@ -783,9 +783,7 @@ class LandSlide extends Enemy {
         }
     }
     draw() {
-        context.fillStyle = "#FFA500";
-        context.beginPath();
-        context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
+        context.drawImage(texLandSlide, posSourceLandSlide[0], posSourceLandSlide[0], 40, 20, this.pt.x, this.pt.y, this.w, this.h);
     }
     restore(save) {
         this.pt.x = save.pt.x;

@@ -834,6 +834,10 @@ var posSourceBuilding = [
     [54, 0]
 ];
 
+var texLandSlide = new Image();
+texLandSlide.src = "landSlide-40x20.png";
+var posSourceLandSlide = [0,0];
+
 var texPause = new Image();
 texPause.src = "pause-14x14-2x1-1spacing.png";
 var posSourcePause = [
