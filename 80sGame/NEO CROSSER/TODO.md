@@ -27,6 +27,8 @@ display use w/s up/down to change the selected save
 
 mouse hover over buttons in restore screen
 
+Let user scroll through all scores (like saves)
+
 Clarity
 - General colors/hitboxes
     - Check w/ Jerry/Andrew
