@@ -271,7 +271,6 @@ function getName(message) {
 }
 
 function writeScore() {
-    localStorage.setItem("lastScore", topScore);
     let scores = getTopScores();
     let scoresNew = [];
     let swap = 0;
