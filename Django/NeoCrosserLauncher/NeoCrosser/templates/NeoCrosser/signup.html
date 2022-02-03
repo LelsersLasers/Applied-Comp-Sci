@@ -1,0 +1,33 @@
+
+<form action="{% url 'NeoCrosser:createAccount' %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>Sign Up</h1></legend>
+
+        <label for="fullname">Full name:</label>
+        <br />
+        <input type="text" id="fullname" name="fullname" value="{% if a %}{{ a }}{% endif %}" />
+        <br />
+
+        <label for="username">Username:</label>
+        <br />
+        <input type="text" id="username" name="username" value="{% if b %}{{ b }}{% endif %}">
+        <br />
+        <label for="password1">Password:</label>
+        <br />
+
+        <input type="password" id="password1" name="password1" value="{% if c %}{{ c }}{% endif %}">
+        <br />
+        <label for="password2">Repeat password:</label>
+        <br />
+        <input type="password" id="password2" name="password2" value="{% if d %}{{ d }}{% endif %}">
+        <br />
+
+        {% if error_message %}
+            <strong>{{ error_message }}</strong>
+        {% endif %}
+        <br />
+
+    </fieldset>
+    <input type="submit" value="Create Account" />
+</form>

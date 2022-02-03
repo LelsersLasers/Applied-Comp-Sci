@@ -2,6 +2,7 @@ from django.urls import path
 
 from . import views
 
+app_name = "NeoCrosser"
 urlpatterns = [
     # ex: /neocrosser/
     path('', views.index, name='index'),
@@ -13,4 +14,6 @@ urlpatterns = [
     path('scores/', views.scores, name='scores'),
     # ex: /neocrosser/game/
     path('game/', views.game, name='game'), # the actual NEO CROSSER PAGE
+    # creates the account, shoud redirect back to index
+    path('createAccount/', views.createAccount, name='createAccount'),
 ]
