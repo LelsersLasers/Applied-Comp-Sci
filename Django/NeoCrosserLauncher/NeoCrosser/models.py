@@ -19,12 +19,6 @@ class TopScore(models.Model):
         return "%i" % self.score
 
     def getRank(self):
-        # allScores = TopScore.objects.all()
-        # for n in range(len(allScores)-1, 0, -1):
-        #     for i in range(n):
-        #         if allScores[i].score > allScores[i + 1].score:
-        #             allScores[i], allScores[i + 1] = allScores[i + 1], allScores[i]
-
         allScores = TopScore.objects.order_by('-score')
         for i in range(len(allScores)):
             if self.score == allScores[i].score:

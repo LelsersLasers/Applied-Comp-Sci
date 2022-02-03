@@ -1,3 +1,5 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
 
 <form action="{% url 'NeoCrosser:checkLogin' %}" method="post">
     {% csrf_token %}

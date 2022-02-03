@@ -24,7 +24,7 @@ def createAccount(request):
     password1 = request.POST['password1']
     password2 = request.POST['password2']
 
-    # TODO: replace the a/b/c/d with a function
+    # TODO: replace the a/b/c/d with a function or something better
 
     if dislpay_name == "" or username == "" or password1 == "" or password2 == "":
         context = {
@@ -33,7 +33,7 @@ def createAccount(request):
             'b': username,
             'c': password1,
             'd': password2
-            }
+        }
         return render(request, 'NeoCrosser/signup.html', context)
     elif password1 != password2:
         context = {
@@ -42,7 +42,7 @@ def createAccount(request):
             'b': username,
             'c': password1,
             'd': password2
-            }
+        }
         return render(request, 'NeoCrosser/signup.html', context)
 
     users = Account.objects.all()
@@ -86,7 +86,7 @@ def checkLogin(request):
     for user in users:
         if user.username == username and user.password == password:
             LOGIN
-            return
+            return HttpResponseRedirect("/neocrosser") # not hardcode?
 
     context = {
         'error_message': "Login not found!",
