@@ -19,15 +19,17 @@ def scores(request):
     return render(request, 'NeoCrosser/scores.html', context)
 
 def createAccount(request):
-    fullname = request.POST['fullname']
+    dislpay_name = request.POST['display']
     username = request.POST['username']
     password1 = request.POST['password1']
     password2 = request.POST['password2']
 
-    if fullname == "" or username == "" or password1 == "" or password2 == "":
+    # TODO: replace the a/b/c/d with a function
+
+    if dislpay_name == "" or username == "" or password1 == "" or password2 == "":
         context = {
             'error_message': "All fields must be filled in",
-            'a': fullname,
+            'a': dislpay_name,
             'b': username,
             'c': password1,
             'd': password2
@@ -36,15 +38,62 @@ def createAccount(request):
     elif password1 != password2:
         context = {
             'error_message': "Passwords do not match",
-            'a': fullname,
+            'a': dislpay_name,
             'b': username,
             'c': password1,
             'd': password2
             }
         return render(request, 'NeoCrosser/signup.html', context)
-    acc = Account(username=username, password=password1, display_name=fullname)
+
+    users = Account.objects.all()
+    for user in users:
+        if user.username == username:
+            context = {
+                'error_message': "That username is already in use",
+                'a': dislpay_name,
+                'b': username,
+                'c': password1,
+                'd': password2
+            }
+            return render(request, 'NeoCrosser/signup.html', context)
+        elif user.display_name == dislpay_name:
+            context = {
+                'error_message': "That display name is already in use",
+                'a': dislpay_name,
+                'b': username,
+                'c': password1,
+                'd': password2
+            }
+            return render(request, 'NeoCrosser/signup.html', context)
+
+    acc = Account(username=username, password=password1, display_name=dislpay_name)
     acc.save()
     return HttpResponseRedirect("/neocrosser") # not hardcode?
+
+def checkLogin(request):
+    username = request.POST['username']
+    password = request.POST['password']
+
+    if username == "" or password == "":
+        context = {
+            'error_message': "All fields must be filled in",
+            'a': username,
+            'b': password
+        }
+        return render(request, 'NeoCrosser/login.html', context)
+    
+    users = Account.objects.all()
+    for user in users:
+        if user.username == username and user.password == password:
+            LOGIN
+            return
+
+    context = {
+        'error_message': "Login not found!",
+        'a': username,
+        'b': password
+    }
+    return render(request, 'NeoCrosser/login.html', context)
 
 def game(request):
     return HttpResponse("Play NEOCROSSER")

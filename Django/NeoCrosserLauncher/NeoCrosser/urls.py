@@ -16,4 +16,6 @@ urlpatterns = [
     path('game/', views.game, name='game'), # the actual NEO CROSSER PAGE
     # creates the account, shoud redirect back to index
     path('createAccount/', views.createAccount, name='createAccount'),
+    # checks and validates the login
+    path('checkLogin/', views.checkLogin, name='checkLogin'),
 ]
