@@ -6,22 +6,15 @@ from .models import TopScore
 
 
 def index(request):
-    return HttpResponse("Greetings Traveler")
+    return render(request, 'NeoCrosser/index.html')
 
 def signup(request):
-    return HttpResponse("SIGNUP")
+    return render(request, 'NeoCrosser/signup.html')
 
 def login(request):
-    return HttpResponse("LOGIN")
+    return render(request, 'NeoCrosser/login.html')
 
 def scores(request):
-    # response = "<ul>"
-    # s = TopScore.objects.all()
-    # for score in s:
-    #     response += "<li>RANK %i) %i</li>" % (score.getRank(), score.score)
-    # response += "</ul>"
-    # return HttpResponse(response)
-
     s = TopScore.objects.order_by('-score')
     context = {'scores_list': s}
     return render(request, 'NeoCrosser/scores.html', context)
