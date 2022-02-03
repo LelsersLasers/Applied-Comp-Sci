@@ -1,10 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Account(models.Model):
-    username = models.CharField("Username", max_length=200)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     display_name = models.CharField("Display Name", max_length=200)
-    password = models.CharField("Password", max_length=200)
     play_music = models.BooleanField("Play Music?", default=True)
 
     def __str__(self):
