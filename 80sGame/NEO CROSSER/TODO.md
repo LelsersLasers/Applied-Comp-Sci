@@ -1,5 +1,9 @@
 # TODO
 
+OPTIMIZE
+    - remove "freezes" that freeze the whole broswer
+    - Where is time lost? (why so slow?)
+
 On Demand Scaling
 - on restore
 - on screen change size
@@ -9,10 +13,6 @@ LandSlide:
 - Sound
 
 E SOUND
-
-BUS/TANK seperate class than cars ???
-- tanks/ufos also based on different class ???
-    - "Class CanShoot" vs leave in enemy class ???
     
 SETTINGS SCREEN
     - toggle ufos
@@ -27,7 +27,7 @@ display use w/s up/down to change the selected save
 
 mouse hover over buttons in restore screen
 
-Let user scroll through all scores (like saves)
+Let user scroll through all scores (like saves)?
 
 Clarity
 - General colors/hitboxes

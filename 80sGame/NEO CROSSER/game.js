@@ -600,6 +600,7 @@ function drawGame() {
 
 function drawAll() {
     buttonHover();
+    count = 0;
 
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
@@ -615,6 +616,7 @@ function drawAll() {
     else if (textOpacity < 0) opacityDir = 0.04;
     textOpacity += opacityDir;
 
+    console.log(count)
     window.requestAnimationFrame(drawAll);
 }
 
@@ -645,7 +647,9 @@ function setUpContext() {
 
 // localStorage.removeItem("NEO CROSSER - Leader Board"); // reset leard board
 
-const softCap = 10000;
+var count = 0;
+
+const softCap = 1000;
 const ufoBase = Math.pow(2, 1/softCap); // double ufo spawn rate at softCap
 const buildingBlockCount = 5;
 

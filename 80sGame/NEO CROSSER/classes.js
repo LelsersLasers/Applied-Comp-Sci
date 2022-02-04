@@ -460,6 +460,7 @@ class Enemy extends Thing {
         }
     }
     hasLOS() {
+        count++;
         let checkObstructed = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
         checkObstructed.scale(new Laser(new Vector(-1, -1), -1, -1, false).ms * 5); // If game runs way to slow once lasers are being fired, increase
         let tempHB = new HitBox(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), 1, 1);
