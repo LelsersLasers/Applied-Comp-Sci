@@ -8,6 +8,8 @@ On Demand Scaling
 - on restore
 - on screen change size
 
+Calculate speed/movement based on fps
+
 LandSlide:
 - Texture
 - Sound
