@@ -200,6 +200,7 @@ class Laser extends Thing {
     update() {
         if (this.active) {
             this.pt.apply(this.moveVector);
+            if (this.pt.x < -this.ms || this.pt.x > canvas.width + this.ms) this.active = false;
             let enemies = this.friendly ? [...cars, ...ufos] : [player];
             for (var i in enemies) {
                 if (this.hb.checkCollide(enemies[i].hb)) {
