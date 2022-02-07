@@ -1,0 +1,9 @@
+{% if scores_list %}
+    <ol>
+    {% for s in scores_list %}
+        <li>{{ s.account.display_name }}: {{ s.score }}</li>
+    {% endfor %}
+    </ol>
+{% else %}
+    <p>No top scores!</p>
+{% endif %}
