@@ -8,7 +8,7 @@ class Account(models.Model):
     play_music = models.BooleanField("Play Music?", default=True)
 
     def __str__(self):
-        return self.username
+        return self.display_name
 
 
 class TopScore(models.Model):
@@ -16,7 +16,7 @@ class TopScore(models.Model):
     account = models.ForeignKey(Account, on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return "%i" % self.score
+        return "%s: %i" % (self.account.display_name, self.score)
 
     def getRank(self):
         allScores = TopScore.objects.order_by('-score')

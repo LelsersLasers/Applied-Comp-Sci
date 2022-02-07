@@ -1,3 +1,11 @@
 strong {
     color: red;
 }
+
+li {
+    border: 2px solid #289fbd;
+}
+
+h1 {
+    border: 2px solid #289fbd;
+}
