@@ -4,7 +4,7 @@
 <h1>Greetings Traveler</h1>
 
 {% if is_login %}
-    <p>Greetings '{{ display_name }}'</p>
+    <p>Hello there {{ display_name }}!</p>
 {% endif %}
 
 <h3>Options</h3>
@@ -12,7 +12,7 @@
     {% if is_login %}
         <li><a href="{% url 'NeoCrosser:logoutUser' %}">Log Out</a></li>
     {% else %}
-        <li><a href="{% url 'NeoCrosser:login' %}">Login</a></li>
+        <li><a href="{% url 'NeoCrosser:loginPage' %}">Login</a></li>
         <li><a href="{% url 'NeoCrosser:signup' %}">Sign Up</a></li>
     {% endif %}
 

@@ -8,8 +8,8 @@ urlpatterns = [
     path('', views.index, name='index'),
     # ex: /neocrosser/signup/
     path('signup/', views.signup, name='signup'),
-    # ex: /neocrosser/login/
-    path('login/', views.login, name='login'),
+    # ex: /neocrosser/loginPage/
+    path('loginPage/', views.loginPage, name='loginPage'),
     # ex: /neocrosser/scores/
     path('scores/', views.scores, name='scores'),
     # ex: /neocrosser/game/
