@@ -54,6 +54,10 @@ function keyDownHandler(e) {
                 }
                 if (match == 5) {
                     console.log("WON");
+                    localStorage.removeItem("word");
+                }
+                else if (guessPos[0] > 4) {
+                    console.log("lost");
                 }
                 guessPos[0]++;
             }
