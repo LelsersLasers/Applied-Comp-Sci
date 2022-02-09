@@ -20,4 +20,6 @@ urlpatterns = [
     path('checkLogin/', views.checkLogin, name='checkLogin'),
     # logs the user out, shoud redirect back to index
     path('logoutUser/', views.logoutUser, name='logoutUser'),
+    # creates a TopScore after a game ends
+    path('createScore/', views.createScore, name='createScore'),
 ]

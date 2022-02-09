@@ -99,3 +99,11 @@ def logoutUser(request):
 
 def game(request):
     return render(request, 'NeoCrosser/game.html')
+
+def createScore(request):
+    score = request.POST['score']
+
+    ts = TopScore(score=score, account=Account.objects.get(user=request.user))
+    ts.save()
+    print("\nTS\n", ts)
+    return HttpResponseRedirect("/neocrosser")
