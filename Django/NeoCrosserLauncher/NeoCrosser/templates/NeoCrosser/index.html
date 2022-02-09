@@ -3,13 +3,13 @@
 
 <h1>Greetings Traveler</h1>
 
-{% if login %}
-    <p>Greetings {{ display_name }}</p>
+{% if is_login %}
+    <p>Greetings '{{ display_name }}'</p>
 {% endif %}
 
 <h3>Options</h3>
 <ul>
-    {% if login %}
+    {% if is_login %}
         <li><a href="{% url 'NeoCrosser:logoutUser' %}">Log Out</a></li>
     {% else %}
         <li><a href="{% url 'NeoCrosser:login' %}">Login</a></li>

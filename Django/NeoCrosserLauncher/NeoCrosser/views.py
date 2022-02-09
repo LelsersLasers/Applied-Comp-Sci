@@ -1,6 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import TopScore, Account
 from django.contrib.auth.models import User
@@ -9,8 +8,8 @@ from django.contrib.auth import authenticate, login, logout
 
 def index(request):
     display_name = ""
-    # if request.user.is_authenticated:
-    #     display_name = request.user.display_name  
+    if request.user.is_authenticated:
+        display_name = request.user.username
     context = {
         "is_login": request.user.is_authenticated,
         "display_name": display_name
@@ -103,7 +102,7 @@ def checkLogin(request):
     if user is not None:
         # IF success, then use the login function so the session persists.
         login(request)
-        print(user.__dict__)
+        print("\n\nSUCESS\n", user.__dict__, "\n")
         return HttpResponseRedirect("/neocrosser")
 
     context = {

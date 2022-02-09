@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Account(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     display_name = models.CharField("Display Name", max_length=200)
     play_music = models.BooleanField("Play Music?", default=True)
 
