@@ -3,16 +3,19 @@ var avalibleWords;
 
 var wordLen;
 var tries;
+var infiniteTries = false;
 
 var guesses;
 var stat;
+
+var state = "game";
 
 var guessPos = [0, 0];
 
 document.addEventListener("keydown", keyDownHandler, false);
 
 function keyDownHandler(e) {
-    if (word) {
+    if (word && state == "game") {
         alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
         if (e.key == "Backspace") {
             guesses[guessPos[0]][guessPos[1] - 1] = "";
@@ -34,12 +37,29 @@ function keyDownHandler(e) {
                         }
                     }
                     if (match == wordLen) {
-                        console.log("WON");
+                        state = "won";
+                        document.getElementById("info").innerHTML = "You won!";
                     }
                     else if (guessPos[0] > tries - 1) {
-                        console.log("lost");
+                        state = "lost";
+                        document.getElementById("info").innerHTML = "You lost! The correct word was: " + word;
                     }
                     guessPos[0]++;
+                    document.getElementById("info").innerHTML = "";
+                    if (infiniteTries) {
+                        tries++;
+                        guesses.push([]);
+                        for (var j = 0; j < wordLen; j++) {
+                            guesses[guesses.length - 1].push("");
+                        }
+                        stat.push([]);
+                        for (var j = 0; j < wordLen; j++) {
+                            stat[stat.length - 1].push(0);
+                        }
+                    }
+                }
+                else {
+                    document.getElementById("info").innerHTML = "Guesses must be words";
                 }
             }
         }
@@ -49,7 +69,7 @@ function keyDownHandler(e) {
         }
         draw();
     }
-    else if (e.key == "Enter") {
+    else if (e.key == "Enter" && !word) {
         startGame();
     }
 }
@@ -57,7 +77,6 @@ function keyDownHandler(e) {
 function draw() {
     main = document.getElementById("holder");
     main.innerHTML = "";
-    console.log(tries);
 
     for (var i = 0; i < tries; i++) {
         let txt = "";
@@ -79,18 +98,27 @@ function draw() {
 }
 
 function newWord() {
-    localStorage.removeItem('word');
-    location.reload(); // reloads the webpage
+    window.localStorage.href = "generateWord.html";
 }
 
+
+function showWord() {
+    document.getElementById("wordDisplay").removeAttribute("hidden");
+    state = "lost";
+    document.getElementById("info").innerHTML = "You lost!";
+}
 
 function setupGame() {
     wordLen = localStorage.getItem('wordLen') != null ? localStorage.getItem('wordLen') : 5;
     tries = localStorage.getItem('tries') != null ? localStorage.getItem('tries') : 6;
+    if (tries < 1) {
+        infiniteTries = true;
+        tries = 1;
+    }
 
     avalibleWords = getWordsOfLen(wordLen);
     word = avalibleWords[Math.floor(Math.random() * avalibleWords.length)];
-    document.getElementById("temp").innerHTML = word;
+    document.getElementById("wordDisplay").innerHTML = word;
 
     guesses = [];
     for (var i = 0; i < tries; i++) {
@@ -115,8 +143,10 @@ function startGame() {
     wordLen = document.getElementById("wordLen").value;
     tries = document.getElementById("tries").value;
 
-    localStorage.setItem("wordLen", wordLen);
-    localStorage.setItem("tries", tries);
+    if (wordLen > 2 && wordLen < 10) {
+        localStorage.setItem("wordLen", wordLen);
+        localStorage.setItem("tries", tries);
 
-    window.location.href = "index.html";
+        window.location.href = "index.html";
+    }
 }
