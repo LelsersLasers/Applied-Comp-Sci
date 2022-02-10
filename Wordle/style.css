@@ -4,8 +4,11 @@
 }
 
 .box {
-    border: 1px solid green;
+    border: 1px solid grey;
     width: 40px;
     height: 40px;
+    line-height: 40px;
     margin: 2px;
+    text-align: center;
+    font-size: 35px;
 }

@@ -38,15 +38,17 @@ function keyDownHandler(e) {
                     }
                     if (match == wordLen) {
                         state = "won";
-                        document.getElementById("info").innerHTML = "You won!";
+                        document.getElementById("info").innerHTML = "YOU WON!";
+                        console.log("win");
                     }
-                    else if (guessPos[0] > tries - 1) {
+                    else if (guessPos[0] >= tries - 1 && !infiniteTries) {
                         state = "lost";
                         document.getElementById("info").innerHTML = "You lost! The correct word was: " + word;
+                        console.log("lost");
                     }
                     guessPos[0]++;
                     document.getElementById("info").innerHTML = "";
-                    if (infiniteTries) {
+                    if (infiniteTries && state == "game") {
                         tries++;
                         guesses.push([]);
                         for (var j = 0; j < wordLen; j++) {
