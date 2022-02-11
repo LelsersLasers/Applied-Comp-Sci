@@ -9,7 +9,10 @@ from django.contrib.auth import authenticate, login, logout
 def index(request):
     display_name = ""
     if request.user.is_authenticated:
-        display_name = Account.objects.get(user=request.user).display_name
+        try:
+            display_name = Account.objects.get(user=request.user).display_name
+        except: # incase it is my admin account
+            display_name = request.user.username
     context = {
         "is_login": request.user.is_authenticated,
         "display_name": display_name
@@ -43,19 +46,19 @@ def createAccount(request):
     # TODO: replace the a/b/c/d with a function or something better
 
     if display_name == "" or username == "" or password1 == "" or password2 == "":
-        failContext.error_message = "All fields must be filled in"
+        failContext['error_message'] = "All fields must be filled in"
         return render(request, 'NeoCrosser/signup.html', failContext)
     elif password1 != password2:
-        failContext.error_message = "Passwords do not match"
+        failContext['error_message'] = "Passwords do not match"
         return render(request, 'NeoCrosser/signup.html', failContext)
 
     users = Account.objects.all()
     for user in users:
-        if user.username == username:
-            failContext.error_message = "That username is already in use"
+        if user.user.username == username:
+            failContext['error_message'] = "That username is already in use"
             return render(request, 'NeoCrosser/signup.html', failContext)
         elif user.display_name == display_name:
-            failContext.error_message = "That display name is already in use"
+            failContext['error_message'] = "That display name is already in use"
             return render(request, 'NeoCrosser/signup.html', failContext)
 
     user = User(username=username, password=password1)
@@ -81,7 +84,7 @@ def checkLogin(request):
     }
 
     if username == "" or password == "":
-        failContext.error_message = "All fields must be filled in"
+        failContext['error_message'] = "All fields must be filled in"
         return render(request, 'NeoCrosser/login.html', failContext)
 
     user = authenticate(username=username, password=password)
@@ -90,7 +93,7 @@ def checkLogin(request):
         login(request, user)
         return HttpResponseRedirect("/neocrosser")
 
-    failContext.error_message = "Login not found"
+    failContext['error_message'] = "Login not found"
     return render(request, 'NeoCrosser/login.html', failContext)
 
 def logoutUser(request):
@@ -98,12 +101,14 @@ def logoutUser(request):
     return HttpResponseRedirect("/neocrosser")  
 
 def game(request):
-    return render(request, 'NeoCrosser/game.html')
+    if request.user.is_authenticated:
+        return render(request, 'NeoCrosser/game.html')
+    return HttpResponseRedirect("/neocrosser")
 
 def createScore(request):
-    score = request.POST['score']
+    score = int(request.POST['score'])
 
     ts = TopScore(score=score, account=Account.objects.get(user=request.user))
     ts.save()
-    print("\nTS\n", ts)
+    
     return HttpResponseRedirect("/neocrosser")
