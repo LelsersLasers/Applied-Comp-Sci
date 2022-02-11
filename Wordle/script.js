@@ -20,6 +20,7 @@ function keyDownHandler(e) {
         if (e.key == "Backspace") {
             guesses[guessPos[0]][guessPos[1] - 1] = "";
             if (guessPos[1] > 0) guessPos[1]--;
+            document.getElementById("info").innerHTML = " ";
         }
         if (guessPos[1] >= wordLen) {
             if (e.key == "Enter") {
@@ -38,13 +39,9 @@ function keyDownHandler(e) {
                     }
                     if (match == wordLen) {
                         state = "won";
-                        document.getElementById("info").innerHTML = "YOU WON!";
-                        console.log("win");
                     }
                     else if (guessPos[0] >= tries - 1 && !infiniteTries) {
                         state = "lost";
-                        document.getElementById("info").innerHTML = "You lost! The correct word was: " + word;
-                        console.log("lost");
                     }
                     guessPos[0]++;
                     document.getElementById("info").innerHTML = "";
@@ -97,17 +94,18 @@ function draw() {
         }
         main.innerHTML += "<div class='row' id='row" + i + "'> " + txt + "</div>";
     }
+    if (state == "lost") document.getElementById("info").innerHTML = "You lost! The correct word was: " + word;
+    else if (state == "won") document.getElementById("info").innerHTML = "YOU WON!";
 }
 
 function newWord() {
-    window.localStorage.href = "generateWord.html";
+    window.location.href = "generateWord.html";
 }
 
 
 function showWord() {
-    document.getElementById("wordDisplay").removeAttribute("hidden");
     state = "lost";
-    document.getElementById("info").innerHTML = "You lost!";
+    document.getElementById("info").innerHTML = "You lost! The correct word was: " + word;
 }
 
 function setupGame() {
@@ -120,7 +118,6 @@ function setupGame() {
 
     avalibleWords = getWordsOfLen(wordLen);
     word = avalibleWords[Math.floor(Math.random() * avalibleWords.length)];
-    document.getElementById("wordDisplay").innerHTML = word;
 
     guesses = [];
     for (var i = 0; i < tries; i++) {
