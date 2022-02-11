@@ -6,16 +6,19 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 
-def index(request):
-    display_name = ""
+
+def getDisplayName(request):
     if request.user.is_authenticated:
         try:
-            display_name = Account.objects.get(user=request.user).display_name
+            return Account.objects.get(user=request.user).display_name
         except: # incase it is my admin account
-            display_name = request.user.username
+            return request.user.username
+    return ""
+
+def index(request):
     context = {
         "is_login": request.user.is_authenticated,
-        "display_name": display_name
+        "display_name": getDisplayName(request)
     }
     return render(request, 'NeoCrosser/index.html', context)
 
@@ -52,17 +55,19 @@ def createAccount(request):
         failContext['error_message'] = "Passwords do not match"
         return render(request, 'NeoCrosser/signup.html', failContext)
 
-    users = Account.objects.all()
-    for user in users:
-        if user.user.username == username:
+    accs = Account.objects.all()
+    for acc in accs:
+        if acc.user.username == username:
             failContext['error_message'] = "That username is already in use"
             return render(request, 'NeoCrosser/signup.html', failContext)
-        elif user.display_name == display_name:
+        elif acc.display_name == display_name:
             failContext['error_message'] = "That display name is already in use"
             return render(request, 'NeoCrosser/signup.html', failContext)
 
-    user = User(username=username, password=password1)
+    print(isinstance(password1, str))
+    user = User.objects.create_user(username=username, password=password1)
     user.save()
+
     acc = Account(display_name=display_name, user=user)
     acc.save()
 
@@ -111,4 +116,18 @@ def createScore(request):
     ts = TopScore(score=score, account=Account.objects.get(user=request.user))
     ts.save()
     
+    return HttpResponseRedirect("/neocrosser")
+
+def directions(request):
+    return render(request, 'NeoCrosser/directions.html')
+
+def restore(request):
+    if request.user.is_authenticated:
+        context = {
+            "saves_list": None # TODO
+        }
+        return render(request, 'NeoCrosser/restore.html', context)
+    return HttpResponseRedirect("/neocrosser")
+
+def backToIndex(request):
     return HttpResponseRedirect("/neocrosser")

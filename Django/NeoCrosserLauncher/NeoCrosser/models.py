@@ -13,7 +13,7 @@ class Account(models.Model):
 
 class TopScore(models.Model):
     score = models.IntegerField("Score")
-    account = models.ForeignKey(Account, on_delete=models.DO_NOTHING)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
 
     def __str__(self):
         return "%s: %i" % (self.account.display_name, self.score)
@@ -30,6 +30,8 @@ class GameSave(models.Model):
     json = models.TextField("JSON Save")
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     is_live = models.BooleanField("Can Join?", default=False)
+    score = models.IntegerField("Score")
+    date_created = models.DateTimeField("Data Created")
 
     def __str__(self):
         return self.json

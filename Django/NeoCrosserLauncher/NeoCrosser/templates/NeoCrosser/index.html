@@ -11,12 +11,14 @@
 <ul>
     {% if is_login %}
         <li><a href="{% url 'NeoCrosser:logoutUser' %}">Log Out</a></li>
-        <li><a href="{% url 'NeoCrosser:game' %}">Play NEO CROSSER</a></li>
+        <li><a href="{% url 'NeoCrosser:game' %}">Play NEO CROSSER - New Game</a></li>
+        <li><a href="{% url 'NeoCrosser:restore' %}">Play NEO CROSSER - From Save</a></li>
     {% else %}
         <li><a href="{% url 'NeoCrosser:loginPage' %}">Login</a></li>
         <li><a href="{% url 'NeoCrosser:signup' %}">Sign Up</a></li>
         <li>Must be logged in to play!</li>
     {% endif %}
 
+    <li><a href="{% url 'NeoCrosser:directions' %}">NEO CROSSER Directions</a></li>
     <li><a href="{% url 'NeoCrosser:scores' %}">View Top Scores</a></li>
 </ul>

@@ -22,4 +22,11 @@ urlpatterns = [
     path('logoutUser/', views.logoutUser, name='logoutUser'),
     # creates a TopScore after a game ends
     path('createScore/', views.createScore, name='createScore'),
+
+    # back button
+    path('backToIndex/', views.backToIndex, name='backToIndex'),
+
+    path('directions/', views.directions, name='directions'),
+
+    path('restore/', views.restore, name='restore')
 ]

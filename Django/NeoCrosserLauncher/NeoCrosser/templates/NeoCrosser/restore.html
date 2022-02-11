@@ -1,11 +1,11 @@
-{% if scores_list %}
+{% if saves_list %}
     <ol>
-    {% for s in scores_list %}
-        <li>{{ s.account.display_name }}: {{ s.score }}</li>
+    {% for s in saves_list %}
+        <li>{{ s.date_created }} - {{ s.score }}</li>
     {% endfor %}
     </ol>
 {% else %}
-    <p>No top scores!</p>
+    <p>No Saves!</p>
 {% endif %}
 
 <a href="{% url 'NeoCrosser:backToIndex' %}">
