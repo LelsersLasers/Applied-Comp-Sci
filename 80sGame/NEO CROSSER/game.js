@@ -582,12 +582,12 @@ function drawGame() {
         for (var i in enemies) {
             enemies[i].update();
             enemies[i].draw();
-            // if (enemies[i].hb.checkCollide(player.hb) && alive) {
-            //     scoreView.color = "#e37e7b";
-            //     enemies[i].deathSound.play();
-            //     alive = false;
-            //     player.active = false;
-            // }
+            if (enemies[i].hb.checkCollide(player.hb) && alive) {
+                scoreView.color = "#e37e7b";
+                enemies[i].deathSound.play();
+                alive = false;
+                player.active = false;
+            }
         }
         for (var i in lasers) lasers[i].update();
         drawHUD();
@@ -653,7 +653,7 @@ const softCap = 10000;
 const ufoBase = Math.pow(2, 1/(softCap * 1.5));
 const buildingBlockCount = 5;
 
-var landSlideWait = 2;
+var landSlideWait = 20;
 
 const font = "monospace";
 

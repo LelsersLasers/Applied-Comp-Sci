@@ -11,7 +11,6 @@ On Demand Scaling
 Calculate speed/movement based on fps
 
 LandSlide:
-- Texture
 - Sound
 
 E SOUND
@@ -29,7 +28,7 @@ display use w/s up/down to change the selected save
 
 mouse hover over buttons in restore screen
 
-Let user scroll through all scores (like saves)?
+Let user scroll through all scores (like saves)? (rather than top 10?)
 
 Clarity
 - General colors/hitboxes
