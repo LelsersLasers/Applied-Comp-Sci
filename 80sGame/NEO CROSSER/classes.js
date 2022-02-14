@@ -755,7 +755,7 @@ class LandSlide extends Enemy {
         let MSs = [w/200, -w/200];
         let dir = getRandomInt(0, 2);
 
-        super(new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + topScore/softCap), "TODO.mp3", 2.0);
+        super(new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + topScore/softCap), "landSlideSound.mp3", 2.0);
         this.deathSound.play();
         this.dir = dir;
         this.animationWaitBase = 100;

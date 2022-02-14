@@ -9,11 +9,6 @@ On Demand Scaling
 - on screen change size
 
 Calculate speed/movement based on fps
-
-LandSlide:
-- Sound
-
-E SOUND
     
 SETTINGS SCREEN
     - toggle ufos
