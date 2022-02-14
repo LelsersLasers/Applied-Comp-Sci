@@ -445,7 +445,7 @@ class Enemy extends Thing {
     }
     updateCanShoot(speciality, laserDist) {
         let dist = Math.sqrt((this.pt.x - player.pt.x) * (this.pt.x - player.pt.x) + (this.pt.y - player.pt.y) * (this.pt.y - player.pt.y));
-        this.canShoot = speciality && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * laserDist && this.active;
+        this.canShoot = speciality && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * laserDist && this.active && alive;
         if (this.canShoot) this.canShoot = this.hasLOS(); // hasLOS is very costly to run, so only run when nessissary
     }
     checkShoot(startPt) {
@@ -562,7 +562,7 @@ class Car extends Enemy {
             }
             else justPlaced = false;
 
-            if (Math.random() < 1/20 && landSlideWait < 0) {
+            if (Math.random() < 1/2 && landSlideWait < 0) {
                 landSlides.push(new LandSlide(y + 3 * carHeight));
                 landSlideWait = 20;
             }
@@ -757,6 +757,8 @@ class LandSlide extends Enemy {
 
         super(new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + topScore/softCap), "TODO.mp3", 2.0);
         this.deathSound.play();
+        this.dir = dir;
+        this.animationWaitBase = 100;
     }
     update() {
         this.updateAnimation();
@@ -779,7 +781,7 @@ class LandSlide extends Enemy {
         }
     }
     draw() {
-        context.drawImage(texLandSlide, posSourceLandSlide[0], posSourceLandSlide[0], 40, 20, this.pt.x, this.pt.y, this.w, this.h);
+        context.drawImage(texLandSlide, posSourceLandSlide[Number(!Boolean(this.dir))][this.animation][0], posSourceLandSlide[Number(!Boolean(this.dir))][this.animation][1], 82, 40, this.pt.x, this.pt.y, this.w, this.h);
     }
     restore(save) {
         this.pt.x = save.pt.x;

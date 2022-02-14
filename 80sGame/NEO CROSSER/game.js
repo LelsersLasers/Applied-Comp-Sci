@@ -582,12 +582,12 @@ function drawGame() {
         for (var i in enemies) {
             enemies[i].update();
             enemies[i].draw();
-            if (enemies[i].hb.checkCollide(player.hb) && alive) {
-                scoreView.color = "#e37e7b";
-                enemies[i].deathSound.play();
-                alive = false;
-                player.active = false;
-            }
+            // if (enemies[i].hb.checkCollide(player.hb) && alive) {
+            //     scoreView.color = "#e37e7b";
+            //     enemies[i].deathSound.play();
+            //     alive = false;
+            //     player.active = false;
+            // }
         }
         for (var i in lasers) lasers[i].update();
         drawHUD();
@@ -650,10 +650,10 @@ function setUpContext() {
 var count = 0;
 
 const softCap = 10000;
-const ufoBase = Math.pow(2, 1/softCap); // double ufo spawn rate at softCap
+const ufoBase = Math.pow(2, 1/(softCap * 1.5));
 const buildingBlockCount = 5;
 
-var landSlideWait = 20;
+var landSlideWait = 2;
 
 const font = "monospace";
 
@@ -838,8 +838,17 @@ var posSourceBuilding = [
 ];
 
 var texLandSlide = new Image();
-texLandSlide.src = "landSlide-40x20.png";
-var posSourceLandSlide = [0,0];
+texLandSlide.src = "landSlide-82x41-1x4-1spacing.png";
+var posSourceLandSlide = [
+    [ // left
+        [0, 0],
+        [0, 41]
+    ],
+    [ // right
+        [0, 82],
+        [0, 123]
+    ]
+];
 
 var texPause = new Image();
 texPause.src = "pause-14x14-2x1-1spacing.png";

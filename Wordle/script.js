@@ -36,6 +36,9 @@ function keyDownHandler(e) {
                         else if (word.toUpperCase().split("").includes(guesses[guessPos[0]][i])) {
                             stat[guessPos[0]][i] = 1;
                         }
+                        else {
+                            stat[guessPos[0]][i] = -1;
+                        }
                     }
                     if (match == wordLen) {
                         state = "won";
@@ -84,8 +87,14 @@ function draw() {
             if (stat[i][j] == 1) color = "yellow";
             else if (stat[i][j] == 2) color = "green";
             else if (i == guessPos[0]) {
-                if (guessPos[1] == wordLen && j == 4) color = "grey";
-                else if (guessPos[1] == j) color = "grey";
+                if (guessPos[1] == wordLen && j == 4) color = "lightgrey";
+                else if (guessPos[1] == j) color = "lightgrey";
+            }
+            else if (stat[i][j] == -1) {
+                color = "grey; color: white"
+            }
+            if (guesses[i][j] != "" && stat[i][j] == 0) {
+                color += "; border: 1px solid black";
             }
 
             txt += "<div class='box' id='" + i + "-" + j
