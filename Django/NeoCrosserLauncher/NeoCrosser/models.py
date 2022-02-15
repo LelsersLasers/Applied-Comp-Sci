@@ -31,7 +31,7 @@ class GameSave(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     is_live = models.BooleanField("Can Join?", default=False)
     score = models.IntegerField("Score")
-    date_created = models.DateTimeField("Data Created")
+    # date_created = models.DateTimeField("Data Created")
 
     def __str__(self):
         return self.json

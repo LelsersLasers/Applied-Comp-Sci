@@ -123,8 +123,10 @@ def directions(request):
 
 def restore(request):
     if request.user.is_authenticated:
+        acc = Account.objects.get(user=request.user)
+        print(acc.pk)
         context = {
-            "saves_list": None # TODO
+            "saves_list": acc.gameSave_set.all()
         }
         return render(request, 'NeoCrosser/restore.html', context)
     return HttpResponseRedirect("/neocrosser")
