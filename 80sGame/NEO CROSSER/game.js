@@ -570,10 +570,7 @@ function drawHUD() {
 function drawGame() {
     for (var i in bar) bar[i].draw();
     if (!paused) {
-        for (var i in landSlides) {
-            landSlides[i].update();
-            landSlides[i].draw();
-        }
+        for (var i in landSlides) landSlides[i].update();
         mouseDownActions();
         player.move();
         player.draw();
@@ -582,12 +579,12 @@ function drawGame() {
         for (var i in enemies) {
             enemies[i].update();
             enemies[i].draw();
-            if (enemies[i].hb.checkCollide(player.hb) && alive) {
-                scoreView.color = "#e37e7b";
-                enemies[i].deathSound.play();
-                alive = false;
-                player.active = false;
-            }
+            // if (enemies[i].hb.checkCollide(player.hb) && alive) {
+            //     scoreView.color = "#e37e7b";
+            //     enemies[i].deathSound.play();
+            //     alive = false;
+            //     player.active = false;
+            // }
         }
         for (var i in lasers) lasers[i].update();
         drawHUD();
@@ -599,6 +596,7 @@ function drawGame() {
 }
 
 function drawAll() {
+    t0 = performance.now();
     buttonHover();
     count = 0;
 
@@ -616,7 +614,11 @@ function drawAll() {
     else if (textOpacity < 0) opacityDir = 0.04;
     textOpacity += opacityDir;
 
-    console.log(count)
+    // console.log(count);
+
+    t1 = performance.now();
+    console.log(parseInt(1000 * (t1 - t0)));
+
     window.requestAnimationFrame(drawAll);
 }
 
@@ -649,7 +651,10 @@ function setUpContext() {
 
 var count = 0;
 
-const softCap = 10000;
+var t0 = performance.now();
+var t1 = performance.now();
+
+const softCap = 1000;
 const ufoBase = Math.pow(2, 1/(softCap * 1.5));
 const buildingBlockCount = 5;
 
@@ -881,7 +886,7 @@ var scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5)
 
 context.font = carHeight * 1/2 + "px " + font;
 let pauseWidth = 0;
-let txts = ["Resume", "[S]ave", "[Q]uit Without Saving", "Toggle [M]usic", "Resume [P]revious Game", "New [G]ame"];
+let txts = ["[R]esume", "[S]ave", "[Q]uit Without Saving", "Toggle [M]usic", "Resume [P]revious Game", "New [G]ame"];
 for (var i in txts) {
     if (context.measureText(txts[i]).width > pauseWidth) {
         pauseWidth = context.measureText(txts[i]).width;

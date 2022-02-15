@@ -198,20 +198,24 @@ class Laser extends Thing {
         this.hitSound.volume = 0.8/soundOffset;
     }
     update() {
-        if (this.active) {
-            this.pt.apply(this.moveVector);
-            if (this.pt.x < -this.ms || this.pt.x > canvas.width + this.ms) this.active = false;
-            let enemies = this.friendly ? [...cars, ...ufos] : [player];
-            for (var i in enemies) {
-                if (this.hb.checkCollide(enemies[i].hb)) {
-                    this.active = false;
-                    enemies[i].active = false;
-                    enemies[i].stun += this.stunTime;
-                    this.hitSound.play();
-                }
+        this.pt.apply(this.moveVector);
+        if (this.pt.x < -this.ms || this.pt.x > canvas.width + this.ms || (this.pt.y > cars[0].pt.y && this.pt.y > canvas.height) || this.pt.y < -carHeight) {
+            lasers.splice(lasers.indexOf(this), 1);
+        }
+        let enemies = this.friendly ? [...cars, ...ufos] : [player];
+        for (var i in enemies) {
+            if (this.hb.checkCollide(enemies[i].hb)) {
+                enemies[i].active = false;
+                enemies[i].stun += this.stunTime;
+                this.hitSound.play();
+                lasers.splice(lasers.indexOf(this), 1);
+                break;
             }
-            for (var i in buildings) {
-                if (this.hb.checkCollide(buildings[i].hb)) this.active = false;
+        }
+        for (var i in buildings) {
+            if (this.hb.checkCollide(buildings[i].hb)) {
+                this.active = false;
+                break;
             }
         }
         this.draw();
@@ -303,6 +307,7 @@ class Player extends Thing {
                         else if (lastDir == "d") this.pt.x -= this.msX/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1);
                         else if (lastDir == "w") this.moveVertical(-this.msY/moveWait);
                         else if (lastDir == "s") this.moveVertical(this.msY/moveWait);
+                        break;
                     }
                 }
             }
@@ -346,6 +351,7 @@ class Player extends Thing {
                         else if (lastDir == "s") this.moveVertical(this.pt.y - buildings[i].pt.y + this.h);
                         else if (lastDir == "a") this.pt.x += buildings[i].pt.x + buildings[i].w - this.pt.x;
                         else if (lastDir == "d") this.pt.x -= this.pt.x - buildings[i].pt.x + this.w;
+                        break;
                     }
                 }
                 qAbility.use();
@@ -403,6 +409,7 @@ class AfterImage extends Thing {
             context.globalAlpha = 1;
             if (!paused) this.frames--;
         }
+        else player.afterImages.splice(player.afterImages.indexOf(this), 1);
     }
 }
 
@@ -518,7 +525,10 @@ class Car extends Enemy {
             var x = getRandomInt(0, canvas.width - w);
             let tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (var i in buildings) {
-                if (tempHB.checkCollide(buildings[i].hb)) badX = true;
+                if (tempHB.checkCollide(buildings[i].hb)) {
+                    badX = true;
+                    break;
+                }
             }
         }
         let pt = new Vector(x, y);
@@ -541,7 +551,10 @@ class Car extends Enemy {
             if (this.hb.outOfBounds()) this.ms *= -1.001;
         }
         for (var i in buildings) {
-            if (this.hb.checkCollide(buildings[i].hb)) this.ms *= -1;
+            if (this.hb.checkCollide(buildings[i].hb)) {
+                this.ms *= -1;
+                break;
+            }
         }
 
         if (this.pt.y > canvas.height && !this.offScreen) {
@@ -622,8 +635,9 @@ class Ufo extends Enemy {
     update() {
         this.updateStun();
         this.updateAnimation();
-        
-        if (this.active) {
+
+        if (this.pt.y > cars[0].pt.y && this.pt.y > canvas.height) ufos.splice(ufos.indexOf(this), 1);
+        else if (this.active) {
             this.pt.apply(this.move);
             this.hb.useSmallHB(this.pt, this.w, this.h);
             if (this.hb.outOfBounds()) this.move.x *= -1;
@@ -682,7 +696,10 @@ class Building extends Thing {
             var x = getRandomInt(0, canvas.width - w);
             let tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (var i in cars) {
-                if (tempHB.checkCollide(cars[i].hb)) badX = true;
+                if (tempHB.checkCollide(cars[i].hb)) {
+                    badX = true;
+                    break;
+                }
             }
         }
         let pt = new Vector(x, y);
@@ -761,23 +778,29 @@ class LandSlide extends Enemy {
         this.animationWaitBase = 100;
     }
     update() {
-        this.updateAnimation();
-        this.pt.x += this.ms;
-        let obstacles = [...cars, player];
-        for (var i in obstacles) {
-            if (this.hb.checkCollide(obstacles[i].hb)) {
-                obstacles[i].pt.x += this.ms/4;
-                player.hb.useSmallHB(player.pt, player.w, player.h);
-                for (var j in buildings) {
-                    if (obstacles[i].hb.checkCollide(buildings[j].hb)) {
-                        obstacles[i].pt.x = this.ms > 0 ? buildings[j].pt.x - obstacles[i].hb.w : buildings[j].pt.x + buildings[j].hb.w;
-                        obstacles[i].pt.x -= (obstacles[i].w - obstacles[i].hb.w)/2; // for player
+        if ((this.dir == 0 && this.pt.x > canvas.width) || (this.dir == 1 && this.pt.x + this.w < 0)) {
+            landSlides.splice(landSlides.indexOf(this), 1);
+        }
+        else {
+            this.updateAnimation();
+            this.pt.x += this.ms;
+            let obstacles = [...cars, player];
+            for (var i in obstacles) {
+                if (this.hb.checkCollide(obstacles[i].hb)) {
+                    obstacles[i].pt.x += this.ms/4;
+                    player.hb.useSmallHB(player.pt, player.w, player.h);
+                    for (var j in buildings) {
+                        if (obstacles[i].hb.checkCollide(buildings[j].hb)) {
+                            obstacles[i].pt.x = this.ms > 0 ? buildings[j].pt.x - obstacles[i].hb.w : buildings[j].pt.x + buildings[j].hb.w;
+                            obstacles[i].pt.x -= (obstacles[i].w - obstacles[i].hb.w)/2; // for player
+                        }
+                    }
+                    if (obstacles[i].hb.outOfBounds()) {
+                        obstacles[i].pt.x = this.ms > 0 ? canvas.width - obstacles[i].w : 0;
                     }
                 }
-                if (obstacles[i].hb.outOfBounds()) {
-                    obstacles[i].pt.x = this.ms > 0 ? canvas.width - obstacles[i].w : 0;
-                }
             }
+            this.draw();
         }
     }
     draw() {

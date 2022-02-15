@@ -1,5 +1,7 @@
 # TODO
 
+Score randomly getting .00000000000???
+
 OPTIMIZE
     - remove "freezes" that freeze the whole broswer
     - Where is time lost? (why so slow?)
@@ -10,6 +12,9 @@ On Demand Scaling
 
 Calculate speed/movement based on fps
     
+
+Mario Kart speed ups?
+
 SETTINGS SCREEN
     - toggle ufos
         - and if they can shoot
@@ -44,10 +49,10 @@ Clarity
 - softCap
 
 Redo any art?
-- tanks/buses
+- tanks
 - demensions of the textures
 Update HitBoxes to match the art
-- cars, tanks
+- cars, tanks, ufos
 
 Update directions
 Update README
