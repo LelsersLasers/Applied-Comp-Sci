@@ -614,7 +614,8 @@ function drawAll() {
     textOpacity += opacityDir;
 
     t1 = performance.now();
-    console.log("My Time (ms):", (t1 - t0), " Total Time (ms):", parseInt(t1 - t2), " FPS:", parseInt(1000/(t1 - t2)));
+    console.log("MyTime:", (t1 - t0).toFixed(2), " TotalTime:", (t1 - t2).toFixed(2), " FPS:", (1000/(t1 - t2)).toFixed(2));
+    console.log("Extra Time Added:", (t0 - t2).toFixed(2));
     t2 = performance.now();
 
     window.requestAnimationFrame(drawAll);
