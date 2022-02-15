@@ -214,7 +214,7 @@ class Laser extends Thing {
         }
         for (var i in buildings) {
             if (this.hb.checkCollide(buildings[i].hb)) {
-                this.active = false;
+                lasers.splice(lasers.indexOf(this), 1);
                 break;
             }
         }
@@ -453,6 +453,7 @@ class Enemy extends Thing {
     updateCanShoot(speciality, laserDist) {
         let dist = Math.sqrt((this.pt.x - player.pt.x) * (this.pt.x - player.pt.x) + (this.pt.y - player.pt.y) * (this.pt.y - player.pt.y));
         this.canShoot = speciality && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * laserDist && this.active && alive;
+        // COMMENT The line below to stop the LOS function from running
         if (this.canShoot) this.canShoot = this.hasLOS(); // hasLOS is very costly to run, so only run when nessissary
     }
     checkShoot(startPt) {
@@ -460,21 +461,23 @@ class Enemy extends Thing {
             let animationWait = this.getAnimationWait() * 4;
             animationWait = animationWait > 0 ? animationWait : this.animationWaitBase * 4;
             if (this.frame % animationWait == 0) {
+                // COMMENT THESE 4 Lines to stop ufo/tanks from spawning lasers
+                // /*
                 lasers.push(new Laser(startPt, 45, 60, false));
                 lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - startPt.x, player.pt.y + player.h/2 - startPt.y);
                 lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);
                 this.laserFireSound.play();
+                // */
             }
         }
     }
     hasLOS() {
-        count++;
         let checkObstructed = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
         checkObstructed.scale(new Laser(new Vector(-1, -1), -1, -1, false).ms * 5); // If game runs way to slow once lasers are being fired, increase
         let tempHB = new HitBox(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), 1, 1);
         while (!tempHB.outOfBounds()) {
             tempHB.pt.apply(checkObstructed);
-            if (tempHB.checkCollide(player.hb))  return true;
+            if (tempHB.checkCollide(player.hb)) return true;
             for (var i in buildings) {
                 if (tempHB.checkCollide(buildings[i].hb)) return false;
             }

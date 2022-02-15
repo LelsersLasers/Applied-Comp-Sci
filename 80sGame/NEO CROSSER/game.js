@@ -598,7 +598,6 @@ function drawGame() {
 function drawAll() {
     t0 = performance.now();
     buttonHover();
-    count = 0;
 
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
@@ -614,10 +613,9 @@ function drawAll() {
     else if (textOpacity < 0) opacityDir = 0.04;
     textOpacity += opacityDir;
 
-    // console.log(count);
-
     t1 = performance.now();
-    console.log(parseInt(1000 * (t1 - t0)));
+    console.log("My Time (ms):", (t1 - t0), " Total Time (ms):", parseInt(t1 - t2), " FPS:", parseInt(1000/(t1 - t2)));
+    t2 = performance.now();
 
     window.requestAnimationFrame(drawAll);
 }
@@ -653,6 +651,7 @@ var count = 0;
 
 var t0 = performance.now();
 var t1 = performance.now();
+var t2 = performance.now();
 
 const softCap = 1000;
 const ufoBase = Math.pow(2, 1/(softCap * 1.5));
