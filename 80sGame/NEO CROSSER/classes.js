@@ -202,6 +202,9 @@ class Laser extends Thing {
         if (this.pt.x < -this.ms || this.pt.x > canvas.width + this.ms || (this.pt.y > cars[0].pt.y && this.pt.y > canvas.height) || this.pt.y < -carHeight) {
             lasers.splice(lasers.indexOf(this), 1);
         }
+        // if (this.pt.x < -this.ms || this.pt.x > canvas.width + this.ms || Math.abs(this.pt.y - player.pt.y) > canvas.height) {
+        //     lasers.splice(lasers.indexOf(this), 1);
+        // }
         let enemies = this.friendly ? [...cars, ...ufos] : [player];
         for (var i in enemies) {
             if (this.hb.checkCollide(enemies[i].hb)) {
@@ -221,15 +224,13 @@ class Laser extends Thing {
         this.draw();
     }
     draw() {
-        if (this.active) {
-            context.strokeStyle = this.color;
-            context.lineWidth = this.ms * 1.5;
-            context.beginPath();
-            context.moveTo(this.pt.x + this.hb.w/2, this.pt.y + this.hb.h/2);
-            context.lineTo(this.pt.x + this.hb.w/2 - this.moveVector.x * 3, this.pt.y + this.hb.h/2 - this.moveVector.y * 3);
-            context.stroke();
-            context.lineWidth = 3;
-        }
+        context.strokeStyle = this.color;
+        context.lineWidth = this.ms * 1.5;
+        context.beginPath();
+        context.moveTo(this.pt.x + this.hb.w/2, this.pt.y + this.hb.h/2);
+        context.lineTo(this.pt.x + this.hb.w/2 - this.moveVector.x * 3, this.pt.y + this.hb.h/2 - this.moveVector.y * 3);
+        context.stroke();
+        context.lineWidth = 3;
     }
     restore(save) {
         this.active = save.active;
@@ -267,7 +268,7 @@ class Player extends Thing {
         for (var i in obstacles) obstacles[i].pt.y += ms * (eAbility.active > 0 ? this.sprintSpeed : 1);
         for (var i in bar) bar[i].update();
         score += ms * moveWait/this.msY;
-        if (score > topScore) topScore = Number(score);
+        if (score > topScore) topScore = score.toFixed(0);
     }
     move() {
         if (this.stun != this.lastStun && this.stunProtection <= 0) {
@@ -472,6 +473,7 @@ class Enemy extends Thing {
         }
     }
     hasLOS() {
+        count++;
         let checkObstructed = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
         checkObstructed.scale(new Laser(new Vector(-1, -1), -1, -1, false).ms * 5); // If game runs way to slow once lasers are being fired, increase
         let tempHB = new HitBox(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), 1, 1);
