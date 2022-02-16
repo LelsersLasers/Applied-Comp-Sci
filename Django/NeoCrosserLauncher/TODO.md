@@ -1,7 +1,5 @@
 # NEO CROSSER Online!
 
-Pass list of saves to restore.html
-
 Make NEO CROSSER Actually playable:
 - Load static images and sounds
 

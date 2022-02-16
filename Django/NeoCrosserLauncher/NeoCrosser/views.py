@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import TopScore, Account
+from .models import TopScore, Account, GameSave
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -73,10 +73,8 @@ def createAccount(request):
 
     person = authenticate(username=username, password=password1)
     if person is not None:
-        # IF success, then use the login function so the session persists.
         login(request, person)
     return HttpResponseRedirect("/neocrosser")
-
 
 def checkLogin(request):
     username = request.POST['username']
@@ -94,7 +92,6 @@ def checkLogin(request):
 
     user = authenticate(username=username, password=password)
     if user is not None:
-        # IF success, then use the login function so the session persists.
         login(request, user)
         return HttpResponseRedirect("/neocrosser")
 
@@ -112,10 +109,8 @@ def game(request):
 
 def createScore(request):
     score = int(request.POST['score'])
-
     ts = TopScore(score=score, account=Account.objects.get(user=request.user))
     ts.save()
-    
     return HttpResponseRedirect("/neocrosser")
 
 def directions(request):
@@ -124,10 +119,7 @@ def directions(request):
 def restore(request):
     if request.user.is_authenticated:
         acc = Account.objects.get(user=request.user)
-        print(acc.pk)
-        context = {
-            "saves_list": acc.gameSave_set.all()
-        }
+        context = {"saves_list": GameSave.objects.filter(account=acc)}
         return render(request, 'NeoCrosser/restore.html', context)
     return HttpResponseRedirect("/neocrosser")
 
