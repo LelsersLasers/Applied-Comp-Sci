@@ -23,4 +23,13 @@
 
     </fieldset>
     <input type="submit" value="Login" />
+    <a href="{% url 'NeoCrosser:signup' %}">
+        <button type="button">Don't have an account? (Signup)</button>
+    </a>
 </form>
+
+<a href="{% url 'NeoCrosser:backToIndex' %}">
+    <button type="button">
+        Back
+    </button>
+</a>
