@@ -8,13 +8,18 @@
     </title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'game.css' %}">
+
+    <audio id="bgMusic">
+        <source src="{% static 'backgroundMusic.mp3' %}" />
+    </audio>
+
     <script defer type="text/javascript" src="{% static 'classes.js' %}"></script>
     <script defer type="text/javascript" src="{% static 'game.js' %}"></script>
-
 </head>
+
 <body>
     <canvas id="mainCanvas" class="center"></canvas>
-    <form id="scoreForm" action="{% url 'NeoCrosser:createScore' %}" method="post">
+    <form id="scoreForm" action="{% url 'NeoCrosser:createScore' %}" method="post" hidden>
         {% csrf_token %}
         <input id="score" type="text" id="score" name="score" value="">
     </form>

@@ -14,99 +14,102 @@ var mousePos = new Vector(-1, -1);
 var cursorHB = new HitBox(-1, -1, 0, 0);
 
 document.addEventListener("keydown", keyDownHandler, false);
-document.addEventListener("keyup", keyUpHandler, false);
-document.addEventListener("click", clickHandler, false);
-document.addEventListener("mousemove", getMousePos, false);
+// document.addEventListener("keyup", keyUpHandler, false);
+// document.addEventListener("click", clickHandler, false);
+// document.addEventListener("mousemove", getMousePos, false);
 
 function keyDownHandler(e) {
-    switch (e.key) {
-        case "w": case "ArrowUp":
-            if (screen == "restore") {
-                selectedIndex -= 1;
-                deleteCount = 0;
-            }
-            wDown = true;
-            lastDir = "w";
-            break;
-        case "s": case "ArrowDown":
-            if (screen == "welcome") screen = "scores";
-            else if (screen == "restore") {
-                selectedIndex += 1;
-                deleteCount = 0;
-            }
-            else if (paused) {
-                save();
-                saveButton.clicked = 10;
-            }
-            sDown = true;
-            lastDir = "s";
-            break;
-        case "a": case "ArrowLeft":
-            aDown = true;
-            lastDir = "a";
-            break;
-        case "d": case "ArrowRight":
-            if (screen == "welcome") screen = "directions";
-            dDown = true;
-            lastDir = "d";
-            break;
-        case "q": case "1":
-            if (paused) {
-                reset();
-            }
-            qDown = true;
-            break;
-        case "e": case "2": eDown = true; break;
-        case "r": case "3":
-            if (paused) paused = false;
-            rDown = true;
-            break;
-        case "z": case "Escape":
-            if (screen == "game") paused = !paused;
-            break;
-        case "p":
-            if (screen == "play") screen = "restore";
-            break;
-        case "m":
-            if (paused) musicToggle();
-            break;
-        case "g":
-            if (screen == "play") {
-                screen = "game";
-                musicStart();
-            }
-            break;
-        case "x":
-            if (screen == "restore") {
-                let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
-                if (games.length > 0) games.splice(selectedIndex, 1);
-                localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
-            }
-            break;
-        case "y":
-            if (screen == "restore") screen = "play";
-            break;
-        case "Enter":
-            if (screen == "welcome") {
-                screen = "play";
-            }
-            else if (screen == "play") screen = "welcome";
-            else if (screen == "restore") {
-                let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
-                if (games.length > 0) {
-                    restore(games[selectedIndex]);
-                    screen = "game";
-                }
-            }
-            else if (screen == "game" && !alive) {
-                reset();
-            }
-            else if (screen == "directions" || screen == "scores") {
-                screen = "welcome";
-            }
-            break;
-    }
-    inputMode = "key";
+    backgroundMusic.currentTime = getRandomInt(100, backgroundMusic.duration);
+    console.log(backgroundMusic.currentTime);
+    backgroundMusic.play();
+    // switch (e.key) {
+    //     case "w": case "ArrowUp":
+    //         if (screen == "restore") {
+    //             selectedIndex -= 1;
+    //             deleteCount = 0;
+    //         }
+    //         wDown = true;
+    //         lastDir = "w";
+    //         break;
+    //     case "s": case "ArrowDown":
+    //         if (screen == "welcome") screen = "scores";
+    //         else if (screen == "restore") {
+    //             selectedIndex += 1;
+    //             deleteCount = 0;
+    //         }
+    //         else if (paused) {
+    //             save();
+    //             saveButton.clicked = 10;
+    //         }
+    //         sDown = true;
+    //         lastDir = "s";
+    //         break;
+    //     case "a": case "ArrowLeft":
+    //         aDown = true;
+    //         lastDir = "a";
+    //         break;
+    //     case "d": case "ArrowRight":
+    //         if (screen == "welcome") screen = "directions";
+    //         dDown = true;
+    //         lastDir = "d";
+    //         break;
+    //     case "q": case "1":
+    //         if (paused) {
+    //             reset();
+    //         }
+    //         qDown = true;
+    //         break;
+    //     case "e": case "2": eDown = true; break;
+    //     case "r": case "3":
+    //         if (paused) paused = false;
+    //         rDown = true;
+    //         break;
+    //     case "z": case "Escape":
+    //         if (screen == "game") paused = !paused;
+    //         break;
+    //     case "p":
+    //         if (screen == "play") screen = "restore";
+    //         break;
+    //     case "m":
+    //         if (paused) musicToggle();
+    //         break;
+    //     case "g":
+    //         if (screen == "play") {
+    //             screen = "game";
+    //             musicStart();
+    //         }
+    //         break;
+    //     case "x":
+    //         if (screen == "restore") {
+    //             let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+    //             if (games.length > 0) games.splice(selectedIndex, 1);
+    //             localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
+    //         }
+    //         break;
+    //     case "y":
+    //         if (screen == "restore") screen = "play";
+    //         break;
+    //     case "Enter":
+    //         if (screen == "welcome") {
+    //             screen = "play";
+    //         }
+    //         else if (screen == "play") screen = "welcome";
+    //         else if (screen == "restore") {
+    //             let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+    //             if (games.length > 0) {
+    //                 restore(games[selectedIndex]);
+    //                 screen = "game";
+    //             }
+    //         }
+    //         else if (screen == "game" && !alive) {
+    //             reset();
+    //         }
+    //         else if (screen == "directions" || screen == "scores") {
+    //             screen = "welcome";
+    //         }
+    //         break;
+    // }
+    // inputMode = "key";
 }
 function keyUpHandler(e) {
     switch (e.key) {
@@ -230,6 +233,7 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     value = Math.floor(Math.random() * (max - min) + min); //The max is exclusive and the min is inclusive
+    console.log(value);
     return value;
 }
 
@@ -653,292 +657,294 @@ function setUpContext() {
 
 // localStorage.removeItem("NEO CROSSER - Leader Board"); // reset leard board
 
-var count = 0;
+var backgroundMusic = document.getElementById("bgMusic");
 
-const softCap = 10000;
-const ufoBase = Math.pow(2, 1/softCap); // double ufo spawn rate at softCap
-const buildingBlockCount = 5;
+// var count = 0;
 
-var landSlideWait = 20;
+// const softCap = 10000;
+// const ufoBase = Math.pow(2, 1/softCap); // double ufo spawn rate at softCap
+// const buildingBlockCount = 5;
 
-const font = "monospace";
+// var landSlideWait = 20;
 
-var screen = "welcome";
-var paused = false;
+// const font = "monospace";
 
-var alive = true;
-var score = 0;
-var topScore = 0;
+// var screen = "welcome";
+// var paused = false;
 
-const moveWait = 30;
+// var alive = true;
+// var score = 0;
+// var topScore = 0;
 
-var textOpacity = 1;
-var opacityDir = -0.04;
+// const moveWait = 30;
 
-const soundOffset = 10.0;
-// Set up the canvas, context objects, and html elements
-var context = setUpContext();
+// var textOpacity = 1;
+// var opacityDir = -0.04;
 
-var qSound = document.createElement("audio");
-qSound.src = "qSound.mp3";
-qSound.volume = 1.0/soundOffset;
-var eSound = document.createElement("audio");
-eSound.src = "eSound.mp3"; // x2
-eSound.volume = 3.5/soundOffset;
-var rSound = document.createElement("audio");
-rSound.src = "rSound.mp3";
-rSound.volume = 1.0/soundOffset;
+// const soundOffset = 10.0;
+// // Set up the canvas, context objects, and html elements
+// var context = setUpContext();
 
-var backgroundMusic = document.createElement("audio");
-backgroundMusic.src = "backgroundMusic.mp3";
-backgroundMusic.playing = false;
-backgroundMusic.volume = 0.9/soundOffset;
-var musicShouldPlay = localStorage.getItem("playMusic") != null ? localStorage.getItem("playMusic") : "true";
+// var qSound = document.createElement("audio");
+// qSound.src = "qSound.mp3";
+// qSound.volume = 1.0/soundOffset;
+// var eSound = document.createElement("audio");
+// eSound.src = "eSound.mp3"; // x2
+// eSound.volume = 3.5/soundOffset;
+// var rSound = document.createElement("audio");
+// rSound.src = "rSound.mp3";
+// rSound.volume = 1.0/soundOffset;
 
-var texPlayer = new Image();
-texPlayer.src = "player-10x11-8x8-1spacing.png";
-var posSourcePlayer = [ // [!alive][!active][dir][animationPlayer][x/y]
-    [ // not dead
-        [ // not stunned
-            [[0,  0], [11,  0], [22,  0], [33,  0]], // down
-            [[0, 12], [11, 12], [22, 12], [33, 12]], // up
-            [[0, 24], [11, 24], [22, 24], [33, 24]], // right
-            [[0, 36], [11, 36], [22, 36], [33, 36]] // left
-        ],
-        [
-            [[44,  0], [55,  0], [66,  0], [77,  0]], // down
-            [[44, 12], [55, 12], [66, 12], [77, 12]], // up
-            [[44, 24], [55, 24], [66, 24], [77, 24]], // right
-            [[44, 36], [55, 36], [66, 36], [77, 36]] // left
-        ]
-    ],
-    [
-        [ // not stunned
-            [[0, 48], [11, 48], [22, 48], [33, 48]], // down
-            [[0, 60], [11, 60], [22, 60], [33, 60]], // up
-            [[0, 72], [11, 72], [22, 72], [33, 72]], // right
-            [[0, 84], [11, 84], [22, 84], [33, 84]] // left
-        ],
-        [
-            [[44, 48], [55, 48], [66, 48], [77, 48]], // down
-            [[44, 60], [55, 60], [66, 60], [77, 60]], // up
-            [[44, 72], [55, 72], [66, 72], [77, 72]], // right
-            [[44, 84], [55, 84], [66, 84], [77, 84]] // left
-        ]
-    ]
-];
+// var backgroundMusic = document.createElement("audio");
+// backgroundMusic.src = "backgroundMusic.mp3";
+// backgroundMusic.playing = false;
+// backgroundMusic.volume = 0.9/soundOffset;
+// var musicShouldPlay = localStorage.getItem("playMusic") != null ? localStorage.getItem("playMusic") : "true";
 
-var texCar = new Image();
-texCar.src = "car-34x17-2x4-1spacing.png";
-var posSourceCar = [ // [active][dir][animation][x/y]
-    [ // if active
-        [ // if dir == right
-            [0, 0], // animation 1
-            [35, 0] // animation 2
-        ],
-        [ // if dir == left
-            [0, 18], // animation 1
-            [35, 18] // animation 2
-        ]
-    ],
-    [ // if not active
-        [ // if dir == right
-            [0, 36], // animation 1
-            [35, 36] // animation 2
-        ],
-        [ // if dir == left
-            [0, 54], // animation 1
-            [35, 54] // animation 2
-        ]
-    ],
-];
+// var texPlayer = new Image();
+// texPlayer.src = "player-10x11-8x8-1spacing.png";
+// var posSourcePlayer = [ // [!alive][!active][dir][animationPlayer][x/y]
+//     [ // not dead
+//         [ // not stunned
+//             [[0,  0], [11,  0], [22,  0], [33,  0]], // down
+//             [[0, 12], [11, 12], [22, 12], [33, 12]], // up
+//             [[0, 24], [11, 24], [22, 24], [33, 24]], // right
+//             [[0, 36], [11, 36], [22, 36], [33, 36]] // left
+//         ],
+//         [
+//             [[44,  0], [55,  0], [66,  0], [77,  0]], // down
+//             [[44, 12], [55, 12], [66, 12], [77, 12]], // up
+//             [[44, 24], [55, 24], [66, 24], [77, 24]], // right
+//             [[44, 36], [55, 36], [66, 36], [77, 36]] // left
+//         ]
+//     ],
+//     [
+//         [ // not stunned
+//             [[0, 48], [11, 48], [22, 48], [33, 48]], // down
+//             [[0, 60], [11, 60], [22, 60], [33, 60]], // up
+//             [[0, 72], [11, 72], [22, 72], [33, 72]], // right
+//             [[0, 84], [11, 84], [22, 84], [33, 84]] // left
+//         ],
+//         [
+//             [[44, 48], [55, 48], [66, 48], [77, 48]], // down
+//             [[44, 60], [55, 60], [66, 60], [77, 60]], // up
+//             [[44, 72], [55, 72], [66, 72], [77, 72]], // right
+//             [[44, 84], [55, 84], [66, 84], [77, 84]] // left
+//         ]
+//     ]
+// ];
 
-var texBus = new Image();
-texBus.src = "bus-40x17-2x4-1spacing.png";
-var posSourceBus = [ // [active][dir][animation][x/y]
-    [ // if active
-        [ // if dir == right
-            [0, 0], // animation 1
-            [41, 0] // animation 2
-        ],
-        [ // if dir == left
-            [0, 18], // animation 1
-            [41, 18] // animation 2
-        ]
-    ],
-    [ // if not active
-        [ // if dir == right
-            [0, 36], // animation 1
-            [41, 36] // animation 2
-        ],
-        [ // if dir == left
-            [0, 54], // animation 1
-            [41, 54] // animation 2
-        ]
-    ],
-];
+// var texCar = new Image();
+// texCar.src = "car-34x17-2x4-1spacing.png";
+// var posSourceCar = [ // [active][dir][animation][x/y]
+//     [ // if active
+//         [ // if dir == right
+//             [0, 0], // animation 1
+//             [35, 0] // animation 2
+//         ],
+//         [ // if dir == left
+//             [0, 18], // animation 1
+//             [35, 18] // animation 2
+//         ]
+//     ],
+//     [ // if not active
+//         [ // if dir == right
+//             [0, 36], // animation 1
+//             [35, 36] // animation 2
+//         ],
+//         [ // if dir == left
+//             [0, 54], // animation 1
+//             [35, 54] // animation 2
+//         ]
+//     ],
+// ];
 
-var texTank = new Image();
-texTank.src = "tank-33x16-2x4-1spacing.png";
-var posSourceTank = [
-    [ // can't shoot
-        [ // if dir == right
-            [0, 0],
-            [34, 0]
-        ],
-        [ // if dir == left
-            [0, 17],
-            [34, 17]
-        ]
-    ],
-    [ // can shoot
-        [ // if dir == right
-            [0, 34],
-            [34, 34]
-        ],
-        [ // if dir == left
-            [0, 51],
-            [34, 51]
-        ]
-    ]
-];
+// var texBus = new Image();
+// texBus.src = "bus-40x17-2x4-1spacing.png";
+// var posSourceBus = [ // [active][dir][animation][x/y]
+//     [ // if active
+//         [ // if dir == right
+//             [0, 0], // animation 1
+//             [41, 0] // animation 2
+//         ],
+//         [ // if dir == left
+//             [0, 18], // animation 1
+//             [41, 18] // animation 2
+//         ]
+//     ],
+//     [ // if not active
+//         [ // if dir == right
+//             [0, 36], // animation 1
+//             [41, 36] // animation 2
+//         ],
+//         [ // if dir == left
+//             [0, 54], // animation 1
+//             [41, 54] // animation 2
+//         ]
+//     ],
+// ];
 
-var texUfo = new Image();
-texUfo.src = "ufo-20x19-4x2-1spacing.png";
-var posSourceUfo = [
-    [ // active
-        [ // can't shoot
-            [0, 0],
-            [21, 0]
-        ],
-        [ // can shoot
-            [42, 0],
-            [63, 0]
-        ],
-    ],
-    [ // not active
-        [
-            [0, 20],
-            [21, 20]
-        ],
-        [
-            [42, 20],
-            [63, 20]
-        ]
-    ]
-];
+// var texTank = new Image();
+// texTank.src = "tank-33x16-2x4-1spacing.png";
+// var posSourceTank = [
+//     [ // can't shoot
+//         [ // if dir == right
+//             [0, 0],
+//             [34, 0]
+//         ],
+//         [ // if dir == left
+//             [0, 17],
+//             [34, 17]
+//         ]
+//     ],
+//     [ // can shoot
+//         [ // if dir == right
+//             [0, 34],
+//             [34, 34]
+//         ],
+//         [ // if dir == left
+//             [0, 51],
+//             [34, 51]
+//         ]
+//     ]
+// ];
 
-var texBar = new Image();
-texBar.src = "arrow-14x11-1x2-1spacing.png";
-var posSourceBar = [
-    [0, 0], // purple
-    [0, 12], // yellow
-];
+// var texUfo = new Image();
+// texUfo.src = "ufo-20x19-4x2-1spacing.png";
+// var posSourceUfo = [
+//     [ // active
+//         [ // can't shoot
+//             [0, 0],
+//             [21, 0]
+//         ],
+//         [ // can shoot
+//             [42, 0],
+//             [63, 0]
+//         ],
+//     ],
+//     [ // not active
+//         [
+//             [0, 20],
+//             [21, 20]
+//         ],
+//         [
+//             [42, 20],
+//             [63, 20]
+//         ]
+//     ]
+// ];
 
-var texBuilding = new Image();
-texBuilding.src = "building-26x40-3x1-1spacing.png";
-var posSourceBuilding = [
-    [0, 0],
-    [27, 0],
-    [54, 0]
-];
+// var texBar = new Image();
+// texBar.src = "arrow-14x11-1x2-1spacing.png";
+// var posSourceBar = [
+//     [0, 0], // purple
+//     [0, 12], // yellow
+// ];
 
-var texLandSlide = new Image();
-texLandSlide.src = "landSlide-40x20.png";
-var posSourceLandSlide = [0,0];
+// var texBuilding = new Image();
+// texBuilding.src = "building-26x40-3x1-1spacing.png";
+// var posSourceBuilding = [
+//     [0, 0],
+//     [27, 0],
+//     [54, 0]
+// ];
 
-var texPause = new Image();
-texPause.src = "pause-14x14-2x1-1spacing.png";
-var posSourcePause = [
-    [0, 0],
-    [15, 0]
-];
+// var texLandSlide = new Image();
+// texLandSlide.src = "landSlide-40x20.png";
+// var posSourceLandSlide = [0,0];
 
-const carWidth = canvas.width * 1/9;
-const carHeight = canvas.height * 1/14;
+// var texPause = new Image();
+// texPause.src = "pause-14x14-2x1-1spacing.png";
+// var posSourcePause = [
+//     [0, 0],
+//     [15, 0]
+// ];
 
-const ufoWidth = canvas.width * 1/8;
-const ufoHeight = canvas.height * 1/8 * 7/9;
+// const carWidth = canvas.width * 1/9;
+// const carHeight = canvas.height * 1/14;
 
-const spacer = canvas.height * 1/70;
+// const ufoWidth = canvas.width * 1/8;
+// const ufoHeight = canvas.height * 1/8 * 7/9;
 
-const playerLevel = carHeight * 10;
-var player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight * 10/11, carHeight, canvas.width/14, 1.5 * canvas.height/14);
+// const spacer = canvas.height * 1/70;
 
-var qAbility = new Ability(new Vector(carHeight, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, "Q", qSound);
-var eAbility = new Buff(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 360, 3, "E", eSound);
-var rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 240, "R", rSound);
+// const playerLevel = carHeight * 10;
+// var player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight * 10/11, carHeight, canvas.width/14, 1.5 * canvas.height/14);
 
-var wTrigger = new Trigger(new Vector(canvas.width - (carHeight * 7/4), playerLevel + carHeight * 5/4), carHeight * 3/4, carHeight * 3/4, "W");
-var sTrigger = new Trigger(new Vector(canvas.width - (carHeight * 7/4), playerLevel + carHeight * 11/4), carHeight * 3/4, carHeight * 3/4, "S");
-var aTrigger = new Trigger(new Vector(canvas.width - (carHeight * 10/4), playerLevel + carHeight * 2), carHeight * 3/4, carHeight * 3/4, "A");
-var dTrigger = new Trigger(new Vector(canvas.width - carHeight, playerLevel + carHeight * 2), carHeight * 3/4, carHeight * 3/4, "D");
+// var qAbility = new Ability(new Vector(carHeight, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, "Q", qSound);
+// var eAbility = new Buff(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 360, 3, "E", eSound);
+// var rAbility = new Ability(new Vector(carHeight * 3, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 240, "R", rSound);
 
-var scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", carHeight, carHeight/3, "Score: 0");
+// var wTrigger = new Trigger(new Vector(canvas.width - (carHeight * 7/4), playerLevel + carHeight * 5/4), carHeight * 3/4, carHeight * 3/4, "W");
+// var sTrigger = new Trigger(new Vector(canvas.width - (carHeight * 7/4), playerLevel + carHeight * 11/4), carHeight * 3/4, carHeight * 3/4, "S");
+// var aTrigger = new Trigger(new Vector(canvas.width - (carHeight * 10/4), playerLevel + carHeight * 2), carHeight * 3/4, carHeight * 3/4, "A");
+// var dTrigger = new Trigger(new Vector(canvas.width - carHeight, playerLevel + carHeight * 2), carHeight * 3/4, carHeight * 3/4, "D");
 
-context.font = carHeight * 1/2 + "px " + font;
-let pauseWidth = 0;
-let txts = ["Resume", "[S]ave", "[Q]uit Without Saving", "Toggle [M]usic", "Resume [P]revious Game", "New [G]ame"];
-for (var i in txts) {
-    if (context.measureText(txts[i]).width > pauseWidth) {
-        pauseWidth = context.measureText(txts[i]).width;
-    }
-}
-pauseWidth += 40;
-var resumeButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + spacer * 2) * 3/2 - spacer * 3), pauseWidth, carHeight * 3/4 + spacer * 2, "Resume", carHeight * 1/2);
-var saveButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + spacer * 2)/2 - spacer), pauseWidth, carHeight * 3/4 + spacer * 2, "[S]ave", carHeight * 1/2);
-var quitButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + spacer * 2)/2 + spacer), pauseWidth, carHeight * 3/4 + spacer * 2, "[Q]uit Without Saving", carHeight * 1/2);
-var musicButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + spacer * 2) * 3/2 + spacer * 3), pauseWidth, carHeight * 3/4 + spacer * 2, "Toggle [M]usic", carHeight * 1/2);
+// var scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", carHeight, carHeight/3, "Score: 0");
 
-var previousGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20)/2 - spacer), pauseWidth, carHeight * 3/4 + spacer * 2, "Resume [P]revious Game", carHeight * 1/2);
-var newGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + spacer), pauseWidth, carHeight * 3/4 + spacer * 2, "New [G]ame", carHeight * 1/2);
+// context.font = carHeight * 1/2 + "px " + font;
+// let pauseWidth = 0;
+// let txts = ["Resume", "[S]ave", "[Q]uit Without Saving", "Toggle [M]usic", "Resume [P]revious Game", "New [G]ame"];
+// for (var i in txts) {
+//     if (context.measureText(txts[i]).width > pauseWidth) {
+//         pauseWidth = context.measureText(txts[i]).width;
+//     }
+// }
+// pauseWidth += 40;
+// var resumeButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + spacer * 2) * 3/2 - spacer * 3), pauseWidth, carHeight * 3/4 + spacer * 2, "Resume", carHeight * 1/2);
+// var saveButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + spacer * 2)/2 - spacer), pauseWidth, carHeight * 3/4 + spacer * 2, "[S]ave", carHeight * 1/2);
+// var quitButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + spacer * 2)/2 + spacer), pauseWidth, carHeight * 3/4 + spacer * 2, "[Q]uit Without Saving", carHeight * 1/2);
+// var musicButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + spacer * 2) * 3/2 + spacer * 3), pauseWidth, carHeight * 3/4 + spacer * 2, "Toggle [M]usic", carHeight * 1/2);
 
-var restoreButtons = [];
-var deleteCount = 0;
-{ // so games ('let') stops in here
-    let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
-    if (games == null) {
-        games = [];
-        localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
-    }
-    var selectedIndex = games.length > 3 ? 2 : games.length;
-}
+// var previousGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 - (carHeight * 3/4 + 20)/2 - spacer), pauseWidth, carHeight * 3/4 + spacer * 2, "Resume [P]revious Game", carHeight * 1/2);
+// var newGameButton = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, canvas.height/2 + (carHeight * 3/4 + 20)/2 + spacer), pauseWidth, carHeight * 3/4 + spacer * 2, "New [G]ame", carHeight * 1/2);
 
-context.font = carHeight * 5/12 + "px " + font;
-let menuWidth = context.measureText("[D]irections").width; // both txts have the same number of characters (by pure chance)
-var directionsButton = new ButtonMenu(new Vector(canvas.width/2 - menuWidth/2 - spacer, canvas.height * 1/3 + carHeight * 4 - carHeight * 1/3 - spacer), menuWidth + spacer * 2, carHeight * 5/12 + spacer * 2, "[D]irections", carHeight * 5/12);
-var scoresButton = new ButtonMenu(new Vector(canvas.width/2 - menuWidth/2 - spacer, canvas.height * 1/3 + carHeight * 4 + carHeight * 1.3 - carHeight * 1/3 - spacer), menuWidth + spacer * 2, carHeight * 5/12 + spacer * 2, "Top [S]cores", carHeight * 5/12);
+// var restoreButtons = [];
+// var deleteCount = 0;
+// { // so games ('let') stops in here
+//     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
+//     if (games == null) {
+//         games = [];
+//         localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
+//     }
+//     var selectedIndex = games.length > 3 ? 2 : games.length;
+// }
 
-var ufos = [];
-var cars = [];
-var buildings = [];
-var lasers = [];
-var bar = [];
-var landSlides = [];
+// context.font = carHeight * 5/12 + "px " + font;
+// let menuWidth = context.measureText("[D]irections").width; // both txts have the same number of characters (by pure chance)
+// var directionsButton = new ButtonMenu(new Vector(canvas.width/2 - menuWidth/2 - spacer, canvas.height * 1/3 + carHeight * 4 - carHeight * 1/3 - spacer), menuWidth + spacer * 2, carHeight * 5/12 + spacer * 2, "[D]irections", carHeight * 5/12);
+// var scoresButton = new ButtonMenu(new Vector(canvas.width/2 - menuWidth/2 - spacer, canvas.height * 1/3 + carHeight * 4 + carHeight * 1.3 - carHeight * 1/3 - spacer), menuWidth + spacer * 2, carHeight * 5/12 + spacer * 2, "Top [S]cores", carHeight * 5/12);
 
-const base = playerLevel - 3 * carHeight;
-var justPlaced = true; // true to skip placing one in the first row
-for (var i = 0; i < 10; i++) {
-    let startPosY = base - (1.5 * carHeight * i);
-    let speed = (getRandomInt(i/6 + 1, i/4 + 2)/900) * canvas.width * 2/3;
-    speed = getRandomInt(1, 3) == 2 ? -speed : speed;
-    cars.push(new Car(startPosY, speed));
-    if (Math.random() < buildingBlockCount/10 && !justPlaced) {
-        buildings.push(new Building(startPosY));
-        justPlaced = true;
-    }
-    else justPlaced = false;
-}
+// var ufos = [];
+// var cars = [];
+// var buildings = [];
+// var lasers = [];
+// var bar = [];
+// var landSlides = [];
 
-// to make it look like player is moving
-const barWidth = 3/4 * carHeight;
-const barHeight = (barWidth * 11) / 14; // (33/56) * carHeight
-for (i = 0; i < canvas.height/barHeight; i++) {
-    bar.push(new Block(new Vector(0, i * barHeight), i, barWidth, barHeight));
-    bar.push(new Block(new Vector(canvas.width - barWidth, i * barHeight), i, barWidth, barHeight));
-}
+// const base = playerLevel - 3 * carHeight;
+// var justPlaced = true; // true to skip placing one in the first row
+// for (var i = 0; i < 10; i++) {
+//     let startPosY = base - (1.5 * carHeight * i);
+//     let speed = (getRandomInt(i/6 + 1, i/4 + 2)/900) * canvas.width * 2/3;
+//     speed = getRandomInt(1, 3) == 2 ? -speed : speed;
+//     cars.push(new Car(startPosY, speed));
+//     if (Math.random() < buildingBlockCount/10 && !justPlaced) {
+//         buildings.push(new Building(startPosY));
+//         justPlaced = true;
+//     }
+//     else justPlaced = false;
+// }
 
-var pauseButton = new ButtonExtra(barWidth * 3/4, barWidth * 3/4);
+// // to make it look like player is moving
+// const barWidth = 3/4 * carHeight;
+// const barHeight = (barWidth * 11) / 14; // (33/56) * carHeight
+// for (i = 0; i < canvas.height/barHeight; i++) {
+//     bar.push(new Block(new Vector(0, i * barHeight), i, barWidth, barHeight));
+//     bar.push(new Block(new Vector(canvas.width - barWidth, i * barHeight), i, barWidth, barHeight));
+// }
 
-// Fire up the animation engine
-window.requestAnimationFrame(drawAll);
+// var pauseButton = new ButtonExtra(barWidth * 3/4, barWidth * 3/4);
+
+// // Fire up the animation engine
+// window.requestAnimationFrame(drawAll);
