@@ -1,7 +1,5 @@
 # TODO
 
-Score randomly getting .00000000000???
-
 OPTIMIZE
     - remove "freezes" that freeze the whole broswer
     - Where is time lost? (why so slow?)

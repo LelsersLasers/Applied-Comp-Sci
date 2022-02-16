@@ -597,6 +597,7 @@ function drawGame() {
 
 function drawAll() {
     t0 = performance.now();
+    count = 0;
     buttonHover();
 
     context.fillStyle = "#000000";
@@ -617,6 +618,7 @@ function drawAll() {
     console.log("MyTime:", (t1 - t0).toFixed(2), " TotalTime:", (t1 - t2).toFixed(2), " FPS:", (1000/(t1 - t2)).toFixed(2));
     console.log("Extra Time Added:", (t0 - t2).toFixed(2));
     t2 = performance.now();
+    console.log("Ufos:", ufos.length, " Lasers:", lasers.length, " LoS:", count);
 
     window.requestAnimationFrame(drawAll);
 }
