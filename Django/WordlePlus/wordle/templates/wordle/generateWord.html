@@ -1,0 +1,33 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'wordle/style.css' %}">
+<script defer src="{% static 'wordle/words.js' %}"></script>
+<script defer src="{% static 'wordle/createWord.js' %}"></script>
+
+<h1>Wordle Offline</h1>
+
+<label for="wordLen">Word Length (2-10)</label>
+<br />
+<input type="number" id="wordLen" name="wordLen" min="2" value="5" />
+<br />
+
+<label for="tries">Guesses (0 = unlimited)</label>
+<br />
+<input type="numbers" id="tries" name="tries" min="0" value="6" />
+<br />
+
+<br />
+<button type="button" onclick="SPCreateWord()">
+    Start!
+</button>
+<br />
+<a href="{% url 'wordle:backToIndex' %}">
+    <button type="button">
+        Back
+    </button>
+</a>
+
+<form id="wordGen" action="{% url 'wordle:SPGame' %}" method="post" hidden>
+    {% csrf_token %}
+    <input type="hidden" id="word" name="word" value="" />
+    <input type="hidden" id="tries" name="tries" value="" />
+</form>

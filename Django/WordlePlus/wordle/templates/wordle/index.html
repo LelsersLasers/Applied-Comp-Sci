@@ -1,0 +1,21 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'wordle/style.css' %}">
+
+<h1>Greetings Traveler</h1>
+
+{% if is_login %}
+    <p>Hello there {{ display_name }}!</p>
+{% endif %}
+
+<h3>Options</h3>
+<ul>
+    {% if is_login %}
+        <li><a href="{% url 'wordle:logoutUser' %}">Log Out</a></li>
+    {% else %}
+        <li><a href="{% url 'wordle:loginPage' %}">Login</a></li>
+        <li><a href="{% url 'wordle:signup' %}">Sign Up</a></li>
+        <li>Must be logged in to play online!</li>
+    {% endif %}
+
+    <li><a href="{% url 'wordle:SPLauncher' %}">Single Player Offline Wordle+</a></li>
+</ul>

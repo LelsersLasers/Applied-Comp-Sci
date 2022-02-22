@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html charset="UTF-8" lang="en-US">
+
+<head>
+    <title>WORDLE OFFLINE</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Worlde Unlimited Offline">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'wordle/style.css' %}">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="{% static 'wordle/words.js' %}"></script>
+    <script defer src="{% static 'wordle/script.js' %}"></script>
+</head>
+
+<body onload="setupGame();">
+    <h1>Wordle Offline</h1>
+
+    <div id="holder"></div>
+    
+    <p id="info"></p>
+
+    <div class="row">
+        <button type="button" onclick="showWord()">Show Word</button>
+        <button type="button" onclick="newWord()">New Word</button>
+    </div>
+
+</body>
+
+
+</html>
