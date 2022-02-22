@@ -17,4 +17,4 @@ class Word(models.Model):
     doubleLetters = models.BooleanField("DoubleLetters", default=False)
 
     def __str__(self):
-        return self.txt
+        return "%i: %s (%s)" % (self.length, self.txt, self.doubleLetters)

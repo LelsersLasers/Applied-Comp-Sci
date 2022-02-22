@@ -8,11 +8,10 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'wordle/style.css' %}">
     <link rel="stylesheet" href="style.css">
-    <script defer src="{% static 'wordle/words.js' %}"></script>
     <script defer src="{% static 'wordle/script.js' %}"></script>
 </head>
 
-<body onload="setupGame();">
+<body onload="setupGame()">
     <h1>Wordle Offline</h1>
 
     <div id="holder"></div>

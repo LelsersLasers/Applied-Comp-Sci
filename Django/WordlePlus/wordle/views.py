@@ -1,9 +1,13 @@
+import random
+from json import dumps
 from django.shortcuts import render, redirect
-
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Account
+from numpy import double
+from .models import Account, Word
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+
+from .allWords import getAllWords
 
 
 def getDisplayName(request):
@@ -19,6 +23,10 @@ def index(request):
         "is_login": request.user.is_authenticated,
         "display_name": getDisplayName(request)
     }
+
+    # TODO: LET THIS RUN
+    createDictionary()
+    
     return render(request, 'wordle/index.html', context)
 
 def signup(request):
@@ -112,10 +120,45 @@ def SPLauncher(request):
 
 def SPGame(request):
     try:
-        word = request.POST['word']
-        tries = request.POST['tries']
+        wordLen = request.POST['wordLenSub']
+        tries = request.POST['triesSub']
+        doubleLetters = True if request.POST['doubleLettersSub'] == 'true' else False
     except:
         return redirect('wordle:SPLauncher')
 
-    return HttpResponseRedirect("/wordle")
+    word = getWord(wordLen, doubleLetters)
+    data = {
+        'txt': word.txt,
+        'length': word.length
+    }
+
+    dataJSON = dumps(data)
+    return render(request, 'wordle/game.html', {'data': dataJSON})
+    
+
+
+def createDictionary():
+    Word.objects.all().delete()
+    words = getAllWords()
+    i = 0
+    for word in words:
+        doubleLetters = False
+        letters = []
+        for letter in word:
+            if letter in letters:
+                doubleLetters = True
+                break
+            else:
+                letters.append(letter)
+        w = Word(txt=word, length=len(word), doubleLetters=doubleLetters)
+        w.save()
+        print("%i)  %s" % (i, w))
+        i = i + 1
+
+def getWord(wordLen, doubleLetters):
+    if (not doubleLetters):
+        words = Word.objects.filter(length=wordLen, doubleLetters=False)
+    else:
+        words = Word.objects.filter(length=wordLen)
+    return random.choice(words)
     

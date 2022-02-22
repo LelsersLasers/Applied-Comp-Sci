@@ -1,4 +1,4 @@
-var words = `a
+words = """a
 aa
 aah
 aahed
@@ -338579,17 +338579,7 @@ zythia
 zythum
 zyzomys
 zyzzogeton
-zyzzyva`;
+zyzzyva"""
 
-function getAllWords() {
-    return words.split("\n");
-}
-
-function getWordsOfLen(len) {
-    let allWords = getAllWords();
-    let wordList = [];
-    for (var i in allWords) {
-        if (allWords[i].length == len) wordList.push(allWords[i]);
-    }
-    return wordList;
-}
+def getAllWords():
+    return words.split("\n")

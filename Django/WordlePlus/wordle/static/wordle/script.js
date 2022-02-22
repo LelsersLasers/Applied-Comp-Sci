@@ -118,15 +118,12 @@ function showWord() {
 }
 
 function setupGame() {
-    wordLen = localStorage.getItem('wordLen') != null ? localStorage.getItem('wordLen') : 5;
-    tries = localStorage.getItem('tries') != null ? localStorage.getItem('tries') : 6;
+    // TODO
+    
     if (tries < 1) {
         infiniteTries = true;
         tries = 1;
     }
-
-    avalibleWords = getWordsOfLen(wordLen);
-    word = avalibleWords[Math.floor(Math.random() * avalibleWords.length)];
 
     guesses = [];
     for (var i = 0; i < tries; i++) {
