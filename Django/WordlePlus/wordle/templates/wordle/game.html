@@ -2,12 +2,11 @@
 <html charset="UTF-8" lang="en-US">
 
 <head>
-    <title>WORDLE OFFLINE</title>
+    <title>Wordle+ SP</title>
     <meta charset="utf-8">
-    <meta name="description" content="Worlde Unlimited Offline">
+    <meta name="description" content="Worlde Unlimited Offline Plus +">
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'wordle/style.css' %}">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'wordle/game.css' %}">
     <script defer src="{% static 'wordle/script.js' %}"></script>
 </head>
 
@@ -18,7 +17,7 @@
     <input id="triesIn" type="hidden" name="tries" value="{{ tries }}" />
     <input id="availableWordsIn" type="hidden" name="availableWords" value="{{ availableWords }}" />
 
-    <h1>Wordle Offline</h1>
+    <h1>Wordle+</h1>
 
     <div id="holder"></div>
     
@@ -26,8 +25,16 @@
 
     <div class="row">
         <button type="button" onclick="showWord()">Show Word</button>
-        <a href="{% url 'wordle:SPLauncher' %}"><button type="button">New Word</button></a>
+        <a href="{% url 'wordle:SPLauncher' %}">
+            <button type="button">New Word</button>
+        </a>
+        <a href="{% url 'wordle:backToIndex' %}">
+            <button type="button">
+                Back
+            </button>
+        </a>
     </div>
+
 
 </body>
 
