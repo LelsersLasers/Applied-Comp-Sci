@@ -9,6 +9,7 @@ function SPCreateWord() {
         document.getElementById("triesSub").value = document.getElementById("tries").value;
         document.getElementById("doubleLettersSub").value = doubleLetters;
         document.getElementById("wordGen").submit();
+        console.log("Asdasd");
     }
     else document.getElementById("wordLen").style.border = "1px solid red";
 }

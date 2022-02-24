@@ -23,9 +23,6 @@ def index(request):
         "is_login": request.user.is_authenticated,
         "display_name": getDisplayName(request)
     }
-
-    # TODO: LET THIS RUN
-    createDictionary()
     
     return render(request, 'wordle/index.html', context)
 
@@ -137,23 +134,23 @@ def SPGame(request):
     
 
 
-def createDictionary():
-    Word.objects.all().delete()
-    words = getAllWords()
-    i = 0
-    for word in words:
-        doubleLetters = False
-        letters = []
-        for letter in word:
-            if letter in letters:
-                doubleLetters = True
-                break
-            else:
-                letters.append(letter)
-        w = Word(txt=word, length=len(word), doubleLetters=doubleLetters)
-        w.save()
-        print("%i)  %s" % (i, w))
-        i = i + 1
+# def createDictionary():
+#     Word.objects.all().delete()
+#     words = getAllWords()
+#     i = 0
+#     for word in words:
+#         doubleLetters = False
+#         letters = []
+#         for letter in word:
+#             if letter in letters:
+#                 doubleLetters = True
+#                 break
+#             else:
+#                 letters.append(letter)
+#         w = Word(txt=word, length=len(word), doubleLetters=doubleLetters)
+#         w.save()
+#         print("%i = %i/%i)  %s" % ((i/len(words) * 100), i, len(words), w))
+#         i = i + 1
 
 def getWord(wordLen, doubleLetters):
     if (not doubleLetters):
