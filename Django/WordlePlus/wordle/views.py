@@ -130,6 +130,12 @@ def SPGame(request):
     }
     return render(request, 'wordle/game.html', data)
 
+def MPHub(request):
+    if request.user.is_authenticated:
+        return render(request, 'wordle/MPHub.html')
+    return HttpResponseRedirect("/wordle") 
+
+
 
 def getWord(wordLen, doubleLetters):
     if (not doubleLetters):

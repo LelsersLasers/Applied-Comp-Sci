@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html charset="UTF-8" lang="en-US">
+
+<head>
+    <title>Wordle+ MP</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Worlde Unlimited Offline Plus +">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'wordle/style.css' %}">
+</head>
+
+<h1>Multiplayer Hub</h1>
+
+<h3>Options</h3>
+<dl>
+    <dt>6x5x1 daily</dt>
+        <dd>Random word</dd>
+        <dd>6 tries</dd>
+        <dd>5 letters long</dd>
+        <dd>1 word</dd>
+        <dd>Scoring: Least amout of gueses, tie breaker is time</dd>
+        <dd>1 round per day</dd>
+    <dt>&#8734;x5x1 daily</dt>
+        <dd>Random word</dd>
+        <dd>Infinite tries</dd>
+        <dd>5 letters long</dd>
+        <dd>1 word</dd>
+        <dd>Scoring: Least amout of gueses, tie breaker is time</dd>
+        <dd>1 round per day</dd>
+</dl>
+
+<a href="{% url 'wordle:backToIndex' %}">
+    <button type="button">
+        Back
+    </button>
+</a>
