@@ -1,5 +1,5 @@
 var word;
-var avalibleWords;
+var availableWords;
 
 var wordLen;
 var tries;
@@ -25,7 +25,7 @@ function keyDownHandler(e) {
         if (guessPos[1] >= wordLen) {
             if (e.key == "Enter") {
                 let guessWord = guesses[guessPos[0]].join("");
-                if (avalibleWords.includes(guessWord.toLowerCase())) {
+                if (availableWords.includes(guessWord.toLowerCase())) {
                     guessPos[1] = 0;
                     let match = 0;
                     for (let i = 0; i < wordLen; i++) {
@@ -107,18 +107,16 @@ function draw() {
     else if (state == "won") document.getElementById("info").innerHTML = "YOU WON!";
 }
 
-function newWord() {
-    window.location.href = "generateWord.html";
-}
-
-
 function showWord() {
     state = "lost";
     document.getElementById("info").innerHTML = "You lost! The correct word was: " + word;
 }
 
 function setupGame() {
-    // TODO
+    word = document.getElementById("wordIn").value;
+    wordLen = document.getElementById("lengthIn").value;
+    tries = document.getElementById("triesIn").value;
+    availableWords = document.getElementById("availableWordsIn").value;
     
     if (tries < 1) {
         infiniteTries = true;
@@ -142,17 +140,4 @@ function setupGame() {
     }
 
     draw();
-}
-
-function SPCreateWord() {
-    wordLen = document.getElementById("wordLen").value;
-    tries = document.getElementById("tries").value;
-
-    if (wordLen > 2 && wordLen < 10) {
-        console.log("asdaskldjsal")
-        let avalibleWords = getWordsOfLen(wordLen);
-        document.getElementById("word").value = avalibleWords[Math.floor(Math.random() * avalibleWords.length)];
-        document.getElementById("tries").value = tries;
-        document.getElementById("wordGen").submit();
-    }
 }

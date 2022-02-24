@@ -12,6 +12,12 @@
 </head>
 
 <body onload="setupGame()">
+
+    <input id="wordIn" type="hidden" name="word" value="{{ word.txt }} " />
+    <input id="lengthIn" type="hidden" name="length" value="{{ word.length }}" />
+    <input id="triesIn" type="hidden" name="tries" value="{{ tries }}" />
+    <input id="availableWordsIn" type="hidden" name="availableWords" value="{{ availableWords }}" />
+
     <h1>Wordle Offline</h1>
 
     <div id="holder"></div>
@@ -20,7 +26,7 @@
 
     <div class="row">
         <button type="button" onclick="showWord()">Show Word</button>
-        <button type="button" onclick="newWord()">New Word</button>
+        <a href="{% url 'wordle:SPLauncher' %}"><button type="button">New Word</button></a>
     </div>
 
 </body>

@@ -1,5 +1,4 @@
 import random
-from json import dumps
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from numpy import double
@@ -125,14 +124,20 @@ def SPGame(request):
 
     word = getWord(wordLen, doubleLetters)
     data = {
-        'txt': word.txt,
-        'length': word.length
+        'word': word,
+        'tries': tries,
+        'availableWords': getAllWords()
     }
+    return render(request, 'wordle/game.html', data)
 
-    dataJSON = dumps(data)
-    return render(request, 'wordle/game.html', {'data': dataJSON})
+
+def getWord(wordLen, doubleLetters):
+    if (not doubleLetters):
+        words = Word.objects.filter(length=wordLen, doubleLetters=False)
+    else:
+        words = Word.objects.filter(length=wordLen)
+    return random.choice(words)
     
-
 
 # def createDictionary():
 #     Word.objects.all().delete()
@@ -151,11 +156,3 @@ def SPGame(request):
 #         w.save()
 #         print("%i = %i/%i)  %s" % ((i/len(words) * 100), i, len(words), w))
 #         i = i + 1
-
-def getWord(wordLen, doubleLetters):
-    if (not doubleLetters):
-        words = Word.objects.filter(length=wordLen, doubleLetters=False)
-    else:
-        words = Word.objects.filter(length=wordLen)
-    return random.choice(words)
-    
