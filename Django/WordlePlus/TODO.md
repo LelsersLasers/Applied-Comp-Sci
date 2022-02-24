@@ -20,4 +20,7 @@ Oragnization:
 - Save model?
     - title, current guesses, tries, time, etc
     - 1 to many? (account to saves)
+- Score model?
+    - Title
+    - needed for tourements
 - Use game.html for MP also?
