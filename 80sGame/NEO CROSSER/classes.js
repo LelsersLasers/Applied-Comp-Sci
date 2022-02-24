@@ -21,18 +21,10 @@ class HitBox {
         this.h = h;
     }
     checkCollide(boxOther) {
-        if (this.pt.x < boxOther.pt.x + boxOther.w && boxOther.pt.x < this.pt.x + this.w) {
-            if (this.pt.y < boxOther.pt.y + boxOther.h && boxOther.pt.y < this.pt.y + this.h) {
-                return true;
-            }
-        }
-        return false;
+        return (this.pt.x < boxOther.pt.x + boxOther.w && boxOther.pt.x < this.pt.x + this.w && this.pt.y < boxOther.pt.y + boxOther.h && boxOther.pt.y < this.pt.y + this.h);
     }
     outOfBounds() {
-        if (this.pt.x < 0 || this.pt.x + this.w > canvas.width) {
-            return true;
-        }
-        return false;
+        return (this.pt.x < 0 || this.pt.x + this.w > canvas.width);
     }
     useSmallHB(pt, w, h) {
         this.pt.x = pt.x + w/5;
