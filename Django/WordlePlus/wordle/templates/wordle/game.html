@@ -2,9 +2,13 @@
 <html charset="UTF-8" lang="en-US">
 
 <head>
-    <title>Wordle+ SP</title>
+    {% if mode %}
+        <title>Wordle+ SP</title>
+    {% else %}
+        <title>Wordle+ MP</title>
+    {% endif %}
     <meta charset="utf-8">
-    <meta name="description" content="Worlde Unlimited Offline Plus +">
+    <meta name="description" content="Worlde Unlimited Plus +">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'wordle/game.css' %}">
     <script defer src="{% static 'wordle/script.js' %}"></script>
@@ -17,24 +21,29 @@
     <input id="triesIn" type="hidden" name="tries" value="{{ tries }}" />
     <input id="availableWordsIn" type="hidden" name="availableWords" value="{{ availableWords }}" />
 
-    <h1>Wordle+</h1>
+    {% if mode %}
+        <h1>Wordle+ SP</h1>
+    {% else %}
+        <h1>Wordle+ MP</h1>
+    {% endif %}
 
     <div id="holder"></div>
     
     <p id="info"></p>
 
-    <div class="row">
-        <button type="button" onclick="showWord()">Show Word</button>
-        <a href="{% url 'wordle:SPLauncher' %}">
-            <button type="button">New Word</button>
-        </a>
-        <a href="{% url 'wordle:backToIndex' %}">
-            <button type="button">
-                Back
-            </button>
-        </a>
-    </div>
-
+    {% if mode %}
+        <div class="row">
+            <button type="button" onclick="showWord()">Show Word</button>
+            <a href="{% url 'wordle:SPLauncher' %}">
+                <button type="button">New Word</button>
+            </a>
+            <a href="{% url 'wordle:backToIndex' %}">
+                <button type="button">
+                    Back
+                </button>
+            </a>
+        </div>
+    {% endif %}
 
 </body>
 

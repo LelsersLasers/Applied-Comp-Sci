@@ -1,5 +1,6 @@
 var word;
 var availableWords;
+var time;
 
 var wordLen;
 var tries;
@@ -104,7 +105,16 @@ function draw() {
         main.innerHTML += "<div class='row' id='row" + i + "'> " + txt + "</div>";
     }
     if (state == "lost") document.getElementById("info").innerHTML = "You lost! The correct word was: " + word;
-    else if (state == "won") document.getElementById("info").innerHTML = "YOU WON!";
+    else if (state == "won") {
+        let seconds = ((Date.now() - time)/1000).toFixed(0);
+        let minutes = 0;
+        while (seconds > 60) {
+            minutes++;
+            seconds -= 60;
+        }
+
+        document.getElementById("info").innerHTML = "YOU WON!\nGuesses: " + guessPos[0] + "\nTime Taken: " + minutes + ":" + seconds;
+    }
 }
 
 function showWord() {
@@ -140,4 +150,5 @@ function setupGame() {
     }
 
     draw();
+    time = Date.now();
 }

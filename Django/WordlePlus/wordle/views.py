@@ -2,7 +2,7 @@ import random
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from numpy import double
-from .models import Account, Word
+from .models import Account, Word, Score
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -114,26 +114,54 @@ def backToIndex(request):
 def SPLauncher(request):
     return render(request, 'wordle/generateWord.html')
 
-def SPGame(request):
+def Game(request, mode):
     try:
         wordLen = request.POST['wordLenSub']
         tries = request.POST['triesSub']
         doubleLetters = True if request.POST['doubleLettersSub'] == 'true' else False
     except:
-        return redirect('wordle:SPLauncher')
+        if mode == "SP":
+            return redirect('wordle:SPLauncher')
+        return redirect('wordle:MPHub')
 
     word = getWord(wordLen, doubleLetters)
-    data = {
+    context = {
         'word': word,
         'tries': tries,
-        'availableWords': getAllWords()
+        'availableWords': getAllWords(),
+        'mode': mode == "SP"
     }
-    return render(request, 'wordle/game.html', data)
+    print(context['word'])
+    return render(request, 'wordle/game.html', context)
+
+def rankings(request, name):
+    scores = Score.objects.filter(name=name).order_by('-guesses')
+
+    context = {
+        'scores': scores
+    }
+    return render(request, 'wordle/rankings.html', context)
 
 def MPHub(request):
     if request.user.is_authenticated:
         return render(request, 'wordle/MPHub.html')
-    return HttpResponseRedirect("/wordle") 
+    return HttpResponseRedirect("/wordle")
+
+def MPReceiveScore(request):
+    try:
+        cupName = request.POST['cupName']
+        word = request.POST['word']
+        guesses = request.POST['guesses']
+        time = request.POST['time']
+    except:
+        return redirect('wordle:MPHub')
+
+    acc = Account.objects.get(user=request.user)
+    score = Score(name=cupName, word=word, account=acc, guesses=guesses, time=time)
+    score.save()
+    return redirect('wordle:MPHub')
+
+    
 
 
 

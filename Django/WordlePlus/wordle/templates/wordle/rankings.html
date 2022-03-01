@@ -1,0 +1,9 @@
+{% if scores %}
+    <ul>
+    {% for score in scores %}
+        <li>{{ score }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No scores yet!</p>
+{% endif %}

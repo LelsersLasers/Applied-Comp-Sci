@@ -39,7 +39,7 @@
     </button>
 </a>
 
-<form id="wordGen" action="{% url 'wordle:SPGame' %}" method="post" hidden>
+<form id="wordGen" action="{% url 'wordle:Game' 'SP' %}" method="post" hidden>
     {% csrf_token %}
     <input type="hidden" id="wordLenSub" name="wordLenSub" value="" />
     <input type="hidden" id="triesSub" name="triesSub" value="" />

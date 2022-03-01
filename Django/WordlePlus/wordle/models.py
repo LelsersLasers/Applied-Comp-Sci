@@ -18,3 +18,13 @@ class Word(models.Model):
 
     def __str__(self):
         return "%i: %s (%s)" % (self.length, self.txt, self.doubleLetters)
+
+class Score(models.Model):
+    name = models.CharField("Compition Name", max_length=200)
+    word = models.ForeignKey(Word, on_delete=models.CASCADE)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    guesses = models.IntegerField("Guesses")
+    time = models.IntegerField("Time in seconds")
+
+    def __str__(self):
+        return "%s) %s - '%s' in %i guesses, %i seconds" % (self.name, self.account.display_name, self.word.txt, self.guesses, self.time)
