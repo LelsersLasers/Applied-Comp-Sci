@@ -2,7 +2,7 @@
 
 OPTIMIZE
     - remove "freezes" that freeze the whole broswer
-    - Where is time lost? (why so slow?)
+    - FIXED?
 
 On Demand Scaling
 - on restore

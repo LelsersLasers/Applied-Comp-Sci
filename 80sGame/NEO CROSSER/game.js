@@ -579,12 +579,12 @@ function drawGame() {
         for (var i in enemies) {
             enemies[i].update();
             enemies[i].draw();
-            // if (enemies[i].hb.checkCollide(player.hb) && alive) {
-            //     scoreView.color = "#e37e7b";
-            //     enemies[i].deathSound.play();
-            //     alive = false;
-            //     player.active = false;
-            // }
+            if (enemies[i].hb.checkCollide(player.hb) && alive) {
+                scoreView.color = "#e37e7b";
+                enemies[i].deathSound.play();
+                alive = false;
+                player.active = false;
+            }
         }
         for (var i in lasers) lasers[i].update();
         drawHUD();
@@ -592,7 +592,7 @@ function drawGame() {
     }
     else drawPauseMenu();
 
-    if (backgroundMusic.currentTime > backgroundMusic.duration - 20) backgroundMusic.currentTime = 20;
+    if (backgroundMusic.currentTime < 20) backgroundMusic.currentTime = 20;
 }
 
 function drawAll() {
@@ -656,7 +656,7 @@ var t0 = performance.now();
 var t1 = performance.now();
 var t2 = performance.now();
 
-const softCap = 1000;
+const softCap = 10000;
 const ufoBase = Math.pow(2, 1/(softCap * 1.5));
 const buildingBlockCount = 5;
 
@@ -690,9 +690,17 @@ var rSound = document.createElement("audio");
 rSound.src = "rSound.mp3";
 rSound.volume = 1.0/soundOffset;
 
+var laserSounds = [];
+for (var i = 0; i < 10; i++) {
+    laserSounds.push(document.createElement("audio"));
+    laserSounds[i].src = "laserHitSound.mp3";
+    laserSounds[i].volume = 0.8/soundOffset;
+}
+
 var backgroundMusic = document.createElement("audio");
 backgroundMusic.src = "backgroundMusic.mp3";
 backgroundMusic.playing = false;
+backgroundMusic.loop = true;
 backgroundMusic.volume = 0.9/soundOffset;
 var musicShouldPlay = localStorage.getItem("playMusic") != null ? localStorage.getItem("playMusic") : "true";
 
