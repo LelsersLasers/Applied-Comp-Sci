@@ -19,8 +19,8 @@ document.addEventListener("click", clickHandler, false);
 document.addEventListener("mousemove", getMousePos, false);
 
 function keyDownHandler(e) {
-    switch (e.key) {
-        case "w": case "ArrowUp":
+    switch (e.key.toLowerCase()) {
+        case "w": case "arrowup":
             if (screen == "restore") {
                 selectedIndex -= 1;
                 deleteCount = 0;
@@ -28,7 +28,7 @@ function keyDownHandler(e) {
             wDown = true;
             lastDir = "w";
             break;
-        case "s": case "ArrowDown":
+        case "s": case "arrowdown":
             if (screen == "welcome") screen = "scores";
             else if (screen == "restore") {
                 selectedIndex += 1;
@@ -41,11 +41,11 @@ function keyDownHandler(e) {
             sDown = true;
             lastDir = "s";
             break;
-        case "a": case "ArrowLeft":
+        case "a": case "arrowleft":
             aDown = true;
             lastDir = "a";
             break;
-        case "d": case "ArrowRight":
+        case "d": case "arrowright":
             if (screen == "welcome") screen = "directions";
             dDown = true;
             lastDir = "d";
@@ -61,7 +61,7 @@ function keyDownHandler(e) {
             if (paused) paused = false;
             rDown = true;
             break;
-        case "z": case "Escape":
+        case "z": case "escape":
             if (screen == "game") paused = !paused;
             break;
         case "p":
@@ -86,7 +86,7 @@ function keyDownHandler(e) {
         case "y":
             if (screen == "restore") screen = "play";
             break;
-        case "Enter":
+        case "enter":
             if (screen == "welcome") {
                 screen = "play";
             }
@@ -109,11 +109,11 @@ function keyDownHandler(e) {
     inputMode = "key";
 }
 function keyUpHandler(e) {
-    switch (e.key) {
-        case "w": case "ArrowUp": wDown = false; break;
-        case "s": case "ArrowDown": sDown = false; break;
-        case "a": case "ArrowLeft": aDown = false; break;
-        case "d": case "ArrowRight": dDown = false; break;
+    switch (e.key.toLowerCase()) {
+        case "w": case "arrowup": wDown = false; break;
+        case "s": case "arrowdown": sDown = false; break;
+        case "a": case "arrowleft": aDown = false; break;
+        case "d": case "arrowright": dDown = false; break;
         case "q": case "1": qDown = false; break;
         case "e": case "2": eDown = false; break;
         case "r": case "3": rDown = false; break;
