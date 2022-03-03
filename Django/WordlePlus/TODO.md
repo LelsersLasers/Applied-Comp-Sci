@@ -1,5 +1,7 @@
 # Wordle+
 
+CREATE DICT
+
 SP:
 - If signed in: save/restore the game automatically
     - field in the model?
