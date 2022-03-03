@@ -1,15 +1,10 @@
 # TODO
 
-OPTIMIZE
-    - remove "freezes" that freeze the whole broswer
-    - FIXED?
-
 On Demand Scaling
 - on restore
 - on screen change size
 
 Calculate speed/movement based on fps
-    
 
 Mario Kart speed ups?
 
@@ -30,7 +25,6 @@ Let user scroll through all scores (like saves)? (rather than top 10?)
 
 Clarity
 - General colors/hitboxes
-    - Check w/ Jerry/Andrew
 
 "Clean" code
 - LET
@@ -54,4 +48,3 @@ Update HitBoxes to match the art
 
 Update directions
 Update README
-Update and redo libary ipad code

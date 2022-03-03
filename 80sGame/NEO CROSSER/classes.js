@@ -449,7 +449,7 @@ class Enemy extends Thing {
     }
     checkShoot(startPt) {
         if (this.canShoot) {
-            let animationWait = this.getAnimationWait() * 4;
+            let animationWait = this.getAnimationWait() * 6;
             animationWait = animationWait > 0 ? animationWait : this.animationWaitBase * 4;
             if (this.frame % animationWait == 0) {
                 lasers.push(new Laser(startPt, 45, 60, false));
@@ -489,7 +489,7 @@ class Enemy extends Thing {
 
 class Car extends Enemy {
     constructor(y, ms) {
-        if (topScore < softCap * 3/4) {
+        if (topScore < softCap * 1/2) {
             var busChance = 1/(10 - (4/(softCap/2)) * topScore);
             var tankChance = 0;
         }
@@ -633,7 +633,7 @@ class Ufo extends Enemy {
             this.pt.apply(this.move);
             this.hb.useSmallHB(this.pt, this.w, this.h);
             if (this.hb.outOfBounds()) this.move.x *= -1;
-            this.updateCanShoot(topScore > softCap/2, 100);
+            this.updateCanShoot(topScore > softCap * 3/4, 100);
             this.checkShoot(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19));
         }
     }
