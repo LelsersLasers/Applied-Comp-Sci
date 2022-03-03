@@ -10,8 +10,7 @@ var rDown = false;
 
 var inputMode = "either";
 var mouseDown = false;
-var mousePos = new Vector(-1, -1);
-var cursorHB = new HitBox(-1, -1, 0, 0);
+var cursorHB = new HitBox(new Vector(-100, -100), 10, 10);
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -184,9 +183,8 @@ function clickHandler(event) {
 }
 function getMousePos(event) {
     var rect = canvas.getBoundingClientRect();
-    mousePos.x = event.clientX - rect.left;
-    mousePos.y = event.clientY - rect.top;
-    cursorHB = new HitBox(new Vector(mousePos.x - 6, mousePos.y - 6), 10, 10);
+    cursorHB.pt.x = event.clientX - rect.left - 6;
+    cursorHB.pt.y = event.clientY - rect.top - 6;
 }
 
 function mouseDownActions() {
@@ -229,7 +227,7 @@ function reset() {
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    value = Math.floor(Math.random() * (max - min) + min); //The max is exclusive and the min is inclusive
+    let value = Math.floor(Math.random() * (max - min) + min); //The max is exclusive and the min is inclusive
     return value;
 }
 
@@ -540,7 +538,7 @@ function drawGameOver() {
 
 function drawPauseMenu() {
     player.draw();
-    obstacles = [...landSlides, ...cars, ...ufos, ...buildings, ...lasers];
+    let obstacles = [...landSlides, ...cars, ...ufos, ...buildings, ...lasers];
     for (var i in obstacles) obstacles[i].draw();
 
     drawHUD();
@@ -575,7 +573,7 @@ function drawGame() {
         player.move();
         player.draw();
         for (var i in buildings) buildings[i].draw();
-        enemies = [...cars, ...ufos];
+        let enemies = [...cars, ...ufos];
         for (var i in enemies) {
             enemies[i].update();
             enemies[i].draw();
@@ -678,6 +676,7 @@ var opacityDir = -0.04;
 
 const soundOffset = 10.0;
 // Set up the canvas, context objects, and html elements
+var canvas;
 var context = setUpContext();
 
 var qSound = document.createElement("audio");
