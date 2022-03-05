@@ -1,12 +1,22 @@
 # TODO
 
+Lives system
+    - X to start
+    - Immunity on rez
+    - Every Xk points gain live?
+    - And/or live pick ups?
+Calculate speed/movement based on fps
+Make HUD Bigger/slightly more central
+    - harder to miss
+On game 'load' show directions above QER Hud
+Warning sign for landslides
+
 On Demand Scaling
 - on restore
 - on screen change size
 
-Calculate speed/movement based on fps
-
 Mario Kart speed ups?
+Pickup buffs?
 
 SETTINGS SCREEN
     - toggle ufos
