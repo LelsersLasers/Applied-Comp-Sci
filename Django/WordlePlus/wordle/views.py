@@ -1,4 +1,6 @@
 import random
+import time
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from numpy import double
@@ -22,7 +24,7 @@ def index(request):
         "is_login": request.user.is_authenticated,
         "display_name": getDisplayName(request)
     }
-    
+
     return render(request, 'wordle/index.html', context)
 
 def signup(request):
@@ -112,6 +114,8 @@ def backToIndex(request):
 
 
 def SPLauncher(request):
+    print("creating dict")
+    print("done")
     return render(request, 'wordle/generateWord.html')
 
 def Game(request, mode):
@@ -136,7 +140,7 @@ def Game(request, mode):
 
 def rankings(request, name):
     scores = Score.objects.filter(name=name).order_by('-guesses')
-
+    # TODO: second sort by time
     context = {
         'scores': scores
     }
@@ -156,8 +160,10 @@ def MPReceiveScore(request):
     except:
         return redirect('wordle:MPHub')
 
+    wordObj = Word.objects.get(txt=word.strip())
+
     acc = Account.objects.get(user=request.user)
-    score = Score(name=cupName, word=word, account=acc, guesses=guesses, time=time)
+    score = Score(name=cupName, word=wordObj, account=acc, guesses=guesses, time=time)
     score.save()
     return redirect('wordle:MPHub')
 
@@ -173,20 +179,22 @@ def getWord(wordLen, doubleLetters):
     return random.choice(words)
     
 
-# def createDictionary():
-#     Word.objects.all().delete()
+# def createDictionary(resetDB):
+#     if resetDB:
+#         Word.objects.all().delete()
 #     words = getAllWords()
 #     i = 0
 #     for word in words:
-#         doubleLetters = False
-#         letters = []
-#         for letter in word:
-#             if letter in letters:
-#                 doubleLetters = True
-#                 break
-#             else:
-#                 letters.append(letter)
-#         w = Word(txt=word, length=len(word), doubleLetters=doubleLetters)
-#         w.save()
-#         print("%i = %i/%i)  %s" % ((i/len(words) * 100), i, len(words), w))
-#         i = i + 1
+#         if not len(Word.objects.filter(txt=word)) > 0:
+#             doubleLetters = False
+#             letters = []
+#             for letter in word:
+#                 if letter in letters:
+#                     doubleLetters = True
+#                     break
+#                 else:
+#                     letters.append(letter)
+#             w = Word(txt=word.strip(), length=len(word), doubleLetters=doubleLetters)
+#             w.save()
+#             print("%i = %i/%i)  %s" % ((i/len(words) * 100), i, len(words), w))
+#             i = i + 1
