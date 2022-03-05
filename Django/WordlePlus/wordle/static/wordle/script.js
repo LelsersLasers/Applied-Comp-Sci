@@ -1,6 +1,7 @@
 var word;
 var availableWords;
-var time;
+var startTime;
+var takenTime;
 
 var wordLen;
 var tries;
@@ -106,15 +107,23 @@ function draw() {
     }
     if (state == "lost") document.getElementById("info").innerHTML = "You lost! The correct word was: " + word;
     else if (state == "won") {
-        let seconds = ((Date.now() - time)/1000).toFixed(0);
+        let seconds = ((Date.now() - startTime)/1000).toFixed(0);
+        takenTime = seconds;
         let minutes = 0;
         while (seconds > 60) {
             minutes++;
             seconds -= 60;
         }
-
         document.getElementById("info").innerHTML = "YOU WON!\nGuesses: " + guessPos[0] + "\nTime Taken: " + minutes + ":" + seconds;
     }
+}
+
+function sendScore() {
+    document.getElementById("cupName").value = "6x5x1";
+    document.getElementById("word").value = document.getElementById("wordTxtIn").value;
+    document.getElementById("guesses").value = guessPos[0];
+    document.getElementById("time").value = takenTime;
+    document.getElementById("MPSubmit").submit();
 }
 
 function showWord() {
@@ -123,7 +132,7 @@ function showWord() {
 }
 
 function setupGame() {
-    word = document.getElementById("wordIn").value;
+    word = document.getElementById("wordTxtIn").value;
     wordLen = document.getElementById("lengthIn").value;
     tries = document.getElementById("triesIn").value;
     availableWords = document.getElementById("availableWordsIn").value;
@@ -150,5 +159,5 @@ function setupGame() {
     }
 
     draw();
-    time = Date.now();
+    startTime = Date.now();
 }

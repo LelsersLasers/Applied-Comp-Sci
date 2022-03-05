@@ -16,7 +16,7 @@
 
 <body onload="setupGame()">
 
-    <input id="wordIn" type="hidden" name="word" value="{{ word.txt }} " />
+    <input id="wordTxtIn" type="hidden" name="wordTxt" value="{{ word.txt }} " />
     <input id="lengthIn" type="hidden" name="length" value="{{ word.length }}" />
     <input id="triesIn" type="hidden" name="tries" value="{{ tries }}" />
     <input id="availableWordsIn" type="hidden" name="availableWords" value="{{ availableWords }}" />
@@ -43,6 +43,17 @@
                 </button>
             </a>
         </div>
+    {% else %}
+        <button type="button" onclick="sendScore()">
+            Submit Score
+        </button>
+        <form id="MPSubmit" action="{% url 'wordle:MPReceiveScore' %}" method="post" hidden>
+            {% csrf_token %}
+            <input type="hidden" id="cupName" name="cupName" value="" />
+            <input type="hidden" id="word" name="word" value="" />
+            <input type="hidden" id="guesses" name="guesses" value="" />
+            <input type="hidden" id="time" name="time" value="" />
+        </form>
     {% endif %}
 
 </body>

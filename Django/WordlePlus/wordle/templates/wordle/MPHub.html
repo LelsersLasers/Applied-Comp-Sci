@@ -15,26 +15,28 @@
 <h3>Modes</h3>
 Scoring: Least amout of gueses, tie breaker is time
 <dl>
-    <dt><a onclick="Daily6x5x1()">6x5x1 daily</a></dt>
+    <dt><a onclick="Launch6x5x1()">6x5x1 daily</a></dt>
         <dd>Random word</dd>
         <dd>6 tries</dd>
         <dd>5 letters long</dd>
         <dd>Double letters not allowed</dd>
         <dd>1 word</dd>
-        <dd>1 try per day</dd>
         <dd>
             <a href="{% url 'wordle:rankings' '6x5x1' %}">
-                View rankings for today
+                View rankings
             </a>
         </dd>
-    <dt>&#8734;x5x1 daily</dt>
+    <dt><a onclick="Launch0x5x1()">&#8734;x5x1 daily</a></dt>
         <dd>Random word</dd>
         <dd>Infinite tries</dd>
         <dd>5 letters long</dd>
         <dd>Double letters allowed</dd>
         <dd>1 word</dd>
-        <dd>1 try per day</dd>
-        <dd><a>View rankings for today</a></dd>
+        <dd>
+            <a href="{% url 'wordle:rankings' '0x5x1' %}">
+                View rankings
+            </a>
+        </dd>
 </dl>
 
 <a href="{% url 'wordle:backToIndex' %}">

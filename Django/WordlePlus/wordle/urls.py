@@ -25,6 +25,8 @@ urlpatterns = [
 
     # 'hub' screen for multiplayer/online options
     path('MPHub/', views.MPHub, name='MPHub'),
-    # rankings for a page
-    path('rankings/<str:name>/', views.rankings, name='rankings')
+    # rankings for a cup/etc
+    path('rankings/<str:name>/', views.rankings, name='rankings'),
+    # after submitting a MP score, save it to DB
+    path('MPReceiveScore/', views.MPReceiveScore, name='MPReceiveScore')
 ]
