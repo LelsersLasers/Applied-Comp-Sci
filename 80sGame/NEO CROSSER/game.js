@@ -25,7 +25,6 @@ function keyDownHandler(e) {
                 deleteCount = 0;
             }
             wDown = true;
-            lastDir = "w";
             break;
         case "s": case "arrowdown":
             if (screen == "welcome") screen = "scores";
@@ -38,16 +37,13 @@ function keyDownHandler(e) {
                 saveButton.clicked = 10;
             }
             sDown = true;
-            lastDir = "s";
             break;
         case "a": case "arrowleft":
             aDown = true;
-            lastDir = "a";
             break;
         case "d": case "arrowright":
             if (screen == "welcome") screen = "directions";
             dDown = true;
-            lastDir = "d";
             break;
         case "q": case "1":
             if (paused) {
@@ -197,10 +193,6 @@ function mouseDownActions() {
             qDown = qAbility.checkDown(cursorHB, mouseDown);
             eDown = eAbility.checkDown(cursorHB, mouseDown);
             rDown = rAbility.checkDown(cursorHB, mouseDown);
-            if (wDown) lastDir = "w";
-            if (sDown) lastDir = "s";
-            if (aDown) lastDir = "a";
-            if (dDown) lastDir = "d";
         }
     }
     else if (screen == "restore") {
@@ -217,6 +209,13 @@ function mouseDownActions() {
             }
         }
     }
+}
+
+function setLastDir() {
+    if (wDown) lastDir = "w";
+    else if (sDown) lastDir = "s";
+    else if (aDown) lastDir = "a";
+    else if (dDown) lastDir = "d";
 }
 
 function reset() {
@@ -566,6 +565,7 @@ function drawHUD() {
 }
 
 function drawGame() {
+    setLastDir();
     for (var i in bar) bar[i].draw();
     if (!paused) {
         for (var i in landSlides) landSlides[i].update();
