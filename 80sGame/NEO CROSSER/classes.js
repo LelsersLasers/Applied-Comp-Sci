@@ -308,7 +308,7 @@ class Player extends Thing {
                     }
                 }
             }
-            let animationWait = eAbility.active ? 7 : 11;
+            let animationWait = eAbility.active ? 6 : 8;
             if (this.frame.toFixed(0) % animationWait == 0 && alive) {
                 this.animation++;
                 this.frame++; // so if player stops on a % = 0, it doesn't freak out
@@ -547,11 +547,11 @@ class Car extends Enemy {
             this.pt.x += this.ms * delta;
             this.updateCanShoot(this.type == 2, 80);
             this.checkShoot(new Vector(this.ms > 0 ? this.pt.x + this.w : this.pt.x, this.pt.y + this.h * 4/17));
-            if (this.hb.outOfBounds()) this.ms *= -1.001;
+            if (this.hb.outOfBounds()) this.ms *= -1;
         }
         for (var i in buildings) {
             if (this.hb.checkCollide(buildings[i].hb)) {
-                this.ms *= -1.001;
+                this.ms *= -1;
                 break;
             }
         }

@@ -654,7 +654,6 @@ var delta = 1;
 const font = "monospace";
 
 var screen = localStorage.getItem("firstBoot") == null ? "directions" : "welcome";
-console.log(localStorage.getItem("firstBoot"));
 var paused = false;
 
 var alive = true;
