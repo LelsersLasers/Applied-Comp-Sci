@@ -1,11 +1,12 @@
 # TODO
 
+Calculate speed/movement based on fps
+    - Also animations based on delta
 Lives system
     - X to start
     - Immunity on rez
     - Every Xk points gain live?
     - And/or live pick ups?
-Calculate speed/movement based on fps
 Make HUD Bigger/slightly more central
     - harder to miss
 On game 'load' show directions above QER Hud
@@ -17,6 +18,8 @@ On Demand Scaling
 
 Mario Kart speed ups?
 Pickup buffs?
+
+Make Thing extend HB?
 
 SETTINGS SCREEN
     - toggle ufos
