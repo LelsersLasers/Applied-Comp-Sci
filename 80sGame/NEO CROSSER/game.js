@@ -98,6 +98,7 @@ function keyDownHandler(e) {
             }
             else if (screen == "directions" || screen == "scores") {
                 screen = "welcome";
+                localStorage.setItem("firstBoot", "true");
             }
             break;
     }
@@ -175,6 +176,7 @@ function clickHandler(event) {
     }
     else if (screen == "directions" || screen == "scores") {
         screen = "welcome";
+        localStorage.setItem("firstBoot", "true");
     }
 }
 function getMousePos(event) {
@@ -610,7 +612,7 @@ function drawAll() {
 
     if (textOpacity > 1) opacityDir = -0.04;
     else if (textOpacity < 0) opacityDir = 0.04;
-    textOpacity += opacityDir;
+    textOpacity += opacityDir * delta;
 
     t1 = performance.now();
     console.log("MyTime:", (t1 - t0).toFixed(2), " TotalTime:", (t1 - t2).toFixed(2), " FPS:", (1000/(t1 - t2)).toFixed(2));
@@ -662,7 +664,8 @@ var landSlideWait = 10;
 
 const font = "monospace";
 
-var screen = "welcome";
+var screen = localStorage.getItem("firstBoot") == null ? "directions" : "welcome";
+console.log(localStorage.getItem("firstBoot"));
 var paused = false;
 
 var alive = true;
