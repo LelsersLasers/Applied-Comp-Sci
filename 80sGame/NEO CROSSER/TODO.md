@@ -1,7 +1,7 @@
 # TODO
 
-Calculate speed/movement based on fps
-    - Also animations based on delta
+Fix issue with delta where cars/etc get stuck in walls
+
 Lives system
     - X to start
     - Immunity on rez
@@ -12,12 +12,12 @@ Make HUD Bigger/slightly more central
 On game 'load' show directions above QER Hud
 Warning sign for landslides
 
+Mario Kart speed ups?
+Pickup buffs?
+
 On Demand Scaling
 - on restore
 - on screen change size
-
-Mario Kart speed ups?
-Pickup buffs?
 
 Make Thing extend HB?
 

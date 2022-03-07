@@ -282,7 +282,7 @@ class Player extends Thing {
         }
         if (alive && this.active) {
             if (wDown || sDown || aDown || dDown) {
-                this.frame++;
+                this.frame += delta;
                 switch (lastDir) {
                     case "w":
                         this.moveVertical(this.msY/moveWait * delta);
@@ -309,9 +309,9 @@ class Player extends Thing {
                 }
             }
             let animationWait = eAbility.active ? 7 : 11;
-            if (this.frame % animationWait == 0 && alive) {
+            if (this.frame.toFixed(0) % animationWait == 0 && alive) {
                 this.animation++;
-                this.frame++; // so if player stops on a %11, it doesn't freak out
+                this.frame++; // so if player stops on a % = 0, it doesn't freak out
                 if (player.animation > 3) player.animation = 0;
             }
             if (qDown && qAbility.canUse()) { // teleport ability
@@ -438,14 +438,17 @@ class Enemy extends Thing {
     }
     updateAnimation() {
         if (this.active) {
-            this.frame++;
+            this.frame += delta;
             var animationWait = this.getAnimationWait();
             animationWait = animationWait > 0 ? animationWait : this.animationWaitBase;
-            if (this.frame % animationWait == 0) this.animation = Number(!this.animation);
+            if (this.frame.toFixed(0) % animationWait == 0) {
+                this.animation = Number(!this.animation);
+                this.frame++;
+            }
         }
     }
     getAnimationWait() {
-        return Math.abs(parseInt(this.animationWaitBase/this.ms));
+        return Math.abs((this.animationWaitBase/this.ms).toFixed(0));
     }
     updateCanShoot(speciality, laserDist) {
         let dist = Math.sqrt((this.pt.x - player.pt.x) * (this.pt.x - player.pt.x) + (this.pt.y - player.pt.y) * (this.pt.y - player.pt.y));
@@ -454,9 +457,9 @@ class Enemy extends Thing {
     }
     checkShoot(startPt) {
         if (this.canShoot) {
-            let animationWait = this.getAnimationWait() * 6;
+            let animationWait = this.getAnimationWait() * 10;
             animationWait = animationWait > 0 ? animationWait : this.animationWaitBase * 4;
-            if (this.frame % animationWait == 0) {
+            if (this.frame.toFixed(0) % animationWait == 0) {
                 lasers.push(new Laser(startPt, 45, 60, false));
                 lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - startPt.x, player.pt.y + player.h/2 - startPt.y);
                 lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);
@@ -616,7 +619,7 @@ class Ufo extends Enemy {
         let ms = topScore/softCap * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800) + 1 * delta;
         super(pt, w, h, ms, "ufoHitSound.mp3", soundOffset);
 
-        this.animationWaitBase = 45;
+        this.animationWaitBase = 25;
 
         if (getRandomInt(1, 3) == 1) {
             this.move = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2); // punish player for not moving
