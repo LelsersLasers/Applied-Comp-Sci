@@ -43,6 +43,7 @@ Clarity
 - LET
     - scope
 - stun protection
+- Delta time
 - animation code
 - shooting code
     - optimize

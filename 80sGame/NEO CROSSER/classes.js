@@ -12,6 +12,10 @@ class Vector {
         this.x = this.x * (len/currentLen);
         this.y = this.y * (len/currentLen);
     }
+    scalar(s) {
+        this.x *= s;
+        this.y *= s;
+    }
 }
 
 class HitBox {
@@ -103,7 +107,7 @@ class Ability extends Trigger {
         context.fillRect(this.pt.x, this.pt.y, width, this.h);
 
         this.drawTxt();
-        if (!paused && this.timer < this.wait) this.timer++;
+        if (!paused && this.timer < this.wait) this.timer += delta;
     }
     use() {
         this.timer = 0;
@@ -133,8 +137,8 @@ class Buff extends Ability {
         super.draw();
         
         if (this.timer <= 0) this.active = false;
-        if (this.active && !paused) this.timer -= this.drain;
-        this.doubleClickProtection--;
+        if (this.active && !paused) this.timer -= this.drain * delta;
+        this.doubleClickProtection -= delta;
     }
     use() {
         if (this.doubleClickProtection <= 0) {
@@ -144,7 +148,7 @@ class Buff extends Ability {
                 this.sound.currentTime = 0;
                 this.sound.play();
             }
-            this.doubleClickProtection = 40;
+            this.doubleClickProtection = 20;
         }
     }
     restore(save) {
@@ -178,6 +182,7 @@ class Laser extends Thing {
     constructor(pt, angle, stunTime, friendly) {
         let ms = Math.sqrt((canvas.width * canvas.width + canvas.height * canvas.height)/52000);
         var moveVector = new Vector(Math.sin(degToRad(angle)) * ms, Math.cos(degToRad(angle)) * ms);
+        moveVector.scalar(delta);
         super(pt, ms, ms);
         this.friendly = friendly;
         this.color = friendly ? "#03b1fc" : "#ff0055";
@@ -219,7 +224,7 @@ class Laser extends Thing {
         context.lineWidth = this.ms * 1.5;
         context.beginPath();
         context.moveTo(this.pt.x + this.hb.w/2, this.pt.y + this.hb.h/2);
-        context.lineTo(this.pt.x + this.hb.w/2 - this.moveVector.x * 3, this.pt.y + this.hb.h/2 - this.moveVector.y * 3);
+        context.lineTo(this.pt.x + this.hb.w/2 - this.moveVector.x * 3 * 1/delta, this.pt.y + this.hb.h/2 - this.moveVector.y * 3 * 1/delta);
         context.stroke();
         context.lineWidth = 3;
     }
@@ -268,8 +273,8 @@ class Player extends Thing {
         else if (this.stun != this.lastStun) {
             this.stun = this.lastStun;
         }
-        this.stun--;
-        this.stunProtection--;
+        this.stun -= delta;
+        this.stunProtection -= delta;
         this.lastStun = this.stun;
         if (this.stun <= 0) {
             this.active = true;
@@ -280,25 +285,25 @@ class Player extends Thing {
                 this.frame++;
                 switch (lastDir) {
                     case "w":
-                        this.moveVertical(this.msY/moveWait);
+                        this.moveVertical(this.msY/moveWait * delta);
                         break;
                     case "s":
-                        this.moveVertical(-this.msY/moveWait);
+                        this.moveVertical(-this.msY/moveWait * delta);
                         break;
                     case "a":
-                        this.pt.x -= this.msX/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1);
+                        this.pt.x -= this.msX/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1) * delta;
                         break;
                     case "d":
-                        this.pt.x += this.msX/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1);
+                        this.pt.x += this.msX/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1) * delta;
                         break;
                 }
                 this.hb.useSmallHB(this.pt, this.w, this.h);
                 for (var i in buildings) {
                     if (this.hb.checkCollide(buildings[i].hb)) { // if it is touching, undo the last movement
-                        if (lastDir == "a") this.pt.x += this.msX/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1);
-                        else if (lastDir == "d") this.pt.x -= this.msX/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1);
-                        else if (lastDir == "w") this.moveVertical(-this.msY/moveWait);
-                        else if (lastDir == "s") this.moveVertical(this.msY/moveWait);
+                        if (lastDir == "a") this.pt.x += this.msX/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1) * delta;
+                        else if (lastDir == "d") this.pt.x -= this.msX/moveWait * (eAbility.active > 0 ? this.sprintSpeed : 1) * delta;
+                        else if (lastDir == "w") this.moveVertical(-this.msY/moveWait * delta);
+                        else if (lastDir == "s") this.moveVertical(this.msY/moveWait * delta);
                         break;
                     }
                 }
@@ -399,7 +404,7 @@ class AfterImage extends Thing {
             context.globalAlpha = this.frames/300 * 0.6;
             context.drawImage(texPlayer, posSourcePlayer[this.a][0][this.b][this.c][0], posSourcePlayer[this.a][0][this.b][this.c][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
             context.globalAlpha = 1;
-            if (!paused) this.frames--;
+            if (!paused) this.frames -= delta;
         }
         else player.afterImages.splice(player.afterImages.indexOf(this), 1);
     }
@@ -425,7 +430,7 @@ class Enemy extends Thing {
         this.canShoot = false;
     }
     updateStun() {
-        this.stun--;
+        this.stun -= delta;
         if (this.stun <= 0) {
             this.active = true;
             this.stun = 0;
@@ -460,7 +465,6 @@ class Enemy extends Thing {
         }
     }
     hasLOS() {
-        count++;
         let checkObstructed = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
         checkObstructed.scale(new Laser(new Vector(-1, -1), -1, -1, false).ms * 4);
         let tempHB = new HitBox(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), 1, 1);
@@ -537,14 +541,14 @@ class Car extends Enemy {
         this.updateStun();
         this.updateAnimation();
         if (this.active) {
-            this.pt.x += this.ms;
+            this.pt.x += this.ms * delta;
             this.updateCanShoot(this.type == 2, 80);
             this.checkShoot(new Vector(this.ms > 0 ? this.pt.x + this.w : this.pt.x, this.pt.y + this.h * 4/17));
             if (this.hb.outOfBounds()) this.ms *= -1.001;
         }
         for (var i in buildings) {
             if (this.hb.checkCollide(buildings[i].hb)) {
-                this.ms *= -1;
+                this.ms *= -1.001;
                 break;
             }
         }
@@ -609,7 +613,7 @@ class Ufo extends Enemy {
         let w = ufoWidth;
         let h = ufoHeight;
         let pt = new Vector(getRandomInt(0, canvas.width - w), y);
-        let ms = topScore/softCap * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800) + 1;
+        let ms = topScore/softCap * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800) + 1 * delta;
         super(pt, w, h, ms, "ufoHitSound.mp3", soundOffset);
 
         this.animationWaitBase = 45;
@@ -740,7 +744,7 @@ class ButtonMenu extends Thing {
             context.fillStyle = "#ffffff";
             context.fillText(this.text, canvas.width/2, this.pt.y + this.h/2);
         }
-        this.clicked--;
+        this.clicked -= delta;
     }
 }
 
@@ -761,7 +765,7 @@ class LandSlide extends Enemy {
         let h = carHeight * 8.5;
 
         let Xs = [0 - w, canvas.width]
-        let MSs = [w/200, -w/200];
+        let MSs = [w/200 * delta, -w/200 * delta];
         let dir = getRandomInt(0, 2);
 
         super(new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + topScore/softCap), "landSlideSound.mp3", 2.0);

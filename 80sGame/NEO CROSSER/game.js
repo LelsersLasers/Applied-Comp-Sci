@@ -46,9 +46,7 @@ function keyDownHandler(e) {
             dDown = true;
             break;
         case "q": case "1":
-            if (paused) {
-                reset();
-            }
+            if (paused) reset();
             qDown = true;
             break;
         case "e": case "2": eDown = true; break;
@@ -82,9 +80,7 @@ function keyDownHandler(e) {
             if (screen == "restore") screen = "play";
             break;
         case "enter":
-            if (screen == "welcome") {
-                screen = "play";
-            }
+            if (screen == "welcome") screen = "play";
             else if (screen == "play") screen = "welcome";
             else if (screen == "restore") {
                 let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
@@ -93,9 +89,7 @@ function keyDownHandler(e) {
                     screen = "game";
                 }
             }
-            else if (screen == "game" && !alive) {
-                reset();
-            }
+            else if (screen == "game" && !alive) reset();
             else if (screen == "directions" || screen == "scores") {
                 screen = "welcome";
                 localStorage.setItem("firstBoot", "true");
@@ -200,9 +194,9 @@ function mouseDownActions() {
     else if (screen == "restore") {
         for (var i = 0; i < restoreButtons.length; i++) {
             if (cursorHB.checkCollide(restoreButtons[i].hb) && i == selectedIndex) {
-                deleteCount++;
+                deleteCount += delta;
                 console.log(deleteCount);
-                if (deleteCount > 30) {
+                if (deleteCount > 60) {
                     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
                     games.splice(selectedIndex, 1);
                     localStorage.setItem("NEO CROSSER - Saved Games", JSON.stringify(games));
@@ -596,8 +590,6 @@ function drawGame() {
 }
 
 function drawAll() {
-    t0 = performance.now();
-    count = 0;
     buttonHover();
 
     context.fillStyle = "#000000";
@@ -615,10 +607,8 @@ function drawAll() {
     textOpacity += opacityDir * delta;
 
     t1 = performance.now();
-    console.log("MyTime:", (t1 - t0).toFixed(2), " TotalTime:", (t1 - t2).toFixed(2), " FPS:", (1000/(t1 - t2)).toFixed(2));
-    console.log("Extra Time Added:", (t0 - t2).toFixed(2));
-    t2 = performance.now();
-    console.log("Ufos:", ufos.length, " Lasers:", lasers.length, " LoS:", count);
+    delta = (t1 - t0)/(1000/60);
+    t0 = performance.now();
 
     window.requestAnimationFrame(drawAll);
 }
@@ -650,17 +640,16 @@ function setUpContext() {
 
 // localStorage.removeItem("NEO CROSSER - Leader Board"); // reset leard board
 
-var count = 0;
-
 var t0 = performance.now();
 var t1 = performance.now();
-var t2 = performance.now();
 
 const softCap = 10000;
 const ufoBase = Math.pow(2, 1/(softCap * 1.5));
 const buildingBlockCount = 5;
 
 var landSlideWait = 10;
+
+var delta = 1;
 
 const font = "monospace";
 
