@@ -608,6 +608,10 @@ function drawAll() {
 
     tNow = performance.now();
     delta = (tNow/frames)/(1000/60);
+    let a = (tNow - tThen)/(1000/60);
+    let b = a - delta;
+    console.log(b.toFixed(3));
+    tThen = performance.now();
     frames++;
 
     window.requestAnimationFrame(drawAll);
@@ -641,6 +645,7 @@ function setUpContext() {
 // localStorage.removeItem("NEO CROSSER - Leader Board"); // reset leard board
 
 var tNow = performance.now();
+var tThen = performance.now();
 var frames = 2;
 
 const softCap = 10000;

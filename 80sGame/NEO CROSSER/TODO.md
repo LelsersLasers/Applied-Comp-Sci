@@ -1,6 +1,7 @@
 # TODO
 
 Delta time fixed?
+- NOPE (frames++ doesn't work when alt tab but time keeps going)
 
 Lives system
     - X to start
