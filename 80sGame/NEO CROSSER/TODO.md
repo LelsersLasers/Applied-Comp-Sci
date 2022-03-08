@@ -1,6 +1,6 @@
 # TODO
 
-Fix issue with delta where cars/etc get stuck in walls
+Delta time fixed?
 
 Lives system
     - X to start

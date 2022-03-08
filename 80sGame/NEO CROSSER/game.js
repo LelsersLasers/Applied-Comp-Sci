@@ -606,9 +606,9 @@ function drawAll() {
     else if (textOpacity < 0) opacityDir = 0.04;
     textOpacity += opacityDir * delta;
 
-    t1 = performance.now();
-    delta = (t1 - t0)/(1000/60);
-    t0 = performance.now();
+    tNow = performance.now();
+    delta = (tNow/frames)/(1000/60);
+    frames++;
 
     window.requestAnimationFrame(drawAll);
 }
@@ -640,8 +640,8 @@ function setUpContext() {
 
 // localStorage.removeItem("NEO CROSSER - Leader Board"); // reset leard board
 
-var t0 = performance.now();
-var t1 = performance.now();
+var tNow = performance.now();
+var frames = 2;
 
 const softCap = 10000;
 const ufoBase = Math.pow(2, 1/(softCap * 1.5));
