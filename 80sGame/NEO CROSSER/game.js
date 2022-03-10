@@ -233,6 +233,12 @@ function degToRad(deg) {
     return deg * Math.PI / 180;
 }
 
+function average(lst) {
+    let sum = 0;
+    for (var i in lst) sum += lst[i];
+    return sum/lst.length;
+}
+
 function musicStart() {
     backgroundMusic.currentTime = getRandomInt(20, backgroundMusic.duration);
     if (musicShouldPlay === "true") {
@@ -606,13 +612,12 @@ function drawAll() {
     else if (textOpacity < 0) opacityDir = 0.04;
     textOpacity += opacityDir * delta;
 
-    tNow = performance.now();
-    delta = (tNow/frames)/(1000/60);
-    let a = (tNow - tThen)/(1000/60);
-    let b = a - delta;
-    console.log(b.toFixed(3));
-    tThen = performance.now();
-    frames++;
+    t1 = performance.now();
+    lastDelta = (t1 - t0)/(1000/60);
+    if (lastDelta < 2 * average(deltas)) deltas.push(lastDelta); // protect against alt-tab
+    delta = average(deltas);
+    console.log(delta);
+    t0 = performance.now();
 
     window.requestAnimationFrame(drawAll);
 }
@@ -644,17 +649,16 @@ function setUpContext() {
 
 // localStorage.removeItem("NEO CROSSER - Leader Board"); // reset leard board
 
-var tNow = performance.now();
-var tThen = performance.now();
-var frames = 2;
+var t0 = performance.now();
+var t1 = performance.now();
+var delta = 1; // delta is relative to 60fps
+var deltas = [delta];
 
 const softCap = 10000;
 const ufoBase = Math.pow(2, 1/(softCap * 1.5));
 const buildingBlockCount = 5;
 
 var landSlideWait = 10;
-
-var delta = 1;
 
 const font = "monospace";
 
