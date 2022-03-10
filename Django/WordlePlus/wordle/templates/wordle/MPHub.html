@@ -15,7 +15,7 @@
 <h3>Modes</h3>
 Scoring: Least amout of gueses, tie breaker is time
 <dl>
-    <dt><a onclick="Launch6x5x1()">6x5x1 daily</a></dt>
+    <dt><a onclick="Launch(5, 6, false, '6x5x1')">6x5x1</a></dt>
         <dd>Random word</dd>
         <dd>6 tries</dd>
         <dd>5 letters long</dd>
@@ -26,7 +26,7 @@ Scoring: Least amout of gueses, tie breaker is time
                 View rankings
             </a>
         </dd>
-    <dt><a onclick="Launch0x5x1()">&#8734;x5x1 daily</a></dt>
+    <dt><a onclick="Launch(5, 0, true, '0x5x1')">&#8734;x5x1</a></dt>
         <dd>Random word</dd>
         <dd>Infinite tries</dd>
         <dd>5 letters long</dd>
@@ -50,4 +50,5 @@ Scoring: Least amout of gueses, tie breaker is time
     <input type="hidden" id="wordLenSub" name="wordLenSub" value="" />
     <input type="hidden" id="triesSub" name="triesSub" value="" />
     <input type="hidden" id="doubleLettersSub" name="doubleLettersSub" value="" />
+    <input type="hidden" id="cupSub" name="cupSub" value="" />
 </form>
