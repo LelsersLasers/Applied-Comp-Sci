@@ -11,11 +11,12 @@
     <meta name="description" content="Worlde Unlimited Plus +">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'wordle/game.css' %}">
-    <script defer src="{% static 'wordle/script.js' %}"></script>
+    <script defer src="{% static 'wordle/game.js' %}"></script>
 </head>
 
 <body onload="setupGame()">
 
+    <input id="cupIn" type="hidden" name="cupIn" value="{{ cup }} " />
     <input id="wordTxtIn" type="hidden" name="wordTxt" value="{{ word.txt }} " />
     <input id="lengthIn" type="hidden" name="length" value="{{ word.length }}" />
     <input id="triesIn" type="hidden" name="tries" value="{{ tries }}" />
