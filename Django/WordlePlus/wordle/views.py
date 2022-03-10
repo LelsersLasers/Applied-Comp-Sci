@@ -1,12 +1,13 @@
 import random
-import time
+from numpy import double
+
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from numpy import double
 from .models import Account, Word, Score
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.utils import timezone
 
 from .allWords import getAllWords
 
@@ -114,8 +115,6 @@ def backToIndex(request):
 
 
 def SPLauncher(request):
-    print("creating dict")
-    print("done")
     return render(request, 'wordle/generateWord.html')
 
 def Game(request, mode):
@@ -123,6 +122,7 @@ def Game(request, mode):
         wordLen = request.POST['wordLenSub']
         tries = request.POST['triesSub']
         doubleLetters = True if request.POST['doubleLettersSub'] == 'true' else False
+        cup = request.POST['cupSub']
     except:
         if mode == "SP":
             return redirect('wordle:SPLauncher')
@@ -133,13 +133,14 @@ def Game(request, mode):
         'word': word,
         'tries': tries,
         'availableWords': getAllWords(),
-        'mode': mode == "SP"
+        'mode': mode == "SP",
+        'cup': cup
     }
     print(context['word'])
     return render(request, 'wordle/game.html', context)
 
 def rankings(request, name):
-    scores = Score.objects.filter(name=name).order_by('-guesses')
+    scores = Score.objects.filter(name=name).order_by('guesses')
     # TODO: second sort by time
     context = {
         'scores': scores
@@ -157,17 +158,16 @@ def MPReceiveScore(request):
         word = request.POST['word']
         guesses = request.POST['guesses']
         time = request.POST['time']
+        print(cupName)
     except:
         return redirect('wordle:MPHub')
 
     wordObj = Word.objects.get(txt=word.strip())
-
     acc = Account.objects.get(user=request.user)
-    score = Score(name=cupName, word=wordObj, account=acc, guesses=guesses, time=time)
+    score = Score(name=cupName.strip(), word=wordObj, account=acc, guesses=guesses, time=time, sub_date=timezone.now())
     score.save()
     return redirect('wordle:MPHub')
 
-    
 
 
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 
@@ -25,6 +26,12 @@ class Score(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     guesses = models.IntegerField("Guesses")
     time = models.IntegerField("Time in seconds")
+    sub_date = models.DateField("Date Submitted")
 
     def __str__(self):
-        return "%s) %s - '%s' in %i guesses, %i seconds" % (self.name, self.account.display_name, self.word.txt, self.guesses, self.time)
+        sec = self.time
+        minutes = 0
+        while sec > 60:
+            minutes += 1
+            sec -= 60
+        return "%s - %s) '%s' in %i guesses and %02i:%02i" % (self.sub_date, self.account.display_name, self.word.txt, self.guesses, minutes, sec)
