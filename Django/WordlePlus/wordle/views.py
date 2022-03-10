@@ -1,6 +1,7 @@
 import random
 from numpy import double
 
+from datetime import datetime, time, timedelta
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -140,8 +141,13 @@ def Game(request, mode):
     return render(request, 'wordle/game.html', context)
 
 def rankings(request, name):
-    scores = Score.objects.filter(name=name).order_by('guesses')
-    # TODO: second sort by time
+    scores = Score.objects.filter(name=name).order_by('guesses', 'time')
+    if "daily" in name:
+        tNow = timezone.now()
+        tMidNight = tNow.timestamp() - (tNow.hour * 3600) - (tNow.minute * 60) - tNow.second
+        for score in scores:
+            if tMidNight > score.sub_date.timestamp():
+                scores.remove(score)   
     context = {
         'scores': scores
     }

@@ -1,7 +1,7 @@
 {% if scores %}
     <ul>
     {% for score in scores %}
-        <li>{{ score }}</li>
+        <li>{{ forloop.counter }}) {{ score }}</li>
     {% endfor %}
     </ul>
 {% else %}

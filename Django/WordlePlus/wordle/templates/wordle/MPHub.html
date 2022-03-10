@@ -15,25 +15,49 @@
 <h3>Modes</h3>
 Scoring: Least amout of gueses, tie breaker is time
 <dl>
-    <dt><a onclick="Launch(5, 6, false, '6x5x1')">6x5x1</a></dt>
+    <dt><a onclick="Launch(5, 6, false, '6x5')">6x5</a></dt>
         <dd>Random word</dd>
         <dd>6 tries</dd>
         <dd>5 letters long</dd>
         <dd>Double letters not allowed</dd>
         <dd>1 word</dd>
         <dd>
-            <a href="{% url 'wordle:rankings' '6x5x1' %}">
+            <a href="{% url 'wordle:rankings' '6x5' %}">
                 View rankings
             </a>
         </dd>
-    <dt><a onclick="Launch(5, 0, true, '0x5x1')">&#8734;x5x1</a></dt>
+    <dt><a onclick="Launch(5, 0, true, '0x5')">&#8734;x5</a></dt>
         <dd>Random word</dd>
         <dd>Infinite tries</dd>
         <dd>5 letters long</dd>
         <dd>Double letters allowed</dd>
         <dd>1 word</dd>
         <dd>
-            <a href="{% url 'wordle:rankings' '0x5x1' %}">
+            <a href="{% url 'wordle:rankings' '0x5' %}">
+                View rankings
+            </a>
+        </dd>
+    <dt><a onclick="Launch(5, 10, false, '10x5 daily')">10x5 DAILY</a></dt>
+        <dd>Random word</dd>
+        <dd>6 tries</dd>
+        <dd>5 letters long</dd>
+        <dd>Double letters not allowed</dd>
+        <dd>1 word</dd>
+        <dd>Scoreboard resets daily!</dd>
+        <dd>
+            <a href="{% url 'wordle:rankings' '10x5 daily' %}">
+                View rankings
+            </a>
+        </dd>
+    <dt><a onclick="Launch(5, 0, false, '0x5 sprint daily')">&#8734;x5 SPRINT DAILY</a></dt>
+        <dd>Random word</dd>
+        <dd>6 tries</dd>
+        <dd>5 letters long</dd>
+        <dd>Double letters not allowed</dd>
+        <dd>5 minutes to get as many words as possible</dd>
+        <dd>Scoreboard resets daily!</dd>
+        <dd>
+            <a href="{% url 'wordle:rankings' '0x5 sprint daily' %}">
                 View rankings
             </a>
         </dd>

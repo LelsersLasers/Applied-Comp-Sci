@@ -1,5 +1,9 @@
 # Wordle+
 
+Launch from rankings page
+
+Time driven events ("sprint")
+
 SP:
 - If signed in: save/restore the game automatically
     - field in the model?
