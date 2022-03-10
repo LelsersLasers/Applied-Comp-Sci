@@ -480,9 +480,7 @@ function drawDirections() {
 
     context.fillStyle = "#ffffff";
     context.font = carHeight * 5/12 + "px  " + font;
-    for (var i = 0; i < txts.length; i++) {
-        context.fillText(txts[i], canvas.width/2, base + carHeight + carHeight * 1/2 * (3+i));
-    }
+    for (var i = 0; i < txts.length; i++) context.fillText(txts[i], canvas.width/2, base + carHeight + carHeight * 1/2 * (3+i));
 }
 
 function drawScores() {
@@ -537,6 +535,23 @@ function drawGameOver() {
     context.textBaseline = "middle";
 }
 
+function drawHUDDirections() {
+    let maxWidth = carHeight * 2.75;
+
+    context.font = 1 + "px " + font;    
+    let ratio = 1/context.measureText("a").width;
+    let h = maxWidth/11 * ratio; // 11 because that is longest test
+
+    context.font = h + "px " + font;
+    context.fillStyle = "rgba(255,255,255," + directionsOpacity + ")";
+    context.textAlign = "left";
+    let txts = ["Q: Teleport", "E: Sprint", "R: Lasers"];
+    for (var i in txts) context.fillText(txts[i], carHeight, playerLevel + carHeight * 2 - i * h * 1.1);
+    
+    context.textAlign = "center";
+    if (!paused) directionsOpacity -= delta/130;
+}
+
 function drawPauseMenu() {
     player.draw();
     let obstacles = [...landSlides, ...cars, ...ufos, ...buildings, ...lasers];
@@ -568,6 +583,7 @@ function drawHUD() {
 
 function drawGame() {
     setLastDir();
+    drawHUDDirections();
     for (var i in bar) bar[i].draw();
     if (!paused) {
         for (var i in landSlides) landSlides[i].update();
@@ -673,6 +689,8 @@ const moveWait = 30;
 
 var textOpacity = 1;
 var opacityDir = -0.04;
+
+var directionsOpacity = 1.2;
 
 const soundOffset = 10.0;
 // Set up the canvas, context objects, and html elements

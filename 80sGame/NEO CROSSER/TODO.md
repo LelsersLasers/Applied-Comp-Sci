@@ -9,7 +9,6 @@ Lives system
     - And/or live pick ups?
 Make HUD Bigger/slightly more central
     - harder to miss
-On game 'load' show directions above QER Hud
 Warning sign for landslides
 
 Mario Kart speed ups?
