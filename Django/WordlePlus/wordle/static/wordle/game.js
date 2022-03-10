@@ -114,12 +114,14 @@ function draw() {
             minutes++;
             seconds -= 60;
         }
+        if (seconds < 10) seconds = "0" + seconds;
+        if (minutes < 10) minutes = "0" + minutes;
         document.getElementById("info").innerHTML = "YOU WON!\nGuesses: " + guessPos[0] + "\nTime Taken: " + minutes + ":" + seconds;
     }
 }
 
 function sendScore() {
-    document.getElementById("cupName").value = "6x5x1";
+    document.getElementById("cupName").value = document.getElementById("cupIn").value;
     document.getElementById("word").value = document.getElementById("wordTxtIn").value;
     document.getElementById("guesses").value = guessPos[0];
     document.getElementById("time").value = takenTime;
