@@ -9,7 +9,9 @@ Lives system
     - And/or live pick ups?
 Make HUD Bigger/slightly more central
     - harder to miss
-Warning sign for landslides
+
+efficeny: only check things that make sense
+- LoS doesn't need to check all buildings, etc
 
 Mario Kart speed ups?
 Pickup buffs?

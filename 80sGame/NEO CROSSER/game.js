@@ -295,6 +295,12 @@ function getTopScores() {
     return scores;
 }
 
+function getFontHeight(w, letters) {
+    context.font = 1 + "px " + font;
+    let ratio = 1/context.measureText("a").width;
+    return w/letters * ratio;
+}
+
 function save() {
     let date = new Date();
     let name = getName("Enter 3 letters for your name to save:");
@@ -536,18 +542,12 @@ function drawGameOver() {
 }
 
 function drawHUDDirections() {
-    let maxWidth = carHeight * 2.75;
-
-    context.font = 1 + "px " + font;    
-    let ratio = 1/context.measureText("a").width;
-    let h = maxWidth/11 * ratio; // 11 because that is longest test
-
+    let h = getFontHeight(carHeight * 2.75, 11);
     context.font = h + "px " + font;
     context.fillStyle = "rgba(255,255,255," + directionsOpacity + ")";
     context.textAlign = "left";
     let txts = ["Q: Teleport", "E: Sprint", "R: Lasers"];
-    for (var i in txts) context.fillText(txts[i], carHeight, playerLevel + carHeight * 2 - i * h * 1.1);
-    
+    for (var i in txts.reverse()) context.fillText(txts[i], carHeight, playerLevel + carHeight * 2.2 - i * h * 1.1);
     context.textAlign = "center";
     if (!paused) directionsOpacity -= delta/130;
 }
@@ -583,7 +583,6 @@ function drawHUD() {
 
 function drawGame() {
     setLastDir();
-    drawHUDDirections();
     for (var i in bar) bar[i].draw();
     if (!paused) {
         for (var i in landSlides) landSlides[i].update();
@@ -603,7 +602,9 @@ function drawGame() {
             }
         }
         for (var i in lasers) lasers[i].update();
+        for (var i in notices) notices[i].draw();
         drawHUD();
+        if (directionsOpacity > 0) drawHUDDirections();
         if (!alive) drawGameOver();
     }
     else drawPauseMenu();
@@ -624,15 +625,14 @@ function drawAll() {
     else if (screen == "directions") drawDirections();
     else if (screen == "scores") drawScores();
 
+    textOpacity += opacityDir * delta;
     if (textOpacity > 1) opacityDir = -0.04;
     else if (textOpacity < 0) opacityDir = 0.04;
-    textOpacity += opacityDir * delta;
 
     t1 = performance.now();
     lastDelta = (t1 - t0)/(1000/60);
     if (lastDelta < 2 * average(deltas)) deltas.push(lastDelta); // protect against alt-tab
     delta = average(deltas);
-    console.log(delta);
     t0 = performance.now();
 
     window.requestAnimationFrame(drawAll);
@@ -889,6 +889,9 @@ var posSourcePause = [
     [15, 0]
 ];
 
+var texWarning = new Image();
+texWarning.src = "landSlideWarning-20x19-1x1.png";
+
 const carWidth = canvas.width * 1/9;
 const carHeight = canvas.height * 1/14;
 
@@ -950,6 +953,7 @@ var buildings = [];
 var lasers = [];
 var bar = [];
 var landSlides = [];
+var notices = [];
 
 const base = playerLevel - 3 * carHeight;
 var justPlaced = true; // true to skip placing one in the first row

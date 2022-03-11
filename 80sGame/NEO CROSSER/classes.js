@@ -575,7 +575,7 @@ class Car extends Enemy {
             else justPlaced = false;
 
             if (Math.random() < 1/15 && landSlideWait < 0) {
-                landSlides.push(new LandSlide(y + 3 * carHeight));
+                landSlides.push(new LandSlide(y + 1.5 * carHeight));
                 landSlideWait = 10;
             }
             else landSlideWait--;
@@ -765,16 +765,17 @@ class ButtonExtra extends Thing {
 class LandSlide extends Enemy {
     constructor(y) {
         let w = canvas.width;
-        let h = carHeight * 8.5;
+        let h = carHeight * 11.5;
 
-        let Xs = [0 - w, canvas.width]
         let MSs = [w/200 * delta, -w/200 * delta];
         let dir = getRandomInt(0, 2);
+        let Xs = [0 - w + MSs[0] * -60, canvas.width + MSs[1] * -60]
 
         super(new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + topScore/softCap), "landSlideSound.mp3", 2.0);
         this.deathSound.play();
         this.dir = dir;
         this.animationWaitBase = 100;
+        notices.push(new Notice(80));
     }
     update() {
         if ((this.dir == 0 && this.pt.x > canvas.width) || (this.dir == 1 && this.pt.x + this.w < 0)) {
@@ -811,5 +812,25 @@ class LandSlide extends Enemy {
         this.ms = save.ms;
         this.animation = save.animation;
         this.frame = save.frame;
+    }
+}
+
+class Notice extends Thing {
+    constructor(frames) {
+        let w = 1.5 * carWidth;
+        super(new Vector((canvas.width - w)/2, (canvas.height - w)/2), w, w);
+        this.frames = frames;
+    }
+    draw() {
+        if (this.frames > 0) {
+            context.globalAlpha = textOpacity;
+            context.drawImage(texWarning, 0, 0, 20, 19, this.pt.x, this.pt.y, this.w, this.h);
+            context.globalAlpha = 1;
+            context.font = carHeight/2 + "px " + font;
+            context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
+            context.fillText("Incoming", this.pt.x + this.w/2, this.pt.y + this.h + carHeight/2);
+            if (!paused) this.frames -= delta;
+        }
+        else notices.splice(notices.indexOf(this), 1);
     }
 }
