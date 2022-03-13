@@ -573,11 +573,17 @@ function drawHUD() {
     sTrigger.draw(sDown);
     aTrigger.draw(aDown);
     dTrigger.draw(dDown);
+    
     qAbility.draw();
     eAbility.draw();
     rAbility.draw();
-    scoreView.setTxt("Score: " + topScore);
+    
+    scoreView.setTxt("Score: " + topScore); // why is this so much longer than lives?
     scoreView.draw();
+    livesView.pt.x = scoreView.pt.x + scoreView.w + 5;
+    livesView.setTxt("Lives: " + lives);
+    livesView.draw();
+
     pauseButton.draw();
 }
 
@@ -684,6 +690,7 @@ var paused = false;
 var alive = true;
 var score = 0;
 var topScore = 0;
+var lives = 3;
 
 const moveWait = 30;
 
@@ -912,7 +919,8 @@ var sTrigger = new Trigger(new Vector(canvas.width - (carHeight * 7/4), playerLe
 var aTrigger = new Trigger(new Vector(canvas.width - (carHeight * 10/4), playerLevel + carHeight * 2), carHeight * 3/4, carHeight * 3/4, "A");
 var dTrigger = new Trigger(new Vector(canvas.width - carHeight, playerLevel + carHeight * 2), carHeight * 3/4, carHeight * 3/4, "D");
 
-var scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", carHeight, carHeight/3, "Score: 0");
+var scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", -1, carHeight/3, "");
+var livesView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", -1, carHeight/3, "");
 
 context.font = carHeight * 1/2 + "px " + font;
 let pauseWidth = 0;

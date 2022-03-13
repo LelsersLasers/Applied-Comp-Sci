@@ -174,7 +174,9 @@ class GameTxt extends Thing {
     }
     setTxt(txt) {
         this.txt = txt;
-        this.w = context.measureText(this.txt).width + 5;
+        let w = context.measureText(this.txt).width + 5;
+        if (this.w != w) console.log("change");
+        this.w = w;
     }
 }
 
