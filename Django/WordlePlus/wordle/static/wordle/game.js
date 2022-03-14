@@ -114,7 +114,10 @@ function draw() {
         if (seconds < 10) seconds = "0" + seconds;
         if (minutes < 10) minutes = "0" + minutes;
         document.getElementById("info").innerHTML = "YOU WON!\nGuesses: " + guessPos[0] + "\nTime Taken: " + minutes + ":" + seconds;
-        document.getElementById("MPSubmitButton").removeAttribute("hidden");
+        if (document.getElementById("cupIn").value.trim() != "SP") {
+            document.getElementById("MPSubmitButton").removeAttribute("hidden");
+            document.getElementById("MPBackButton").setAttribute("hidden", "");
+        }
     }
 }
 
