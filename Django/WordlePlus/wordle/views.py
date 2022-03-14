@@ -141,7 +141,7 @@ def Game(request, mode):
     return render(request, 'wordle/game.html', context)
 
 def rankings(request, name):
-    scores = Score.objects.filter(name=name).order_by('guesses', 'time')
+    scores = list(Score.objects.filter(name=name).order_by('guesses', 'time'))
     if "daily" in name:
         tNow = timezone.now()
         tMidNight = tNow.timestamp() - (tNow.hour * 3600) - (tNow.minute * 60) - tNow.second
@@ -164,7 +164,6 @@ def MPReceiveScore(request):
         word = request.POST['word']
         guesses = request.POST['guesses']
         time = request.POST['time']
-        print(cupName)
     except:
         return redirect('wordle:MPHub')
 
@@ -173,8 +172,6 @@ def MPReceiveScore(request):
     score = Score(name=cupName.strip(), word=wordObj, account=acc, guesses=guesses, time=time, sub_date=timezone.now())
     score.save()
     return redirect('wordle:MPHub')
-
-
 
 
 def getWord(wordLen, doubleLetters):
