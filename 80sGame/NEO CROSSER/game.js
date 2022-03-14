@@ -234,6 +234,7 @@ function degToRad(deg) {
 }
 
 function average(lst) {
+    if (lst.length == 0) return 100;
     let sum = 0;
     for (var i in lst) sum += lst[i];
     return sum/lst.length;
@@ -639,6 +640,7 @@ function drawAll() {
     lastDelta = (t1 - t0)/(1000/60);
     if (lastDelta < 2 * average(deltas)) deltas.push(lastDelta); // protect against alt-tab
     delta = average(deltas);
+    console.log(delta.toFixed(3));
     t0 = performance.now();
 
     window.requestAnimationFrame(drawAll);
@@ -674,7 +676,7 @@ function setUpContext() {
 var t0 = performance.now();
 var t1 = performance.now();
 var delta = 1; // delta is relative to 60fps
-var deltas = [delta];
+var deltas = [];
 
 const softCap = 10000;
 const ufoBase = Math.pow(2, 1/(softCap * 1.5));
