@@ -45,9 +45,14 @@
             </a>
         </div>
     {% else %}
-        <button type="button" onclick="sendScore()">
+        <button id="MPSubmitButton" type="button" onclick="sendScore()" hidden>
             Submit Score
         </button>
+        <a href="{% url 'wordle:MPHub' %}">
+            <button type="button">
+                Back
+            </button>
+        </a>
         <form id="MPSubmit" action="{% url 'wordle:MPReceiveScore' %}" method="post" hidden>
             {% csrf_token %}
             <input type="hidden" id="cupName" name="cupName" value="" />

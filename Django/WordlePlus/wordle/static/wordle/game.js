@@ -17,7 +17,7 @@ var guessPos = [0, 0];
 document.addEventListener("keydown", keyDownHandler, false);
 
 function keyDownHandler(e) {
-    if (word && state == "game") {
+    if (state == "game") {
         alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
         if (e.key == "Backspace") {
             guesses[guessPos[0]][guessPos[1] - 1] = "";
@@ -73,9 +73,6 @@ function keyDownHandler(e) {
         }
         draw();
     }
-    else if (e.key == "Enter" && !word) {
-        startGame();
-    }
 }
 
 function draw() {
@@ -117,6 +114,7 @@ function draw() {
         if (seconds < 10) seconds = "0" + seconds;
         if (minutes < 10) minutes = "0" + minutes;
         document.getElementById("info").innerHTML = "YOU WON!\nGuesses: " + guessPos[0] + "\nTime Taken: " + minutes + ":" + seconds;
+        document.getElementById("MPSubmitButton").removeAttribute("hidden");
     }
 }
 
