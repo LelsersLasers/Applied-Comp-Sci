@@ -15,29 +15,29 @@
 <h3>Modes</h3>
 Scoring: Least amout of gueses, tie breaker is time
 <dl>
-    <dt><a onclick="Launch(5, 6, false, '6x5')">6x5</a></dt>
+    <dt><a onclick="Launch('game', 5, 6, false, '6x5')">6x5</a></dt>
         <dd>Random word</dd>
         <dd>6 tries</dd>
         <dd>5 letters long</dd>
         <dd>Double letters not allowed</dd>
         <dd>1 word</dd>
         <dd>
-            <a href="{% url 'wordle:rankings' '6x5' %}">
+            <a onclick="Launch('rankings', 5, 6, false, '6x5')">
                 View rankings
             </a>
         </dd>
-    <dt><a onclick="Launch(5, 0, true, '0x5')">&#8734;x5</a></dt>
+    <dt><a onclick="Launch('game', 5, 0, true, '0x5')">&#8734;x5</a></dt>
         <dd>Random word</dd>
         <dd>Infinite tries</dd>
         <dd>5 letters long</dd>
         <dd>Double letters allowed</dd>
         <dd>1 word</dd>
         <dd>
-            <a href="{% url 'wordle:rankings' '0x5' %}">
+            <a onclick="Launch('rankings', 5, 0, true, '0x5')">
                 View rankings
             </a>
         </dd>
-    <dt><a onclick="Launch(5, 10, false, '10x5 daily')">10x5 DAILY</a></dt>
+    <dt><a onclick="Launch('game', 5, 10, false, '10x5 daily')">10x5 DAILY</a></dt>
         <dd>Random word</dd>
         <dd>6 tries</dd>
         <dd>5 letters long</dd>
@@ -45,11 +45,11 @@ Scoring: Least amout of gueses, tie breaker is time
         <dd>1 word</dd>
         <dd>Scoreboard resets daily!</dd>
         <dd>
-            <a href="{% url 'wordle:rankings' '10x5 daily' %}">
+            <a onclick="Launch('rankings', 5, 10, false, '10x5 sprint daily')">
                 View rankings
             </a>
         </dd>
-    <dt><a onclick="Launch(5, 0, false, '0x5 sprint daily')">&#8734;x5 SPRINT DAILY</a></dt>
+    <dt><a onclick="Launch('game', 5, 0, false, '0x5 sprint daily')">&#8734;x5 SPRINT DAILY</a></dt>
         <dd>Random word</dd>
         <dd>6 tries</dd>
         <dd>5 letters long</dd>
@@ -57,7 +57,7 @@ Scoring: Least amout of gueses, tie breaker is time
         <dd>5 minutes to get as many words as possible</dd>
         <dd>Scoreboard resets daily!</dd>
         <dd>
-            <a href="{% url 'wordle:rankings' '0x5 sprint daily' %}">
+            <a onclick="Launch('rankings', 5, 0, false, '0x5 sprint daily')">
                 View rankings
             </a>
         </dd>
@@ -69,10 +69,18 @@ Scoring: Least amout of gueses, tie breaker is time
     </button>
 </a>
 
-<form id="wordGen" action="{% url 'wordle:Game' 'MP' %}" method="post" hidden>
+<form id="gameForm" action="{% url 'wordle:Game' 'MP' %}" method="post" hidden>
     {% csrf_token %}
-    <input type="hidden" id="wordLenSub" name="wordLenSub" value="" />
-    <input type="hidden" id="triesSub" name="triesSub" value="" />
-    <input type="hidden" id="doubleLettersSub" name="doubleLettersSub" value="" />
-    <input type="hidden" id="cupSub" name="cupSub" value="" />
+    <input type="hidden" id="gameWordLenSub" name="wordLenSub" value="" />
+    <input type="hidden" id="gameTriesSub" name="triesSub" value="" />
+    <input type="hidden" id="gameDoubleLettersSub" name="doubleLettersSub" value="" />
+    <input type="hidden" id="gameCupSub" name="cupSub" value="" />
+</form>
+
+<form id="rankingsForm" action="{% url 'wordle:rankings' %}" method="post" hidden>
+    {% csrf_token %}
+    <input type="hidden" id="rankingsWordLenSub" name="wordLenSub" value="" />
+    <input type="hidden" id="rankingsTriesSub" name="triesSub" value="" />
+    <input type="hidden" id="rankingsDoubleLettersSub" name="doubleLettersSub" value="" />
+    <input type="hidden" id="rankingsCupSub" name="cupSub" value="" />
 </form>

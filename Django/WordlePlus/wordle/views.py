@@ -1,8 +1,6 @@
 import random
 from numpy import double
 
-from datetime import datetime, time, timedelta
-
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Account, Word, Score
@@ -123,7 +121,7 @@ def Game(request, mode):
         wordLen = request.POST['wordLenSub']
         tries = request.POST['triesSub']
         doubleLetters = True if request.POST['doubleLettersSub'] == 'true' else False
-        cup = request.POST['cupSub']
+        cup = request.POST['cupSub'].strip()
     except:
         if mode == "SP":
             return redirect('wordle:SPLauncher')
@@ -140,15 +138,26 @@ def Game(request, mode):
     print(context['word'])
     return render(request, 'wordle/game.html', context)
 
-def rankings(request, name):
-    scores = list(Score.objects.filter(name=name).order_by('guesses', 'time'))
-    if "daily" in name:
+def rankings(request):
+    try:
+        wordLen = request.POST['wordLenSub']
+        tries = request.POST['triesSub']
+        doubleLetters = True if request.POST['doubleLettersSub'] == 'true' else False
+        cup = request.POST['cupSub'].strip()
+    except:
+        return redirect('wordle:MPHub')
+    scores = list(Score.objects.filter(name=cup).order_by('guesses', 'time'))
+    if "daily" in cup.lower():
         tNow = timezone.now()
         tMidNight = tNow.timestamp() - (tNow.hour * 3600) - (tNow.minute * 60) - tNow.second
         for score in scores:
             if tMidNight > score.sub_date.timestamp():
                 scores.remove(score)   
     context = {
+        'wordLen': wordLen,
+        'tries': tries,
+        'doubleLetters': doubleLetters,
+        'cup': cup,
         'scores': scores
     }
     return render(request, 'wordle/rankings.html', context)
@@ -160,16 +169,16 @@ def MPHub(request):
 
 def MPReceiveScore(request):
     try:
-        cupName = request.POST['cupName']
-        word = request.POST['word']
+        cupName = request.POST['cupName'].strip()
+        word = request.POST['word'].strip()
         guesses = request.POST['guesses']
         time = request.POST['time']
     except:
         return redirect('wordle:MPHub')
 
-    wordObj = Word.objects.get(txt=word.strip())
+    wordObj = Word.objects.get(txt=word)
     acc = Account.objects.get(user=request.user)
-    score = Score(name=cupName.strip(), word=wordObj, account=acc, guesses=guesses, time=time, sub_date=timezone.now())
+    score = Score(name=cupName, word=wordObj, account=acc, guesses=guesses, time=time, sub_date=timezone.now())
     score.save()
     return redirect('wordle:MPHub')
 
