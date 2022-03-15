@@ -578,11 +578,11 @@ function drawHUD() {
     eAbility.draw();
     rAbility.draw();
     
-    scoreView.setTxt("Score: " + topScore); // why is this so much longer than lives?
-    scoreView.draw();
-    livesView.pt.x = scoreView.pt.x + scoreView.w + 5;
     livesView.setTxt("Lives: " + lives);
     livesView.draw();
+    scoreView.pt.x = livesView.pt.x + livesView.w * 1.08;
+    scoreView.setTxt("Score: " + topScore);
+    scoreView.draw();
 
     pauseButton.draw();
 }
