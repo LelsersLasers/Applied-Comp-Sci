@@ -174,7 +174,7 @@ function clickHandler(event) {
     }
 }
 function getMousePos(event) {
-    var rect = canvas.getBoundingClientRect();
+    let rect = canvas.getBoundingClientRect();
     cursorHB.pt.x = event.clientX - rect.left - 6;
     cursorHB.pt.y = event.clientY - rect.top - 6;
 }

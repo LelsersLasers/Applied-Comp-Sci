@@ -38,10 +38,7 @@ class HitBox {
     }
     draw(color) {
         context.strokeStyle = color;
-        context.fillStyle = color;
-        context.beginPath();
-        context.rect(this.pt.x, this.pt.y, this.w, this.h);
-        context.stroke();
+        context.strokeRect(this.pt.x, this.pt.y, this.w, this.h);
     }
 }
 
@@ -96,13 +93,11 @@ class Ability extends Trigger {
     }
     draw() {
         context.fillStyle = this.backgroundColor;
-        context.beginPath();
         context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
         
         let delay = this.wait - this.timer >= 0 ? this.wait - this.timer : 0;
         let width = (this.wait - delay) * this.w/this.wait;
 
-        context.beginPath();
         context.fillStyle = delay == 0 ? this.canUseColor : this.rechargingColor;
         context.fillRect(this.pt.x, this.pt.y, width, this.h);
 
@@ -164,7 +159,6 @@ class GameTxt extends Thing {
         this.txt = txt;
     }
     draw() {
-        context.beginPath();
         context.fillStyle = this.color;
         context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
 
@@ -173,10 +167,9 @@ class GameTxt extends Thing {
         context.fillText(this.txt, this.pt.x + this.w/2, this.pt.y + this.h/2);
     }
     setTxt(txt) {
+        context.font = carHeight/4.5 + "px " + font;
         this.txt = txt;
-        let w = context.measureText(this.txt).width + 5;
-        if (this.w != w) console.log("change");
-        this.w = w;
+        this.w = context.measureText(this.txt).width * 1.3;
     }
 }
 
