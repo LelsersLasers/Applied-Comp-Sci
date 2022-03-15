@@ -54,6 +54,8 @@ Clarity
 - duplicate code?
 - for var i vs let i
 - softCap
+- touch code
+    - remove/rework inputmode = 'key'
 
 Redo any art?
 - tanks

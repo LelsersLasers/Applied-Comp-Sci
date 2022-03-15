@@ -654,8 +654,8 @@ function setUpContext() {
     canvas.width = window.innerWidth - 20;
     canvas.height = window.innerHeight - 20;
 
-    canvas.onmousedown = function(event) { mouseDown = true; }
-    canvas.onmouseup = function(event) { mouseDown = false; }
+    canvas.onmousedown = () => mouseDown = true;
+    canvas.onmouseup = () => mouseDown = false;
 
     // Set up the context for the animation
     context = canvas.getContext("2d");
