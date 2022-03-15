@@ -273,7 +273,7 @@ class Player extends Thing {
             this.active = true;
             this.stun = 0;
         }
-        this.liveProtection -= delta;
+        this.liveProtection -= delta * 0.2;
         if (alive && this.active) {
             if (wDown || sDown || aDown || dDown) {
                 this.frame += delta;
@@ -366,8 +366,11 @@ class Player extends Thing {
         if (enemy.hb.checkCollide(player.hb)) {
             if (this.liveProtection < 0) {
                 enemy.deathSound.play();
-                this.stunProtection = this.liveProtection = 120;
+                this.stunProtection = this.liveProtection = 120 * 0.2;
                 this.stun = this.lastStun = 0;
+                qAbility.timer = qAbility.wait;
+                eAbility.timer = eAbility.wait;
+                rAbility.timer = rAbility.wait;
                 lives--;
                 if (lives <= 0) {
                     livesView.color = "#e37e7b";
@@ -384,7 +387,7 @@ class Player extends Thing {
             let dir = dirs.indexOf(lastDir);
             this.lastDrawDir = dir;
         }
-        if (this.liveProtection <= 0 || (this.liveProtection.toFixed(0) % 2 != 0 && this.liveProtection.toFixed(0) % 3 != 0) || !alive) {
+        if (this.liveProtection <= 0 || this.liveProtection.toFixed(0) % 2 != 0 || !alive) {
             context.drawImage(texPlayer, posSourcePlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][0], posSourcePlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
         }
     }
