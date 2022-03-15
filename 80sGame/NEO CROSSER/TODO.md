@@ -57,12 +57,12 @@ Clarity
 - softCap
 - touch code
     - remove/rework inputmode = 'key'
-- avoid using 'new laser' just for the ms
-    - save it in a calc somewhere else
 - General:
     - Simply lines
     - duplicate code -> function
     - can use 'a = b = 0'
+- Constructors for classes
+    - what is already global var
 
 Redo any art?
 - tanks

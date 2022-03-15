@@ -899,6 +899,8 @@ const carHeight = canvas.height * 1/14;
 const ufoWidth = canvas.width * 1/8;
 const ufoHeight = canvas.height * 1/8 * 7/9;
 
+const laserSpeed = Math.sqrt((canvas.width * canvas.width + canvas.height * canvas.height)/52000)
+
 const spacer = canvas.height * 1/70;
 
 const playerLevel = carHeight * 10;

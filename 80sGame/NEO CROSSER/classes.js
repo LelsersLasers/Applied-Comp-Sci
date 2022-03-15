@@ -175,7 +175,7 @@ class GameTxt extends Thing {
 
 class Laser extends Thing {
     constructor(pt, angle, stunTime, friendly) {
-        let ms = Math.sqrt((canvas.width * canvas.width + canvas.height * canvas.height)/52000);
+        let ms = laserSpeed;
         var moveVector = new Vector(Math.sin(degToRad(angle)) * ms, Math.cos(degToRad(angle)) * ms);
         moveVector.scalar(delta);
         super(pt, ms, ms);
@@ -463,7 +463,7 @@ class Enemy extends Thing {
     }
     updateCanShoot(speciality, laserDist) {
         let dist = Math.sqrt((this.pt.x - player.pt.x) * (this.pt.x - player.pt.x) + (this.pt.y - player.pt.y) * (this.pt.y - player.pt.y));
-        this.canShoot = speciality && dist < new Laser(new Vector(-1, -1), -1, -1, false).ms * laserDist && this.active && alive;
+        this.canShoot = speciality && dist < laserSpeed * laserDist && this.active && alive;
         if (this.canShoot) this.canShoot = this.hasLOS();
     }
     checkShoot(startPt) {
@@ -480,7 +480,7 @@ class Enemy extends Thing {
     }
     hasLOS() {
         let checkObstructed = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2);
-        checkObstructed.scale(new Laser(new Vector(-1, -1), -1, -1, false).ms * 4);
+        checkObstructed.scale(laserSpeed * 4);
         let tempHB = new HitBox(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), 1, 1);
         while (!tempHB.outOfBounds()) {
             tempHB.pt.apply(checkObstructed);
