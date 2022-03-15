@@ -4,6 +4,7 @@ Launch from rankings page - works
 - Avoid "confirm resubmission" message
 Confirm the daily/midnight thing works
 Time driven events ("sprint")
+Multiword events
 
 SP:
 - If signed in: save/restore the game automatically
@@ -29,7 +30,7 @@ Cleaning:
     - Use subtemplates (Template inheritance)
 - Namings
     - cup vs name, etc
-    - upper case vs lower case letters
+    - upper case vs lower case letters vs snake_case
         - variables/functions start with lower case letter ('Game()' = bad)
 - Permissions
     - if user.isAuthenticated for all MP stuff
