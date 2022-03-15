@@ -195,7 +195,6 @@ function mouseDownActions() {
         for (var i = 0; i < restoreButtons.length; i++) {
             if (cursorHB.checkCollide(restoreButtons[i].hb) && i == selectedIndex) {
                 deleteCount += delta;
-                console.log(deleteCount);
                 if (deleteCount > 60) {
                     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
                     games.splice(selectedIndex, 1);
@@ -241,7 +240,7 @@ function average(lst) {
 }
 
 function musicStart() {
-    backgroundMusic.currentTime = getRandomInt(20, backgroundMusic.duration);
+    backgroundMusic.currentTime = getRandomInt(100, backgroundMusic.duration);
     if (musicShouldPlay === "true") {
         backgroundMusic.play();
         backgroundMusic.playing = true;
@@ -616,7 +615,7 @@ function drawGame() {
     }
     else drawPauseMenu();
 
-    if (backgroundMusic.currentTime < 20) backgroundMusic.currentTime = 20;
+    if (backgroundMusic.currentTime < 100) backgroundMusic.currentTime = 100;
 }
 
 function drawAll() {
