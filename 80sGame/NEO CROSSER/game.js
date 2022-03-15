@@ -600,12 +600,7 @@ function drawGame() {
         for (var i in enemies) {
             enemies[i].update();
             enemies[i].draw();
-            if (enemies[i].hb.checkCollide(player.hb) && alive) {
-                scoreView.color = "#e37e7b";
-                enemies[i].deathSound.play();
-                alive = false;
-                player.active = false;
-            }
+            if (alive) player.checkHit(enemies[i]);
         }
         for (var i in lasers) lasers[i].update();
         for (var i in notices) notices[i].draw();
@@ -639,7 +634,7 @@ function drawAll() {
     lastDelta = (t1 - t0)/(1000/60);
     if (frames > 20 && lastDelta < 2 * average(deltas)) deltas.push(lastDelta); // protect against alt-tab
     delta = average(deltas);
-    console.log(delta.toFixed(3));
+    // console.log(delta.toFixed(3));
     t0 = performance.now();
     frames++;
 

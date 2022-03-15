@@ -3,18 +3,19 @@
 Delta time fixed?
 
 Lives system
-    - X to start
     - Immunity on rez
     - Every Xk points gain live?
     - And/or live pick ups?
-Make HUD Bigger/slightly more central
-    - harder to miss
 
 efficeny: only check things that make sense
 - LoS doesn't need to check all buildings, etc
 
 Mario Kart speed ups?
 Pickup buffs?
+    - perment speed
+    - longer stun protection
+    - lives
+    - improved HUD
 
 On Demand Scaling
 - on restore
@@ -39,6 +40,7 @@ Let user scroll through all scores (like saves)? (rather than top 10?)
 
 Clarity
 - General colors/hitboxes
+- Stun protection/dead protection
 
 "Clean" code
 - LET
@@ -51,11 +53,16 @@ Clarity
 - restores bugtest
     - restore w/h?
         - update hb with w/h
-- duplicate code?
 - for var i vs let i
 - softCap
 - touch code
     - remove/rework inputmode = 'key'
+- avoid using 'new laser' just for the ms
+    - save it in a calc somewhere else
+- General:
+    - Simply lines
+    - duplicate code -> function
+    - can use 'a = b = 0'
 
 Redo any art?
 - tanks

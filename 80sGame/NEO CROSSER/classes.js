@@ -253,6 +253,7 @@ class Player extends Thing {
         this.stun = 0;
         this.lastStun = 0;
         this.stunProtection = 0;
+        this.liveProtection = 0;
     }
     moveVertical(ms) {
         let obstacles = [...landSlides, ...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
@@ -262,11 +263,8 @@ class Player extends Thing {
         if (score > topScore) topScore = score.toFixed(0);
     }
     move() {
-        if (this.stun != this.lastStun && this.stunProtection <= 0) {
+        if (this.stun > this.lastStun && this.stunProtection <= 0) {
             this.stunProtection = this.stun * 2;
-        }
-        else if (this.stun != this.lastStun) {
-            this.stun = this.lastStun;
         }
         this.stun -= delta;
         this.stunProtection -= delta;
@@ -275,6 +273,7 @@ class Player extends Thing {
             this.active = true;
             this.stun = 0;
         }
+        this.liveProtection -= delta;
         if (alive && this.active) {
             if (wDown || sDown || aDown || dDown) {
                 this.frame += delta;
@@ -363,6 +362,21 @@ class Player extends Thing {
         else if (this.pt.x + this.w > canvas.width) this.pt.x = canvas.width - this.w;
         this.hb.useSmallHB(this.pt, this.w, this.h);
     }
+    checkHit(enemy) {
+        if (enemy.hb.checkCollide(player.hb)) {
+            if (this.liveProtection < 0) {
+                enemy.deathSound.play();
+                this.stunProtection = this.liveProtection = 120;
+                this.stun = this.lastStun = 0;
+                lives--;
+                if (lives <= 0) {
+                    livesView.color = "#e37e7b";
+                    alive = false;
+                    player.active = false;
+                }
+            }
+        }
+    }
     draw() {
         for (var i in this.afterImages) this.afterImages[i].draw();
         if (alive && !paused && this.active) {
@@ -370,7 +384,9 @@ class Player extends Thing {
             let dir = dirs.indexOf(lastDir);
             this.lastDrawDir = dir;
         }
-        context.drawImage(texPlayer, posSourcePlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][0], posSourcePlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
+        if (this.liveProtection <= 0 || (this.liveProtection.toFixed(0) % 2 != 0 && this.liveProtection.toFixed(0) % 3 != 0) || !alive) {
+            context.drawImage(texPlayer, posSourcePlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][0], posSourcePlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
+        }
     }
     restore(save) {
         this.active = save.active;
@@ -455,7 +471,7 @@ class Enemy extends Thing {
             let animationWait = this.getAnimationWait() * 10;
             animationWait = animationWait > 0 ? animationWait : this.animationWaitBase * 4;
             if (this.frame.toFixed(0) % animationWait == 0) {
-                lasers.push(new Laser(startPt, 45, 60, false));
+                lasers.push(new Laser(startPt, -1, 60, false));
                 lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - startPt.x, player.pt.y + player.h/2 - startPt.y);
                 lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);
                 this.laserFireSound.play();
