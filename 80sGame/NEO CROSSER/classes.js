@@ -845,3 +845,7 @@ class Notice extends Thing {
         else notices.splice(notices.indexOf(this), 1);
     }
 }
+
+class PickUp extends Thing {
+
+}

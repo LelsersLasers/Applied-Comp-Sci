@@ -655,6 +655,12 @@ function setUpContext() {
     // Set up the context for the animation
     context = canvas.getContext("2d");
 
+    context.imageSmoothingEnabled = false;       // standard
+    context.mozImageSmoothingEnabled = false;    // Firefox
+    context.oImageSmoothingEnabled = false;      // Opera
+    context.webkitImageSmoothingEnabled = false; // Safari
+    context.msImageSmoothingEnabled = false;     // IE
+
     context.textAlign = "center";
     context.textBaseline = "middle";
     context.lineWidth = 3;
