@@ -922,7 +922,7 @@ const laserSpeed = Math.sqrt((canvas.width * canvas.width + canvas.height * canv
 const spacer = canvas.height * 1/70;
 
 const playerLevel = carHeight * 10;
-var player = new Player(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight * 10/11, carHeight, canvas.width/14, 1.5 * canvas.height/14);
+var player = new Player();
 
 var qAbility = new Ability(new Vector(carHeight, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 120, "Q", qSound);
 var eAbility = new Buff(new Vector(carHeight * 2, playerLevel + carHeight * 2.5), carHeight * 3/4, carHeight * 3/4, 360, 3, "E", eSound);

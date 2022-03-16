@@ -238,10 +238,10 @@ class Laser extends Thing {
 }
 
 class Player extends Thing {
-    constructor(pt, w, h, msX, msY) {
-        super(pt, w, h);
-        this.msX = msX;
-        this.msY = msY;
+    constructor() {
+        super(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight * 10/11, carHeight);
+        this.msX = canvas.width/14;
+        this.msY = 1.5 * canvas.height/14;
         this.teleportSpeed = 3;
         this.sprintSpeed = 1.5;
         this.animation = 0;
