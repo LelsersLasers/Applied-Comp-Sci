@@ -109,8 +109,8 @@ class Ability extends Trigger {
         this.sound.currentTime = 0;
         this.sound.play();
     }
-    canUse() {
-        return this.timer >= this.wait;
+    canUse(keyDown) {
+        return this.timer >= this.wait && keyDown;
     }
     restore(save) {
         this.wait = save.wait;
@@ -283,7 +283,7 @@ class Player extends Thing {
         }
     }
     checkAbilites() {
-        if (qDown && qAbility.canUse()) { // teleport ability
+        if (qAbility.canUse(qDown)) { // teleport ability
             switch (lastDir) {
                 case "w":
                     for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
@@ -325,7 +325,7 @@ class Player extends Thing {
         if (eDown) { // sprint ability
             eAbility.use();
         }
-        if (rDown && rAbility.canUse()) { // laser ability
+        if (rAbility.canUse(rDown)) { // laser ability
             for (var i = 0; i < 8; i++) {
                 var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
                 lasers.push(new Laser(startPos, i * 45, 120, true));
