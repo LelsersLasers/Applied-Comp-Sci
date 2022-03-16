@@ -3,9 +3,10 @@
 Delta time fixed?
 
 Lives system
-    - Immunity on rez
-    - Every Xk points gain live?
-    - And/or live pick ups?
+    - Live pick ups
+    - When spawn a live, always also spawn an addition ufo
+    - First 1 at 5k
+    - Garentee that 1 will spawn by 10k
 
 efficeny: only check things that make sense
 - LoS doesn't need to check all buildings, etc
@@ -15,7 +16,8 @@ Pickup buffs?
     - perment speed
     - longer stun protection
     - lives
-    - improved HUD
+    - improved HUD to showcase buffs
+    - 'idle animation'?
 
 On Demand Scaling
 - on restore
@@ -47,6 +49,10 @@ Clarity
     - scope
 - stun protection
 - Delta time
+    - Make sure it works
+    - Make sure everything uses it
+- Pause menu
+    - consistent about what pauses
 - animation code
 - shooting code
     - optimize
@@ -63,6 +69,7 @@ Clarity
     - can use 'a = b = 0'
 - Constructors for classes
     - what is already global var
+- Player move class
 
 Redo any art?
 - tanks

@@ -590,6 +590,7 @@ function drawHUD() {
 function drawGame() {
     setLastDir();
     for (var i in bar) bar[i].draw();
+    for (var i in pickUps) pickUps[i].update();
     if (!paused) {
         for (var i in landSlides) landSlides[i].update();
         mouseDownActions();
@@ -964,6 +965,7 @@ var lasers = [];
 var bar = [];
 var landSlides = [];
 var notices = [];
+var pickUps = [];
 
 const base = playerLevel - 3 * carHeight;
 var justPlaced = true; // true to skip placing one in the first row

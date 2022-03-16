@@ -453,7 +453,7 @@ class Enemy extends Thing {
     updateAnimation() {
         if (this.active) {
             this.frame += delta;
-            var animationWait = this.getAnimationWait();
+            let animationWait = this.getAnimationWait();
             animationWait = animationWait > 0 ? animationWait : this.animationWaitBase;
             if (this.frame.toFixed(0) % animationWait == 0) {
                 this.animation = Number(!this.animation);
@@ -593,6 +593,11 @@ class Car extends Enemy {
                 landSlideWait = 10;
             }
             else landSlideWait--;
+
+            if (Math.random() < 1/2) {
+                pickUps.push(new PickUp(y, () => { lives++; }));
+                ufos.push(new Ufo(y));
+            }
 
             this.offScreen = true;
         }
@@ -850,5 +855,48 @@ class Notice extends Thing {
 }
 
 class PickUp extends Thing {
+    constructor(y, action) {
+        let w = carHeight;
+        let h = carHeight;
+        
+        let badX = true;
+        while (badX) {
+            badX = false;
+            var x = getRandomInt(0, canvas.width - w);
+            let tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
+            for (var i in buildings) {
+                if (tempHB.checkCollide(buildings[i].hb)) {
+                    badX = true;
+                    break;
+                }
+            }
+        }
+        let pt = new Vector(x, y);
+        super(pt, w, w);
 
+        this.action = action;
+        this.frame = 0;
+        this.animation = 0;
+    }
+    updateAnimation() {
+        this.frame += delta;
+        let animationWait = 45;
+        if (this.frame.toFixed(0) % animationWait == 0) {
+            this.animation = Number(!this.animation);
+            this.frame++;
+        }
+    }
+    update() {
+        this.updateAnimation();
+        if (this.hb.checkCollide(player.hb)) {
+            this.action();
+            pickUps.splice(pickUps.indexOf(this), 1);
+        }
+        this.draw();
+    }
+    draw() {
+        let colors = ["#ffffff", "777777"];
+        context.fillStyle = colors[this.animation];
+        context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
+    }
 }
