@@ -603,8 +603,16 @@ class Car extends Enemy {
 
             if (Math.random() < (topScore % 5000)/5000 && topScore >= spawnLife) {
                 spawnLife += 5000;
-                pickUps.push(new PickUp(y, () => { lives++; }));
+                pickUps.push(new PickUp(y, texLifePickUp, posSourceLifePickUp, () => lives++ ));
                 ufos.push(new Ufo(y));
+            }
+
+            if (Math.random() < 1/2) {
+                pickUps.push(new PickUp(y, texLifePickUp, posSourceLifePickUp, () => {
+                    qAbility.wait *= 0.9;
+                    eAbility.wait *= 0.9;
+                    rAbility.wait *= 0.9;
+                }));
             }
 
             this.offScreen = true;
@@ -863,7 +871,7 @@ class Notice extends Thing {
 }
 
 class PickUp extends Thing {
-    constructor(y, action) {
+    constructor(y, tex, posSource, action) {
         let w = carHeight;
         let h = carHeight;
         
@@ -882,6 +890,8 @@ class PickUp extends Thing {
         let pt = new Vector(x, y);
         super(pt, w, w);
 
+        this.tex = tex;
+        this.posSource = posSource;
         this.action = action;
         this.frame = 0;
         this.animation = 0;
@@ -903,6 +913,6 @@ class PickUp extends Thing {
         this.draw();
     }
     draw() {
-        context.drawImage(texLifePickUp, posSourceLifePickUp[this.animation][0], posSourceLifePickUp[this.animation][1], 11, 12, this.pt.x, this.pt.y, this.w, this.h);
+        context.drawImage(this.tex, this.posSource[this.animation][0], this.posSource[this.animation][1], 11, 12, this.pt.x, this.pt.y, this.w, this.h);
     }
 }
