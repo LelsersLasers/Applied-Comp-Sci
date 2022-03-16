@@ -635,7 +635,6 @@ function drawAll() {
     lastDelta = (t1 - t0)/(1000/60);
     if (frames > 20 && lastDelta < 2 * average(deltas)) deltas.push(lastDelta); // protect against alt-tab
     delta = average(deltas);
-    console.log(delta.toFixed(3));
     t0 = performance.now();
     frames++;
 
@@ -694,7 +693,7 @@ var score = 0;
 var topScore = 0;
 
 var lives = 3;
-var spawnLife = false;
+var spawnLife = 5000;
 
 const moveWait = 30;
 

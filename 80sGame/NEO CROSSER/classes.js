@@ -518,7 +518,6 @@ class Car extends Enemy {
             var busChance = 1/6;
             let a = (topScore - softCap * 3/4)/(softCap * 3/4);
             let b = 1 / (1 + Math.exp(-a)) * 4;
-            console.log(b);
             var tankChance =  1/(10 - b);
         }
 
@@ -594,9 +593,8 @@ class Car extends Enemy {
             }
             else landSlideWait--;
 
-            // TODO: make spawnLife = true every 5k;
-            if (Math.random() < (topScore % 5000)/5000 && spawnLife) {
-                spawnLife = false;
+            if (Math.random() < (topScore % 5000)/5000 && topScore >= spawnLife) {
+                spawnLife += 5000;
                 pickUps.push(new PickUp(y, () => { lives++; }));
                 ufos.push(new Ufo(y));
             }

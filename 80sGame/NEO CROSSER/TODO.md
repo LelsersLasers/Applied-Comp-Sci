@@ -1,12 +1,5 @@
 # TODO
 
-Lives system
-    - Live pick ups
-    - When spawn a live, always also spawn an addition ufo
-    - First 1 at 5k
-    - Garentee that 1 will spawn by 10k
-    - Collect animation
-
 efficeny: only check things that make sense
 - LoS doesn't need to check all buildings, etc
 
@@ -14,9 +7,10 @@ Mario Kart speed ups?
 Pickup buffs?
     - perment speed
     - longer stun protection
-    - lives
+    - cdr
     - improved HUD to showcase buffs
     - 'idle animation'?
+    - Collect animation
 
 On Demand Scaling
 - on restore
