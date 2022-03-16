@@ -253,7 +253,7 @@ class Player extends Thing {
         this.stun = 0;
         this.lastStun = 0;
         this.stunProtection = 0;
-        this.liveProtection = 0;
+        this.spawnProtection = 120;
     }
     moveVertical(ms) {
         let obstacles = [...pickUps, ...landSlides, ...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
@@ -273,7 +273,7 @@ class Player extends Thing {
             this.active = true;
             this.stun = 0;
         }
-        this.liveProtection -= delta * 0.2;
+        this.spawnProtection -= delta * 0.2;
         if (alive && this.active) {
             if (wDown || sDown || aDown || dDown) {
                 this.frame += delta;
@@ -306,7 +306,7 @@ class Player extends Thing {
             if (this.frame.toFixed(0) % animationWait == 0 && alive) {
                 this.animation++;
                 this.frame++; // so if player stops on a % = 0, it doesn't freak out
-                if (player.animation > 3) player.animation = 0;
+                if (this.animation > 3) this.animation = 0;
             }
             if (qDown && qAbility.canUse()) { // teleport ability
                 switch (lastDir) {
@@ -364,9 +364,9 @@ class Player extends Thing {
     }
     checkHit(enemy) {
         if (enemy.hb.checkCollide(player.hb)) {
-            if (this.liveProtection < 0) {
+            if (this.spawnProtection < 0) {
                 enemy.deathSound.play();
-                this.stunProtection = this.liveProtection = 120 * 0.2;
+                this.stunProtection = this.spawnProtection = 120 * 0.2;
                 this.stun = this.lastStun = 0;
                 qAbility.timer = qAbility.wait;
                 eAbility.timer = eAbility.wait;
@@ -387,7 +387,7 @@ class Player extends Thing {
             let dir = dirs.indexOf(lastDir);
             this.lastDrawDir = dir;
         }
-        if (this.liveProtection <= 0 || this.liveProtection.toFixed(0) % 2 != 0 || !alive) {
+        if (this.spawnProtection <= 0 || this.spawnProtection.toFixed(0) % 2 != 0 || !alive) {
             context.drawImage(texPlayer, posSourcePlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][0], posSourcePlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
         }
     }
@@ -594,7 +594,9 @@ class Car extends Enemy {
             }
             else landSlideWait--;
 
-            if (Math.random() < 1/2) {
+            // TODO: make spawnLife = true every 5k;
+            if (Math.random() < (topScore % 5000)/5000 && spawnLife) {
+                spawnLife = false;
                 pickUps.push(new PickUp(y, () => { lives++; }));
                 ufos.push(new Ufo(y));
             }
@@ -880,10 +882,10 @@ class PickUp extends Thing {
     }
     updateAnimation() {
         this.frame += delta;
-        let animationWait = 25;
-        if (this.frame.toFixed(0) % animationWait == 0) {
-            this.animation = Number(!this.animation);
+        if (this.frame.toFixed(0) % 15 == 0) {
+            this.animation++;
             this.frame++;
+            if (this.animation > 3) this.animation = 0;
         }
     }
     update() {
@@ -895,8 +897,6 @@ class PickUp extends Thing {
         this.draw();
     }
     draw() {
-        let colors = ["#ffffff", "#777777"];
-        context.fillStyle = colors[this.animation];
-        context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
+        context.drawImage(texLifePickUp, posSourceLifePickUp[this.animation][0], posSourceLifePickUp[this.animation][1], 11, 12, this.pt.x, this.pt.y, this.w, this.h);
     }
 }

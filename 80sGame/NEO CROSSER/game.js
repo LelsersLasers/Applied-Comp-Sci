@@ -692,7 +692,9 @@ var paused = false;
 var alive = true;
 var score = 0;
 var topScore = 0;
+
 var lives = 3;
+var spawnLife = false;
 
 const moveWait = 30;
 
@@ -896,6 +898,15 @@ texPause.src = "pause-14x14-2x1-1spacing.png";
 var posSourcePause = [
     [0, 0],
     [15, 0]
+];
+
+var texLifePickUp = new Image();
+texLifePickUp.src = "lifePickUp-11x12-1x4-1spacing.png";
+var posSourceLifePickUp = [
+    [0, 0],
+    [12, 0],
+    [24, 0],
+    [36, 0]
 ];
 
 var texWarning = new Image();
