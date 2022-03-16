@@ -1,12 +1,11 @@
 # TODO
 
-Delta time fixed?
-
 Lives system
     - Live pick ups
     - When spawn a live, always also spawn an addition ufo
     - First 1 at 5k
     - Garentee that 1 will spawn by 10k
+    - Collect animation
 
 efficeny: only check things that make sense
 - LoS doesn't need to check all buildings, etc

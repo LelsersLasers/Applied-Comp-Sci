@@ -554,7 +554,7 @@ function drawHUDDirections() {
 
 function drawPauseMenu() {
     player.draw();
-    let obstacles = [...landSlides, ...cars, ...ufos, ...buildings, ...lasers];
+    let obstacles = [...pickUps, ...landSlides, ...cars, ...ufos, ...buildings, ...lasers];
     for (var i in obstacles) obstacles[i].draw();
 
     drawHUD();
@@ -590,9 +590,9 @@ function drawHUD() {
 function drawGame() {
     setLastDir();
     for (var i in bar) bar[i].draw();
-    for (var i in pickUps) pickUps[i].update();
     if (!paused) {
         for (var i in landSlides) landSlides[i].update();
+        for (var i in pickUps) pickUps[i].update();
         mouseDownActions();
         player.move();
         player.draw();
@@ -635,7 +635,7 @@ function drawAll() {
     lastDelta = (t1 - t0)/(1000/60);
     if (frames > 20 && lastDelta < 2 * average(deltas)) deltas.push(lastDelta); // protect against alt-tab
     delta = average(deltas);
-    // console.log(delta.toFixed(3));
+    console.log(delta.toFixed(3));
     t0 = performance.now();
     frames++;
 
@@ -656,6 +656,7 @@ function setUpContext() {
     // Set up the context for the animation
     context = canvas.getContext("2d");
 
+    // disable anti-alising to make my pixel art look 'crisp'
     context.imageSmoothingEnabled = false;       // standard
     context.mozImageSmoothingEnabled = false;    // Firefox
     context.oImageSmoothingEnabled = false;      // Opera

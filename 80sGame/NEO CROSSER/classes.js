@@ -256,7 +256,7 @@ class Player extends Thing {
         this.liveProtection = 0;
     }
     moveVertical(ms) {
-        let obstacles = [...landSlides, ...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
+        let obstacles = [...pickUps, ...landSlides, ...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
         for (var i in obstacles) obstacles[i].pt.y += ms * (eAbility.active > 0 ? this.sprintSpeed : 1);
         for (var i in bar) bar[i].update();
         score += ms * moveWait/this.msY;
@@ -803,7 +803,7 @@ class LandSlide extends Enemy {
         else {
             this.updateAnimation();
             this.pt.x += this.ms;
-            let obstacles = [...cars, player];
+            let obstacles = [...pickUps, ...cars, player];
             for (var i in obstacles) {
                 if (this.hb.checkCollide(obstacles[i].hb)) {
                     obstacles[i].pt.x += this.ms/4;
@@ -880,7 +880,7 @@ class PickUp extends Thing {
     }
     updateAnimation() {
         this.frame += delta;
-        let animationWait = 45;
+        let animationWait = 25;
         if (this.frame.toFixed(0) % animationWait == 0) {
             this.animation = Number(!this.animation);
             this.frame++;
@@ -895,7 +895,7 @@ class PickUp extends Thing {
         this.draw();
     }
     draw() {
-        let colors = ["#ffffff", "777777"];
+        let colors = ["#ffffff", "#777777"];
         context.fillStyle = colors[this.animation];
         context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
     }
