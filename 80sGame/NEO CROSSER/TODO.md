@@ -62,7 +62,6 @@ Clarity
     - can use 'a = b = 0'
 - Constructors for classes
     - what is already global var
-- Player move class
 
 Redo any art?
 - tanks

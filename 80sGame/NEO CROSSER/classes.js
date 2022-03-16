@@ -262,7 +262,7 @@ class Player extends Thing {
         score += ms * moveWait/this.msY;
         if (score > topScore) topScore = score.toFixed(0);
     }
-    move() {
+    updateStun() {
         if (this.stun > this.lastStun && this.stunProtection <= 0) {
             this.stunProtection = this.stun * 2;
         }
@@ -273,6 +273,67 @@ class Player extends Thing {
             this.active = true;
             this.stun = 0;
         }
+    }
+    updateAnimation() {
+        let animationWait = eAbility.active ? 6 : 8;
+        if (this.frame.toFixed(0) % animationWait == 0 && alive) {
+            this.animation++;
+            this.frame++; // so if player stops on a % = 0, it doesn't freak out
+            if (this.animation > 3) this.animation = 0;
+        }
+    }
+    checkAbilites() {
+        if (qDown && qAbility.canUse()) { // teleport ability
+            switch (lastDir) {
+                case "w":
+                    for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
+                        this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y - i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
+                    }
+                    this.moveVertical(this.msY * this.teleportSpeed);
+                    break;
+                case "s":
+                    for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
+                        this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y + i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
+                    }
+                    this.moveVertical(-this.msY * this.teleportSpeed);
+                    break;
+                case "a":
+                    for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
+                        this.afterImages.push(new AfterImage(new Vector(this.pt.x - i * this.msX/2, this.pt.y), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
+                    }
+                    this.pt.x -= this.msX * this.teleportSpeed;
+                    break;
+                case "d":
+                    for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
+                        this.afterImages.push(new AfterImage(new Vector(this.pt.x + i * this.msX/2, this.pt.y), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
+                    }
+                    this.pt.x += this.msX * this.teleportSpeed;
+                    break
+            }
+            this.hb.useSmallHB(this.pt, this.w, this.h);
+            for (var i in buildings) {
+                if (this.hb.checkCollide(buildings[i].hb)) {
+                    if (lastDir == "w") this.moveVertical(-(buildings[i].pt.y + buildings[i].h - this.pt.y));
+                    else if (lastDir == "s") this.moveVertical(this.pt.y - buildings[i].pt.y + this.h);
+                    else if (lastDir == "a") this.pt.x += buildings[i].pt.x + buildings[i].w - this.pt.x;
+                    else if (lastDir == "d") this.pt.x -= this.pt.x - buildings[i].pt.x + this.w;
+                    break;
+                }
+            }
+            qAbility.use();
+        }
+        if (eDown) { // sprint ability
+            eAbility.use();
+        }
+        if (rDown && rAbility.canUse()) { // laser ability
+            for (var i = 0; i < 8; i++) {
+                var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
+                lasers.push(new Laser(startPos, i * 45, 120, true));
+            }
+            rAbility.use();
+        }
+    }
+    move() {
         this.spawnProtection -= delta * 0.2;
         if (alive && this.active) {
             if (wDown || sDown || aDown || dDown) {
@@ -302,61 +363,8 @@ class Player extends Thing {
                     }
                 }
             }
-            let animationWait = eAbility.active ? 6 : 8;
-            if (this.frame.toFixed(0) % animationWait == 0 && alive) {
-                this.animation++;
-                this.frame++; // so if player stops on a % = 0, it doesn't freak out
-                if (this.animation > 3) this.animation = 0;
-            }
-            if (qDown && qAbility.canUse()) { // teleport ability
-                switch (lastDir) {
-                    case "w":
-                        for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
-                            this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y - i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
-                        }
-                        this.moveVertical(this.msY * this.teleportSpeed);
-                        break;
-                    case "s":
-                        for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
-                            this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y + i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
-                        }
-                        this.moveVertical(-this.msY * this.teleportSpeed);
-                        break;
-                    case "a":
-                        for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
-                            this.afterImages.push(new AfterImage(new Vector(this.pt.x - i * this.msX/2, this.pt.y), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
-                        }
-                        this.pt.x -= this.msX * this.teleportSpeed;
-                        break;
-                    case "d":
-                        for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
-                            this.afterImages.push(new AfterImage(new Vector(this.pt.x + i * this.msX/2, this.pt.y), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
-                        }
-                        this.pt.x += this.msX * this.teleportSpeed;
-                        break
-                }
-                this.hb.useSmallHB(this.pt, this.w, this.h);
-                for (var i in buildings) {
-                    if (this.hb.checkCollide(buildings[i].hb)) {
-                        if (lastDir == "w") this.moveVertical(-(buildings[i].pt.y + buildings[i].h - this.pt.y));
-                        else if (lastDir == "s") this.moveVertical(this.pt.y - buildings[i].pt.y + this.h);
-                        else if (lastDir == "a") this.pt.x += buildings[i].pt.x + buildings[i].w - this.pt.x;
-                        else if (lastDir == "d") this.pt.x -= this.pt.x - buildings[i].pt.x + this.w;
-                        break;
-                    }
-                }
-                qAbility.use();
-            }
-            if (eDown) { // sprint ability
-                eAbility.use();
-            }
-            if (rDown && rAbility.canUse()) { // laser ability
-                for (var i = 0; i < 8; i++) {
-                    var startPos = new Vector(this.pt.x + (this.w/2), this.pt.y + (this.h/2));
-                    lasers.push(new Laser(startPos, i * 45, 120, true));
-                }
-                rAbility.use();
-            }
+            this.updateAnimation();
+            this.checkAbilites();
         }
         if (this.pt.x < 0) this.pt.x = 0;
         else if (this.pt.x + this.w > canvas.width) this.pt.x = canvas.width - this.w;
