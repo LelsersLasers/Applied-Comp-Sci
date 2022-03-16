@@ -253,7 +253,7 @@ class Player extends Thing {
         this.stun = 0;
         this.lastStun = 0;
         this.stunProtection = 0;
-        this.spawnProtection = 120;
+        this.spawnProtection = 45 * 0.2;
     }
     moveVertical(ms) {
         let obstacles = [...pickUps, ...landSlides, ...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
