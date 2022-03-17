@@ -618,8 +618,8 @@ class Car extends Enemy {
             }
             else landSlideWait--;
 
-            if (Math.random() < (topScore % softCap/2)/(softCap/2) && topScore >= spawnLife) {
-                spawnLife += softCap/2;
+            if (Math.random() < (topScore % softCap/3)/(softCap/3) && topScore >= spawnLife) {
+                spawnLife += softCap/3;
                 pickUps.push(new PickUp(y, texLifePickUp, 11, 10, () => lives++ ));
                 ufos.push(new Ufo(y));
             }
