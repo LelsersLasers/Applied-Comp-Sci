@@ -243,6 +243,8 @@ class Player extends Thing {
         super(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight * 10/11, carHeight);
         this.msX = canvas.width/14;
         this.msY = 1.5 * canvas.height/14;
+        this.msXIncrease = this.msX/20;
+        this.msYIncrease = this.msY/20;
         this.teleportSpeed = 3;
         this.sprintSpeed = 1.5;
         this.animation = 0;
@@ -630,8 +632,8 @@ class Car extends Enemy {
 
             if (Math.random() < 1/25) {
                 pickUps.push(new PickUp(y, texSpeedPickUp, 16, 27, () => {
-                    player.msX *= 1.02;
-                    player.msY *= 1.02;
+                    player.msX += player.msXIncrease;
+                    player.msY += player.msYIncrease;
                 }));
                 ufos.push(new Ufo(y));
             }

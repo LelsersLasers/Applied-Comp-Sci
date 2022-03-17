@@ -1,7 +1,5 @@
 # TODO
 
-linearize pickup values
-
 Make game easier
     - Getting past 6k is too hard
         - Shift to 8k
