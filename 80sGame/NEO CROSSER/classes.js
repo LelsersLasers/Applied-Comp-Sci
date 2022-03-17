@@ -258,6 +258,7 @@ class Player extends Thing {
     moveVertical(ms) {
         let obstacles = [...pickUps, ...landSlides, ...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
         for (var i in obstacles) obstacles[i].pt.y += ms * (eAbility.active > 0 ? this.sprintSpeed : 1);
+        for (var i in pickUps) pickUps[i].minY += ms * (eAbility.active > 0 ? this.sprintSpeed : 1);
         for (var i in bar) bar[i].update();
         score += ms * moveWait/this.msY;
         if (score > topScore) topScore = score.toFixed(0);
@@ -601,18 +602,19 @@ class Car extends Enemy {
             }
             else landSlideWait--;
 
-            if (Math.random() < (topScore % 5000)/5000 && topScore >= spawnLife) {
-                spawnLife += 5000;
-                pickUps.push(new PickUp(y, texLifePickUp, posSourceLifePickUp, () => lives++ ));
+            if (Math.random() < (topScore % softCap/2)/(softCap/2) && topScore >= spawnLife) {
+                spawnLife += softCap/2;
+                pickUps.push(new PickUp(y, texLifePickUp, 11, 10, () => lives++ ));
                 ufos.push(new Ufo(y));
             }
 
-            if (Math.random() < 1/2) {
-                pickUps.push(new PickUp(y, texLifePickUp, posSourceLifePickUp, () => {
+            if (Math.random() < 1/25) {
+                pickUps.push(new PickUp(y, texCooldownPickUp, 9, 12, () => {
                     qAbility.wait *= 0.9;
-                    eAbility.wait *= 0.9;
+                    eAbility.drain *= 0.9;
                     rAbility.wait *= 0.9;
                 }));
+                ufos.push(new Ufo(y));
             }
 
             this.offScreen = true;
@@ -871,9 +873,9 @@ class Notice extends Thing {
 }
 
 class PickUp extends Thing {
-    constructor(y, tex, posSource, action) {
-        let w = carHeight;
-        let h = carHeight;
+    constructor(y, tex, srcW, srcH, action) {
+        let w = carHeight * 3/5;
+        let h = carHeight * 3/5;
         
         let badX = true;
         while (badX) {
@@ -889,23 +891,20 @@ class PickUp extends Thing {
         }
         let pt = new Vector(x, y);
         super(pt, w, w);
-
+        
         this.tex = tex;
-        this.posSource = posSource;
+        this.srcW = srcW;
+        this.srcH = srcH;
         this.action = action;
-        this.frame = 0;
-        this.animation = 0;
+        this.minY = y;
+        this.bounce = delta/3;
     }
-    updateAnimation() {
-        this.frame += delta;
-        if (this.frame.toFixed(0) % 15 == 0) {
-            this.animation++;
-            this.frame++;
-            if (this.animation > 3) this.animation = 0;
-        }
+    updateBounce() {
+        this.pt.y += this.bounce;
+        if (this.pt.y < this.minY || this.pt.y + this.h > this.minY + this.h * 5/3) this.bounce *= -1;  
     }
     update() {
-        this.updateAnimation();
+        this.updateBounce();
         if (this.hb.checkCollide(player.hb)) {
             this.action();
             pickUps.splice(pickUps.indexOf(this), 1);
@@ -913,6 +912,6 @@ class PickUp extends Thing {
         this.draw();
     }
     draw() {
-        context.drawImage(this.tex, this.posSource[this.animation][0], this.posSource[this.animation][1], 11, 12, this.pt.x, this.pt.y, this.w, this.h);
+        context.drawImage(this.tex, 0, 0, this.srcW, this.srcH, this.pt.x, this.pt.y, this.w, this.h);
     }
 }

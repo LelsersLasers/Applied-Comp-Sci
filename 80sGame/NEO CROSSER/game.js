@@ -628,8 +628,7 @@ function drawAll() {
     else if (screen == "scores") drawScores();
 
     textOpacity += opacityDir * delta;
-    if (textOpacity > 1) opacityDir = -0.04;
-    else if (textOpacity < 0) opacityDir = 0.04;
+    if (textOpacity > 1 || textOpacity < 0) opacityDir *= -1;
 
     t1 = performance.now();
     lastDelta = (t1 - t0)/(1000/60);
@@ -900,13 +899,10 @@ var posSourcePause = [
 ];
 
 var texLifePickUp = new Image();
-texLifePickUp.src = "lifePickUp-11x12-1x4-1spacing.png";
-var posSourceLifePickUp = [
-    [0, 0],
-    [12, 0],
-    [24, 0],
-    [36, 0]
-];
+texLifePickUp.src = "lifePickUp-11x10.png";
+
+var texCooldownPickUp = new Image();
+texCooldownPickUp.src = "cooldownPickUp-9x12.png";
 
 var texWarning = new Image();
 texWarning.src = "landSlideWarning-20x19-1x1.png";
