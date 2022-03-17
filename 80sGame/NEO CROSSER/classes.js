@@ -149,6 +149,7 @@ class Buff extends Ability {
     restore(save) {
         this.wait = save.wait;
         this.timer = save.timer;
+        this.drain = save.drain;
     }
 }
 
@@ -411,6 +412,12 @@ class Player extends Thing {
         this.pt.x = save.pt.x;
         this.pt.y = save.pt.y;
         this.stun = 0;
+        this.msX = save.msX;
+        this.msY = save.msY;
+        this.spawnProtection = save.spawnProtection;
+        this.stunProtection = save.stunProtection;
+        this.stun = save.stun;
+        this.lastStun = save.lastStun;
     }
 }
 
@@ -906,6 +913,7 @@ class PickUp extends Thing {
         this.action = action;
         this.minY = y;
         this.bounce = delta/3;
+        this.src = tex.src;
     }
     updateBounce() {
         this.pt.y += this.bounce;
@@ -922,6 +930,7 @@ class PickUp extends Thing {
     draw() {
         context.drawImage(this.tex, 0, 0, this.srcW, this.srcH, this.pt.x, this.pt.y, this.w, this.h);
     }
+    restore(save) {
         this.pt.x = save.pt.x;
         this.pt.y = save.pt.y;
         this.srcW = save.srcW;

@@ -315,12 +315,14 @@ function save() {
         "bar": bar,
         "ufos": ufos,
         "landSlides": landSlides,
+        "pickUps": pickUps,
         "score": score,
         "topScore": topScore,
         "qAbility": qAbility,
         "eAbility": eAbility,
         "rAbility": rAbility,
         "alive": alive,
+        "lives": lives,
         "justPlaced": justPlaced,
         "landSlideWait": landSlideWait
     };
@@ -371,6 +373,12 @@ function restore(savedGame) {
     }
     landSlideWait = savedGame.landSlideWait;
 
+    pickUps = [];
+    for (let i = 0; i < savedGame.pickUps.length; i++) {
+        pickUps.push(new PickUp(-1, new Image(), -1, -1, () => {}));
+        pickUps[i].restore(savedGame.pickUps[i]);
+    }
+
     qAbility.restore(savedGame.qAbility);
     eAbility.restore(savedGame.eAbility);
     rAbility.restore(savedGame.rAbility);
@@ -378,6 +386,7 @@ function restore(savedGame) {
     score = savedGame.score;
     topScore = savedGame.topScore;
     alive = savedGame.alive;
+    lives = savedGame.lives;
 
     paused = true;
 }
