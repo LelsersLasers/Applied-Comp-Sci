@@ -49,6 +49,7 @@ Clarity
 - restores bugtest
     - restore w/h?
         - update hb with w/h
+    - use super.restore to improve
 - for var i vs let i
 - softCap
 - touch code

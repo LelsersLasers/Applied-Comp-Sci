@@ -90,6 +90,7 @@ class Ability extends Trigger {
         this.backgroundColor = "#dadfe6";
         this.canUseColor = "#9ee092";
         this.rechargingColor = "#5e94d1"
+        this.recharge = 1;
     }
     draw() {
         context.fillStyle = this.backgroundColor;
@@ -102,7 +103,7 @@ class Ability extends Trigger {
         context.fillRect(this.pt.x, this.pt.y, width, this.h);
 
         this.drawTxt();
-        if (!paused && this.timer < this.wait) this.timer += delta;
+        if (!paused && this.timer < this.wait) this.timer += delta * this.recharge;
     }
     use() {
         this.timer = 0;
@@ -115,6 +116,7 @@ class Ability extends Trigger {
     restore(save) {
         this.wait = save.wait;
         this.timer = save.timer;
+        this.recharge = save.recharge;
     }
 }
 
@@ -147,9 +149,8 @@ class Buff extends Ability {
         }
     }
     restore(save) {
-        this.wait = save.wait;
-        this.timer = save.timer;
-        this.drain = save.drain;
+        super.restore(save);
+        this.active = save.active;
     }
 }
 
@@ -415,6 +416,8 @@ class Player extends Thing {
         this.lastDrawDir = save.lastDrawDir;
         this.msX = save.msX;
         this.msY = save.msY;
+        this.msXIncrease = save.msXIncrease;
+        this.msYIncrease = save.msYIncrease;
         this.pt.x = save.pt.x;
         this.pt.y = save.pt.y;
         this.stun = 0;
@@ -623,9 +626,9 @@ class Car extends Enemy {
 
             if (Math.random() < 1/25) {
                 pickUps.push(new PickUp(y, texCooldownPickUp, 9, 12, () => {
-                    qAbility.wait *= 0.95;
-                    eAbility.drain *= 0.95;
-                    rAbility.wait *= 0.95;
+                    qAbility.recharge += 0.05;
+                    eAbility.recharge += 0.05;
+                    rAbility.recharge += 0.05;
                 }));
                 ufos.push(new Ufo(y));
             }
