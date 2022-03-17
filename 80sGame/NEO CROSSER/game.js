@@ -900,9 +900,10 @@ var posSourcePause = [
 
 var texLifePickUp = new Image();
 texLifePickUp.src = "lifePickUp-11x10.png";
-
 var texCooldownPickUp = new Image();
 texCooldownPickUp.src = "cooldownPickUp-9x12.png";
+var texSpeedPickUp = new Image();
+texSpeedPickUp.src = "speedPickUp-16x27.png";
 
 var texWarning = new Image();
 texWarning.src = "landSlideWarning-20x19-1x1.png";

@@ -608,11 +608,19 @@ class Car extends Enemy {
                 ufos.push(new Ufo(y));
             }
 
-            if (Math.random() < 1/25) {
+            if (Math.random() < 1/20) {
                 pickUps.push(new PickUp(y, texCooldownPickUp, 9, 12, () => {
                     qAbility.wait *= 0.9;
                     eAbility.drain *= 0.9;
                     rAbility.wait *= 0.9;
+                }));
+                ufos.push(new Ufo(y));
+            }
+
+            if (Math.random() < 1/20) {
+                pickUps.push(new PickUp(y, texSpeedPickUp, 16, 27, () => {
+                    player.msX *= 1.05;
+                    player.msY *= 1.05;
                 }));
                 ufos.push(new Ufo(y));
             }
@@ -913,5 +921,14 @@ class PickUp extends Thing {
     }
     draw() {
         context.drawImage(this.tex, 0, 0, this.srcW, this.srcH, this.pt.x, this.pt.y, this.w, this.h);
+    }
+        this.pt.x = save.pt.x;
+        this.pt.y = save.pt.y;
+        this.srcW = save.srcW;
+        this.srcH = save.srcH;
+        this.tex.src = save.src;
+        this.action = save.action;
+        this.minY = save.minY;
+        this.bounce = save.bounce;
     }
 }

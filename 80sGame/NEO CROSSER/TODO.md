@@ -5,11 +5,8 @@ efficeny: only check things that make sense
 
 Mario Kart speed ups?
 Pickup buffs?
-    - perment speed
     - longer stun protection
-    - cdr
     - improved HUD to showcase buffs
-    - 'idle animation'?
     - Collect animation
 
 On Demand Scaling
