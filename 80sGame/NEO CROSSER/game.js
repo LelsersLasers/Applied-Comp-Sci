@@ -231,6 +231,9 @@ function radToDeg(rad) {
 function degToRad(deg) {
     return deg * Math.PI / 180;
 }
+function getBaseLog(x, y) {
+    return Math.log(y) / Math.log(x);
+  }
 
 function average(lst) {
     if (lst.length == 0) return 1;
@@ -577,6 +580,18 @@ function drawPauseMenu() {
     musicButton.draw();
 }
 
+function drawBuffs(stacks, ability, tex, srcX, srcY) {
+    stacks = stacks.toFixed(0);
+    if (stacks >= 0) {
+        let pc = new PickUp(ability.pt.y - carHeight * 4/5, tex, srcX, srcY, () => {});
+        pc.pt.x = ability.pt.x + carHeight * 1/20;
+        pc.draw();
+        context.fillStyle = "#ffffff";
+        context.font = pc.h * 2/3 + "px " + font;
+        context.fillText(stacks, pc.pt.x + pc.w, pc.pt.y + pc.h);
+    }
+}
+
 function drawHUD() {
     wTrigger.draw(wDown);
     sTrigger.draw(sDown);
@@ -586,6 +601,9 @@ function drawHUD() {
     qAbility.draw();
     eAbility.draw();
     rAbility.draw();
+
+    drawBuffs(getBaseLog(0.95, qAbility.wait/120), qAbility, texCooldownPickUp, 9, 12);
+    drawBuffs(player.msX/player.msXIncrease - 20, eAbility, texSpeedPickUp, 16, 27);
     
     livesView.setTxt("Lives: " + lives);
     livesView.draw();

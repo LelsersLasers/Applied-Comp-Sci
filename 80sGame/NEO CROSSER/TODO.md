@@ -8,12 +8,6 @@ efficeny: only check things that make sense
 - LoS doesn't need to check all buildings, etc
 
 Mario Kart speed ups?
-Pickup buffs?
-    - other buffs:
-        - Longer stun protection
-        - Etc
-    - improved HUD to showcase buffs
-    - Collect animation
 
 On Demand Scaling
 - on restore
