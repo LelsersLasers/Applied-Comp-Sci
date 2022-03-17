@@ -602,8 +602,10 @@ function drawHUD() {
     eAbility.draw();
     rAbility.draw();
 
-    drawBuffs(getBaseLog(0.95, qAbility.wait/120), qAbility, texCooldownPickUp, 9, 12);
-    drawBuffs(player.msX/player.msXIncrease - 20, eAbility, texSpeedPickUp, 16, 27);
+    if (directionsOpacity <= 0) {
+        drawBuffs(getBaseLog(0.95, qAbility.wait/120), qAbility, texCooldownPickUp, 9, 12);
+        drawBuffs(player.msX/player.msXIncrease - 20, eAbility, texSpeedPickUp, 16, 27);
+    }
     
     livesView.setTxt("Lives: " + lives);
     livesView.draw();
