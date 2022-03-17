@@ -268,13 +268,16 @@ class Player extends Thing {
         if (this.stun > this.lastStun && this.stunProtection <= 0) {
             this.stunProtection = this.stun * 2;
         }
-        this.stun -= delta;
+        else if (this.stun > this.lastStun) {
+            this.stun = 0;
+        }
         this.stunProtection -= delta;
-        this.lastStun = this.stun;
+        this.stun -= delta;
         if (this.stun <= 0) {
             this.active = true;
             this.stun = 0;
         }
+        this.lastStun = this.stun;
     }
     updateAnimation() {
         let animationWait = eAbility.active ? 6 : 8;
@@ -336,6 +339,7 @@ class Player extends Thing {
         }
     }
     move() {
+        this.updateStun();
         this.spawnProtection -= delta * 0.2;
         if (alive && this.active) {
             if (wDown || sDown || aDown || dDown) {
@@ -489,7 +493,7 @@ class Enemy extends Thing {
         if (this.canShoot) {
             let animationWait = this.getAnimationWait() * 10;
             animationWait = animationWait > 0 ? animationWait : this.animationWaitBase * 4;
-            if (this.frame.toFixed(0) % animationWait == 0) {
+            if (this.frame.toFixed(0) % animationWait == 1) {
                 lasers.push(new Laser(startPt, -1, 60, false));
                 lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - startPt.x, player.pt.y + player.h/2 - startPt.y);
                 lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);
@@ -615,19 +619,19 @@ class Car extends Enemy {
                 ufos.push(new Ufo(y));
             }
 
-            if (Math.random() < 1/20) {
+            if (Math.random() < 1/25) {
                 pickUps.push(new PickUp(y, texCooldownPickUp, 9, 12, () => {
-                    qAbility.wait *= 0.9;
-                    eAbility.drain *= 0.9;
-                    rAbility.wait *= 0.9;
+                    qAbility.wait *= 0.95;
+                    eAbility.drain *= 0.95;
+                    rAbility.wait *= 0.95;
                 }));
                 ufos.push(new Ufo(y));
             }
 
-            if (Math.random() < 1/20) {
+            if (Math.random() < 1/25) {
                 pickUps.push(new PickUp(y, texSpeedPickUp, 16, 27, () => {
-                    player.msX *= 1.05;
-                    player.msY *= 1.05;
+                    player.msX *= 1.02;
+                    player.msY *= 1.02;
                 }));
                 ufos.push(new Ufo(y));
             }

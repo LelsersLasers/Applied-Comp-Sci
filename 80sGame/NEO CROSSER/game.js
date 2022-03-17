@@ -701,7 +701,7 @@ var score = 0;
 var topScore = 0;
 
 var lives = 3;
-var spawnLife = 5000;
+var spawnLife = softCap/2;
 
 const moveWait = 30;
 

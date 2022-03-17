@@ -1,11 +1,20 @@
 # TODO
 
+linearize ufos
+linearize pickup values
+
+Make game easier
+    - Getting past 6k is too hard
+        - Shift to 8k
+
 efficeny: only check things that make sense
 - LoS doesn't need to check all buildings, etc
 
 Mario Kart speed ups?
 Pickup buffs?
-    - longer stun protection
+    - other buffs:
+        - Longer stun protection
+        - Etc
     - improved HUD to showcase buffs
     - Collect animation
 
