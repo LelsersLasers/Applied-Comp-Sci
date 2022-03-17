@@ -686,7 +686,6 @@ var frames = 0;
 var deltas = [];
 
 const softCap = 10000;
-const ufoBase = Math.pow(2, 1/(softCap * 1.5));
 const buildingBlockCount = 5;
 
 var landSlideWait = 10;

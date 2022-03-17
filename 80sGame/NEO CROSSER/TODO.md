@@ -1,6 +1,5 @@
 # TODO
 
-linearize ufos
 linearize pickup values
 
 Make game easier

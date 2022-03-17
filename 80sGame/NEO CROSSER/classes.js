@@ -597,7 +597,7 @@ class Car extends Enemy {
             else var newMs = this.ms * 1.01;
             cars.push(new Car(y, newMs)); // always spawn new car
 
-            if (getRandomInt(1, 16) * Math.pow(ufoBase, topScore) >= 15) { // spawn ufo scale on score
+            if (Math.random() < (topScore/(softCap * 2) > 0.5 ? 0.5 : x)) {
                 ufos.push(new Ufo(y));
             }
 
