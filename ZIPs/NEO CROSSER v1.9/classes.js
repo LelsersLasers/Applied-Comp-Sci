@@ -16,6 +16,10 @@ class Vector {
         this.x *= s;
         this.y *= s;
     }
+    restore(save) {
+        this.x = save.x;
+        this.y = save.y;
+    }
 }
 
 class HitBox {
@@ -40,6 +44,11 @@ class HitBox {
         context.strokeStyle = color;
         context.strokeRect(this.pt.x, this.pt.y, this.w, this.h);
     }
+    restore(save) {
+        this.pt.restore(save.pt);
+        this.w = save.w;
+        this.h = save.h;
+    }
 }
 
 class Thing {
@@ -49,6 +58,13 @@ class Thing {
         this.h = h;
         this.active = true;
         this.hb = new HitBox(pt, w, h);
+    }
+    restore(save) {
+        this.pt.restore(save.pt);
+        this.w = save.w;
+        this.h = save.h;
+        this.active = save.active;
+        this.hb.restore(save.hb);
     }
 }
 
@@ -226,14 +242,12 @@ class Laser extends Thing {
         context.lineWidth = 3;
     }
     restore(save) {
-        this.active = save.active;
+        super.restore(save);
         this.stunTime = save.stunTime;
         this.ms = save.ms;
         this.angle = save.angle;
         this.moveVector.x = save.moveVector.x;
         this.moveVector.y = save.moveVector.y;
-        this.pt.x = save.pt.x;
-        this.pt.y = save.pt.y;
         this.friendly = save.friendly;
         this.color = save.color;
     }
@@ -409,7 +423,7 @@ class Player extends Thing {
         }
     }
     restore(save) {
-        this.active = save.active;
+        super.restore(save);
         this.afterImages = [];
         this.animation = save.animation;
         this.frame = save.frame;
@@ -418,11 +432,6 @@ class Player extends Thing {
         this.msY = save.msY;
         this.msXIncrease = save.msXIncrease;
         this.msYIncrease = save.msYIncrease;
-        this.pt.x = save.pt.x;
-        this.pt.y = save.pt.y;
-        this.stun = 0;
-        this.msX = save.msX;
-        this.msY = save.msY;
         this.spawnProtection = save.spawnProtection;
         this.stunProtection = save.stunProtection;
         this.stun = save.stun;
@@ -530,6 +539,15 @@ class Enemy extends Thing {
             context.fillStyle = "#ff0055";
             context.fillRect(player.pt.x + player.w * 2/5, player.pt.y + player.h * 2/5, player.w * 1/5, player.h * 1/5);
         }   
+    }
+    restore(save) {
+        super.restore(save);
+        this.stun = save.stun;
+        this.ms = save.ms;
+        this.frame = save.frame;
+        this.animation = save.animation;
+        this.animationWaitBase = save.animationWaitBase;
+        this.canShoot = save.canShoot;
     }
 }
 
@@ -658,17 +676,9 @@ class Car extends Enemy {
         }
     }
     restore(save) {
-        this.ms = save.ms;
+        super.restore(save);
         this.type = save.type;
-        this.animation = save.animation;
-        this.frame = save.frame;
-        this.stun = save.stun;
-        this.active = save.active;
         this.offScreen = save.offScreen;
-        this.w = save.w;
-        this.hb.w = save.hb.w;
-        this.pt.x = save.pt.x;
-        this.pt.y = save.pt.y;
     }
 }
 
@@ -710,14 +720,9 @@ class Ufo extends Enemy {
         this.drawTarget(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19));
     }
     restore(save) {
-        this.active = save.active;
-        this.animation = save.animation;
-        this.frame = save.frame;
+        super.restore(save);
         this.move.x = save.move.x;
         this.move.y = save.move.y;
-        this.stun = save.stun;
-        this.pt.x = save.pt.x;
-        this.pt.y = save.pt.y;
     }
 }
 
@@ -732,13 +737,6 @@ class Block extends Thing { // "Arrows" on the side
     update() {
         if (this.pt.y < -this.h) this.pt.y = this.pt.y + (this.h * canvas.height/barHeight);
         if (this.pt.y > canvas.height) this.pt.y = this.pt.y - (this.h * canvas.height/barHeight);
-    }
-    restore(save) {
-        this.animation = save.animation;
-        this.w = save.w;
-        this.h = save.h;
-        this.pt.x = save.pt.x;
-        this.pt.y = save.pt.y;
     }
 }
 
@@ -778,12 +776,9 @@ class Building extends Thing {
         }
     }
     restore(save) {
+        super.restore(save);
         this.buildings = save.buildings;
         this.widthOfOne = save.widthOfOne;
-        this.w = save.w;
-        this.hb.w = this.w;
-        this.pt.x = save.pt.x;
-        this.pt.y = save.pt.y;
     }
 }
 
@@ -867,13 +862,6 @@ class LandSlide extends Enemy {
     draw() {
         context.drawImage(texLandSlide, posSourceLandSlide[Number(!Boolean(this.dir))][this.animation][0], posSourceLandSlide[Number(!Boolean(this.dir))][this.animation][1], 82, 40, this.pt.x, this.pt.y, this.w, this.h);
     }
-    restore(save) {
-        this.pt.x = save.pt.x;
-        this.pt.y = save.pt.y;
-        this.ms = save.ms;
-        this.animation = save.animation;
-        this.frame = save.frame;
-    }
 }
 
 class Notice extends Thing {
@@ -940,8 +928,7 @@ class PickUp extends Thing {
         context.drawImage(this.tex, 0, 0, this.srcW, this.srcH, this.pt.x, this.pt.y, this.w, this.h);
     }
     restore(save) {
-        this.pt.x = save.pt.x;
-        this.pt.y = save.pt.y;
+        super.restore(save);
         this.srcW = save.srcW;
         this.srcH = save.srcH;
         this.tex.src = save.src;
