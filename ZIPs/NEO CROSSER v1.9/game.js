@@ -231,9 +231,6 @@ function radToDeg(rad) {
 function degToRad(deg) {
     return deg * Math.PI / 180;
 }
-function getBaseLog(x, y) {
-    return Math.log(y) / Math.log(x);
-  }
 
 function average(lst) {
     if (lst.length == 0) return 1;
@@ -603,7 +600,7 @@ function drawHUD() {
     rAbility.draw();
 
     if (directionsOpacity <= 0) {
-        drawBuffs(getBaseLog(0.95, qAbility.wait/120), qAbility, texCooldownPickUp, 9, 12);
+        drawBuffs((qAbility.recharge - 1) * 20, qAbility, texCooldownPickUp, 9, 12);
         drawBuffs(player.msX/player.msXIncrease - 20, eAbility, texSpeedPickUp, 16, 27);
     }
     
