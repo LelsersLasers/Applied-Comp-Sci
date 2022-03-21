@@ -21,7 +21,7 @@ urlpatterns = [
     # generate word screen
     path('SPLauncher/', views.SPLauncher, name='SPLauncher'),
     # single player game
-    path('Game/<str:mode>', views.Game, name='Game'),
+    path('game/<str:mode>', views.displayGame, name='displayGame'),
 
     # 'hub' screen for multiplayer/online options
     path('MPHub/', views.MPHub, name='MPHub'),

@@ -3,8 +3,6 @@
 Launch from rankings page - works
 - Avoid "confirm resubmission" message
 Confirm the daily/midnight thing works
-Time driven events ("sprint")
-Multiword events
 
 SP:
 - If signed in: save/restore the game automatically

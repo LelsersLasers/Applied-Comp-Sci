@@ -57,7 +57,7 @@ Scoring: Least amout of gueses, tie breaker is time
     </button>
 </a>
 
-<form id="gameForm" action="{% url 'wordle:Game' 'MP' %}" method="post" hidden>
+<form id="gameForm" action="{% url 'wordle:displayGame' 'MP' %}" method="post" hidden>
     {% csrf_token %}
     <input type="hidden" id="gameWordLenSub" name="wordLenSub" value="" />
     <input type="hidden" id="gameTriesSub" name="triesSub" value="" />
