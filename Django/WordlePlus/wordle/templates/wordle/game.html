@@ -34,7 +34,7 @@
 
     {% if mode %}
         <div class="row">
-            <button type="button" onclick="showWord()">Show Word</button>
+            <button id="showWord" type="button" onclick="showWord()">Show Word</button>
             <a href="{% url 'wordle:SPLauncher' %}">
                 <button type="button">New Word</button>
             </a>
