@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
 
-from .allWords import getAllWords
+from .allWords import getAllWords, getWordsOfLen
 
 
 def getDisplayName(request):
@@ -116,7 +116,7 @@ def backToIndex(request):
 def SPLauncher(request):
     return render(request, 'wordle/generateWord.html')
 
-def Game(request, mode):
+def displayGame(request, mode):
     try:
         wordLen = request.POST['wordLenSub']
         tries = request.POST['triesSub']
@@ -131,7 +131,7 @@ def Game(request, mode):
     context = {
         'word': word,
         'tries': tries,
-        'availableWords': getAllWords(),
+        'availableWords': getWordsOfLen(wordLen),
         'mode': mode == "SP",
         'cup': cup
     }

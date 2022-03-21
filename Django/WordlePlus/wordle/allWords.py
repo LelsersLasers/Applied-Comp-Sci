@@ -338583,3 +338583,12 @@ zyzzyva"""
 
 def getAllWords():
     return words.split("\n")
+
+def getWordsOfLen(length):
+    length = int(length)
+    allWords = getAllWords()
+    newWords = []
+    for word in allWords:
+        if len(word) == length:
+            newWords.append(word)
+    return newWords

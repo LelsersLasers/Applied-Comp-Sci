@@ -1,5 +1,5 @@
 var word;
-var availableWords;
+var availableWords = [];
 var startTime;
 var takenTime;
 
@@ -26,8 +26,9 @@ function keyDownHandler(e) {
         }
         if (guessPos[1] >= wordLen) {
             if (e.key == "Enter") {
-                let guessWord = guesses[guessPos[0]].join("");
-                if (availableWords.includes(guessWord.toLowerCase())) {
+                let guessWord = guesses[guessPos[0]].join("").toLowerCase();
+                // if (availableWords.includes(guessWord.)) {
+                if (search(guessWord)) {
                     guessPos[1] = 0;
                     let match = 0;
                     for (let i = 0; i < wordLen; i++) {
@@ -118,6 +119,9 @@ function draw() {
             document.getElementById("MPSubmitButton").removeAttribute("hidden");
             document.getElementById("MPBackButton").setAttribute("hidden", "");
         }
+        else {
+            document.getElementById("showWord").setAttribute("hidden", "");
+        }
     }
 }
 
@@ -130,16 +134,27 @@ function sendScore() {
 }
 
 function showWord() {
-    state = "lost";
-    document.getElementById("info").innerHTML = "You lost! The correct word was: " + word;
+    if (state != "won") {
+        state = "lost";
+        document.getElementById("info").innerHTML = "You lost! The correct word was: " + word;
+    }
 }
 
 function setupGame() {
     word = document.getElementById("wordTxtIn").value;
     wordLen = document.getElementById("lengthIn").value;
     tries = document.getElementById("triesIn").value;
-    availableWords = document.getElementById("availableWordsIn").value;
     
+    let availableWordsString = document.getElementById("availableWordsIn").value.replace("[", "").replace("]", "").replaceAll(" ", "").replaceAll("'", "");
+    let tempWord = "";
+    for (var i in availableWordsString) {
+        if (availableWordsString[i] == ",") {
+            availableWords.push(tempWord);
+            tempWord = "";
+        }
+        else tempWord += availableWordsString[i];
+    }
+
     if (tries < 1) {
         infiniteTries = true;
         tries = 1;
@@ -163,4 +178,14 @@ function setupGame() {
 
     draw();
     startTime = Date.now();
+}
+
+// TODO: binary search
+function search(word) {
+    for (var i in availableWords) {
+        if (word == availableWords[i]) {
+            return true;
+        }
+    }
+    return false;
 }
