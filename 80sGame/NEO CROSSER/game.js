@@ -611,6 +611,8 @@ function drawHUD() {
     scoreView.draw();
 
     pauseButton.draw();
+
+    if (directionsOpacity > 0) drawHUDDirections();
 }
 
 function drawGame() {
@@ -632,7 +634,6 @@ function drawGame() {
         for (var i in lasers) lasers[i].update();
         for (var i in notices) notices[i].draw();
         drawHUD();
-        if (directionsOpacity > 0) drawHUDDirections();
         if (!alive) drawGameOver();
     }
     else drawPauseMenu();
