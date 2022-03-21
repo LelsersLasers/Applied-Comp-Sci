@@ -814,7 +814,7 @@ class LandSlide extends Enemy {
         let w = canvas.width;
         let h = carHeight * 11.5;
 
-        let MSs = [w/200 * delta, -w/200 * delta];
+        let MSs = [w/300 * delta, -w/300 * delta];
         let dir = getRandomInt(0, 2);
         let Xs = [0 - w + MSs[0] * -60, canvas.width + MSs[1] * -60]
 
@@ -834,7 +834,7 @@ class LandSlide extends Enemy {
             let obstacles = [...pickUps, ...cars, player];
             for (var i in obstacles) {
                 if (this.hb.checkCollide(obstacles[i].hb)) {
-                    obstacles[i].pt.x += this.ms/4;
+                    obstacles[i].pt.x += this.ms/3;
                     player.hb.useSmallHB(player.pt, player.w, player.h);
                     for (var j in buildings) {
                         if (obstacles[i].hb.checkCollide(buildings[j].hb)) {
