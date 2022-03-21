@@ -553,21 +553,11 @@ class Enemy extends Thing {
 
 class Car extends Enemy {
     constructor(y, ms) {
-        if (topScore < softCap * 1/2) {
-            var busChance = 1/(10 - (4/(softCap/2)) * topScore);
-            var tankChance = 0;
-        }
-        else {
-            var busChance = 1/6;
-            let a = (topScore - softCap * 3/4)/(softCap * 3/4);
-            let b = 1 / (1 + Math.exp(-a)) * 4;
-            var tankChance =  1/(10 - b);
-        }
-
         let rand = Math.random();
         let type = 0;
+        let tankChance = topScore < softCap * 1/2 ? 0 : 1/10;
         if (rand < tankChance) type = 2;
-        else if (rand - tankChance < busChance) type = 1;
+        else if (rand - tankChance < 1/7) type = 1;
 
         let w = carWidth;
         if (type == 1) w *= 7/5;
@@ -639,7 +629,6 @@ class Car extends Enemy {
             if (Math.random() < (topScore % softCap/3)/(softCap/3) && topScore >= spawnLife) {
                 spawnLife += softCap/3;
                 pickUps.push(new PickUp(y, texLifePickUp, 11, 10, () => lives++ ));
-                ufos.push(new Ufo(y));
             }
 
             if (Math.random() < 1/25) {
@@ -648,7 +637,6 @@ class Car extends Enemy {
                     eAbility.recharge += 0.05;
                     rAbility.recharge += 0.05;
                 }));
-                ufos.push(new Ufo(y));
             }
 
             if (Math.random() < 1/25) {
@@ -656,7 +644,6 @@ class Car extends Enemy {
                     player.msX += player.msXIncrease;
                     player.msY += player.msYIncrease;
                 }));
-                ufos.push(new Ufo(y));
             }
 
             this.offScreen = true;
