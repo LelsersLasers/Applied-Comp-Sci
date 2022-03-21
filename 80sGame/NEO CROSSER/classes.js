@@ -581,7 +581,7 @@ class Car extends Enemy {
         super(pt, w, h, ms, "carHitSound.mp3", 2.0);
 
         if (type == 1) this.ms *= 7/5;
-        else if (type == 2) this.ms *= 3/4;
+        else if (type == 2) this.ms *= 1/2;
         this.offScreen = false;
         this.type = type;
     }
@@ -605,9 +605,9 @@ class Car extends Enemy {
         if (this.pt.y > canvas.height && !this.offScreen) {
             let y = this.pt.y - (1.5 * carHeight) * 10;
 
-            if (this.type == 1) var newMs = this.ms * 5/7 * 1.01;
-            else if (this.type == 2) var newMs = this.ms * 4/3 * 1.01;
-            else var newMs = this.ms * 1.01;
+            var newMs = this.ms * 1.01;
+            if (this.type == 1) newMs *= 5/7;
+            else if (this.type == 2) newMs *= 2;
             cars.push(new Car(y, newMs)); // always spawn new car
 
             if (Math.random() < (topScore/(softCap * 2) > 0.5 ? 0.5 : topScore/(softCap * 2))) {
