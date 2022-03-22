@@ -337,7 +337,7 @@ function restore(savedGame) {
 
     cars = [];
     for (let i = 0; i < savedGame.cars.length; i++) {
-        cars.push(new Car(-1, -1));
+        cars.push(new Car(-1, -1, -1));
         cars[i].restore(savedGame.cars[i]);
     }
 
@@ -1007,7 +1007,7 @@ for (var i = 0; i < 10; i++) {
     let startPosY = base - (1.5 * carHeight * i);
     let speed = (getRandomInt(700, 900)/100) * canvas.width * 1/6000;
     speed = getRandomInt(1, 3) == 2 ? -speed : speed;
-    cars.push(new Car(startPosY, speed));
+    cars.push(new Car(startPosY, speed, speed/100));
     if (Math.random() < buildingBlockCount/10 && !justPlaced) {
         buildings.push(new Building(startPosY));
         justPlaced = true;

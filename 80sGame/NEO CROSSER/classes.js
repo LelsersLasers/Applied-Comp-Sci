@@ -552,7 +552,7 @@ class Enemy extends Thing {
 }
 
 class Car extends Enemy {
-    constructor(y, ms) {
+    constructor(y, ms, msIncrease) {
         let rand = Math.random();
         let type = 0;
         let tankChance = topScore < softCap * 1/2 ? 0 : 1/10;
@@ -584,6 +584,7 @@ class Car extends Enemy {
         else if (type == 2) this.ms *= 1/2;
         this.offScreen = false;
         this.type = type;
+        this.msIncrease = msIncrease;
     }
     update() {
         if (this.type == 2) this.stun = 0;
@@ -605,10 +606,10 @@ class Car extends Enemy {
         if (this.pt.y > canvas.height && !this.offScreen) {
             let y = this.pt.y - (1.5 * carHeight) * 10;
 
-            var newMs = this.ms * 1.01;
+            var newMs = this.ms + this.msIncrease;
             if (this.type == 1) newMs *= 5/7;
             else if (this.type == 2) newMs *= 2;
-            cars.push(new Car(y, newMs)); // always spawn new car
+            cars.push(new Car(y, newMs, this.msIncrease)); // always spawn new car
 
             if (Math.random() < (topScore/(softCap * 2) > 0.5 ? 0.5 : topScore/(softCap * 2))) {
                 ufos.push(new Ufo(y));
@@ -666,6 +667,7 @@ class Car extends Enemy {
         super.restore(save);
         this.type = save.type;
         this.offScreen = save.offScreen;
+        this.msIncrease = save.msIncrease;
     }
 }
 
