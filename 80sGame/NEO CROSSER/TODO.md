@@ -1,5 +1,12 @@
 # TODO
 
+Note: to compile: tsc game.ts classes.ts
+
+Bugs:
+- Cars getting stuck in walls/buildings when
+    - (twitching back and forth)
+- Randomly dying
+
 Make game easier
     - Getting past 6k is too hard
         - Shift to 8k
