@@ -785,6 +785,7 @@ var Ufo = /** @class */ (function (_super) {
         }
     };
     Ufo.prototype.draw = function () {
+        this.hb.useSmallHB(this.pt, this.w, this.h);
         context.drawImage(texUfo, posSourceUfo[Number(!this.active)][Number(this.canShoot)][this.animation][0], posSourceUfo[Number(!this.active)][Number(this.canShoot)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
         this.drawTarget(new Vector(this.pt.x + this.w / 2, this.pt.y + this.h * 8 / 19));
     };
