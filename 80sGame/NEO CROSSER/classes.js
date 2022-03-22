@@ -822,7 +822,7 @@ class LandSlide extends Enemy {
         this.deathSound.play();
         this.dir = dir;
         this.animationWaitBase = 100;
-        notices.push(new Notice(80));
+        notices.push(new Notice(120));
     }
     update() {
         if ((this.dir == 0 && this.pt.x > canvas.width) || (this.dir == 1 && this.pt.x + this.w < 0)) {
