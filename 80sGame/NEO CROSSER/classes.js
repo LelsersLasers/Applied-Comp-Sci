@@ -585,21 +585,25 @@ class Car extends Enemy {
         this.offScreen = false;
         this.type = type;
         this.msIncrease = msIncrease;
+        this.hidden = !Boolean(getRandomInt(0, 5));
+        if (this.hidden) this.pt.x = -1000;
     }
     update() {
-        if (this.type == 2) this.stun = 0;
-        this.updateStun();
-        this.updateAnimation();
-        if (this.active) {
-            this.pt.x += this.ms * delta;
-            this.updateCanShoot(this.type == 2, 80);
-            this.checkShoot(new Vector(this.ms > 0 ? this.pt.x + this.w : this.pt.x, this.pt.y + this.h * 4/17));
-            if (this.hb.outOfBounds()) this.ms *= -1;
-        }
-        for (var i in buildings) {
-            if (this.hb.checkCollide(buildings[i].hb)) {
-                this.ms *= -1;
-                break;
+        if (!this.hidden) {
+            if (this.type == 2) this.stun = 0;
+            this.updateStun();
+            this.updateAnimation();
+            if (this.active) {
+                this.pt.x += this.ms * delta;
+                this.updateCanShoot(this.type == 2, 80);
+                this.checkShoot(new Vector(this.ms > 0 ? this.pt.x + this.w : this.pt.x, this.pt.y + this.h * 4/17));
+                if (this.hb.outOfBounds()) this.ms *= -1;
+            }
+            for (var i in buildings) {
+                if (this.hb.checkCollide(buildings[i].hb)) {
+                    this.ms *= -1;
+                    break;
+                }
             }
         }
 
@@ -651,16 +655,18 @@ class Car extends Enemy {
         }
     }
     draw() {
-        let dir = this.ms > 0 ? 0 : 1;
-        if (this.type == 1) {
-            context.drawImage(texBus, posSourceBus[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 40, 17, this.pt.x, this.pt.y, this.w, this.h);
-        }
-        else if (this.type == 2) {
-            context.drawImage(texTank, posSourceTank[Number(this.canShoot)][dir][this.animation][0], posSourceTank[Number(this.canShoot)][dir][this.animation][1], 33, 16, this.pt.x, this.pt.y, this.w, this.h);
-            this.drawTarget(new Vector(this.ms > 0 ? this.pt.x + this.w : this.pt.x, this.pt.y + this.h * 4/17));
-        }
-        else {
-            context.drawImage(texCar, posSourceCar[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 34, 17, this.pt.x, this.pt.y, this.w, this.h);
+        if (!this.hidden) {
+            let dir = this.ms > 0 ? 0 : 1;
+            if (this.type == 1) {
+                context.drawImage(texBus, posSourceBus[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 40, 17, this.pt.x, this.pt.y, this.w, this.h);
+            }
+            else if (this.type == 2) {
+                context.drawImage(texTank, posSourceTank[Number(this.canShoot)][dir][this.animation][0], posSourceTank[Number(this.canShoot)][dir][this.animation][1], 33, 16, this.pt.x, this.pt.y, this.w, this.h);
+                this.drawTarget(new Vector(this.ms > 0 ? this.pt.x + this.w : this.pt.x, this.pt.y + this.h * 4/17));
+            }
+            else {
+                context.drawImage(texCar, posSourceCar[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 34, 17, this.pt.x, this.pt.y, this.w, this.h);
+            }
         }
     }
     restore(save) {
@@ -668,6 +674,7 @@ class Car extends Enemy {
         this.type = save.type;
         this.offScreen = save.offScreen;
         this.msIncrease = save.msIncrease;
+        this.hidden = save.hidden;
     }
 }
 
