@@ -20,6 +20,7 @@
 <ul>
     {% if is_login %}
         <li><a href="{% url 'wordle:logoutUser' %}">Log Out</a></li>
+        <li><a href="{% url 'wordle:accountSettings' %}">Account Settings</a></li>
         <li><a href="{% url 'wordle:MPHub' %}">Multiplayer</a></li>
     {% else %}
         <li><a href="{% url 'wordle:loginPage' %}">Login</a></li>

@@ -3,24 +3,21 @@
 Launch from rankings page - works
 - Avoid "confirm resubmission" message
 Confirm the daily/midnight thing works
+- IT DOES NOT
 
-SP:
-- If signed in: save/restore the game automatically
-    - field in the model?
+Editable data?
+    - 'update/change' account
 
-MP:
+Rankings page many to many is broken
+
+Button from hub 'see my scores'
+    - delete, etc
+
+OTHER:
 - Tourements?
     - 7 days long, 1 round per day
     - Custom/challenging rules
-- Save/restore progress
-    - field in the model?
 - Custom "lobbies"/rounds/tourements?
-- Some rounds have double letters? some don't?
-
-Oragnization:
-- Save model?
-    - title, current guesses, tries, time, etc
-    - 1 to many? (account to saves)
 
 Cleaning:
 - HTML templates

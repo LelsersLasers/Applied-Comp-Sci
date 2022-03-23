@@ -109,6 +109,24 @@ def logoutUser(request):
     logout(request)
     return HttpResponseRedirect("/wordle")  
 
+
+def accountSettings(request):
+    if request.user.is_authenticated:
+        return render(request, 'wordle/accountSettings.html')
+    return HttpResponseRedirect("/wordle")
+
+def changePassword(request):
+    if request.user.is_authenticated:
+        return render(request, 'wordle/changePassword.html')
+    return HttpResponseRedirect("/wordle")
+
+def checkChangePassword(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/wordle")
+    return render(request, 'wordle/accountSettings.html')
+    
+
+
 def backToIndex(request):
     return HttpResponseRedirect("/wordle")
 
@@ -146,13 +164,16 @@ def rankings(request):
         cup = request.POST['cupSub'].strip()
     except:
         return redirect('wordle:MPHub')
+
     scores = list(Score.objects.filter(name=cup).order_by('guesses', 'time'))
     if "daily" in cup.lower():
         tNow = timezone.now()
         tMidNight = tNow.timestamp() - (tNow.hour * 3600) - (tNow.minute * 60) - tNow.second
         for score in scores:
+            print(score.sub_date.timestamp(), tMidNight)
             if tMidNight > score.sub_date.timestamp():
-                scores.remove(score)   
+                scores.remove(score)
+                print(score)
     context = {
         'wordLen': wordLen,
         'tries': tries,

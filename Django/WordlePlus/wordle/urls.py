@@ -15,6 +15,12 @@ urlpatterns = [
     path('checkLogin/', views.checkLogin, name='checkLogin'),
     # logs the user out, shoud redirect back to index
     path('logoutUser/', views.logoutUser, name='logoutUser'),
+    # from there: change password, display name, username
+    path('accountSettings/', views.accountSettings, name='accountSettings'),
+    # change password screen
+    path('changePassword/', views.changePassword, name='changePassword'),
+    # makes sure the changing password worked/can work
+    path('checkChangePassword/', views.checkChangePassword, name='checkChangePassword'),
     # back button
     path('backToIndex/', views.backToIndex, name='backToIndex'),
 
