@@ -532,7 +532,6 @@ function drawScores() {
     context.fillText("Touch to Go Back", canvas.width / 2, base + carHeight);
     context.font = carHeight * 5 / 12 + "px " + font;
     var scores = getTopScores();
-    console.log(scores);
     var txts = [];
     var maxWidth = 0;
     for (var i_10 = 0; i_10 < scores.length; i_10++) {

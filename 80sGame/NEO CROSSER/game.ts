@@ -508,7 +508,6 @@ function drawScores() {
  
     context.font = carHeight * 5/12 + "px " + font;
     let scores = getTopScores();
-    console.log(scores);
     let txts = [];
     let maxWidth = 0;
     for (let i = 0; i < scores.length; i++) {
