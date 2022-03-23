@@ -20,7 +20,7 @@ class Word(models.Model):
 
 class Score(models.Model):
     name = models.CharField("Compition Name", max_length=200)
-    word = models.ForeignKey(Word, on_delete=models.CASCADE)
+    word = models.ManyToManyField(Word)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     guesses = models.IntegerField("Guesses")
     time = models.IntegerField("Time in seconds")
