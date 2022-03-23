@@ -180,12 +180,15 @@ function setupGame() {
     startTime = Date.now();
 }
 
-// TODO: binary search
-function search(word) {
-    for (var i in availableWords) {
-        if (word == availableWords[i]) {
-            return true;
-        }
+function search(x) {
+    let start = 0;
+    let end = availableWords.length-1;
+
+    while (start <= end){
+        let mid = Math.floor((start + end)/2);
+        if (availableWords[mid] == x) return true;
+        else if (availableWords[mid] < x) start = mid + 1;
+        else end = mid - 1;
     }
     return false;
 }
