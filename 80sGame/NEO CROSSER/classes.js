@@ -454,7 +454,6 @@ var Player = /** @class */ (function (_super) {
         this.hb.useSmallHB(this.pt, this.w, this.h);
     };
     Player.prototype.checkHit = function (enemy) {
-        enemy.hb.draw("#ff0000");
         if (enemy.hb.checkCollide(player.hb)) {
             if (this.spawnProtection < 0) {
                 enemy.deathSound.play();

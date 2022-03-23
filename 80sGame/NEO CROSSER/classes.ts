@@ -410,7 +410,6 @@ class Player extends Thing {
         this.hb.useSmallHB(this.pt, this.w, this.h);
     }
     checkHit(enemy) {
-        enemy.hb.draw("#ff0000");
         if (enemy.hb.checkCollide(player.hb)) {
             if (this.spawnProtection < 0) {
                 enemy.deathSound.play();
