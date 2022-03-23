@@ -287,6 +287,7 @@ function writeScore() {
 function getTopScores() {
     let scores = JSON.parse(localStorage.getItem("NEO CROSSER - Leader Board"));
     if (scores == null) { // no scores variable in localStorage -> fill with blank values
+        scores = [];
         for (let i = 0; i < 10; i++) scores.push("N/A: -1");
         localStorage.setItem("NEO CROSSER - Leader Board", JSON.stringify(scores)); // create the variable b/c it doesn't exist
     }
@@ -514,8 +515,7 @@ function drawScores() {
         let line = (i + 1) + ") ";
         if (i < 9) line = " " + line; // adjust for 2 digit nums
         if (parseInt(scores[i].substring(5)) > 0) line += scores[i];
-        else line += "N/A: 0" // no player set 
-        line = line.toUpperCase() // in case name was set before uppercase was enforced // TODO, on reset leader board remove this line
+        else line += "N/A: 0" // no player set
         let width = context.measureText(line).width;
         if (width > maxWidth) maxWidth = width; // aline by longest line
         txts.push(line);

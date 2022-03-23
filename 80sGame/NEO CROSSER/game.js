@@ -335,6 +335,7 @@ function writeScore() {
 function getTopScores() {
     var scores = JSON.parse(localStorage.getItem("NEO CROSSER - Leader Board"));
     if (scores == null) { // no scores variable in localStorage -> fill with blank values
+        scores = [];
         for (var i_2 = 0; i_2 < 10; i_2++)
             scores.push("N/A: -1");
         localStorage.setItem("NEO CROSSER - Leader Board", JSON.stringify(scores)); // create the variable b/c it doesn't exist
@@ -541,8 +542,7 @@ function drawScores() {
         if (parseInt(scores[i_10].substring(5)) > 0)
             line += scores[i_10];
         else
-            line += "N/A: 0"; // no player set 
-        line = line.toUpperCase(); // in case name was set before uppercase was enforced // TODO, on reset leader board remove this line
+            line += "N/A: 0"; // no player set
         var width = context.measureText(line).width;
         if (width > maxWidth)
             maxWidth = width; // aline by longest line
