@@ -689,7 +689,7 @@ var Car = /** @class */ (function (_super) {
             else if (this.type == 2)
                 newMs *= 2;
             cars.push(new Car(y, newMs, this.msIncrease)); // always spawn new car
-            if (Math.random() < (topScore / (softCap * 3) > 1 / 3 ? 1 / 3 : topScore / (softCap * 1 / 3))) {
+            if (Math.random() < ((topScore / (softCap * 3) > 1 / 3 ? 1 / 3 : topScore / (softCap * 3)))) {
                 ufos.push(new Ufo(y));
             }
             if (Math.random() < buildingBlockCount / 10 && !justPlaced) {
