@@ -333,15 +333,12 @@ function writeScore() {
     localStorage.setItem("NEO CROSSER - Leader Board", JSON.stringify(scoresNew));
 }
 function getTopScores() {
-    var scoresTxt = localStorage.getItem("NEO CROSSER - Leader Board");
-    var scores = [];
-    if (scoresTxt == null) { // no scores variable in localStorage -> fill with blank values
+    var scores = JSON.parse(localStorage.getItem("NEO CROSSER - Leader Board"));
+    if (scores == null) { // no scores variable in localStorage -> fill with blank values
         for (var i_2 = 0; i_2 < 10; i_2++)
             scores.push("N/A: -1");
-        localStorage.setItem("NEO CROSSER - Leader Board", scores.toString()); // create the variable b/c it doesn't exist
+        localStorage.setItem("NEO CROSSER - Leader Board", JSON.stringify(scores)); // create the variable b/c it doesn't exist
     }
-    else
-        scores = scoresTxt.split(",");
     return scores;
 }
 function getFontHeight(w, letters) {
@@ -535,6 +532,7 @@ function drawScores() {
     context.fillText("Touch to Go Back", canvas.width / 2, base + carHeight);
     context.font = carHeight * 5 / 12 + "px " + font;
     var scores = getTopScores();
+    console.log(scores);
     var txts = [];
     var maxWidth = 0;
     for (var i_10 = 0; i_10 < scores.length; i_10++) {

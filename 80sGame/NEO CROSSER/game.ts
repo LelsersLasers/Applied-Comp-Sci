@@ -285,13 +285,11 @@ function writeScore() {
 }
 
 function getTopScores() {
-    let scoresTxt = localStorage.getItem("NEO CROSSER - Leader Board");
-    let scores = [];
-    if (scoresTxt == null) { // no scores variable in localStorage -> fill with blank values
+    let scores = JSON.parse(localStorage.getItem("NEO CROSSER - Leader Board"));
+    if (scores == null) { // no scores variable in localStorage -> fill with blank values
         for (let i = 0; i < 10; i++) scores.push("N/A: -1");
-        localStorage.setItem("NEO CROSSER - Leader Board", scores.toString()); // create the variable b/c it doesn't exist
+        localStorage.setItem("NEO CROSSER - Leader Board", JSON.stringify(scores)); // create the variable b/c it doesn't exist
     }
-    else scores = scoresTxt.split(",");
     return scores;
 }
 
@@ -510,6 +508,7 @@ function drawScores() {
  
     context.font = carHeight * 5/12 + "px " + font;
     let scores = getTopScores();
+    console.log(scores);
     let txts = [];
     let maxWidth = 0;
     for (let i = 0; i < scores.length; i++) {
