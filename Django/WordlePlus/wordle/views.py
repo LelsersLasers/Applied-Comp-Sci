@@ -195,7 +195,9 @@ def checkChangeUsername(request):
     if username1 != username2:
         failContext['error_message'] = "Usernames do not match"
         return render(request, 'wordle/changeUsername.html', failContext)
-
+    if User.objects.filter(username=username).exists():
+        failContext['error_message'] = "Username already in use"
+        return render(request, 'wordle/changeUsername.html', failContext)
     person = User.objects.get(username=username)
     person.username = username1
     person.save()
