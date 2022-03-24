@@ -195,7 +195,7 @@ def checkChangeUsername(request):
     if username1 != username2:
         failContext['error_message'] = "Usernames do not match"
         return render(request, 'wordle/changeUsername.html', failContext)
-    if User.objects.filter(username=username).exists():
+    if User.objects.filter(username=username1).exists():
         failContext['error_message'] = "Username already in use"
         return render(request, 'wordle/changeUsername.html', failContext)
     person = User.objects.get(username=username)
@@ -208,6 +208,53 @@ def checkChangeUsername(request):
     }
     return render(request, 'wordle/accountSettings.html', context)
 
+def changeDisplayName(request):
+    if request.user.is_authenticated:
+        return render(request, 'wordle/changeDisplayName.html')
+    return HttpResponseRedirect("/wordle")
+
+def checkChangeDisplayName(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/wordle")
+    try:
+        username = request.POST['username']
+        password = request.POST['password']
+        name1 = request.POST['name1']
+        name2 = request.POST['name2']
+    except:
+        return HttpResponseRedirect("/wordle")
+    
+    failContext = {
+        'error_message': "Error",
+        "a": username,
+        "b": password,
+        "c": name1,
+        "d": name2
+    }
+
+    if username == "" or password == "" or name1 == "" or name2 == "":
+        failContext['error_message'] = "All fields must be filled in"
+        return render(request, 'wordle/changeUsername.html', failContext)
+
+    user = authenticate(username=username, password=password)
+    if user is None:
+        failContext['error_message'] = "Incorrect login info"
+        return render(request, 'wordle/changeDisplayName.html', failContext)
+    if name1 != name2:
+        failContext['error_message'] = "Display names do not match"
+        return render(request, 'wordle/changeDisplayName.html', failContext)
+    if Account.objects.filter(display_name=name1).exists():
+        failContext['error_message'] = "Display name already in use"
+        return render(request, 'wordle/changeDisplayName.html', failContext)
+    person = Account.objects.get(user=User.objects.get(username=username))
+    person.display_name = name1
+    person.save()
+    login(request, User.objects.get(username=username))
+
+    context = {
+        'sucess': "Display name changed"
+    }
+    return render(request, 'wordle/accountSettings.html', context)
 
 def backToIndex(request):
     return HttpResponseRedirect("/wordle")

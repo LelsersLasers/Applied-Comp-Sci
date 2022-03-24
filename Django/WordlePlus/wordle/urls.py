@@ -26,6 +26,10 @@ urlpatterns = [
     path('changeUsername/', views.changeUsername, name='changeUsername'),
     # makes sure it works
     path('checkChangeUsername/', views.checkChangeUsername, name='checkChangeUsername'),
+    # change display name screen
+    path('changeDisplayName/', views.changeDisplayName, name='changeDisplayName'),
+    # makes sure it works
+    path('checkChangeDisplayName/', views.checkChangeDisplayName, name='checkChangeDisplayName'),
     
     # back button
     path('backToIndex/', views.backToIndex, name='backToIndex'),
