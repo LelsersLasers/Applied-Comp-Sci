@@ -123,7 +123,39 @@ def changePassword(request):
 def checkChangePassword(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
-    return render(request, 'wordle/accountSettings.html')
+    try:
+        password = request.POST['password']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+    except:
+        return HttpResponseRedirect("/wordle")
+    
+    failContext = {
+        "password": password,
+        "password1": password1,
+        "password2": password2
+    }
+
+    if password == "" or password1 == "" or password2 == "":
+        failContext['error_message'] = "All fields must be filled in"
+        return render(request, 'wordle/changePassword.html', failContext)
+
+    user = authenticate(username=request.user.username, password=password)
+    if user is None:
+        failContext['error_message'] = "Incorrect password"
+        return render(request, 'wordle/changePassword.html', failContext)
+    if password1 != password2:
+        failContext['error_message'] = "Passwords do not match"
+        return render(request, 'wordle/changePassword.html', failContext)
+
+    user.set_password(password1)
+    user.save()
+    login(request, user)
+
+    context = {
+        'sucess': "Password changed"
+    }
+    return render(request, 'wordle/accountSettings.html', context)
     
 
 
