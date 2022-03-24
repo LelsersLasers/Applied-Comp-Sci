@@ -1,0 +1,39 @@
+<form action="{% url 'wordle:checkChangeUsername' %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>Change Password</h1></legend>
+        
+        <label for="username">Current Username:</label>
+        <br />
+        <input type="text" id="username" name="username" value="{% if a %}{{ a }}{% endif %}">
+        <br />
+        
+        <label for="password">Current Password:</label>
+        <br />
+        <input type="password" id="password" name="password" value="{% if b %}{{ b }}{% endif %}">
+        <br />
+
+        <label for="username1">New Username:</label>
+        <br />
+        <input type="text" id="username1" name="username1" value="{% if c %}{{ c }}{% endif %}">
+        <br />
+        
+        <label for="username2">Repeat New Username:</label>
+        <br />
+        <input type="text" id="username2" name="username2" value="{% if d %}{{ d }}{% endif %}">
+        <br />
+
+        {% if error_message %}
+            <strong>{{ error_message }}</strong>
+        {% endif %}
+        <br />
+
+    </fieldset>
+    <input type="submit" value="Change username" />
+</form>
+
+<a href="{% url 'wordle:accountSettings' %}">
+    <button type="button">
+        Back
+    </button>
+</a>

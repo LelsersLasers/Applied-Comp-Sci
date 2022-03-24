@@ -131,16 +131,18 @@ def checkChangePassword(request):
         return HttpResponseRedirect("/wordle")
     
     failContext = {
-        "password": password,
-        "password1": password1,
-        "password2": password2
+        'error_message': "Error",
+        "a": password,
+        "b": password1,
+        "c": password2
     }
 
     if password == "" or password1 == "" or password2 == "":
         failContext['error_message'] = "All fields must be filled in"
         return render(request, 'wordle/changePassword.html', failContext)
 
-    user = authenticate(username=request.user.username, password=password)
+    username = request.user.username
+    user = authenticate(username=username, password=password)
     if user is None:
         failContext['error_message'] = "Incorrect password"
         return render(request, 'wordle/changePassword.html', failContext)
@@ -148,15 +150,61 @@ def checkChangePassword(request):
         failContext['error_message'] = "Passwords do not match"
         return render(request, 'wordle/changePassword.html', failContext)
 
-    user.set_password(password1)
-    user.save()
-    login(request, user)
+    person = User.objects.get(username=username)
+    person.set_password(password1)
+    person.save()
+    login(request, person)
 
     context = {
         'sucess': "Password changed"
     }
     return render(request, 'wordle/accountSettings.html', context)
     
+def changeUsername(request):
+    if request.user.is_authenticated:
+        return render(request, 'wordle/changeUsername.html')
+    return HttpResponseRedirect("/wordle")
+
+def checkChangeUsername(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/wordle")
+    try:
+        username = request.POST['username']
+        password = request.POST['password']
+        username1 = request.POST['username1']
+        username2 = request.POST['username2']
+    except:
+        return HttpResponseRedirect("/wordle")
+    
+    failContext = {
+        'error_message': "Error",
+        "a": username,
+        "b": password,
+        "c": username1,
+        "d": username2
+    }
+
+    if username == "" or password == "" or username1 == "" or username2 == "":
+        failContext['error_message'] = "All fields must be filled in"
+        return render(request, 'wordle/changeUsername.html', failContext)
+
+    user = authenticate(username=username, password=password)
+    if user is None:
+        failContext['error_message'] = "Incorrect login info"
+        return render(request, 'wordle/changeUsername.html', failContext)
+    if username1 != username2:
+        failContext['error_message'] = "Usernames do not match"
+        return render(request, 'wordle/changeUsername.html', failContext)
+
+    person = User.objects.get(username=username)
+    person.username = username1
+    person.save()
+    login(request, person)
+
+    context = {
+        'sucess': "Username changed"
+    }
+    return render(request, 'wordle/accountSettings.html', context)
 
 
 def backToIndex(request):
