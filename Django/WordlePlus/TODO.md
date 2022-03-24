@@ -5,9 +5,6 @@ Launch from rankings page - works
 Confirm the daily/midnight thing works
 - IT DOES NOT
 
-Editable data?
-    - 'update/change' account
-
 Rankings page many to many is broken
 
 Button from hub 'see my scores'
