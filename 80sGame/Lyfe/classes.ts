@@ -112,3 +112,11 @@ class Player extends Thing {
         super.draw(this.color);
     }
 }
+
+class Enemy extends Thing {
+    name: string;
+    ms: number;
+    color: string;
+    hp: number;
+    damage: number;
+}

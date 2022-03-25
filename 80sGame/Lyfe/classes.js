@@ -119,3 +119,10 @@ var Player = /** @class */ (function (_super) {
     };
     return Player;
 }(Thing));
+var Enemy = /** @class */ (function (_super) {
+    __extends(Enemy, _super);
+    function Enemy() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return Enemy;
+}(Thing));
