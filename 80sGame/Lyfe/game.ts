@@ -86,8 +86,9 @@ function setDelta() {
 
 function drawGame() {
 
-    player.draw();
     player.move();
+    player.draw();
+    item.draw();
 }
 
 function drawAll() {
@@ -146,6 +147,7 @@ var canvas;
 var context = setUpContext();
 
 var player = new Player(new Vector(20, 20), 20, 20, 5, "#00ff00");
+var item = new Item("Sword", "#0000ff", player, true);
 
 // Fire up the animation engine
 window.requestAnimationFrame(drawAll);

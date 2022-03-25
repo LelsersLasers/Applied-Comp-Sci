@@ -68,6 +68,29 @@ var Thing = /** @class */ (function (_super) {
     };
     return Thing;
 }(HitBox));
+var Item = /** @class */ (function (_super) {
+    __extends(Item, _super);
+    function Item(name, color, user, active) {
+        if (active === void 0) { active = false; }
+        var _this = _super.call(this, new Vector(user.pt.x + user.w * 3 / 10, user.pt.y + user.h * 3 / 10), user.w * 2 / 5, user.h * 2 / 5) || this;
+        _this.name = name;
+        _this.color = color;
+        _this.user = user;
+        _this.active = active;
+        return _this;
+    }
+    Item.prototype.update = function () {
+        this.pt.x = this.user.pt.x + this.user.w * 3 / 10;
+        this.pt.y = this.user.pt.y + this.user.h * 3 / 10;
+    };
+    Item.prototype.draw = function () {
+        if (this.active) {
+            this.update();
+            _super.prototype.draw.call(this, this.color);
+        }
+    };
+    return Item;
+}(Thing));
 var Player = /** @class */ (function (_super) {
     __extends(Player, _super);
     function Player(pt, w, h, ms, color) {
