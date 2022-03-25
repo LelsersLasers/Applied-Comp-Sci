@@ -89,6 +89,9 @@ function drawGame() {
     player.move();
     player.draw();
 
+    enemy.update();
+    enemy.draw();
+
 }
 
 function drawAll() {
@@ -147,6 +150,7 @@ var canvas;
 var context = setUpContext();
 
 var player = new Player(new Vector(20, 20), 20, 20, "#00ff00", 3, 100, 20);
+var enemy = new Enemy(player, new Vector(200, 200), 15, 15, "#ff0000", 2, 50, 10);
 
 // Fire up the animation engine
 window.requestAnimationFrame(drawAll);

@@ -25,14 +25,20 @@ var Vector = /** @class */ (function () {
     Vector.prototype.add = function (vOther) {
         return new Vector(this.x + vOther.x, this.y + vOther.y);
     };
+    Vector.prototype.subtract = function (vOther) {
+        return new Vector(this.x - vOther.x, this.y - vOther.y);
+    };
     Vector.prototype.scale = function (len) {
-        var currentLen = Math.sqrt(this.x * this.x + this.y * this.y);
+        var currentLen = this.calcLen();
         this.x = this.x * (len / currentLen);
         this.y = this.y * (len / currentLen);
     };
     Vector.prototype.scalar = function (s) {
         this.x *= s;
         this.y *= s;
+    };
+    Vector.prototype.calcLen = function () {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
     };
     return Vector;
 }());
@@ -52,6 +58,9 @@ var HitBox = /** @class */ (function () {
     HitBox.prototype.draw = function (color) {
         context.strokeStyle = color;
         context.strokeRect(this.pt.x, this.pt.y, this.w, this.h);
+    };
+    HitBox.prototype.calcCenter = function () {
+        return new Vector(this.pt.x + this.w / 2, this.pt.y + this.h / 2);
     };
     return HitBox;
 }());
@@ -115,8 +124,21 @@ var Player = /** @class */ (function (_super) {
 }(Moveable));
 var Enemy = /** @class */ (function (_super) {
     __extends(Enemy, _super);
-    function Enemy(pt, w, h, color, ms, hp, damage) {
-        return _super.call(this, pt, w, h, "Enemy", color, ms, hp, damage) || this;
+    function Enemy(target, pt, w, h, color, ms, hp, damage) {
+        var _this = _super.call(this, pt, w, h, "Enemy", color, ms, hp, damage) || this;
+        _this.target = target;
+        return _this;
     }
+    Enemy.prototype.update = function () {
+        var dif = this.calcCenter().subtract(this.target.calcCenter());
+        if (dif.calcLen() > 0) {
+            if (Math.abs(dif.x) > Math.abs(dif.y)) {
+                this.pt.x -= dif.x / Math.abs(dif.x) * this.ms;
+            }
+            else {
+                this.pt.y -= dif.y / Math.abs(dif.y) * this.ms;
+            }
+        }
+    };
     return Enemy;
 }(Moveable));

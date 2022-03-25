@@ -12,14 +12,20 @@ class Vector {
     add(vOther: Vector): Vector {
         return new Vector(this.x + vOther.x, this.y + vOther.y);
     }
+    subtract(vOther: Vector): Vector {
+        return new Vector(this.x - vOther.x, this.y - vOther.y);
+    }
     scale(len: number) {
-        let currentLen: number = Math.sqrt(this.x * this.x + this.y * this.y);
+        let currentLen: number = this.calcLen();
         this.x = this.x * (len/currentLen);
         this.y = this.y * (len/currentLen);
     }
     scalar(s: number) {
         this.x *= s;
         this.y *= s;
+    }
+    calcLen(): number {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
     }
 }
 
@@ -44,6 +50,9 @@ class HitBox {
     draw(color: string) {
         context.strokeStyle = color;
         context.strokeRect(this.pt.x, this.pt.y, this.w, this.h);
+    }
+    calcCenter(): Vector {
+        return new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2);
     }
 }
 
@@ -104,7 +113,20 @@ class Player extends Moveable {
 }
 
 class Enemy extends Moveable {
-    constructor(pt: Vector, w: number, h: number, color: string, ms: number, hp: number, damage: number) {
+    target: Player;
+    constructor(target: Player, pt: Vector, w: number, h: number, color: string, ms: number, hp: number, damage: number) {
         super(pt, w, h, "Enemy", color, ms, hp, damage);
+        this.target = target;
+    }
+    update() {
+        let dif = this.calcCenter().subtract(this.target.calcCenter());
+        if (dif.calcLen() > 0) {
+            if (Math.abs(dif.x) > Math.abs(dif.y)) {
+                this.pt.x -= dif.x/Math.abs(dif.x) * this.ms;
+            }
+            else {
+                this.pt.y -= dif.y/Math.abs(dif.y) * this.ms;
+            }
+        }
     }
 }
