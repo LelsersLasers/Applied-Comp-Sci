@@ -71,39 +71,21 @@ class Drawable extends Thing {
     }
 }
 
-
-class Item extends Drawable {
-    user: Player;
-    constructor(name: string, color: string, user: Player, active: boolean = false) {
-        super(
-            new Vector(user.pt.x + user.w * 3/10, user.pt.y + user.h * 3/10),
-            user.w * 2/5,
-            user.h * 2/5,
-            name, color
-        );
-        this.name = name;
-        this.color = color;
-        this.user = user;
-        this.active = active;
-    }
-    update() {
-        this.pt.x = this.user.pt.x + this.user.w * 3/10;
-        this.pt.y = this.user.pt.y + this.user.h * 3/10;
-    }
-    draw() {
-        if (this.active) {
-            this.update();
-            super.draw();
-        }
+class Moveable extends Drawable {
+    ms: number;
+    hp: number;
+    damage: number;
+    constructor(pt: Vector, w: number, h: number, name: string, color: string, ms: number, hp: number, damage: number) {
+        super(pt, w, h, name, color);
+        this.ms = ms;
+        this.hp = hp;
+        this.damage = damage;
     }
 }
 
-class Player extends Drawable {
-    ms: number;
-    constructor(pt: Vector, w: number, h: number, ms: number, color: string) {
-        super(pt, w, h, "Player", color);
-        this.ms = ms;
-        this.color = color;
+class Player extends Moveable {
+    constructor(pt: Vector, w: number, h: number, color: string, ms: number, hp: number, damage: number) {
+        super(pt, w, h, "Player", color, ms, hp, damage);
     }
     move() {
         if (wDown) {
@@ -121,10 +103,8 @@ class Player extends Drawable {
     }
 }
 
-class Enemy extends Thing {
-    name: string;
-    ms: number;
-    color: string;
-    hp: number;
-    damage: number;
+class Enemy extends Moveable {
+    constructor(pt: Vector, w: number, h: number, color: string, ms: number, hp: number, damage: number) {
+        super(pt, w, h, "Enemy", color, ms, hp, damage);
+    }
 }

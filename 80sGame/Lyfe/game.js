@@ -95,7 +95,6 @@ function setDelta() {
 function drawGame() {
     player.move();
     player.draw();
-    item.draw();
 }
 function drawAll() {
     context.fillStyle = "#000000";
@@ -137,7 +136,6 @@ var gameScreen = "game";
 // Set up the canvas, context objects, and html elements
 var canvas;
 var context = setUpContext();
-var player = new Player(new Vector(20, 20), 20, 20, 5, "#00ff00");
-var item = new Item("Sword", "#0000ff", player, true);
+var player = new Player(new Vector(20, 20), 20, 20, "#00ff00", 3, 100, 20);
 // Fire up the animation engine
 window.requestAnimationFrame(drawAll);

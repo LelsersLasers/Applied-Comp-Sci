@@ -81,36 +81,21 @@ var Drawable = /** @class */ (function (_super) {
     };
     return Drawable;
 }(Thing));
-var Item = /** @class */ (function (_super) {
-    __extends(Item, _super);
-    function Item(name, color, user, active) {
-        if (active === void 0) { active = false; }
-        var _this = _super.call(this, new Vector(user.pt.x + user.w * 3 / 10, user.pt.y + user.h * 3 / 10), user.w * 2 / 5, user.h * 2 / 5, name, color) || this;
-        _this.name = name;
-        _this.color = color;
-        _this.user = user;
-        _this.active = active;
+var Moveable = /** @class */ (function (_super) {
+    __extends(Moveable, _super);
+    function Moveable(pt, w, h, name, color, ms, hp, damage) {
+        var _this = _super.call(this, pt, w, h, name, color) || this;
+        _this.ms = ms;
+        _this.hp = hp;
+        _this.damage = damage;
         return _this;
     }
-    Item.prototype.update = function () {
-        this.pt.x = this.user.pt.x + this.user.w * 3 / 10;
-        this.pt.y = this.user.pt.y + this.user.h * 3 / 10;
-    };
-    Item.prototype.draw = function () {
-        if (this.active) {
-            this.update();
-            _super.prototype.draw.call(this);
-        }
-    };
-    return Item;
+    return Moveable;
 }(Drawable));
 var Player = /** @class */ (function (_super) {
     __extends(Player, _super);
-    function Player(pt, w, h, ms, color) {
-        var _this = _super.call(this, pt, w, h, "Player", color) || this;
-        _this.ms = ms;
-        _this.color = color;
-        return _this;
+    function Player(pt, w, h, color, ms, hp, damage) {
+        return _super.call(this, pt, w, h, "Player", color, ms, hp, damage) || this;
     }
     Player.prototype.move = function () {
         if (wDown) {
@@ -127,11 +112,11 @@ var Player = /** @class */ (function (_super) {
         }
     };
     return Player;
-}(Drawable));
+}(Moveable));
 var Enemy = /** @class */ (function (_super) {
     __extends(Enemy, _super);
-    function Enemy() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function Enemy(pt, w, h, color, ms, hp, damage) {
+        return _super.call(this, pt, w, h, "Enemy", color, ms, hp, damage) || this;
     }
     return Enemy;
-}(Thing));
+}(Moveable));
