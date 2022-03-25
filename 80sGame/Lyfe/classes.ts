@@ -60,14 +60,26 @@ class Thing extends HitBox {
 
 class Player extends Thing {
     lastDir: string = "s";
-    msX: number;
-    msY: number;
+    ms: number;
     color: string;
     constructor(pt: Vector, w: number, h: number, ms: number, color: string) {
         super(pt, w, h);
-        this.msX = ms;
-        this.msY = ms;
+        this.ms = ms;
         this.color = color;
+    }
+    move() {
+        if (wDown) {
+            this.pt.y -= this.ms;
+        }
+        else if (sDown) {
+            this.pt.y += this.ms;
+        }
+        else if (dDown) {
+            this.pt.x += this.ms;
+        }
+        else if (aDown) {
+            this.pt.x -= this.ms;
+        }
     }
     draw() {
         super.draw(this.color);
