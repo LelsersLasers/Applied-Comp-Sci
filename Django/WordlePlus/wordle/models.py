@@ -32,4 +32,8 @@ class Score(models.Model):
         while sec > 60:
             minutes += 1
             sec -= 60
-        return "%s - %s) '%s' in %i guesses and %02i:%02i" % (self.sub_date, self.account.display_name, self.word.txt, self.guesses, minutes, sec)
+        words = self.word.all()
+        wordsTxt = ""
+        for word in words:
+            wordsTxt += word.txt + " "
+        return "%s - %s) '%s' in %i guesses and %02i:%02i" % (self.sub_date, self.account.display_name, wordsTxt, self.guesses, minutes, sec)

@@ -295,6 +295,7 @@ def rankings(request):
         return redirect('wordle:MPHub')
 
     scores = list(Score.objects.filter(name=cup).order_by('guesses', 'time'))
+    print(scores)
     if "daily" in cup.lower():
         tNow = timezone.now()
         tMidNight = tNow.timestamp() - (tNow.hour * 3600) - (tNow.minute * 60) - tNow.second
@@ -328,7 +329,8 @@ def MPReceiveScore(request):
 
     wordObj = Word.objects.get(txt=word)
     acc = Account.objects.get(user=request.user)
-    score = Score(name=cupName, word=wordObj, account=acc, guesses=guesses, time=time, sub_date=timezone.now())
+    score = Score(name=cupName, account=acc, guesses=guesses, time=time, sub_date=timezone.now())
+    score.word.add(wordObj)
     score.save()
     return redirect('wordle:MPHub')
 
