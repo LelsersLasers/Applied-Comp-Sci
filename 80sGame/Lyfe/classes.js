@@ -68,11 +68,24 @@ var Thing = /** @class */ (function (_super) {
     };
     return Thing;
 }(HitBox));
+var Drawable = /** @class */ (function (_super) {
+    __extends(Drawable, _super);
+    function Drawable(pt, w, h, name, color) {
+        var _this = _super.call(this, pt, w, h) || this;
+        _this.name = name;
+        _this.color = color;
+        return _this;
+    }
+    Drawable.prototype.draw = function () {
+        _super.prototype.draw.call(this, this.color);
+    };
+    return Drawable;
+}(Thing));
 var Item = /** @class */ (function (_super) {
     __extends(Item, _super);
     function Item(name, color, user, active) {
         if (active === void 0) { active = false; }
-        var _this = _super.call(this, new Vector(user.pt.x + user.w * 3 / 10, user.pt.y + user.h * 3 / 10), user.w * 2 / 5, user.h * 2 / 5) || this;
+        var _this = _super.call(this, new Vector(user.pt.x + user.w * 3 / 10, user.pt.y + user.h * 3 / 10), user.w * 2 / 5, user.h * 2 / 5, name, color) || this;
         _this.name = name;
         _this.color = color;
         _this.user = user;
@@ -86,16 +99,15 @@ var Item = /** @class */ (function (_super) {
     Item.prototype.draw = function () {
         if (this.active) {
             this.update();
-            _super.prototype.draw.call(this, this.color);
+            _super.prototype.draw.call(this);
         }
     };
     return Item;
-}(Thing));
+}(Drawable));
 var Player = /** @class */ (function (_super) {
     __extends(Player, _super);
     function Player(pt, w, h, ms, color) {
-        var _this = _super.call(this, pt, w, h) || this;
-        _this.lastDir = "s";
+        var _this = _super.call(this, pt, w, h, "Player", color) || this;
         _this.ms = ms;
         _this.color = color;
         return _this;
@@ -114,11 +126,8 @@ var Player = /** @class */ (function (_super) {
             this.pt.x -= this.ms;
         }
     };
-    Player.prototype.draw = function () {
-        _super.prototype.draw.call(this, this.color);
-    };
     return Player;
-}(Thing));
+}(Drawable));
 var Enemy = /** @class */ (function (_super) {
     __extends(Enemy, _super);
     function Enemy() {

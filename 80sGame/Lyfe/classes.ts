@@ -58,15 +58,28 @@ class Thing extends HitBox {
     }
 }
 
-class Item extends Thing {
+class Drawable extends Thing {
     name: string;
     color: string;
+    constructor(pt: Vector, w: number, h: number, name: string, color: string) {
+        super(pt, w, h);
+        this.name = name;
+        this.color = color;
+    }
+    draw() {
+        super.draw(this.color);
+    }
+}
+
+
+class Item extends Drawable {
     user: Player;
     constructor(name: string, color: string, user: Player, active: boolean = false) {
         super(
             new Vector(user.pt.x + user.w * 3/10, user.pt.y + user.h * 3/10),
             user.w * 2/5,
-            user.h * 2/5
+            user.h * 2/5,
+            name, color
         );
         this.name = name;
         this.color = color;
@@ -80,17 +93,15 @@ class Item extends Thing {
     draw() {
         if (this.active) {
             this.update();
-            super.draw(this.color);
+            super.draw();
         }
     }
 }
 
-class Player extends Thing {
-    lastDir: string = "s";
+class Player extends Drawable {
     ms: number;
-    color: string;
     constructor(pt: Vector, w: number, h: number, ms: number, color: string) {
-        super(pt, w, h);
+        super(pt, w, h, "Player", color);
         this.ms = ms;
         this.color = color;
     }
@@ -107,9 +118,6 @@ class Player extends Thing {
         else if (aDown) {
             this.pt.x -= this.ms;
         }
-    }
-    draw() {
-        super.draw(this.color);
     }
 }
 
