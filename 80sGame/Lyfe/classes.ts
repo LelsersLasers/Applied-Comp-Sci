@@ -92,19 +92,11 @@ class Moveable extends Drawable {
         this.damage = damage;
     }
     updateFrame() { this.frame += delta; }
-    checkFrame(interval: number): boolean {
-        let str = frame.toFixed(0);
-        let rounded = Number(str);
-        if (rounded % interval == 0) {
-            this.frame++;
-            return true;
-        }
-        return false;
-    }
     checkAttack(target: Moveable): boolean {
         if (this.checkCollide(target)) {
-            if (this.checkFrame(30)) {
+            if (checkFrame(this.frame, 30)) {
                 target.hp -= this.damage * delta;
+                this.frame++;
             }
             return true;
         }

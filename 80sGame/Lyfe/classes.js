@@ -101,19 +101,11 @@ var Moveable = /** @class */ (function (_super) {
         return _this;
     }
     Moveable.prototype.updateFrame = function () { this.frame += delta; };
-    Moveable.prototype.checkFrame = function (interval) {
-        var str = frame.toFixed(0);
-        var rounded = Number(str);
-        if (rounded % interval == 0) {
-            this.frame++;
-            return true;
-        }
-        return false;
-    };
     Moveable.prototype.checkAttack = function (target) {
         if (this.checkCollide(target)) {
-            if (this.checkFrame(30)) {
+            if (checkFrame(this.frame, 30)) {
                 target.hp -= this.damage * delta;
+                this.frame++;
             }
             return true;
         }

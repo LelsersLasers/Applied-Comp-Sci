@@ -74,6 +74,14 @@ function getFontHeight(w, letters) {
     let ratio = 1/context.measureText("a").width;
     return w/letters * ratio;
 }
+function checkFrame(frame: number, interval: number): boolean {
+    let str = frame.toFixed(0);
+    let rounded = Number(str);
+    if (rounded % interval == 0) {
+        return true;
+    }
+    return false;
+}
 
 function setDelta() {
     t1 = performance.now();
@@ -91,9 +99,6 @@ function drawGame() {
 
     enemy.update();
     enemy.draw();
-
-    console.log(player.hp);
-
 }
 
 function drawAll() {
@@ -104,7 +109,6 @@ function drawAll() {
     drawGame();
 
     setDelta();
-
     window.requestAnimationFrame(drawAll);
 }
 
