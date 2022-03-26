@@ -262,6 +262,7 @@ class Player extends Thing {
     sprintSpeed = 1.5;
     animation = 0;
     frame = 0
+    lastDir = "s";
     lastDrawDir = 0;
     afterImages = [];
     stun = 0;
@@ -270,14 +271,6 @@ class Player extends Thing {
     spawnProtection = 60/5;
     constructor() {
         super(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight * 10/11, carHeight);
-        this.msX = canvas.width/14;
-        this.msY = 1.5 * canvas.height/14;
-        this.msXIncrease = this.msX/20;
-        this.msYIncrease = this.msY/20;
-        this.teleportSpeed = 3;
-        this.sprintSpeed = 1.5;
-        this.animation = 0;
-        this.lastDrawDir = 0;
         this.hb.pt = new Vector(-1, -1); // break reference to this.pt
         this.hb.useSmallHB(this.pt, this.w, this.h);
     }
@@ -314,7 +307,7 @@ class Player extends Thing {
     }
     checkAbilites() {
         if (qAbility.canUse(qDown)) { // teleport ability
-            switch (lastDir) {
+            switch (this.lastDir) {
                 case "w":
                     for (let i = 0; i < this.teleportSpeed * 2 + 1; i++) {
                         this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y - i * this.msY/2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i/2));
@@ -343,10 +336,10 @@ class Player extends Thing {
             this.hb.useSmallHB(this.pt, this.w, this.h);
             for (let i in buildings) {
                 if (this.hb.checkCollide(buildings[i].hb)) {
-                    if (lastDir == "w") this.moveVertical(-(buildings[i].pt.y + buildings[i].h - this.pt.y));
-                    else if (lastDir == "s") this.moveVertical(this.pt.y - buildings[i].pt.y + this.h);
-                    else if (lastDir == "a") this.pt.x += buildings[i].pt.x + buildings[i].w - this.pt.x;
-                    else if (lastDir == "d") this.pt.x -= this.pt.x - buildings[i].pt.x + this.w;
+                    if (this.lastDir == "w") this.moveVertical(-(buildings[i].pt.y + buildings[i].h - this.pt.y));
+                    else if (this.lastDir == "s") this.moveVertical(this.pt.y - buildings[i].pt.y + this.h);
+                    else if (this.lastDir == "a") this.pt.x += buildings[i].pt.x + buildings[i].w - this.pt.x;
+                    else if (this.lastDir == "d") this.pt.x -= this.pt.x - buildings[i].pt.x + this.w;
                     break;
                 }
             }
@@ -369,7 +362,7 @@ class Player extends Thing {
         if (alive && this.active) {
             if (wDown || sDown || aDown || dDown) {
                 this.frame += delta;
-                switch (lastDir) {
+                switch (this.lastDir) {
                     case "w":
                         this.moveVertical(this.msY/moveWait * delta);
                         break;
@@ -386,10 +379,10 @@ class Player extends Thing {
                 this.hb.useSmallHB(this.pt, this.w, this.h);
                 for (let i in buildings) {
                     if (this.hb.checkCollide(buildings[i].hb)) { // if it is touching, undo the last movement
-                        if (lastDir == "a") this.pt.x += this.msX/moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
-                        else if (lastDir == "d") this.pt.x -= this.msX/moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
-                        else if (lastDir == "w") this.moveVertical(-this.msY/moveWait * delta);
-                        else if (lastDir == "s") this.moveVertical(this.msY/moveWait * delta);
+                        if (this.lastDir == "a") this.pt.x += this.msX/moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
+                        else if (this.lastDir == "d") this.pt.x -= this.msX/moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
+                        else if (this.lastDir == "w") this.moveVertical(-this.msY/moveWait * delta);
+                        else if (this.lastDir == "s") this.moveVertical(this.msY/moveWait * delta);
                         break;
                     }
                 }
@@ -423,7 +416,7 @@ class Player extends Thing {
         for (let i in this.afterImages) this.afterImages[i].draw();
         if (alive && !paused && this.active) {
             let dirs = ["s", "w", "d", "a"];
-            let dir = dirs.indexOf(lastDir);
+            let dir = dirs.indexOf(this.lastDir);
             this.lastDrawDir = dir;
         }
         if (this.spawnProtection <= 0 || Number(this.spawnProtection.toFixed(0)) % 2 != 0 || !alive) {

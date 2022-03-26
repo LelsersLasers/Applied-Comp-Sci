@@ -292,20 +292,13 @@ var Player = /** @class */ (function (_super) {
         _this.sprintSpeed = 1.5;
         _this.animation = 0;
         _this.frame = 0;
+        _this.lastDir = "s";
         _this.lastDrawDir = 0;
         _this.afterImages = [];
         _this.stun = 0;
         _this.lastStun = 0;
         _this.stunProtection = 0;
         _this.spawnProtection = 60 / 5;
-        _this.msX = canvas.width / 14;
-        _this.msY = 1.5 * canvas.height / 14;
-        _this.msXIncrease = _this.msX / 20;
-        _this.msYIncrease = _this.msY / 20;
-        _this.teleportSpeed = 3;
-        _this.sprintSpeed = 1.5;
-        _this.animation = 0;
-        _this.lastDrawDir = 0;
         _this.hb.pt = new Vector(-1, -1); // break reference to this.pt
         _this.hb.useSmallHB(_this.pt, _this.w, _this.h);
         return _this;
@@ -348,7 +341,7 @@ var Player = /** @class */ (function (_super) {
     };
     Player.prototype.checkAbilites = function () {
         if (qAbility.canUse(qDown)) { // teleport ability
-            switch (lastDir) {
+            switch (this.lastDir) {
                 case "w":
                     for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
                         this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y - i * this.msY / 2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i / 2));
@@ -377,13 +370,13 @@ var Player = /** @class */ (function (_super) {
             this.hb.useSmallHB(this.pt, this.w, this.h);
             for (var i in buildings) {
                 if (this.hb.checkCollide(buildings[i].hb)) {
-                    if (lastDir == "w")
+                    if (this.lastDir == "w")
                         this.moveVertical(-(buildings[i].pt.y + buildings[i].h - this.pt.y));
-                    else if (lastDir == "s")
+                    else if (this.lastDir == "s")
                         this.moveVertical(this.pt.y - buildings[i].pt.y + this.h);
-                    else if (lastDir == "a")
+                    else if (this.lastDir == "a")
                         this.pt.x += buildings[i].pt.x + buildings[i].w - this.pt.x;
-                    else if (lastDir == "d")
+                    else if (this.lastDir == "d")
                         this.pt.x -= this.pt.x - buildings[i].pt.x + this.w;
                     break;
                 }
@@ -407,7 +400,7 @@ var Player = /** @class */ (function (_super) {
         if (alive && this.active) {
             if (wDown || sDown || aDown || dDown) {
                 this.frame += delta;
-                switch (lastDir) {
+                switch (this.lastDir) {
                     case "w":
                         this.moveVertical(this.msY / moveWait * delta);
                         break;
@@ -424,13 +417,13 @@ var Player = /** @class */ (function (_super) {
                 this.hb.useSmallHB(this.pt, this.w, this.h);
                 for (var i in buildings) {
                     if (this.hb.checkCollide(buildings[i].hb)) { // if it is touching, undo the last movement
-                        if (lastDir == "a")
+                        if (this.lastDir == "a")
                             this.pt.x += this.msX / moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
-                        else if (lastDir == "d")
+                        else if (this.lastDir == "d")
                             this.pt.x -= this.msX / moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
-                        else if (lastDir == "w")
+                        else if (this.lastDir == "w")
                             this.moveVertical(-this.msY / moveWait * delta);
-                        else if (lastDir == "s")
+                        else if (this.lastDir == "s")
                             this.moveVertical(this.msY / moveWait * delta);
                         break;
                     }
@@ -468,7 +461,7 @@ var Player = /** @class */ (function (_super) {
             this.afterImages[i].draw();
         if (alive && !paused && this.active) {
             var dirs = ["s", "w", "d", "a"];
-            var dir = dirs.indexOf(lastDir);
+            var dir = dirs.indexOf(this.lastDir);
             this.lastDrawDir = dir;
         }
         if (this.spawnProtection <= 0 || Number(this.spawnProtection.toFixed(0)) % 2 != 0 || !alive) {

@@ -2,7 +2,6 @@ var wDown = false;
 var sDown = false;
 var aDown = false;
 var dDown = false;
-var lastDir = "s";
 
 var qDown = false;
 var eDown = false;
@@ -194,10 +193,10 @@ function mouseDownActions() {
 }
 
 function setLastDir() {
-    if (wDown) lastDir = "w";
-    else if (sDown) lastDir = "s";
-    else if (aDown) lastDir = "a";
-    else if (dDown) lastDir = "d";
+    if (wDown) player.lastDir = "w";
+    else if (sDown) player.lastDir = "s";
+    else if (aDown) player.lastDir = "a";
+    else if (dDown) player.lastDir = "d";
 }
 
 function reset() {
