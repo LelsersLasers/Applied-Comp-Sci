@@ -105,16 +105,16 @@ class Player extends Moveable {
     }
     move() {
         if (wDown) {
-            this.pt.y -= this.ms;
+            this.pt.y -= this.ms * delta;
         }
         else if (sDown) {
-            this.pt.y += this.ms;
+            this.pt.y += this.ms * delta;
         }
         else if (dDown) {
-            this.pt.x += this.ms;
+            this.pt.x += this.ms * delta;
         }
         else if (aDown) {
-            this.pt.x -= this.ms;
+            this.pt.x -= this.ms * delta;
         }
     }
 }
@@ -135,5 +135,6 @@ class Enemy extends Moveable {
                 this.pt.y -= dif.y/Math.abs(dif.y) * this.ms;
             }
         }
+        this.checkAttack(this.target);
     }
 }
