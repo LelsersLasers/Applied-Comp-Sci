@@ -90,6 +90,13 @@ class Moveable extends Drawable {
         this.hp = hp;
         this.damage = damage;
     }
+    checkHit(target: Moveable): boolean {
+        if (this.checkCollide(target)) {
+            tar
+            return true;
+        }
+        return false;
+    }
 }
 
 class Player extends Moveable {
