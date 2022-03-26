@@ -339,6 +339,16 @@ var Player = /** @class */ (function (_super) {
                 this.animation = 0;
         }
     };
+    Player.prototype.setLastDir = function () {
+        if (wDown)
+            this.lastDir = "w";
+        else if (sDown)
+            this.lastDir = "s";
+        else if (aDown)
+            this.lastDir = "a";
+        else if (dDown)
+            this.lastDir = "d";
+    };
     Player.prototype.checkAbilites = function () {
         if (qAbility.canUse(qDown)) { // teleport ability
             switch (this.lastDir) {

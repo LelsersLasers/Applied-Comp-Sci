@@ -305,6 +305,12 @@ class Player extends Thing {
             if (this.animation > 3) this.animation = 0;
         }
     }
+    setLastDir() {
+        if (wDown) this.lastDir = "w";
+        else if (sDown) this.lastDir = "s";
+        else if (aDown) this.lastDir = "a";
+        else if (dDown) this.lastDir = "d";
+    }
     checkAbilites() {
         if (qAbility.canUse(qDown)) { // teleport ability
             switch (this.lastDir) {

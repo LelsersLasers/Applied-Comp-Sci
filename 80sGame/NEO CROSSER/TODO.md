@@ -4,11 +4,11 @@ Typescript:
 - to compile: tsc game.ts classes.ts
 - Use types better
 
-Remove touch code
-
 Bugs:
 - Cars getting stuck in walls/buildings when
     - (twitching back and forth)
+- Notice text hidden under image?
+- Pressing S in pause menu causes player to be stuck going down 
 
 Make game easier
     - Getting past 6k is too hard
@@ -67,6 +67,7 @@ Clarity
     - can use 'a = b = 0'
 - Constructors for classes
     - what is already global var
+- Remove touch code
 - Set textOpacity to 1 when reused
     - new screen
     - new landslide

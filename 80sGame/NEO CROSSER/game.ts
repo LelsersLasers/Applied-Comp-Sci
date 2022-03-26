@@ -192,13 +192,6 @@ function mouseDownActions() {
     }
 }
 
-function setLastDir() {
-    if (wDown) player.lastDir = "w";
-    else if (sDown) player.lastDir = "s";
-    else if (aDown) player.lastDir = "a";
-    else if (dDown) player.lastDir = "d";
-}
-
 function reset() {
     writeScore();
     location.reload(); // reloads the webpage
@@ -609,11 +602,11 @@ function drawHUD() {
 }
 
 function drawGame() {
-    setLastDir();
     for (let i in bar) bar[i].draw();
     if (!paused) {
         for (let i in landSlides) landSlides[i].update();
         for (let i in pickUps) pickUps[i].update();
+        player.setLastDir();
         player.move();
         player.draw();
         for (let i in buildings) buildings[i].draw();
