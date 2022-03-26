@@ -143,10 +143,10 @@ class Enemy extends Moveable {
         let dif = this.calcCenter().subtract(this.target.calcCenter());
         if (dif.calcLen() > 0) {
             if (Math.abs(dif.x) > Math.abs(dif.y)) {
-                this.pt.x -= dif.x/Math.abs(dif.x) * this.ms;
+                this.pt.x -= dif.x/Math.abs(dif.x) * this.ms * delta;
             }
             else {
-                this.pt.y -= dif.y/Math.abs(dif.y) * this.ms;
+                this.pt.y -= dif.y/Math.abs(dif.y) * this.ms * delta;
             }
         }
         this.checkAttack(this.target);
