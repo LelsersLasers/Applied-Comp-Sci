@@ -99,7 +99,7 @@ function drawAll() {
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    if (gameScreen == "game") drawGame();
+    drawGame();
 
     setDelta();
 
@@ -142,8 +142,6 @@ var frame = 0;
 var deltas = [];
 
 const font = "monospace";
-
-var gameScreen = "game";
 
 // Set up the canvas, context objects, and html elements
 var canvas;
