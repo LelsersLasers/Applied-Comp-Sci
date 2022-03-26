@@ -249,9 +249,9 @@ var Laser = /** @class */ (function (_super) {
             if (this.hb.checkCollide(enemies[i].hb)) {
                 enemies[i].active = false;
                 enemies[i].stun += this.stunTime;
-                for (var i in laserSounds) {
-                    if (laserSounds[i].currentTime == laserSounds[i].duration || laserSounds[i].currentTime == 0) {
-                        laserSounds[i].play();
+                for (var j in laserSounds) {
+                    if (laserSounds[j].currentTime == laserSounds[j].duration || laserSounds[j].currentTime == 0) {
+                        laserSounds[j].play();
                         break;
                     }
                 }
@@ -383,16 +383,16 @@ var Player = /** @class */ (function (_super) {
                     break;
             }
             this.hb.useSmallHB(this.pt, this.w, this.h);
-            for (var i_1 in buildings) {
-                if (this.hb.checkCollide(buildings[i_1].hb)) {
+            for (var i in buildings) {
+                if (this.hb.checkCollide(buildings[i].hb)) {
                     if (lastDir == "w")
-                        this.moveVertical(-(buildings[i_1].pt.y + buildings[i_1].h - this.pt.y));
+                        this.moveVertical(-(buildings[i].pt.y + buildings[i].h - this.pt.y));
                     else if (lastDir == "s")
-                        this.moveVertical(this.pt.y - buildings[i_1].pt.y + this.h);
+                        this.moveVertical(this.pt.y - buildings[i].pt.y + this.h);
                     else if (lastDir == "a")
-                        this.pt.x += buildings[i_1].pt.x + buildings[i_1].w - this.pt.x;
+                        this.pt.x += buildings[i].pt.x + buildings[i].w - this.pt.x;
                     else if (lastDir == "d")
-                        this.pt.x -= this.pt.x - buildings[i_1].pt.x + this.w;
+                        this.pt.x -= this.pt.x - buildings[i].pt.x + this.w;
                     break;
                 }
             }
@@ -671,12 +671,15 @@ var Car = /** @class */ (function (_super) {
                 this.pt.x += this.ms * delta;
                 this.updateCanShoot(this.type == 2, 80);
                 this.checkShoot(new Vector(this.ms > 0 ? this.pt.x + this.w : this.pt.x, this.pt.y + this.h * 4 / 17));
-                if (this.hb.outOfBounds())
+                if (this.hb.outOfBounds()) {
                     this.ms *= -1;
+                    this.update();
+                }
             }
             for (var i in buildings) {
                 if (this.hb.checkCollide(buildings[i].hb)) {
                     this.ms *= -1;
+                    this.update();
                     break;
                 }
             }
@@ -842,7 +845,7 @@ var Building = /** @class */ (function (_super) {
         _this = _super.call(this, pt, w, h) || this;
         _this.buildings = [];
         _this.buildings = [];
-        for (var i_2 = 0; i_2 < buildingCount; i_2++) {
+        for (var i = 0; i < buildingCount; i++) {
             var src = getRandomInt(0, 3);
             _this.buildings.push(posSourceBuilding[src]);
         }
