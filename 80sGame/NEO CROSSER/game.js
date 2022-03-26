@@ -15,7 +15,6 @@ var lastDir = "s";
 var qDown = false;
 var eDown = false;
 var rDown = false;
-var inputMode = "either";
 var mouseDown = false;
 var cursorHB = new HitBox(new Vector(-100, -100), 10, 10);
 document.addEventListener("keydown", keyDownHandle, false);
@@ -123,7 +122,6 @@ function keyDownHandle(e) {
             }
             break;
     }
-    inputMode = "key";
 }
 function keyUpHandle(e) {
     switch (e.key.toLowerCase()) {
@@ -230,18 +228,7 @@ function getMousePos(event) {
     cursorHB.pt.y = event.clientY - rect.top - 6;
 }
 function mouseDownActions() {
-    if (gameScreen == "game") {
-        if (inputMode != "key") {
-            wDown = wTrigger.checkDown(cursorHB, mouseDown);
-            sDown = sTrigger.checkDown(cursorHB, mouseDown);
-            aDown = aTrigger.checkDown(cursorHB, mouseDown);
-            dDown = dTrigger.checkDown(cursorHB, mouseDown);
-            qDown = qAbility.checkDown(cursorHB, mouseDown);
-            eDown = eAbility.checkDown(cursorHB, mouseDown);
-            rDown = rAbility.checkDown(cursorHB, mouseDown);
-        }
-    }
-    else if (gameScreen == "restore") {
+    if (gameScreen == "restore") {
         for (var i = 0; i < restoreButtons.length; i++) {
             if (cursorHB.checkCollide(restoreButtons[i].hb) && i == selectedIndex) {
                 deleteCount += delta;
@@ -447,6 +434,15 @@ function buttonHover() {
             musicButton.clicked = 1;
     }
 }
+function setDelta() {
+    t1 = performance.now();
+    var lastDelta = (t1 - t0) / (1000 / 60);
+    if (frame > 20 && lastDelta < 2 * average(deltas))
+        deltas.push(lastDelta); // protect against alt-tab
+    delta = average(deltas);
+    t0 = performance.now();
+    frame++;
+}
 function drawWelcome() {
     context.fillStyle = "#ffffff";
     context.font = carHeight + "px " + font;
@@ -492,9 +488,8 @@ function drawRestoreMenu() {
     context.font = carHeight / 2 + "px " + font;
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
     context.fillText("Touch to Go Back (or Y)", canvas.width / 2, canvas.height * 1 / 4 - carHeight);
-    if (mouseDown) {
+    if (mouseDown)
         mouseDownActions();
-    }
 }
 function drawDirections() {
     context.fillStyle = "#ffffff";
@@ -641,7 +636,6 @@ function drawGame() {
             landSlides[i].update();
         for (var i in pickUps)
             pickUps[i].update();
-        mouseDownActions();
         player.move();
         player.draw();
         for (var i in buildings)
@@ -674,8 +668,10 @@ function drawAll() {
         drawWelcome();
     else if (gameScreen == "play")
         drawPlayMenu();
-    else if (gameScreen == "restore")
+    else if (gameScreen == "restore") {
+        mouseDownActions();
         drawRestoreMenu();
+    }
     else if (gameScreen == "game")
         drawGame();
     else if (gameScreen == "directions")
@@ -685,13 +681,7 @@ function drawAll() {
     textOpacity += opacityDir * delta;
     if (textOpacity > 1 || textOpacity < 0)
         opacityDir *= -1;
-    t1 = performance.now();
-    var lastDelta = (t1 - t0) / (1000 / 60);
-    if (frame > 20 && lastDelta < 2 * average(deltas))
-        deltas.push(lastDelta); // protect against alt-tab
-    delta = average(deltas);
-    t0 = performance.now();
-    frame++;
+    setDelta();
     window.requestAnimationFrame(drawAll);
 }
 function setUpContext() {

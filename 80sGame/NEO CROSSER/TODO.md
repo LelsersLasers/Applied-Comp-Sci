@@ -4,6 +4,8 @@ Typescript:
 - to compile: tsc game.ts classes.ts
 - Use types better
 
+Remove touch code
+
 Bugs:
 - Cars getting stuck in walls/buildings when
     - (twitching back and forth)
@@ -59,14 +61,17 @@ Clarity
         - update hb with w/h
     - use super.restore to improve
 - softCap
-- remove touch code
-    - remove/rework inputmode = 'key'
 - General:
     - Simply lines
     - duplicate code -> function
     - can use 'a = b = 0'
 - Constructors for classes
     - what is already global var
+- Set textOpacity to 1 when reused
+    - new screen
+    - new landslide
+    - game over
+    - etc
 
 Redo any art?
 - tanks

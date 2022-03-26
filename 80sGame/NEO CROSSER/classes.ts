@@ -91,14 +91,6 @@ class Trigger extends Thing {
         context.font = carHeight/3 + "px " + font;
         context.fillText(this.txt, this.pt.x + this.w/2, this.pt.y + this.h/2);
     }
-    checkDown(cursorHB, mouseDown) {
-        if (cursorHB.checkCollide(this.hb) && mouseDown) {
-            this.down = true;
-            return true;
-        }
-        this.down = false;
-        return false;
-    }
 }
 
 class Ability extends Trigger {

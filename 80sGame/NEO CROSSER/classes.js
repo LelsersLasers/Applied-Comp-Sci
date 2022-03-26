@@ -113,14 +113,6 @@ var Trigger = /** @class */ (function (_super) {
         context.font = carHeight / 3 + "px " + font;
         context.fillText(this.txt, this.pt.x + this.w / 2, this.pt.y + this.h / 2);
     };
-    Trigger.prototype.checkDown = function (cursorHB, mouseDown) {
-        if (cursorHB.checkCollide(this.hb) && mouseDown) {
-            this.down = true;
-            return true;
-        }
-        this.down = false;
-        return false;
-    };
     return Trigger;
 }(Thing));
 var Ability = /** @class */ (function (_super) {

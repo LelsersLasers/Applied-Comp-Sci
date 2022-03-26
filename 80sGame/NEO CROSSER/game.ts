@@ -8,7 +8,6 @@ var qDown = false;
 var eDown = false;
 var rDown = false;
 
-var inputMode = "either";
 var mouseDown = false;
 var cursorHB = new HitBox(new Vector(-100, -100), 10, 10);
 
@@ -96,7 +95,6 @@ function keyDownHandle(e) {
             }
             break;
     }
-    inputMode = "key";
 }
 function keyUpHandle(e) {
     switch (e.key.toLowerCase()) {
@@ -180,18 +178,7 @@ function getMousePos(event) {
 }
 
 function mouseDownActions() {
-    if (gameScreen == "game") {
-        if (inputMode != "key") {
-            wDown = wTrigger.checkDown(cursorHB, mouseDown);
-            sDown = sTrigger.checkDown(cursorHB, mouseDown);
-            aDown = aTrigger.checkDown(cursorHB, mouseDown);
-            dDown = dTrigger.checkDown(cursorHB, mouseDown);
-            qDown = qAbility.checkDown(cursorHB, mouseDown);
-            eDown = eAbility.checkDown(cursorHB, mouseDown);
-            rDown = rAbility.checkDown(cursorHB, mouseDown);
-        }
-    }
-    else if (gameScreen == "restore") {
+    if (gameScreen == "restore") {
         for (let i = 0; i < restoreButtons.length; i++) {
             if (cursorHB.checkCollide(restoreButtons[i].hb) && i == selectedIndex) {
                 deleteCount += delta;
@@ -407,6 +394,15 @@ function buttonHover() {
     }
 }
 
+function setDelta() {
+    t1 = performance.now();
+    let lastDelta = (t1 - t0)/(1000/60);
+    if (frame > 20 && lastDelta < 2 * average(deltas)) deltas.push(lastDelta); // protect against alt-tab
+    delta = average(deltas);
+    t0 = performance.now();
+    frame++;
+}
+
 function drawWelcome() {
     context.fillStyle = "#ffffff";
     context.font = carHeight + "px " + font;
@@ -462,9 +458,7 @@ function drawRestoreMenu() {
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
     context.fillText("Touch to Go Back (or Y)", canvas.width/2, canvas.height * 1/4 - carHeight);
 
-    if (mouseDown) {
-        mouseDownActions();
-    }
+    if (mouseDown) mouseDownActions();
 }
 
 function drawDirections() {
@@ -621,7 +615,6 @@ function drawGame() {
     if (!paused) {
         for (let i in landSlides) landSlides[i].update();
         for (let i in pickUps) pickUps[i].update();
-        mouseDownActions();
         player.move();
         player.draw();
         for (let i in buildings) buildings[i].draw();
@@ -649,7 +642,10 @@ function drawAll() {
 
     if (gameScreen == "welcome") drawWelcome();
     else if (gameScreen == "play") drawPlayMenu();
-    else if (gameScreen == "restore") drawRestoreMenu();
+    else if (gameScreen == "restore") {
+        mouseDownActions();
+        drawRestoreMenu();
+    }
     else if (gameScreen == "game") drawGame();
     else if (gameScreen == "directions") drawDirections();
     else if (gameScreen == "scores") drawScores();
@@ -657,13 +653,7 @@ function drawAll() {
     textOpacity += opacityDir * delta;
     if (textOpacity > 1 || textOpacity < 0) opacityDir *= -1;
 
-    t1 = performance.now();
-    let lastDelta = (t1 - t0)/(1000/60);
-    if (frame > 20 && lastDelta < 2 * average(deltas)) deltas.push(lastDelta); // protect against alt-tab
-    delta = average(deltas);
-    t0 = performance.now();
-    frame++;
-
+    setDelta();
     window.requestAnimationFrame(drawAll);
 }
 
