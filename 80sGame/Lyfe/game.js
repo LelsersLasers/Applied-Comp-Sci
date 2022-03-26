@@ -97,12 +97,12 @@ function drawGame() {
     player.draw();
     enemy.update();
     enemy.draw();
+    console.log(player.hp);
 }
 function drawAll() {
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
-    if (gameScreen == "game")
-        drawGame();
+    drawGame();
     setDelta();
     window.requestAnimationFrame(drawAll);
 }
@@ -134,7 +134,6 @@ var delta = 1; // delta is relative to 60fps
 var frame = 0;
 var deltas = [];
 var font = "monospace";
-var gameScreen = "game";
 // Set up the canvas, context objects, and html elements
 var canvas;
 var context = setUpContext();

@@ -94,11 +94,31 @@ var Moveable = /** @class */ (function (_super) {
     __extends(Moveable, _super);
     function Moveable(pt, w, h, name, color, ms, hp, damage) {
         var _this = _super.call(this, pt, w, h, name, color) || this;
+        _this.frame = 0;
         _this.ms = ms;
         _this.hp = hp;
         _this.damage = damage;
         return _this;
     }
+    Moveable.prototype.updateFrame = function () { this.frame += delta; };
+    Moveable.prototype.checkFrame = function (interval) {
+        var str = frame.toFixed(0);
+        var rounded = Number(str);
+        if (rounded % interval == 0) {
+            this.frame++;
+            return true;
+        }
+        return false;
+    };
+    Moveable.prototype.checkAttack = function (target) {
+        if (this.checkCollide(target)) {
+            if (this.checkFrame(30)) {
+                target.hp -= this.damage * delta;
+            }
+            return true;
+        }
+        return false;
+    };
     return Moveable;
 }(Drawable));
 var Player = /** @class */ (function (_super) {
@@ -108,16 +128,16 @@ var Player = /** @class */ (function (_super) {
     }
     Player.prototype.move = function () {
         if (wDown) {
-            this.pt.y -= this.ms;
+            this.pt.y -= this.ms * delta;
         }
         else if (sDown) {
-            this.pt.y += this.ms;
+            this.pt.y += this.ms * delta;
         }
         else if (dDown) {
-            this.pt.x += this.ms;
+            this.pt.x += this.ms * delta;
         }
         else if (aDown) {
-            this.pt.x -= this.ms;
+            this.pt.x -= this.ms * delta;
         }
     };
     return Player;
@@ -130,6 +150,7 @@ var Enemy = /** @class */ (function (_super) {
         return _this;
     }
     Enemy.prototype.update = function () {
+        this.updateFrame();
         var dif = this.calcCenter().subtract(this.target.calcCenter());
         if (dif.calcLen() > 0) {
             if (Math.abs(dif.x) > Math.abs(dif.y)) {
@@ -139,6 +160,7 @@ var Enemy = /** @class */ (function (_super) {
                 this.pt.y -= dif.y / Math.abs(dif.y) * this.ms;
             }
         }
+        this.checkAttack(this.target);
     };
     return Enemy;
 }(Moveable));

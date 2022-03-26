@@ -84,15 +84,28 @@ class Moveable extends Drawable {
     ms: number;
     hp: number;
     damage: number;
+    frame: number = 0;
     constructor(pt: Vector, w: number, h: number, name: string, color: string, ms: number, hp: number, damage: number) {
         super(pt, w, h, name, color);
         this.ms = ms;
         this.hp = hp;
         this.damage = damage;
     }
-    checkHit(target: Moveable): boolean {
+    updateFrame() { this.frame += delta; }
+    checkFrame(interval: number): boolean {
+        let str = frame.toFixed(0);
+        let rounded = Number(str);
+        if (rounded % interval == 0) {
+            this.frame++;
+            return true;
+        }
+        return false;
+    }
+    checkAttack(target: Moveable): boolean {
         if (this.checkCollide(target)) {
-            tar
+            if (this.checkFrame(30)) {
+                target.hp -= this.damage * delta;
+            }
             return true;
         }
         return false;
@@ -126,6 +139,7 @@ class Enemy extends Moveable {
         this.target = target;
     }
     update() {
+        this.updateFrame();
         let dif = this.calcCenter().subtract(this.target.calcCenter());
         if (dif.calcLen() > 0) {
             if (Math.abs(dif.x) > Math.abs(dif.y)) {

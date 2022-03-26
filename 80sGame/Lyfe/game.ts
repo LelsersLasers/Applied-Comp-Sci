@@ -92,6 +92,8 @@ function drawGame() {
     enemy.update();
     enemy.draw();
 
+    console.log(player.hp);
+
 }
 
 function drawAll() {
