@@ -241,12 +241,13 @@ var Laser = /** @class */ (function (_super) {
             if (this.hb.checkCollide(enemies[i].hb)) {
                 enemies[i].active = false;
                 enemies[i].stun += this.stunTime;
-                for (var j in laserSounds) {
-                    if (laserSounds[j].currentTime == laserSounds[j].duration || laserSounds[j].currentTime == 0) {
-                        laserSounds[j].play();
-                        break;
-                    }
-                }
+                playFromSoundArray(laserSounds);
+                // for (let j in laserSounds) {
+                //     if (laserSounds[j].currentTime == laserSounds[j].duration || laserSounds[j].currentTime == 0) {
+                //         laserSounds[j].play();
+                //         break;
+                //     }
+                // }
                 lasers.splice(lasers.indexOf(this), 1);
                 break;
             }
@@ -567,12 +568,7 @@ var Enemy = /** @class */ (function (_super) {
                 lasers.push(new Laser(startPt, -1, 60, false));
                 lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w / 2 - startPt.x, player.pt.y + player.h / 2 - startPt.y);
                 lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);
-                for (var i in laserTargetingSounds) {
-                    if (laserTargetingSounds[i].currentTime == laserTargetingSounds[i].duration || laserTargetingSounds[i].currentTime == 0) {
-                        laserTargetingSounds[i].play();
-                        break;
-                    }
-                }
+                playFromSoundArray(laserTargetingSounds);
             }
         }
     };

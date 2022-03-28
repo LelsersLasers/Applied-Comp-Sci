@@ -275,6 +275,15 @@ function getTopScores() {
     return scores;
 }
 
+function playFromSoundArray(sounds) {
+    for (let i in sounds) {
+        if (sounds[i].currentTime == sounds[i].duration || sounds[i].currentTime == 0) {
+            sounds[i].play();
+            break;
+        }
+    }
+}
+
 function getFontHeight(w, letters) {
     context.font = 1 + "px " + font;
     let ratio = 1/context.measureText("a").width;
