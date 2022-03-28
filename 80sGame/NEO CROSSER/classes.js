@@ -451,7 +451,8 @@ var Player = /** @class */ (function (_super) {
     Player.prototype.checkHit = function (enemy) {
         if (enemy.hb.checkCollide(player.hb)) {
             if (this.spawnProtection < 0) {
-                enemy.deathSound.play();
+                deathHitSound.currentTime = 0;
+                deathHitSound.play();
                 this.stunProtection = this.spawnProtection = 120 * 0.2;
                 this.stun = this.lastStun = 0;
                 qAbility.timer = qAbility.wait;
@@ -520,7 +521,7 @@ var AfterImage = /** @class */ (function (_super) {
 }(Thing));
 var Enemy = /** @class */ (function (_super) {
     __extends(Enemy, _super);
-    function Enemy(pt, w, h, ms, soundFilename, vol) {
+    function Enemy(pt, w, h, ms) {
         var _this = _super.call(this, pt, w, h) || this;
         _this.frame = 0;
         _this.stun = 0;
@@ -528,9 +529,6 @@ var Enemy = /** @class */ (function (_super) {
         _this.animationWaitBase = 30;
         _this.canShoot = false;
         _this.ms = ms;
-        _this.deathSound = document.createElement("audio");
-        _this.deathSound.src = soundFilename;
-        _this.deathSound.volume = vol / soundOffset;
         _this.laserFireSound = document.createElement("audio");
         _this.laserFireSound.src = "targetingSound.mp3";
         _this.laserFireSound.volume = 4.5 / soundOffset;
@@ -642,7 +640,7 @@ var Car = /** @class */ (function (_super) {
             }
         }
         var pt = new Vector(x, y);
-        _this = _super.call(this, pt, w, h, ms, "carHitSound.mp3", 2.0) || this;
+        _this = _super.call(this, pt, w, h, ms) || this;
         _this.offScreen = false;
         _this.hidden = !Boolean(getRandomInt(0, 5));
         if (type == 1)
@@ -754,7 +752,7 @@ var Ufo = /** @class */ (function (_super) {
         var h = ufoHeight;
         var pt = new Vector(getRandomInt(0, canvas.width - w), y);
         var ms = topScore / softCap * (canvas.width * canvas.width + canvas.height * canvas.height) / (800 * 800) + 1 * delta;
-        _this = _super.call(this, pt, w, h, ms, "ufoHitSound.mp3", soundOffset) || this;
+        _this = _super.call(this, pt, w, h, ms) || this;
         _this.animationWaitBase = 25;
         if (getRandomInt(1, 3) == 1) {
             _this.move = new Vector(player.pt.x + player.w / 2 - _this.pt.x - _this.w / 2, player.pt.y + player.h / 2 - _this.pt.y - _this.h / 2); // punish player for not moving
@@ -908,8 +906,8 @@ var LandSlide = /** @class */ (function (_super) {
         var MSs = [w / 300 * delta, -w / 300 * delta];
         var dir = getRandomInt(0, 2);
         var Xs = [0 - w + MSs[0] * -60, canvas.width + MSs[1] * -60];
-        _this = _super.call(this, new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + topScore / softCap), "landSlideSound.mp3", 2.0) || this;
-        _this.deathSound.play();
+        _this = _super.call(this, new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + topScore / softCap)) || this;
+        landSlideSound.play();
         _this.dir = dir;
         _this.animationWaitBase = 100;
         notices.push(new Notice(120));

@@ -20,11 +20,7 @@ display use w/s up/down to change the selected save
 mouse hover over buttons in restore screen
 
 "Clean" code
-- Set textOpacity to 1 when reused
-    - new screen
-    - new landslide
-    - game over
-    - etc
+- Set textOpacity to 1 when landslide comes onto screen
 - New instances of things do not create new audio things
     - Just create 1 on load, and play it
 - LET

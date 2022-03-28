@@ -403,7 +403,8 @@ class Player extends Thing {
     checkHit(enemy) {
         if (enemy.hb.checkCollide(player.hb)) {
             if (this.spawnProtection < 0) {
-                enemy.deathSound.play();
+                deathHitSound.currentTime = 0;
+                deathHitSound.play();
                 this.stunProtection = this.spawnProtection = 120 * 0.2;
                 this.stun = this.lastStun = 0;
                 qAbility.timer = qAbility.wait;
@@ -467,19 +468,15 @@ class AfterImage extends Thing {
 }
 
 class Enemy extends Thing {
-    ms; deathSound; laserFireSound;
+    ms; laserFireSound;
     frame = 0;
     stun = 0;
     animation = getRandomInt(0, 2);
     animationWaitBase = 30;
     canShoot = false;
-    constructor(pt, w, h, ms, soundFilename, vol) {
+    constructor(pt, w, h, ms) {
         super(pt, w, h);
         this.ms = ms;
-        
-        this.deathSound = document.createElement("audio");
-        this.deathSound.src = soundFilename;
-        this.deathSound.volume = vol/soundOffset;
 
         this.laserFireSound = document.createElement("audio");
         this.laserFireSound.src = "targetingSound.mp3";
@@ -589,7 +586,7 @@ class Car extends Enemy {
         }
         let pt = new Vector(x, y);
 
-        super(pt, w, h, ms, "carHitSound.mp3", 2.0);
+        super(pt, w, h, ms);
 
         if (type == 1) this.ms *= 7/5;
         else if (type == 2) this.ms *= 1/2;
@@ -699,7 +696,7 @@ class Ufo extends Enemy {
         let h = ufoHeight;
         let pt = new Vector(getRandomInt(0, canvas.width - w), y);
         let ms = topScore/softCap * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800) + 1 * delta;
-        super(pt, w, h, ms, "ufoHitSound.mp3", soundOffset);
+        super(pt, w, h, ms);
 
         this.animationWaitBase = 25;
 
@@ -848,8 +845,8 @@ class LandSlide extends Enemy {
         let dir = getRandomInt(0, 2);
         let Xs = [0 - w + MSs[0] * -60, canvas.width + MSs[1] * -60]
 
-        super(new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + topScore/softCap), "landSlideSound.mp3", 2.0);
-        this.deathSound.play();
+        super(new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + topScore/softCap));
+        landSlideSound.play();
         this.dir = dir;
         this.animationWaitBase = 100;
         notices.push(new Notice(120));

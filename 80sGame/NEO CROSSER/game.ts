@@ -727,6 +727,13 @@ var rSound = document.createElement("audio");
 rSound.src = "rSound.mp3";
 rSound.volume = 1.0/soundOffset;
 
+var deathHitSound = document.createElement("audio");
+deathHitSound.src = "carHitSound.mp3";
+deathHitSound.volume = 2.0/soundOffset;
+var landSlideSound = document.createElement("audio");
+landSlideSound.src = "landSlideSound.mp3";
+landSlideSound.volume = 2.0/soundOffset;
+
 var laserSounds = [];
 for (let i = 0; i < 10; i++) {
     laserSounds.push(document.createElement("audio"));
