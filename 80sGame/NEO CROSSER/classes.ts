@@ -363,6 +363,7 @@ class Player extends Thing {
         }
     }
     move() {
+        this.setLastDir();
         this.updateStun();
         this.spawnProtection -= delta * 0.2;
         if (alive && this.active) {

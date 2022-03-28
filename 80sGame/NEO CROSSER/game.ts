@@ -608,10 +608,8 @@ function drawGame() {
     if (!paused) {
         for (let i in landSlides) landSlides[i].update();
         for (let i in pickUps) pickUps[i].update();
-        player.setLastDir();
         player.move();
         player.draw();
-        console.log(sDown, player.lastDir);
         for (let i in buildings) buildings[i].draw();
         let enemies = [...cars, ...ufos];
         for (let i in enemies) {
