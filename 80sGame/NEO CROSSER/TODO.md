@@ -9,8 +9,10 @@ Bugs:
     - (twitching back and forth)
 
 Make game easier
-    - Getting past 6k is too hard
-        - Shift to 8k
+- Getting past 6k is too hard
+    - Shift to 8k
+- Ufos slower for longer
+- Cars start slower?
 
 display restore touch directions
 display use w/s up/down to change the selected save
