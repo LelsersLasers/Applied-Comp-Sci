@@ -65,6 +65,14 @@ function getFontHeight(w, letters) {
     var ratio = 1 / context.measureText("a").width;
     return w / letters * ratio;
 }
+function checkFrame(frame, interval) {
+    var str = frame.toFixed(0);
+    var rounded = Number(str);
+    if (rounded % interval == 0) {
+        return true;
+    }
+    return false;
+}
 function setDelta() {
     t1 = performance.now();
     var lastDelta = (t1 - t0) / (1000 / 60);

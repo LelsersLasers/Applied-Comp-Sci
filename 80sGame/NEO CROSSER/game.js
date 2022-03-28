@@ -11,11 +11,9 @@ var wDown = false;
 var sDown = false;
 var aDown = false;
 var dDown = false;
-var lastDir = "s";
 var qDown = false;
 var eDown = false;
 var rDown = false;
-var inputMode = "either";
 var mouseDown = false;
 var cursorHB = new HitBox(new Vector(-100, -100), 10, 10);
 document.addEventListener("keydown", keyDownHandle, false);
@@ -123,7 +121,6 @@ function keyDownHandle(e) {
             }
             break;
     }
-    inputMode = "key";
 }
 function keyUpHandle(e) {
     switch (e.key.toLowerCase()) {
@@ -230,18 +227,7 @@ function getMousePos(event) {
     cursorHB.pt.y = event.clientY - rect.top - 6;
 }
 function mouseDownActions() {
-    if (gameScreen == "game") {
-        if (inputMode != "key") {
-            wDown = wTrigger.checkDown(cursorHB, mouseDown);
-            sDown = sTrigger.checkDown(cursorHB, mouseDown);
-            aDown = aTrigger.checkDown(cursorHB, mouseDown);
-            dDown = dTrigger.checkDown(cursorHB, mouseDown);
-            qDown = qAbility.checkDown(cursorHB, mouseDown);
-            eDown = eAbility.checkDown(cursorHB, mouseDown);
-            rDown = rAbility.checkDown(cursorHB, mouseDown);
-        }
-    }
-    else if (gameScreen == "restore") {
+    if (gameScreen == "restore") {
         for (var i = 0; i < restoreButtons.length; i++) {
             if (cursorHB.checkCollide(restoreButtons[i].hb) && i == selectedIndex) {
                 deleteCount += delta;
@@ -254,16 +240,6 @@ function mouseDownActions() {
             }
         }
     }
-}
-function setLastDir() {
-    if (wDown)
-        lastDir = "w";
-    else if (sDown)
-        lastDir = "s";
-    else if (aDown)
-        lastDir = "a";
-    else if (dDown)
-        lastDir = "d";
 }
 function reset() {
     writeScore();
@@ -322,12 +298,12 @@ function writeScore() {
     var scores = getTopScores();
     var scoresNew = [];
     var swap = 0;
-    for (var i_1 = 0; i_1 < scores.length; i_1++) {
-        scoresNew.push(scores[i_1 - swap]);
-        if (topScore > parseInt(scores[i_1].substring(5)) && swap == 0) { // 3 lettes + ':' + ' ' = 5
-            var name_1 = getName("Congrats on a Top 10 Score! (Rank " + (i_1 + 1) + "!) Enter 3 letters for your name on the score board:");
+    for (var i = 0; i < scores.length; i++) {
+        scoresNew.push(scores[i - swap]);
+        if (topScore > parseInt(scores[i].substring(5)) && swap == 0) { // 3 lettes + ':' + ' ' = 5
+            var name_1 = getName("Congrats on a Top 10 Score! (Rank " + (i + 1) + "!) Enter 3 letters for your name on the score board:");
             swap = 1;
-            scoresNew[i_1] = name_1 + ": " + topScore;
+            scoresNew[i] = name_1 + ": " + topScore;
         }
     }
     localStorage.setItem("NEO CROSSER - Leader Board", JSON.stringify(scoresNew));
@@ -336,7 +312,7 @@ function getTopScores() {
     var scores = JSON.parse(localStorage.getItem("NEO CROSSER - Leader Board"));
     if (scores == null) { // no scores variable in localStorage -> fill with blank values
         scores = [];
-        for (var i_2 = 0; i_2 < 10; i_2++)
+        for (var i = 0; i < 10; i++)
             scores.push("N/A: -1");
         localStorage.setItem("NEO CROSSER - Leader Board", JSON.stringify(scores)); // create the variable b/c it doesn't exist
     }
@@ -378,41 +354,41 @@ function save() {
 function restore(savedGame) {
     player.restore(savedGame.player);
     cars = [];
-    for (var i_3 = 0; i_3 < savedGame.cars.length; i_3++) {
+    for (var i = 0; i < savedGame.cars.length; i++) {
         cars.push(new Car(-1, -1, -1));
-        cars[i_3].restore(savedGame.cars[i_3]);
+        cars[i].restore(savedGame.cars[i]);
     }
     buildings = [];
-    for (var i_4 = 0; i_4 < savedGame.buildings.length; i_4++) {
+    for (var i = 0; i < savedGame.buildings.length; i++) {
         buildings.push(new Building(-1));
-        buildings[i_4].restore(savedGame.buildings[i_4]);
+        buildings[i].restore(savedGame.buildings[i]);
     }
     justPlaced = savedGame.justPlaced;
     lasers = [];
-    for (var i_5 = 0; i_5 < savedGame.lasers.length; i_5++) {
+    for (var i = 0; i < savedGame.lasers.length; i++) {
         lasers.push(new Laser(new Vector(-1, -1), -1, -1, true));
-        lasers[i_5].restore(savedGame.lasers[i_5]);
+        lasers[i].restore(savedGame.lasers[i]);
     }
     bar = [];
-    for (var i_6 = 0; i_6 < savedGame.bar.length; i_6++) {
+    for (var i = 0; i < savedGame.bar.length; i++) {
         bar.push(new Block(new Vector(-1, -1), -1, -1, -1));
-        bar[i_6].restore(savedGame.bar[i_6]);
+        bar[i].restore(savedGame.bar[i]);
     }
     ufos = [];
-    for (var i_7 = 0; i_7 < savedGame.ufos.length; i_7++) {
+    for (var i = 0; i < savedGame.ufos.length; i++) {
         ufos.push(new Ufo(-1));
-        ufos[i_7].restore(savedGame.ufos[i_7]);
+        ufos[i].restore(savedGame.ufos[i]);
     }
     landSlides = [];
-    for (var i_8 = 0; i_8 < savedGame.landSlides.length; i_8++) {
+    for (var i = 0; i < savedGame.landSlides.length; i++) {
         landSlides.push(new LandSlide(-1));
-        landSlides[i_8].restore(savedGame.landSlides[i_8]);
+        landSlides[i].restore(savedGame.landSlides[i]);
     }
     landSlideWait = savedGame.landSlideWait;
     pickUps = [];
-    for (var i_9 = 0; i_9 < savedGame.pickUps.length; i_9++) {
+    for (var i = 0; i < savedGame.pickUps.length; i++) {
         pickUps.push(new PickUp(-1, new Image(), -1, -1, function () { }));
-        pickUps[i_9].restore(savedGame.pickUps[i_9]);
+        pickUps[i].restore(savedGame.pickUps[i]);
     }
     qAbility.restore(savedGame.qAbility);
     eAbility.restore(savedGame.eAbility);
@@ -446,6 +422,15 @@ function buttonHover() {
         else if (cursorHB.checkCollide(musicButton.hb))
             musicButton.clicked = 1;
     }
+}
+function setDelta() {
+    t1 = performance.now();
+    var lastDelta = (t1 - t0) / (1000 / 60);
+    if (frame > 20 && lastDelta < 2 * average(deltas))
+        deltas.push(lastDelta); // protect against alt-tab
+    delta = average(deltas);
+    t0 = performance.now();
+    frame++;
 }
 function drawWelcome() {
     context.fillStyle = "#ffffff";
@@ -492,9 +477,8 @@ function drawRestoreMenu() {
     context.font = carHeight / 2 + "px " + font;
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
     context.fillText("Touch to Go Back (or Y)", canvas.width / 2, canvas.height * 1 / 4 - carHeight);
-    if (mouseDown) {
+    if (mouseDown)
         mouseDownActions();
-    }
 }
 function drawDirections() {
     context.fillStyle = "#ffffff";
@@ -535,12 +519,12 @@ function drawScores() {
     var scores = getTopScores();
     var txts = [];
     var maxWidth = 0;
-    for (var i_10 = 0; i_10 < scores.length; i_10++) {
-        var line = (i_10 + 1) + ") ";
-        if (i_10 < 9)
+    for (var i = 0; i < scores.length; i++) {
+        var line = (i + 1) + ") ";
+        if (i < 9)
             line = " " + line; // adjust for 2 digit nums
-        if (parseInt(scores[i_10].substring(5)) > 0)
-            line += scores[i_10];
+        if (parseInt(scores[i].substring(5)) > 0)
+            line += scores[i];
         else
             line += "N/A: 0"; // no player set
         var width = context.measureText(line).width;
@@ -549,16 +533,16 @@ function drawScores() {
         txts.push(line);
     }
     context.textAlign = "left";
-    for (var i_11 = 0; i_11 < txts.length; i_11++) {
-        if (i_11 == 0)
+    for (var i = 0; i < txts.length; i++) {
+        if (i == 0)
             context.fillStyle = "rgba(255, 215, 0, 1)"; // gold
-        else if (i_11 == 1)
+        else if (i == 1)
             context.fillStyle = "rgba(192, 192, 192, 1)"; // silver
-        else if (i_11 == 2)
+        else if (i == 2)
             context.fillStyle = "rgba(205, 127, 50, 1)"; // bronze
         else
-            context.fillStyle = "rgba(255, 255, 255, " + (1 - i_11 / 10 + 0.2) + ")"; // white
-        context.fillText(txts[i_11], canvas.width / 2 - maxWidth / 2, base + carHeight + carHeight * 1 / 2 * (3 + i_11));
+            context.fillStyle = "rgba(255, 255, 255, " + (1 - i / 10 + 0.2) + ")"; // white
+        context.fillText(txts[i], canvas.width / 2 - maxWidth / 2, base + carHeight + carHeight * 1 / 2 * (3 + i));
     }
     context.textAlign = "center";
 }
@@ -633,7 +617,6 @@ function drawHUD() {
         drawHUDDirections();
 }
 function drawGame() {
-    setLastDir();
     for (var i in bar)
         bar[i].draw();
     if (!paused) {
@@ -641,7 +624,7 @@ function drawGame() {
             landSlides[i].update();
         for (var i in pickUps)
             pickUps[i].update();
-        mouseDownActions();
+        player.setLastDir();
         player.move();
         player.draw();
         for (var i in buildings)
@@ -674,8 +657,10 @@ function drawAll() {
         drawWelcome();
     else if (gameScreen == "play")
         drawPlayMenu();
-    else if (gameScreen == "restore")
+    else if (gameScreen == "restore") {
+        mouseDownActions();
         drawRestoreMenu();
+    }
     else if (gameScreen == "game")
         drawGame();
     else if (gameScreen == "directions")
@@ -685,13 +670,7 @@ function drawAll() {
     textOpacity += opacityDir * delta;
     if (textOpacity > 1 || textOpacity < 0)
         opacityDir *= -1;
-    t1 = performance.now();
-    var lastDelta = (t1 - t0) / (1000 / 60);
-    if (frame > 20 && lastDelta < 2 * average(deltas))
-        deltas.push(lastDelta); // protect against alt-tab
-    delta = average(deltas);
-    t0 = performance.now();
-    frame++;
+    setDelta();
     window.requestAnimationFrame(drawAll);
 }
 function setUpContext() {
@@ -949,9 +928,9 @@ var livesView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5)
 context.font = carHeight * 1 / 2 + "px " + font;
 var pauseWidth = 0;
 var txts = ["[R]esume", "[S]ave", "[Q]uit Without Saving", "Toggle [M]usic", "Resume [P]revious Game", "New [G]ame"];
-for (var i_12 in txts) {
-    if (context.measureText(txts[i_12]).width > pauseWidth) {
-        pauseWidth = context.measureText(txts[i_12]).width;
+for (var i in txts) {
+    if (context.measureText(txts[i]).width > pauseWidth) {
+        pauseWidth = context.measureText(txts[i]).width;
     }
 }
 pauseWidth += 40;
@@ -1000,7 +979,7 @@ for (var i = 0; i < 10; i++) {
 // to make it look like player is moving
 var barWidth = 3 / 4 * carHeight;
 var barHeight = (barWidth * 11) / 14; // (33/56) * carHeight
-for (i = 0; i < canvas.height / barHeight; i++) {
+for (var i = 0; i < canvas.height / barHeight; i++) {
     bar.push(new Block(new Vector(0, i * barHeight), i, barWidth, barHeight));
     bar.push(new Block(new Vector(canvas.width - barWidth, i * barHeight), i, barWidth, barHeight));
 }

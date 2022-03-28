@@ -2,13 +2,11 @@ var wDown = false;
 var sDown = false;
 var aDown = false;
 var dDown = false;
-var lastDir = "s";
 
 var qDown = false;
 var eDown = false;
 var rDown = false;
 
-var inputMode = "either";
 var mouseDown = false;
 var cursorHB = new HitBox(new Vector(-100, -100), 10, 10);
 
@@ -96,7 +94,6 @@ function keyDownHandle(e) {
             }
             break;
     }
-    inputMode = "key";
 }
 function keyUpHandle(e) {
     switch (e.key.toLowerCase()) {
@@ -133,7 +130,7 @@ function clickHandler(event) {
     }
     else if (gameScreen == "restore") {
         let buttonHit = false;
-        for (var i = 0; i < restoreButtons.length; i++) {
+        for (let i = 0; i < restoreButtons.length; i++) {
             if (cursorHB.checkCollide(restoreButtons[i].hb)) {
                 if (i == selectedIndex) {
                     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
@@ -180,19 +177,8 @@ function getMousePos(event) {
 }
 
 function mouseDownActions() {
-    if (gameScreen == "game") {
-        if (inputMode != "key") {
-            wDown = wTrigger.checkDown(cursorHB, mouseDown);
-            sDown = sTrigger.checkDown(cursorHB, mouseDown);
-            aDown = aTrigger.checkDown(cursorHB, mouseDown);
-            dDown = dTrigger.checkDown(cursorHB, mouseDown);
-            qDown = qAbility.checkDown(cursorHB, mouseDown);
-            eDown = eAbility.checkDown(cursorHB, mouseDown);
-            rDown = rAbility.checkDown(cursorHB, mouseDown);
-        }
-    }
-    else if (gameScreen == "restore") {
-        for (var i = 0; i < restoreButtons.length; i++) {
+    if (gameScreen == "restore") {
+        for (let i = 0; i < restoreButtons.length; i++) {
             if (cursorHB.checkCollide(restoreButtons[i].hb) && i == selectedIndex) {
                 deleteCount += delta;
                 if (deleteCount > 60) {
@@ -204,13 +190,6 @@ function mouseDownActions() {
             }
         }
     }
-}
-
-function setLastDir() {
-    if (wDown) lastDir = "w";
-    else if (sDown) lastDir = "s";
-    else if (aDown) lastDir = "a";
-    else if (dDown) lastDir = "d";
 }
 
 function reset() {
@@ -235,7 +214,7 @@ function degToRad(deg) {
 function average(lst) {
     if (lst.length == 0) return 1;
     let sum = 0;
-    for (var i in lst) sum += lst[i];
+    for (let i in lst) sum += lst[i];
     return sum/lst.length;
 }
 
@@ -407,6 +386,15 @@ function buttonHover() {
     }
 }
 
+function setDelta() {
+    t1 = performance.now();
+    let lastDelta = (t1 - t0)/(1000/60);
+    if (frame > 20 && lastDelta < 2 * average(deltas)) deltas.push(lastDelta); // protect against alt-tab
+    delta = average(deltas);
+    t0 = performance.now();
+    frame++;
+}
+
 function drawWelcome() {
     context.fillStyle = "#ffffff";
     context.font = carHeight + "px " + font;
@@ -442,7 +430,7 @@ function drawRestoreMenu() {
         deleteCount = 0;
     }
 
-    for (var i = 0; i < games.length; i++) {
+    for (let i = 0; i < games.length; i++) {
         let y = canvas.height/2 - (carHeight * 3/4 + 20) * 1/2 - 10 + (i - selectedIndex) * (carHeight * 3/4 + 40);
         let button = new ButtonMenu(new Vector(canvas.width/2 - pauseWidth/2, y), pauseWidth, carHeight * 3/4 + 20, games[i].name, carHeight * 1/2);
         restoreButtons.push(button);
@@ -462,9 +450,7 @@ function drawRestoreMenu() {
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
     context.fillText("Touch to Go Back (or Y)", canvas.width/2, canvas.height * 1/4 - carHeight);
 
-    if (mouseDown) {
-        mouseDownActions();
-    }
+    if (mouseDown) mouseDownActions();
 }
 
 function drawDirections() {
@@ -494,7 +480,7 @@ function drawDirections() {
 
     context.fillStyle = "#ffffff";
     context.font = carHeight * 5/12 + "px  " + font;
-    for (var i = 0; i < txts.length; i++) context.fillText(txts[i], canvas.width/2, base + carHeight + carHeight * 1/2 * (3+i));
+    for (let i = 0; i < txts.length; i++) context.fillText(txts[i], canvas.width/2, base + carHeight + carHeight * 1/2 * (3+i));
 }
 
 function drawScores() {
@@ -554,7 +540,7 @@ function drawHUDDirections() {
     context.fillStyle = "rgba(255,255,255," + directionsOpacity + ")";
     context.textAlign = "left";
     let txts = ["Q: Teleport", "E: Sprint", "R: Lasers"];
-    for (var i = 0; i < txts.reverse().length; i++) {
+    for (let i = 0; i < txts.reverse().length; i++) {
         context.fillText(txts[i], carHeight, playerLevel + carHeight * 2.2 - i * h * 1.1);
     }
     context.textAlign = "center";
@@ -564,7 +550,7 @@ function drawHUDDirections() {
 function drawPauseMenu() {
     player.draw();
     let obstacles = [...pickUps, ...landSlides, ...cars, ...ufos, ...buildings, ...lasers];
-    for (var i in obstacles) obstacles[i].draw();
+    for (let i in obstacles) obstacles[i].draw();
 
     drawHUD();
 
@@ -616,23 +602,22 @@ function drawHUD() {
 }
 
 function drawGame() {
-    setLastDir();
-    for (var i in bar) bar[i].draw();
+    for (let i in bar) bar[i].draw();
     if (!paused) {
-        for (var i in landSlides) landSlides[i].update();
-        for (var i in pickUps) pickUps[i].update();
-        mouseDownActions();
+        for (let i in landSlides) landSlides[i].update();
+        for (let i in pickUps) pickUps[i].update();
+        player.setLastDir();
         player.move();
         player.draw();
-        for (var i in buildings) buildings[i].draw();
+        for (let i in buildings) buildings[i].draw();
         let enemies = [...cars, ...ufos];
-        for (var i in enemies) {
+        for (let i in enemies) {
             enemies[i].update();
             enemies[i].draw();
             if (alive) player.checkHit(enemies[i]);
         }
-        for (var i in lasers) lasers[i].update();
-        for (var i in notices) notices[i].draw();
+        for (let i in lasers) lasers[i].update();
+        for (let i in notices) notices[i].draw();
         drawHUD();
         if (!alive) drawGameOver();
     }
@@ -649,7 +634,10 @@ function drawAll() {
 
     if (gameScreen == "welcome") drawWelcome();
     else if (gameScreen == "play") drawPlayMenu();
-    else if (gameScreen == "restore") drawRestoreMenu();
+    else if (gameScreen == "restore") {
+        mouseDownActions();
+        drawRestoreMenu();
+    }
     else if (gameScreen == "game") drawGame();
     else if (gameScreen == "directions") drawDirections();
     else if (gameScreen == "scores") drawScores();
@@ -657,13 +645,7 @@ function drawAll() {
     textOpacity += opacityDir * delta;
     if (textOpacity > 1 || textOpacity < 0) opacityDir *= -1;
 
-    t1 = performance.now();
-    let lastDelta = (t1 - t0)/(1000/60);
-    if (frame > 20 && lastDelta < 2 * average(deltas)) deltas.push(lastDelta); // protect against alt-tab
-    delta = average(deltas);
-    t0 = performance.now();
-    frame++;
-
+    setDelta();
     window.requestAnimationFrame(drawAll);
 }
 
@@ -743,7 +725,7 @@ rSound.src = "rSound.mp3";
 rSound.volume = 1.0/soundOffset;
 
 var laserSounds = [];
-for (var i = 0; i < 10; i++) {
+for (let i = 0; i < 10; i++) {
     laserSounds.push(document.createElement("audio"));
     laserSounds[i].src = "laserHitSound.mp3";
     laserSounds[i].volume = 0.8/soundOffset;
@@ -1003,7 +985,7 @@ var pickUps = [];
 
 const base = playerLevel - 3 * carHeight;
 var justPlaced = true; // true to skip placing one in the first row
-for (var i = 0; i < 10; i++) {
+for (let i = 0; i < 10; i++) {
     let startPosY = base - (1.5 * carHeight * i);
     let speed = (getRandomInt(700, 900)/100) * canvas.width * 1/6000;
     speed = getRandomInt(1, 3) == 2 ? -speed : speed;
@@ -1018,7 +1000,7 @@ for (var i = 0; i < 10; i++) {
 // to make it look like player is moving
 const barWidth = 3/4 * carHeight;
 const barHeight = (barWidth * 11) / 14; // (33/56) * carHeight
-for (i = 0; i < canvas.height/barHeight; i++) {
+for (let i = 0; i < canvas.height/barHeight; i++) {
     bar.push(new Block(new Vector(0, i * barHeight), i, barWidth, barHeight));
     bar.push(new Block(new Vector(canvas.width - barWidth, i * barHeight), i, barWidth, barHeight));
 }

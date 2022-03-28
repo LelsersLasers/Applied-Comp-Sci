@@ -7,6 +7,8 @@ Typescript:
 Bugs:
 - Cars getting stuck in walls/buildings when
     - (twitching back and forth)
+- Notice text hidden under image?
+- Pressing S in pause menu causes player to be stuck going down 
 
 Make game easier
     - Getting past 6k is too hard
@@ -58,16 +60,19 @@ Clarity
     - restore w/h?
         - update hb with w/h
     - use super.restore to improve
-- for var i vs let i
 - softCap
-- touch code
-    - remove/rework inputmode = 'key'
 - General:
     - Simply lines
     - duplicate code -> function
     - can use 'a = b = 0'
 - Constructors for classes
     - what is already global var
+- Remove touch code
+- Set textOpacity to 1 when reused
+    - new screen
+    - new landslide
+    - game over
+    - etc
 
 Redo any art?
 - tanks

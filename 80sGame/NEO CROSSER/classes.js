@@ -113,14 +113,6 @@ var Trigger = /** @class */ (function (_super) {
         context.font = carHeight / 3 + "px " + font;
         context.fillText(this.txt, this.pt.x + this.w / 2, this.pt.y + this.h / 2);
     };
-    Trigger.prototype.checkDown = function (cursorHB, mouseDown) {
-        if (cursorHB.checkCollide(this.hb) && mouseDown) {
-            this.down = true;
-            return true;
-        }
-        this.down = false;
-        return false;
-    };
     return Trigger;
 }(Thing));
 var Ability = /** @class */ (function (_super) {
@@ -249,9 +241,9 @@ var Laser = /** @class */ (function (_super) {
             if (this.hb.checkCollide(enemies[i].hb)) {
                 enemies[i].active = false;
                 enemies[i].stun += this.stunTime;
-                for (var i in laserSounds) {
-                    if (laserSounds[i].currentTime == laserSounds[i].duration || laserSounds[i].currentTime == 0) {
-                        laserSounds[i].play();
+                for (var j in laserSounds) {
+                    if (laserSounds[j].currentTime == laserSounds[j].duration || laserSounds[j].currentTime == 0) {
+                        laserSounds[j].play();
                         break;
                     }
                 }
@@ -300,20 +292,13 @@ var Player = /** @class */ (function (_super) {
         _this.sprintSpeed = 1.5;
         _this.animation = 0;
         _this.frame = 0;
+        _this.lastDir = "s";
         _this.lastDrawDir = 0;
         _this.afterImages = [];
         _this.stun = 0;
         _this.lastStun = 0;
         _this.stunProtection = 0;
         _this.spawnProtection = 60 / 5;
-        _this.msX = canvas.width / 14;
-        _this.msY = 1.5 * canvas.height / 14;
-        _this.msXIncrease = _this.msX / 20;
-        _this.msYIncrease = _this.msY / 20;
-        _this.teleportSpeed = 3;
-        _this.sprintSpeed = 1.5;
-        _this.animation = 0;
-        _this.lastDrawDir = 0;
         _this.hb.pt = new Vector(-1, -1); // break reference to this.pt
         _this.hb.useSmallHB(_this.pt, _this.w, _this.h);
         return _this;
@@ -354,9 +339,19 @@ var Player = /** @class */ (function (_super) {
                 this.animation = 0;
         }
     };
+    Player.prototype.setLastDir = function () {
+        if (wDown)
+            this.lastDir = "w";
+        else if (sDown)
+            this.lastDir = "s";
+        else if (aDown)
+            this.lastDir = "a";
+        else if (dDown)
+            this.lastDir = "d";
+    };
     Player.prototype.checkAbilites = function () {
         if (qAbility.canUse(qDown)) { // teleport ability
-            switch (lastDir) {
+            switch (this.lastDir) {
                 case "w":
                     for (var i = 0; i < this.teleportSpeed * 2 + 1; i++) {
                         this.afterImages.push(new AfterImage(new Vector(this.pt.x, this.pt.y - i * this.msY / 2), this.w, this.h, Number(!alive), this.lastDrawDir, this.animation, 50 * i / 2));
@@ -383,16 +378,16 @@ var Player = /** @class */ (function (_super) {
                     break;
             }
             this.hb.useSmallHB(this.pt, this.w, this.h);
-            for (var i_1 in buildings) {
-                if (this.hb.checkCollide(buildings[i_1].hb)) {
-                    if (lastDir == "w")
-                        this.moveVertical(-(buildings[i_1].pt.y + buildings[i_1].h - this.pt.y));
-                    else if (lastDir == "s")
-                        this.moveVertical(this.pt.y - buildings[i_1].pt.y + this.h);
-                    else if (lastDir == "a")
-                        this.pt.x += buildings[i_1].pt.x + buildings[i_1].w - this.pt.x;
-                    else if (lastDir == "d")
-                        this.pt.x -= this.pt.x - buildings[i_1].pt.x + this.w;
+            for (var i in buildings) {
+                if (this.hb.checkCollide(buildings[i].hb)) {
+                    if (this.lastDir == "w")
+                        this.moveVertical(-(buildings[i].pt.y + buildings[i].h - this.pt.y));
+                    else if (this.lastDir == "s")
+                        this.moveVertical(this.pt.y - buildings[i].pt.y + this.h);
+                    else if (this.lastDir == "a")
+                        this.pt.x += buildings[i].pt.x + buildings[i].w - this.pt.x;
+                    else if (this.lastDir == "d")
+                        this.pt.x -= this.pt.x - buildings[i].pt.x + this.w;
                     break;
                 }
             }
@@ -415,7 +410,7 @@ var Player = /** @class */ (function (_super) {
         if (alive && this.active) {
             if (wDown || sDown || aDown || dDown) {
                 this.frame += delta;
-                switch (lastDir) {
+                switch (this.lastDir) {
                     case "w":
                         this.moveVertical(this.msY / moveWait * delta);
                         break;
@@ -432,13 +427,13 @@ var Player = /** @class */ (function (_super) {
                 this.hb.useSmallHB(this.pt, this.w, this.h);
                 for (var i in buildings) {
                     if (this.hb.checkCollide(buildings[i].hb)) { // if it is touching, undo the last movement
-                        if (lastDir == "a")
+                        if (this.lastDir == "a")
                             this.pt.x += this.msX / moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
-                        else if (lastDir == "d")
+                        else if (this.lastDir == "d")
                             this.pt.x -= this.msX / moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
-                        else if (lastDir == "w")
+                        else if (this.lastDir == "w")
                             this.moveVertical(-this.msY / moveWait * delta);
-                        else if (lastDir == "s")
+                        else if (this.lastDir == "s")
                             this.moveVertical(this.msY / moveWait * delta);
                         break;
                     }
@@ -476,7 +471,7 @@ var Player = /** @class */ (function (_super) {
             this.afterImages[i].draw();
         if (alive && !paused && this.active) {
             var dirs = ["s", "w", "d", "a"];
-            var dir = dirs.indexOf(lastDir);
+            var dir = dirs.indexOf(this.lastDir);
             this.lastDrawDir = dir;
         }
         if (this.spawnProtection <= 0 || Number(this.spawnProtection.toFixed(0)) % 2 != 0 || !alive) {
@@ -671,12 +666,15 @@ var Car = /** @class */ (function (_super) {
                 this.pt.x += this.ms * delta;
                 this.updateCanShoot(this.type == 2, 80);
                 this.checkShoot(new Vector(this.ms > 0 ? this.pt.x + this.w : this.pt.x, this.pt.y + this.h * 4 / 17));
-                if (this.hb.outOfBounds())
+                if (this.hb.outOfBounds()) {
                     this.ms *= -1;
+                    this.update();
+                }
             }
             for (var i in buildings) {
                 if (this.hb.checkCollide(buildings[i].hb)) {
                     this.ms *= -1;
+                    this.update();
                     break;
                 }
             }
@@ -842,7 +840,7 @@ var Building = /** @class */ (function (_super) {
         _this = _super.call(this, pt, w, h) || this;
         _this.buildings = [];
         _this.buildings = [];
-        for (var i_2 = 0; i_2 < buildingCount; i_2++) {
+        for (var i = 0; i < buildingCount; i++) {
             var src = getRandomInt(0, 3);
             _this.buildings.push(posSourceBuilding[src]);
         }
