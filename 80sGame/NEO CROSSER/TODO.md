@@ -5,9 +5,8 @@ Typescript:
 - Use types better
 
 Bugs:
-- Cars getting stuck in walls/buildings when
+- Cars getting stuck in walls/buildings
     - (twitching back and forth)
-- Notice text hidden under image?
 
 Make game easier
     - Getting past 6k is too hard
