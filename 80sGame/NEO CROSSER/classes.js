@@ -405,6 +405,7 @@ var Player = /** @class */ (function (_super) {
         }
     };
     Player.prototype.move = function () {
+        this.setLastDir();
         this.updateStun();
         this.spawnProtection -= delta * 0.2;
         if (alive && this.active) {
@@ -529,9 +530,6 @@ var Enemy = /** @class */ (function (_super) {
         _this.animationWaitBase = 30;
         _this.canShoot = false;
         _this.ms = ms;
-        _this.laserFireSound = document.createElement("audio");
-        _this.laserFireSound.src = "targetingSound.mp3";
-        _this.laserFireSound.volume = 4.5 / soundOffset;
         return _this;
     }
     Enemy.prototype.updateStun = function () {
@@ -569,7 +567,12 @@ var Enemy = /** @class */ (function (_super) {
                 lasers.push(new Laser(startPt, -1, 60, false));
                 lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w / 2 - startPt.x, player.pt.y + player.h / 2 - startPt.y);
                 lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);
-                this.laserFireSound.play();
+                for (var i in laserTargetingSounds) {
+                    if (laserTargetingSounds[i].currentTime == laserTargetingSounds[i].duration || laserTargetingSounds[i].currentTime == 0) {
+                        laserTargetingSounds[i].play();
+                        break;
+                    }
+                }
             }
         }
     };

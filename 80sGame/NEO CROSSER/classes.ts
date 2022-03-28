@@ -469,7 +469,7 @@ class AfterImage extends Thing {
 }
 
 class Enemy extends Thing {
-    ms; laserFireSound;
+    ms;
     frame = 0;
     stun = 0;
     animation = getRandomInt(0, 2);
@@ -478,10 +478,6 @@ class Enemy extends Thing {
     constructor(pt, w, h, ms) {
         super(pt, w, h);
         this.ms = ms;
-
-        this.laserFireSound = document.createElement("audio");
-        this.laserFireSound.src = "targetingSound.mp3";
-        this.laserFireSound.volume = 4.5/soundOffset;
     }
     updateStun() {
         this.stun -= delta;
@@ -517,7 +513,12 @@ class Enemy extends Thing {
                 lasers.push(new Laser(startPt, -1, 60, false));
                 lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - startPt.x, player.pt.y + player.h/2 - startPt.y);
                 lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);
-                this.laserFireSound.play();
+                for (let i in laserTargetingSounds) {
+                    if (laserTargetingSounds[i].currentTime == laserTargetingSounds[i].duration || laserTargetingSounds[i].currentTime == 0) {
+                        laserTargetingSounds[i].play();
+                        break;
+                    }
+                }
             }
         }
     }

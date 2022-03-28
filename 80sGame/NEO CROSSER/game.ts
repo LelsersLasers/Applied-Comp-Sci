@@ -739,6 +739,13 @@ for (let i = 0; i < 10; i++) {
     laserSounds[i].volume = 0.8/soundOffset;
 }
 
+var laserTargetingSounds = [];
+for (let i = 0; i < 10; i++) {
+    laserTargetingSounds.push(document.createElement("audio"));
+    laserTargetingSounds[i].src = "targetingSound.mp3";
+    laserTargetingSounds[i].volume = 4.5/soundOffset;
+}
+
 var backgroundMusic = document.createElement("audio");
 backgroundMusic.src = "backgroundMusic.mp3";
 var backgroundMusicPlaying = false;

@@ -626,10 +626,8 @@ function drawGame() {
             landSlides[i].update();
         for (var i in pickUps)
             pickUps[i].update();
-        player.setLastDir();
         player.move();
         player.draw();
-        console.log(sDown, player.lastDir);
         for (var i in buildings)
             buildings[i].draw();
         var enemies = __spreadArray(__spreadArray([], cars, true), ufos, true);
@@ -743,6 +741,12 @@ for (var i = 0; i < 10; i++) {
     laserSounds.push(document.createElement("audio"));
     laserSounds[i].src = "laserHitSound.mp3";
     laserSounds[i].volume = 0.8 / soundOffset;
+}
+var laserTargetingSounds = [];
+for (var i = 0; i < 10; i++) {
+    laserTargetingSounds.push(document.createElement("audio"));
+    laserTargetingSounds[i].src = "targetingSound.mp3";
+    laserTargetingSounds[i].volume = 4.5 / soundOffset;
 }
 var backgroundMusic = document.createElement("audio");
 backgroundMusic.src = "backgroundMusic.mp3";
