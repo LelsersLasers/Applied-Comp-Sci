@@ -896,10 +896,10 @@ class Notice extends Thing {
         if (this.frames > 0) {
             context.globalAlpha = textOpacity;
             context.drawImage(texWarning, 0, 0, 20, 19, this.pt.x, this.pt.y, this.w, this.h);
-            context.globalAlpha = 1;
             context.font = carHeight/2 + "px " + font;
-            context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
+            context.fillStyle ="#ffffff";
             context.fillText("Incoming", this.pt.x + this.w/2, this.pt.y + this.h + carHeight/2);
+            context.globalAlpha = 1;
             if (!paused) this.frames -= delta;
         }
         else notices.splice(notices.indexOf(this), 1);
