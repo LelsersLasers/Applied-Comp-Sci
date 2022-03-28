@@ -66,8 +66,10 @@ function keyDownHandle(e) {
             break;
         case "r":
         case "3":
-            if (paused)
+            if (paused) {
                 paused = false;
+                sDown = false;
+            }
             rDown = true;
             break;
         case "z":
@@ -203,6 +205,7 @@ function clickHandler(event) {
         else if (paused) {
             if (cursorHB.checkCollide(resumeButton.hb)) {
                 paused = false;
+                sDown = false;
             }
             else if (cursorHB.checkCollide(saveButton.hb)) {
                 save();
@@ -627,6 +630,7 @@ function drawGame() {
         player.setLastDir();
         player.move();
         player.draw();
+        console.log(sDown, player.lastDir);
         for (var i in buildings)
             buildings[i].draw();
         var enemies = __spreadArray(__spreadArray([], cars, true), ufos, true);

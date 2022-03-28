@@ -49,7 +49,10 @@ function keyDownHandle(e) {
             break;
         case "e": case "2": eDown = true; break;
         case "r": case "3":
-            if (paused) paused = false;
+            if (paused) {
+                paused = false;
+                sDown = false;
+            }
             rDown = true;
             break;
         case "z": case "escape":
@@ -152,6 +155,7 @@ function clickHandler(event) {
         else if (paused) {
             if (cursorHB.checkCollide(resumeButton.hb)) {
                 paused = false;
+                sDown = false;
             }
             else if (cursorHB.checkCollide(saveButton.hb)) {
                 save();
@@ -609,6 +613,7 @@ function drawGame() {
         player.setLastDir();
         player.move();
         player.draw();
+        console.log(sDown, player.lastDir);
         for (let i in buildings) buildings[i].draw();
         let enemies = [...cars, ...ufos];
         for (let i in enemies) {

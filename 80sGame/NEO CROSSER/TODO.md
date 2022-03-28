@@ -8,7 +8,6 @@ Bugs:
 - Cars getting stuck in walls/buildings when
     - (twitching back and forth)
 - Notice text hidden under image?
-- Pressing S in pause menu causes player to be stuck going down 
 
 Make game easier
     - Getting past 6k is too hard
