@@ -93,7 +93,7 @@ function keyDownHandle(e) {
             else if (gameScreen == "game" && !alive) reset();
             else if (gameScreen == "directions" || gameScreen == "scores") {
                 gameScreen = "welcome";
-                localStorage.setItem("firstBoot", "true");
+                localStorage.setItem("firstBoot", "false");
             }
             break;
     }
@@ -117,9 +117,7 @@ function clickHandler(event) {
         else if (cursorHB.checkCollide(scoresButton.hb)) {
             gameScreen = "scores";
         }
-        else {
-            gameScreen = "play";
-        }
+        else gameScreen = "play";
     }
     else if (gameScreen == "play") {
         if (cursorHB.checkCollide(previousGameButton.hb)) {
@@ -171,7 +169,7 @@ function clickHandler(event) {
     }
     else if (gameScreen == "directions" || gameScreen == "scores") {
         gameScreen = "welcome";
-        localStorage.setItem("firstBoot", "true");
+        localStorage.setItem("firstBoot", "false");
     }
 }
 function getMousePos(event) {
