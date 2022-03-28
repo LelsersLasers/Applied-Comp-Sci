@@ -672,7 +672,7 @@ function drawAll() {
     else if (gameScreen == "scores")
         drawScores();
     textOpacity += opacityDir * delta;
-    if (textOpacity > 1 || textOpacity < 0)
+    if (textOpacity > 1 || textOpacity < -opacityDir)
         opacityDir *= -1;
     setDelta();
     window.requestAnimationFrame(drawAll);
