@@ -20,6 +20,11 @@ display use w/s up/down to change the selected save
 mouse hover over buttons in restore screen
 
 "Clean" code
+- Set textOpacity to 1 when reused
+    - new screen
+    - new landslide
+    - game over
+    - etc
 - New instances of things do not create new audio things
     - Just create 1 on load, and play it
 - LET
@@ -45,11 +50,6 @@ mouse hover over buttons in restore screen
 - Constructors for classes
     - what is already global var
 - Remove touch code
-- Set textOpacity to 1 when reused
-    - new screen
-    - new landslide
-    - game over
-    - etc
 
 Clarity
 - General colors/hitboxes
