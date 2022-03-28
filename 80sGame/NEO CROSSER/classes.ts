@@ -294,7 +294,7 @@ class Player extends Thing {
     }
     updateAnimation() {
         let animationWait = eAbility.active ? 6 : 8;
-        if (Number(this.frame.toFixed(0)) % animationWait == 0 && alive) {
+        if (checkFrame(this.frame, animationWait) && alive) {
             this.animation++;
             this.frame++; // so if player stops on a % = 0, it doesn't freak out
             if (this.animation > 3) this.animation = 0;
@@ -422,7 +422,7 @@ class Player extends Thing {
             let dir = dirs.indexOf(this.lastDir);
             this.lastDrawDir = dir;
         }
-        if (this.spawnProtection <= 0 || Number(this.spawnProtection.toFixed(0)) % 2 != 0 || !alive) {
+        if (this.spawnProtection <= 0 || !checkFrame(this.spawnProtection, 2) || !alive) {
             context.drawImage(texPlayer, posSourcePlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][0], posSourcePlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
         }
     }
@@ -486,7 +486,7 @@ class Enemy extends Thing {
             this.frame += delta;
             let animationWait = this.getAnimationWait();
             animationWait = animationWait > 0 ? animationWait : this.animationWaitBase;
-            if (Number(this.frame.toFixed(0)) % animationWait == 0) {
+            if (checkFrame(this.frame, animationWait)) {
                 this.animation = Number(!this.animation);
                 this.frame++;
             }
@@ -504,7 +504,7 @@ class Enemy extends Thing {
         if (this.canShoot) {
             let animationWait = this.getAnimationWait() * 10;
             animationWait = animationWait > 0 ? animationWait : this.animationWaitBase * 4;
-            if (Number(this.frame.toFixed(0)) % animationWait == 1) {
+            if (checkFrame(this.frame - 1, animationWait)) {
                 lasers.push(new Laser(startPt, -1, 60, false));
                 lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w/2 - startPt.x, player.pt.y + player.h/2 - startPt.y);
                 lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);

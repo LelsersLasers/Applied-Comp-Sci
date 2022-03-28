@@ -242,12 +242,6 @@ var Laser = /** @class */ (function (_super) {
                 enemies[i].active = false;
                 enemies[i].stun += this.stunTime;
                 playFromSoundArray(laserSounds);
-                // for (let j in laserSounds) {
-                //     if (laserSounds[j].currentTime == laserSounds[j].duration || laserSounds[j].currentTime == 0) {
-                //         laserSounds[j].play();
-                //         break;
-                //     }
-                // }
                 lasers.splice(lasers.indexOf(this), 1);
                 break;
             }
@@ -333,7 +327,7 @@ var Player = /** @class */ (function (_super) {
     };
     Player.prototype.updateAnimation = function () {
         var animationWait = eAbility.active ? 6 : 8;
-        if (Number(this.frame.toFixed(0)) % animationWait == 0 && alive) {
+        if (checkFrame(this.frame, animationWait) && alive) {
             this.animation++;
             this.frame++; // so if player stops on a % = 0, it doesn't freak out
             if (this.animation > 3)
@@ -477,7 +471,7 @@ var Player = /** @class */ (function (_super) {
             var dir = dirs.indexOf(this.lastDir);
             this.lastDrawDir = dir;
         }
-        if (this.spawnProtection <= 0 || Number(this.spawnProtection.toFixed(0)) % 2 != 0 || !alive) {
+        if (this.spawnProtection <= 0 || !checkFrame(this.spawnProtection, 2) || !alive) {
             context.drawImage(texPlayer, posSourcePlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][0], posSourcePlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
         }
     };
@@ -545,7 +539,7 @@ var Enemy = /** @class */ (function (_super) {
             this.frame += delta;
             var animationWait = this.getAnimationWait();
             animationWait = animationWait > 0 ? animationWait : this.animationWaitBase;
-            if (Number(this.frame.toFixed(0)) % animationWait == 0) {
+            if (checkFrame(this.frame, animationWait)) {
                 this.animation = Number(!this.animation);
                 this.frame++;
             }
@@ -564,7 +558,7 @@ var Enemy = /** @class */ (function (_super) {
         if (this.canShoot) {
             var animationWait = this.getAnimationWait() * 10;
             animationWait = animationWait > 0 ? animationWait : this.animationWaitBase * 4;
-            if (Number(this.frame.toFixed(0)) % animationWait == 1) {
+            if (checkFrame(this.frame - 1, animationWait)) {
                 lasers.push(new Laser(startPt, -1, 60, false));
                 lasers[lasers.length - 1].moveVector = new Vector(player.pt.x + player.w / 2 - startPt.x, player.pt.y + player.h / 2 - startPt.y);
                 lasers[lasers.length - 1].moveVector.scale(lasers[lasers.length - 1].ms);
@@ -684,7 +678,7 @@ var Car = /** @class */ (function (_super) {
             else if (this.type == 2)
                 newMs *= 2;
             cars.push(new Car(y, newMs, this.msIncrease)); // always spawn new car
-            if (Math.random() < ((topScore / (softCap * 3) > 1 / 3 ? 1 / 3 : topScore / (softCap * 3)))) {
+            if (Math.random() < ((topScore / (softCap * 4) > 1 / 4 ? 1 / 4 : topScore / (softCap * 3)))) {
                 ufos.push(new Ufo(y));
             }
             if (Math.random() < buildingBlockCount / 10 && !justPlaced) {

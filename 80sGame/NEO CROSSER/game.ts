@@ -284,6 +284,10 @@ function playFromSoundArray(sounds) {
     }
 }
 
+function checkFrame(frame, inverval) {
+    return Number(frame.toFixed(0)) % inverval == 0;
+}
+
 function getFontHeight(w, letters) {
     context.font = 1 + "px " + font;
     let ratio = 1/context.measureText("a").width;
