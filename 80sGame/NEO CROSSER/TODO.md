@@ -31,9 +31,6 @@ mouse hover over buttons in restore screen
     - Make sure everything uses it
 - Pause menu
     - consistent about what pauses
-- animation code
-- shooting code
-    - optimize
 - restores bugtest
     - restore w/h?
         - update hb with w/h
