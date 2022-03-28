@@ -2,28 +2,20 @@ var wDown = false;
 var sDown = false;
 var aDown = false;
 var dDown = false;
-var mouseDown = false;
-var cursorHB = new HitBox(new Vector(-100, -100), 10, 10);
 document.addEventListener("keydown", keyDownHandle, false);
 document.addEventListener("keyup", keyUpHandle, false);
-document.addEventListener("click", clickHandler, false);
-document.addEventListener("mousemove", getMousePos, false);
 function keyDownHandle(e) {
     switch (e.key.toLowerCase()) {
         case "w":
-        case "arrowup":
             wDown = true;
             break;
         case "s":
-        case "arrowdown":
             sDown = true;
             break;
         case "a":
-        case "arrowleft":
             aDown = true;
             break;
         case "d":
-        case "arrowright":
             dDown = true;
             break;
     }
@@ -31,28 +23,18 @@ function keyDownHandle(e) {
 function keyUpHandle(e) {
     switch (e.key.toLowerCase()) {
         case "w":
-        case "arrowup":
             wDown = false;
             break;
         case "s":
-        case "arrowdown":
             sDown = false;
             break;
         case "a":
-        case "arrowleft":
             aDown = false;
             break;
         case "d":
-        case "arrowright":
             dDown = false;
             break;
     }
-}
-function clickHandler(event) { }
-function getMousePos(event) {
-    var rect = canvas.getBoundingClientRect();
-    cursorHB.pt.x = event.clientX - rect.left - 6;
-    cursorHB.pt.y = event.clientY - rect.top - 6;
 }
 function mouseDownActions() { }
 function reset() {
@@ -93,30 +75,24 @@ function setDelta() {
     frame++;
 }
 function drawGame() {
-    player.move();
-    player.draw();
-    enemy.update();
-    enemy.draw();
+    player.draw("#00ff00");
 }
 function drawAll() {
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height);
-    if (gameScreen == "game")
-        drawGame();
+    drawGame();
     setDelta();
     window.requestAnimationFrame(drawAll);
 }
-function setUpContext() {
+function setUpCanvas() {
     // Get width/height of the browser window
     console.log("Window is %d by %d", window.innerWidth, window.innerHeight);
     // Get the canvas, set the width and height from the window
     canvas = document.getElementById("mainCanvas");
     canvas.width = window.innerWidth - 20;
     canvas.height = window.innerHeight - 20;
-    canvas.onmousedown = function () { return mouseDown = true; };
-    canvas.onmouseup = function () { return mouseDown = false; };
     // Set up the context for the animation
-    var context = canvas.getContext("2d");
+    context = canvas.getContext("2d");
     // disable anti-alising
     context.imageSmoothingEnabled = false; // standard
     context.mozImageSmoothingEnabled = false; // Firefox
@@ -126,7 +102,6 @@ function setUpContext() {
     context.textAlign = "center";
     context.textBaseline = "middle";
     context.lineWidth = 3;
-    return context;
 }
 var t0 = performance.now();
 var t1 = performance.now();
@@ -134,11 +109,10 @@ var delta = 1; // delta is relative to 60fps
 var frame = 0;
 var deltas = [];
 var font = "monospace";
-var gameScreen = "game";
 // Set up the canvas, context objects, and html elements
 var canvas;
-var context = setUpContext();
-var player = new Player(new Vector(20, 20), 20, 20, "#00ff00", 3, 100, 20);
-var enemy = new Enemy(player, new Vector(200, 200), 15, 15, "#ff0000", 2, 50, 10);
+var context;
+setUpCanvas();
+var player = new HitBox(new Vector(20, 20), 20, 20);
 // Fire up the animation engine
 window.requestAnimationFrame(drawAll);
