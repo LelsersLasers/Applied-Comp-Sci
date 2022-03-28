@@ -709,8 +709,8 @@ var spawnLife = softCap/3;
 
 const moveWait = 30;
 
-var textOpacity = 0.99;
-var opacityDir = -0.04;
+var textOpacity = 1;
+var opacityDir = -0.035;
 
 var directionsOpacity = 1.2;
 

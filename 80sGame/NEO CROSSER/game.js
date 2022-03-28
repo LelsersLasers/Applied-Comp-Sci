@@ -717,8 +717,8 @@ var topScore = 0;
 var lives = 3;
 var spawnLife = softCap / 3;
 var moveWait = 30;
-var textOpacity = 0.99;
-var opacityDir = -0.04;
+var textOpacity = 1;
+var opacityDir = -0.035;
 var directionsOpacity = 1.2;
 var soundOffset = 10.0;
 // Set up the canvas, context objects, and html elements
