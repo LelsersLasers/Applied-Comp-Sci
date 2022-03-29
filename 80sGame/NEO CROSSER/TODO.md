@@ -1,28 +1,32 @@
 # TODO
 
+# Main ideas
+2.0) Bug test current
+3.0) Redo HBs
+    - Things extend HB or Things.hb = []
+    - Allow hitboxes to be more custom to the class and match art
+4.0) Cleaning
+5.0) Electron
+6.0) Final
+
+
+# Details
 Typescript:
 - to compile: tsc game.ts classes.ts
 - Use types better
 
 Bugs:
-- Cars getting stuck in walls/buildings
+- FIXED?: Cars getting stuck in walls/buildings
     - (twitching back and forth)
-
-Make game easier
-- Getting past 6k is too hard
-    - Shift to 8k
-- Ufos slower for longer
-- Cars start slower?
 
 display restore touch directions
 display use w/s up/down to change the selected save
 
 mouse hover over buttons in restore screen
 
+ELECTRON
+
 "Clean" code
-- Set textOpacity to 1 when landslide comes onto screen
-- New instances of things do not create new audio things
-    - Just create 1 on load, and play it
 - LET
     - scope
 - stun protection
@@ -36,13 +40,17 @@ mouse hover over buttons in restore screen
         - update hb with w/h
     - use super.restore to improve
 - softCap
+    - Make sure everything uses it
+    - Tune/balance
 - General:
     - Simplify lines
     - duplicate code -> function
     - can use 'a = b = 0'
+- Set textOpacity to 1 when landslide comes onto screen
 - Constructors for classes
     - what is already global var
 - Remove touch code
+    - Delete on restore screen?
 
 Clarity
 - General colors/hitboxes
