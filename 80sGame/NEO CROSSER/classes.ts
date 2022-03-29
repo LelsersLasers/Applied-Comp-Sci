@@ -600,14 +600,32 @@ class Car extends Enemy {
     getSmallHB() {
         switch (this.type) {
             case 0:
-                return super.getHB();
+                if (this.ms > 0) {
+                    return new HitBox(
+                        new Vector(this.pt.x + this.w/15, this.pt.y + this.h/15),
+                        this.w * 4/5, this.h * 4/5
+                    );
+                }
+                return new HitBox(
+                    new Vector(this.pt.x + this.w * (1/5 - 1/15), this.pt.y + this.h/15),
+                    this.w * 4/5, this.h * 4/5
+                );
             case 1:
                 return new HitBox(
                     new Vector(this.pt.x + this.w/10, this.pt.y + this.h/10),
-                    this.w * 4/5, this.h * 3/5
+                    this.w * 4/5, this.h * 7/10
                 );
             case 2:
-                return super.getHB();
+                if (this.ms > 0) {
+                    return new HitBox(
+                        new Vector(this.pt.x + this.w/10, this.pt.y + this.h/5),
+                        this.w * (3/4 - 1/10), this.h * 7/10
+                    );
+                }
+                return new HitBox(
+                    new Vector(this.pt.x + this.w/4, this.pt.y + this.h/5),
+                    this.w * (3/4 - 1/10), this.h * 7/10
+                );
         }
         return new HitBox(
             new Vector(this.pt.x + this.w/5, this.pt.y),
