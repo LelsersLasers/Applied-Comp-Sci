@@ -618,7 +618,7 @@ var Car = /** @class */ (function (_super) {
         var _this = this;
         var rand = Math.random();
         var type = 0;
-        var tankChance = topScore < 1 ? 0 : 1 / 10;
+        var tankChance = topScore < softCap * 3 / 4 ? 0 : 1 / 10;
         if (rand < tankChance)
             type = 2;
         else if (rand - tankChance < 1 / 7)

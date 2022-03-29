@@ -653,9 +653,6 @@ function drawGame() {
     }
     else
         drawPauseMenu();
-    var obstacles = __spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray([], pickUps, true), landSlides, true), cars, true), buildings, true), lasers, true), ufos, true), [player], false);
-    for (var i in obstacles)
-        obstacles[i].drawOutline("#00ffff", true);
     if (backgroundMusic.currentTime < 100)
         backgroundMusic.currentTime = 100;
 }
