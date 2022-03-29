@@ -559,7 +559,7 @@ class Car extends Enemy {
     constructor(y, ms, msIncrease) {
         let rand = Math.random();
         let type = 0;
-        let tankChance = topScore < softCap * 1/2 ? 0 : 1/10;
+        let tankChance = topScore < softCap * 3/4 ? 0 : 1/10;
         if (rand < tankChance) type = 2;
         else if (rand - tankChance < 1/7) type = 1;
 
@@ -718,7 +718,7 @@ class Ufo extends Enemy {
         else if (this.active) {
             this.pt.apply(this.move);
             if (this.outOfBounds()) this.move.x *= -1;
-            this.updateCanShoot(topScore > softCap * 3/4, 100);
+            this.updateCanShoot(topScore > softCap, 100);
             this.checkShoot(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19));
         }
     }
