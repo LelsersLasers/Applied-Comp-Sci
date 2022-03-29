@@ -471,7 +471,7 @@ var Player = /** @class */ (function (_super) {
             this.lastDrawDir = dir;
         }
         if (this.spawnProtection <= 0 || !checkFrame(this.spawnProtection, 2) || !alive) {
-            context.drawImage(texPlayer, posSourcePlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][0], posSourcePlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
+            context.drawImage(texPlayer, texSrcPlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][0], texSrcPlayer[Number(!alive)][Number(!this.active)][this.lastDrawDir][this.animation][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
         }
     };
     Player.prototype.restore = function (save) {
@@ -504,7 +504,7 @@ var AfterImage = /** @class */ (function (_super) {
     AfterImage.prototype.draw = function () {
         if (this.frames > 0) {
             context.globalAlpha = this.frames / 300 * 0.6;
-            context.drawImage(texPlayer, posSourcePlayer[this.a][0][this.b][this.c][0], posSourcePlayer[this.a][0][this.b][this.c][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
+            context.drawImage(texPlayer, texSrcPlayer[this.a][0][this.b][this.c][0], texSrcPlayer[this.a][0][this.b][this.c][1], 10, 11, this.pt.x, this.pt.y, this.w, this.h);
             context.globalAlpha = 1;
             if (!paused)
                 this.frames -= delta;
@@ -716,14 +716,14 @@ var Car = /** @class */ (function (_super) {
         if (!this.hidden) {
             var dir = this.ms > 0 ? 0 : 1;
             if (this.type == 1) {
-                context.drawImage(texBus, posSourceBus[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 40, 17, this.pt.x, this.pt.y, this.w, this.h);
+                context.drawImage(texBus, texSrcBus[Number(!this.active)][dir][this.animation][0], texSrcCar[Number(!this.active)][dir][this.animation][1], 40, 17, this.pt.x, this.pt.y, this.w, this.h);
             }
             else if (this.type == 2) {
-                context.drawImage(texTank, posSourceTank[Number(this.canShoot)][dir][this.animation][0], posSourceTank[Number(this.canShoot)][dir][this.animation][1], 33, 16, this.pt.x, this.pt.y, this.w, this.h);
+                context.drawImage(texTank, texSrcTank[Number(this.canShoot)][dir][this.animation][0], texSrcTank[Number(this.canShoot)][dir][this.animation][1], 33, 16, this.pt.x, this.pt.y, this.w, this.h);
                 this.drawTarget(new Vector(this.ms > 0 ? this.pt.x + this.w : this.pt.x, this.pt.y + this.h * 4 / 17));
             }
             else {
-                context.drawImage(texCar, posSourceCar[Number(!this.active)][dir][this.animation][0], posSourceCar[Number(!this.active)][dir][this.animation][1], 34, 17, this.pt.x, this.pt.y, this.w, this.h);
+                context.drawImage(texCar, texSrcCar[Number(!this.active)][dir][this.animation][0], texSrcCar[Number(!this.active)][dir][this.animation][1], 34, 17, this.pt.x, this.pt.y, this.w, this.h);
             }
         }
     };
@@ -773,7 +773,7 @@ var Ufo = /** @class */ (function (_super) {
     };
     Ufo.prototype.draw = function () {
         // this.hb.useSmallHB(this.pt, this.w, this.h);
-        context.drawImage(texUfo, posSourceUfo[Number(!this.active)][Number(this.canShoot)][this.animation][0], posSourceUfo[Number(!this.active)][Number(this.canShoot)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
+        context.drawImage(texUfo, texSrcUfo[Number(!this.active)][Number(this.canShoot)][this.animation][0], texSrcUfo[Number(!this.active)][Number(this.canShoot)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
         this.drawTarget(new Vector(this.pt.x + this.w / 2, this.pt.y + this.h * 8 / 19));
     };
     Ufo.prototype.restore = function (save) {
@@ -791,7 +791,7 @@ var Block = /** @class */ (function (_super) {
         return _this;
     }
     Block.prototype.draw = function () {
-        context.drawImage(texBar, posSourceBar[this.animation][0], posSourceBar[this.animation][1], 14, 11, this.pt.x, this.pt.y, this.w, this.h);
+        context.drawImage(texBar, texSrcBar[this.animation][0], texSrcBar[this.animation][1], 14, 11, this.pt.x, this.pt.y, this.w, this.h);
     };
     Block.prototype.update = function () {
         if (this.pt.y < -this.h)
@@ -832,7 +832,7 @@ var Building = /** @class */ (function (_super) {
         _this.buildings = [];
         for (var i = 0; i < buildingCount; i++) {
             var src = getRandomInt(0, 3);
-            _this.buildings.push(posSourceBuilding[src]);
+            _this.buildings.push(texSrcBuilding[src]);
         }
         _this.widthOfOne = widthOfOne;
         return _this;
@@ -884,7 +884,7 @@ var ButtonExtra = /** @class */ (function (_super) {
     }
     ButtonExtra.prototype.draw = function () {
         context.globalAlpha = 0.8;
-        context.drawImage(texPause, posSourcePause[Number(!paused)][0], posSourcePause[Number(!paused)][1], 14, 14, this.pt.x, this.pt.y, this.w, this.h);
+        context.drawImage(texPause, texSrcPause[Number(!paused)][0], texSrcPause[Number(!paused)][1], 14, 14, this.pt.x, this.pt.y, this.w, this.h);
         context.globalAlpha = 1;
     };
     return ButtonExtra;
@@ -932,7 +932,7 @@ var LandSlide = /** @class */ (function (_super) {
         }
     };
     LandSlide.prototype.draw = function () {
-        context.drawImage(texLandSlide, posSourceLandSlide[Number(!Boolean(this.dir))][this.animation][0], posSourceLandSlide[Number(!Boolean(this.dir))][this.animation][1], 82, 40, this.pt.x, this.pt.y, this.w, this.h);
+        context.drawImage(texLandSlide, texSrcLandSlide[Number(!Boolean(this.dir))][this.animation][0], texSrcLandSlide[Number(!Boolean(this.dir))][this.animation][1], 82, 40, this.pt.x, this.pt.y, this.w, this.h);
     };
     return LandSlide;
 }(Enemy));

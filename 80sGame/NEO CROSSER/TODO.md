@@ -31,7 +31,6 @@ mouse hover over buttons in restore screen
 ELECTRON
 
 "Clean" code
-- pick shorter name then 'possouceX'
 - LET
     - scope
 - stun protection

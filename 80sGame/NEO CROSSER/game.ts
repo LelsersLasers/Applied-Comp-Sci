@@ -770,7 +770,7 @@ var musicShouldPlay = localStorage.getItem("playMusic") != null ? localStorage.g
 
 var texPlayer = new Image();
 texPlayer.src = "player-10x11-8x8-1spacing.png";
-var posSourcePlayer = [ // [!alive][!active][dir][animationPlayer][x/y]
+var texSrcPlayer = [ // [!alive][!active][dir][animationPlayer][x/y]
     [ // not dead
         [ // not stunned
             [[0,  0], [11,  0], [22,  0], [33,  0]], // down
@@ -803,7 +803,7 @@ var posSourcePlayer = [ // [!alive][!active][dir][animationPlayer][x/y]
 
 var texCar = new Image();
 texCar.src = "car-34x17-2x4-1spacing.png";
-var posSourceCar = [ // [active][dir][animation][x/y]
+var texSrcCar = [ // [active][dir][animation][x/y]
     [ // if active
         [ // if dir == right
             [0, 0], // animation 1
@@ -828,7 +828,7 @@ var posSourceCar = [ // [active][dir][animation][x/y]
 
 var texBus = new Image();
 texBus.src = "bus-40x17-2x4-1spacing.png";
-var posSourceBus = [ // [active][dir][animation][x/y]
+var texSrcBus = [ // [active][dir][animation][x/y]
     [ // if active
         [ // if dir == right
             [0, 0], // animation 1
@@ -853,7 +853,7 @@ var posSourceBus = [ // [active][dir][animation][x/y]
 
 var texTank = new Image();
 texTank.src = "tank-33x16-2x4-1spacing.png";
-var posSourceTank = [
+var texSrcTank = [
     [ // can't shoot
         [ // if dir == right
             [0, 0],
@@ -878,7 +878,7 @@ var posSourceTank = [
 
 var texUfo = new Image();
 texUfo.src = "ufo-20x19-4x2-1spacing.png";
-var posSourceUfo = [
+var texSrcUfo = [
     [ // active
         [ // can't shoot
             [0, 0],
@@ -903,14 +903,14 @@ var posSourceUfo = [
 
 var texBar = new Image();
 texBar.src = "arrow-14x11-1x2-1spacing.png";
-var posSourceBar = [
+var texSrcBar = [
     [0, 0], // purple
     [0, 12], // yellow
 ];
 
 var texBuilding = new Image();
 texBuilding.src = "building-26x40-3x1-1spacing.png";
-var posSourceBuilding = [
+var texSrcBuilding = [
     [0, 0],
     [27, 0],
     [54, 0]
@@ -918,7 +918,7 @@ var posSourceBuilding = [
 
 var texLandSlide = new Image();
 texLandSlide.src = "landSlide-82x41-1x4-1spacing.png";
-var posSourceLandSlide = [
+var texSrcLandSlide = [
     [ // left
         [0, 0],
         [0, 41]
@@ -931,7 +931,7 @@ var posSourceLandSlide = [
 
 var texPause = new Image();
 texPause.src = "pause-14x14-2x1-1spacing.png";
-var posSourcePause = [
+var texSrcPause = [
     [0, 0],
     [15, 0]
 ];
