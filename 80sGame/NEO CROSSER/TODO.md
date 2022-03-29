@@ -8,6 +8,17 @@
 5.0) Electron
 6.0) Final
 
+# Balance
+- Harder around 6k
+- Easier around 10k (by a little)
+- Ufos slower later, faster earlier
+    - always the same speed?
+- Less pickup spawns
+- Cars slightly faster
+- Teleport distance is independent MS
+- Ufos higher delay between shots
+- Tanks lower delay between shots
+
 
 # Details
 Typescript:
