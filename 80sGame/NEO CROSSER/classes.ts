@@ -42,7 +42,7 @@ class HitBox {
         this.w = w * 3/5;
         this.h = h * 4/5;
     }
-    draw(color) {
+    drawOutline(color) {
         context.strokeStyle = color;
         context.strokeRect(this.pt.x, this.pt.y, this.w, this.h);
     }
@@ -53,21 +53,18 @@ class HitBox {
     }
 }
 
-class Thing {
-    pt; w; h; hb;
+class Thing extends HitBox {
+    pt; w; h;
     active = true;
     constructor(pt, w, h) {
+        super(pt, w, h);
         this.pt = pt;
         this.w = w;
         this.h = h;
-        this.hb = new HitBox(pt, w, h);
     }
     restore(save) {
-        this.pt.restore(save.pt);
-        this.w = save.w;
-        this.h = save.h;
+        super.restore(save);
         this.active = save.active;
-        this.hb.restore(save.hb);
     }
 }
 
@@ -211,7 +208,7 @@ class Laser extends Thing {
         }
         let enemies = this.friendly ? [...cars, ...ufos] : [player];
         for (let i in enemies) {
-            if (this.hb.checkCollide(enemies[i].hb)) {
+            if (this.checkCollide(enemies[i])) {
                 enemies[i].active = false;
                 enemies[i].stun += this.stunTime;
                 playFromSoundArray(laserSounds);
@@ -220,7 +217,7 @@ class Laser extends Thing {
             }
         }
         for (let i in buildings) {
-            if (this.hb.checkCollide(buildings[i].hb)) {
+            if (this.checkCollide(buildings[i])) {
                 lasers.splice(lasers.indexOf(this), 1);
                 break;
             }
@@ -231,8 +228,8 @@ class Laser extends Thing {
         context.strokeStyle = this.color;
         context.lineWidth = this.ms * 1.5;
         context.beginPath();
-        context.moveTo(this.pt.x + this.hb.w/2, this.pt.y + this.hb.h/2);
-        context.lineTo(this.pt.x + this.hb.w/2 - this.moveVector.x * 3 * 1/delta, this.pt.y + this.hb.h/2 - this.moveVector.y * 3 * 1/delta);
+        context.moveTo(this.pt.x + this.w/2, this.pt.y + this.h/2);
+        context.lineTo(this.pt.x + this.w/2 - this.moveVector.x * 3 * 1/delta, this.pt.y + this.h/2 - this.moveVector.y * 3 * 1/delta);
         context.stroke();
         context.lineWidth = 3;
     }
@@ -266,8 +263,8 @@ class Player extends Thing {
     spawnProtection = 60/5;
     constructor() {
         super(new Vector(canvas.width/2 - carHeight/2, playerLevel), carHeight * 10/11, carHeight);
-        this.hb.pt = new Vector(-1, -1); // break reference to this.pt
-        this.hb.useSmallHB(this.pt, this.w, this.h);
+        // this.hb.pt = new Vector(-1, -1); // break reference to this.pt
+        // this.hb.useSmallHB(this.pt, this.w, this.h);
     }
     moveVertical(ms) {
         let obstacles = [...pickUps, ...landSlides, ...cars, ...buildings, ...lasers, ...bar, ...this.afterImages, ...ufos];
@@ -334,9 +331,9 @@ class Player extends Thing {
                     this.pt.x += this.msX * this.teleportSpeed;
                     break
             }
-            this.hb.useSmallHB(this.pt, this.w, this.h);
+            // this.hb.useSmallHB(this.pt, this.w, this.h);
             for (let i in buildings) {
-                if (this.hb.checkCollide(buildings[i].hb)) {
+                if (this.checkCollide(buildings[i])) {
                     if (this.lastDir == "w") this.moveVertical(-(buildings[i].pt.y + buildings[i].h - this.pt.y));
                     else if (this.lastDir == "s") this.moveVertical(this.pt.y - buildings[i].pt.y + this.h);
                     else if (this.lastDir == "a") this.pt.x += buildings[i].pt.x + buildings[i].w - this.pt.x;
@@ -378,9 +375,9 @@ class Player extends Thing {
                         this.pt.x += this.msX/moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
                         break;
                 }
-                this.hb.useSmallHB(this.pt, this.w, this.h);
+                // this.hb.useSmallHB(this.pt, this.w, this.h);
                 for (let i in buildings) {
-                    if (this.hb.checkCollide(buildings[i].hb)) { // if it is touching, undo the last movement
+                    if (this.checkCollide(buildings[i])) { // if it is touching, undo the last movement
                         if (this.lastDir == "a") this.pt.x += this.msX/moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
                         else if (this.lastDir == "d") this.pt.x -= this.msX/moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
                         else if (this.lastDir == "w") this.moveVertical(-this.msY/moveWait * delta);
@@ -394,10 +391,10 @@ class Player extends Thing {
         }
         if (this.pt.x < 0) this.pt.x = 0;
         else if (this.pt.x + this.w > canvas.width) this.pt.x = canvas.width - this.w;
-        this.hb.useSmallHB(this.pt, this.w, this.h);
+        // this.hb.useSmallHB(this.pt, this.w, this.h);
     }
-    checkHit(enemy) {
-        if (enemy.hb.checkCollide(player.hb)) {
+    checkDeath(enemy) {
+        if (enemy.checkCollide(player)) {
             if (this.spawnProtection < 0) {
                 deathHitSound.currentTime = 0;
                 deathHitSound.play();
@@ -518,9 +515,9 @@ class Enemy extends Thing {
         let tempHB = new HitBox(new Vector(this.pt.x + this.w/2, this.pt.y + this.h/2), 1, 1);
         while (!tempHB.outOfBounds()) {
             tempHB.pt.apply(checkObstructed);
-            if (tempHB.checkCollide(player.hb)) return true;
+            if (tempHB.checkCollide(player)) return true;
             for (let i in buildings) {
-                if (tempHB.checkCollide(buildings[i].hb)) return false;
+                if (tempHB.checkCollide(buildings[i])) return false;
             }
         }
         return true;
@@ -570,7 +567,7 @@ class Car extends Enemy {
             var x = getRandomInt(0, canvas.width - w);
             let tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (let i in buildings) {
-                if (tempHB.checkCollide(buildings[i].hb)) {
+                if (tempHB.checkCollide(buildings[i])) {
                     badX = true;
                     break;
                 }
@@ -596,13 +593,13 @@ class Car extends Enemy {
                 this.pt.x += this.ms * delta;
                 this.updateCanShoot(this.type == 2, 80);
                 this.checkShoot(new Vector(this.ms > 0 ? this.pt.x + this.w : this.pt.x, this.pt.y + this.h * 4/17));
-                if (this.hb.outOfBounds()) {
+                if (this.outOfBounds()) {
                     this.ms *= -1;
                     this.update();
                 }
             }
             for (let i in buildings) {
-                if (this.hb.checkCollide(buildings[i].hb)) {
+                if (this.checkCollide(buildings[i])) {
                     this.ms *= -1;
                     this.update();
                     break;
@@ -698,8 +695,8 @@ class Ufo extends Enemy {
         else {
             this.move = new Vector(getRandomInt(-12, 12), getRandomInt(3, 5));
         }
-        this.hb.pt = new Vector(-1, -1); // break reference to this.pt
-        this.hb.useSmallHB(this.pt, this.w, this.h);
+        // this.hb.pt = new Vector(-1, -1); // break reference to this.pt
+        // this.hb.useSmallHB(this.pt, this.w, this.h);
         this.move.scale(this.ms);
     }
     update() {
@@ -709,14 +706,14 @@ class Ufo extends Enemy {
         if (this.pt.y > cars[0].pt.y && this.pt.y > canvas.height) ufos.splice(ufos.indexOf(this), 1);
         else if (this.active) {
             this.pt.apply(this.move);
-            this.hb.useSmallHB(this.pt, this.w, this.h);
-            if (this.hb.outOfBounds()) this.move.x *= -1;
+            // this.hb.useSmallHB(this.pt, this.w, this.h);
+            if (this.outOfBounds()) this.move.x *= -1;
             this.updateCanShoot(topScore > softCap * 3/4, 100);
             this.checkShoot(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19));
         }
     }
     draw() {
-        this.hb.useSmallHB(this.pt, this.w, this.h);
+        // this.hb.useSmallHB(this.pt, this.w, this.h);
         context.drawImage(texUfo, posSourceUfo[Number(!this.active)][Number(this.canShoot)][this.animation][0], posSourceUfo[Number(!this.active)][Number(this.canShoot)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
         this.drawTarget(new Vector(this.pt.x + this.w/2, this.pt.y + this.h * 8/19));
     }
@@ -762,7 +759,7 @@ class Building extends Thing {
             var x = getRandomInt(0, canvas.width - w);
             let tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (let i in cars) {
-                if (tempHB.checkCollide(cars[i].hb)) {
+                if (tempHB.checkCollide(cars[i])) {
                     badX = true;
                     break;
                 }
@@ -801,14 +798,14 @@ class ButtonMenu extends Thing {
     draw() {
         context.font = this.textSize + "px " + font;;
         if (this.clicked > 0) {
-            this.hb.draw("#000000");
+            this.drawOutline("#000000");
             context.fillStyle = "#ffffff";
             context.fillRect(this.pt.x, this.pt.y, this.w, this.h);
             context.fillStyle = "#000000";
             context.fillText(this.text, canvas.width/2, this.pt.y + this.h/2);
         }
         else {
-            this.hb.draw("#ffffff");
+            this.drawOutline("#ffffff");
             context.fillStyle = "#ffffff";
             context.fillText(this.text, canvas.width/2, this.pt.y + this.h/2);
         }
@@ -852,16 +849,16 @@ class LandSlide extends Enemy {
             this.pt.x += this.ms;
             let obstacles = [...pickUps, ...cars, player];
             for (let i in obstacles) {
-                if (this.hb.checkCollide(obstacles[i].hb)) {
+                if (this.checkCollide(obstacles[i])) {
                     obstacles[i].pt.x += this.ms/3;
-                    player.hb.useSmallHB(player.pt, player.w, player.h);
+                    // player.hb.useSmallHB(player.pt, player.w, player.h);
                     for (var j in buildings) {
-                        if (obstacles[i].hb.checkCollide(buildings[j].hb)) {
-                            obstacles[i].pt.x = this.ms > 0 ? buildings[j].pt.x - obstacles[i].hb.w : buildings[j].pt.x + buildings[j].hb.w;
-                            obstacles[i].pt.x -= (obstacles[i].w - obstacles[i].hb.w)/2; // for player
+                        if (obstacles[i].checkCollide(buildings[j])) {
+                            obstacles[i].pt.x = this.ms > 0 ? buildings[j].pt.x - obstacles[i].w : buildings[j].pt.x + buildings[j].w;
+                            // obstacles[i].pt.x -= (obstacles[i].w - obstacles[i].w)/2; // for player
                         }
                     }
-                    if (obstacles[i].hb.outOfBounds()) {
+                    if (obstacles[i].outOfBounds()) {
                         obstacles[i].pt.x = this.ms > 0 ? canvas.width - obstacles[i].w : 0;
                     }
                 }
@@ -908,7 +905,7 @@ class PickUp extends Thing {
             var x = getRandomInt(0, canvas.width - w);
             let tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (let i in buildings) {
-                if (tempHB.checkCollide(buildings[i].hb)) {
+                if (tempHB.checkCollide(buildings[i])) {
                     badX = true;
                     break;
                 }
@@ -930,7 +927,7 @@ class PickUp extends Thing {
     }
     update() {
         this.updateBounce();
-        if (this.hb.checkCollide(player.hb)) {
+        if (this.checkCollide(player)) {
             this.action();
             pickUps.splice(pickUps.indexOf(this), 1);
         }

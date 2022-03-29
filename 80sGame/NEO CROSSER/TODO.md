@@ -8,6 +8,7 @@
     - 'Dynamic HB'
         - Use normal HB for walls/buildings
         - Smaller for hit against enemy
+    - - Make Thing extend HB
 4.0) Cleaning
 5.0) Electron
 6.0) Final
@@ -30,6 +31,7 @@ mouse hover over buttons in restore screen
 ELECTRON
 
 "Clean" code
+- pick shorter name then 'possouceX'
 - LET
     - scope
 - stun protection
@@ -72,7 +74,6 @@ Possible addition features:
 - On Demand Scaling
     - on restore
     - on screen change size
-- Make Thing extend HB
 - efficeny: only check things that make sense
     - LoS doesn't need to check all buildings, etc
 - Settings Screen
