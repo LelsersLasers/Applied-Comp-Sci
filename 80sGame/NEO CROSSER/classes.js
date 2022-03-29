@@ -55,20 +55,22 @@ var HitBox = /** @class */ (function () {
     HitBox.prototype.getHB = function () {
         return new HitBox(new Vector(this.pt.x, this.pt.y), this.w, this.h);
     };
-    HitBox.prototype.checkCollide = function (boxOther) {
-        var thisHB = this.getHB();
-        var otherHB = boxOther.getHB();
+    HitBox.prototype.getSmallHB = function () {
+        return this.getHB();
+    };
+    HitBox.prototype.checkCollide = function (boxOther, smallHB) {
+        var thisHB = smallHB ? this.getSmallHB() : this.getHB();
+        var otherHB = smallHB ? boxOther.getSmallHB() : boxOther.getHB();
         return (thisHB.pt.x < otherHB.pt.x + otherHB.w
             && otherHB.pt.x < thisHB.pt.x + thisHB.w
             && thisHB.pt.y < otherHB.pt.y + otherHB.h
             && otherHB.pt.y < thisHB.pt.y + thisHB.h);
     };
     HitBox.prototype.outOfBounds = function () {
-        var thisHB = this.getHB();
-        return (thisHB.pt.x < 0 || thisHB.pt.x + thisHB.w > canvas.width);
+        return (this.pt.x < 0 || this.pt.x + this.w > canvas.width);
     };
     HitBox.prototype.drawOutline = function (color) {
-        var thisHB = this.getHB();
+        var thisHB = this.getSmallHB();
         context.strokeStyle = color;
         context.strokeRect(thisHB.pt.x, thisHB.pt.y, thisHB.w, thisHB.h);
     };
@@ -241,7 +243,7 @@ var Laser = /** @class */ (function (_super) {
         }
         var enemies = this.friendly ? __spreadArray(__spreadArray([], cars, true), ufos, true) : [player];
         for (var i in enemies) {
-            if (this.checkCollide(enemies[i])) {
+            if (this.checkCollide(enemies[i], !this.friendly)) {
                 enemies[i].active = false;
                 enemies[i].stun += this.stunTime;
                 playFromSoundArray(laserSounds);
@@ -250,7 +252,7 @@ var Laser = /** @class */ (function (_super) {
             }
         }
         for (var i in buildings) {
-            if (this.checkCollide(buildings[i])) {
+            if (this.checkCollide(buildings[i], false)) {
                 lasers.splice(lasers.indexOf(this), 1);
                 break;
             }
@@ -377,7 +379,7 @@ var Player = /** @class */ (function (_super) {
                     break;
             }
             for (var i in buildings) {
-                if (this.checkCollide(buildings[i])) {
+                if (this.checkCollide(buildings[i], true)) {
                     if (this.lastDir == "w")
                         this.moveVertical(-(buildings[i].pt.y + buildings[i].h - this.pt.y));
                     else if (this.lastDir == "s")
@@ -424,7 +426,7 @@ var Player = /** @class */ (function (_super) {
                         break;
                 }
                 for (var i in buildings) {
-                    if (this.checkCollide(buildings[i])) { // if it is touching, undo the last movement
+                    if (this.checkCollide(buildings[i], true)) { // if it is touching, undo the last movement
                         if (this.lastDir == "a")
                             this.pt.x += this.msX / moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
                         else if (this.lastDir == "d")
@@ -446,7 +448,7 @@ var Player = /** @class */ (function (_super) {
             this.pt.x = canvas.width - this.w;
     };
     Player.prototype.checkDeath = function (enemy) {
-        if (enemy.checkCollide(player)) {
+        if (enemy.checkCollide(player, true)) {
             if (this.spawnProtection < 0) {
                 deathHitSound.currentTime = 0;
                 deathHitSound.play();
@@ -573,10 +575,10 @@ var Enemy = /** @class */ (function (_super) {
         var tempHB = new HitBox(new Vector(this.pt.x + this.w / 2, this.pt.y + this.h / 2), 1, 1);
         while (!tempHB.outOfBounds()) {
             tempHB.pt.apply(checkObstructed);
-            if (tempHB.checkCollide(player))
+            if (tempHB.checkCollide(player, true))
                 return true;
             for (var i in buildings) {
-                if (tempHB.checkCollide(buildings[i]))
+                if (tempHB.checkCollide(buildings[i], true))
                     return false;
             }
         }
@@ -610,7 +612,7 @@ var Car = /** @class */ (function (_super) {
         var _this = this;
         var rand = Math.random();
         var type = 0;
-        var tankChance = topScore < softCap * 1 / 2 ? 0 : 1 / 10;
+        var tankChance = topScore < softCap * 3 / 4 ? 0 : 1 / 10;
         if (rand < tankChance)
             type = 2;
         else if (rand - tankChance < 1 / 7)
@@ -627,7 +629,7 @@ var Car = /** @class */ (function (_super) {
             var x = getRandomInt(0, canvas.width - w);
             var tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (var i in buildings) {
-                if (tempHB.checkCollide(buildings[i])) {
+                if (tempHB.checkCollide(buildings[i], false)) {
                     badX = true;
                     break;
                 }
@@ -648,6 +650,17 @@ var Car = /** @class */ (function (_super) {
             _this.pt.x = -9999;
         return _this;
     }
+    Car.prototype.getSmallHB = function () {
+        switch (this.type) {
+            case 0:
+                return _super.prototype.getHB.call(this);
+            case 1:
+                return new HitBox(new Vector(this.pt.x + this.w / 10, this.pt.y + this.h / 10), this.w * 4 / 5, this.h * 3 / 5);
+            case 2:
+                return _super.prototype.getHB.call(this);
+        }
+        return new HitBox(new Vector(this.pt.x + this.w / 5, this.pt.y), this.w * 3 / 5, this.h);
+    };
     Car.prototype.update = function () {
         if (!this.hidden) {
             if (this.type == 2)
@@ -664,7 +677,7 @@ var Car = /** @class */ (function (_super) {
                 }
             }
             for (var i in buildings) {
-                if (this.checkCollide(buildings[i])) {
+                if (this.checkCollide(buildings[i], false)) {
                     this.ms *= -1;
                     this.update();
                     break;
@@ -769,7 +782,7 @@ var Ufo = /** @class */ (function (_super) {
             this.pt.apply(this.move);
             if (this.outOfBounds())
                 this.move.x *= -1;
-            this.updateCanShoot(topScore > softCap * 3 / 4, 100);
+            this.updateCanShoot(topScore > softCap, 100);
             this.checkShoot(new Vector(this.pt.x + this.w / 2, this.pt.y + this.h * 8 / 19));
         }
     };
@@ -821,7 +834,7 @@ var Building = /** @class */ (function (_super) {
             var x = getRandomInt(0, canvas.width - w);
             var tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (var i in cars) {
-                if (tempHB.checkCollide(cars[i])) {
+                if (tempHB.checkCollide(cars[i], false)) {
                     badX = true;
                     break;
                 }
@@ -915,13 +928,11 @@ var LandSlide = /** @class */ (function (_super) {
             this.pt.x += this.ms;
             var obstacles = __spreadArray(__spreadArray(__spreadArray([], pickUps, true), cars, true), [player], false);
             for (var i in obstacles) {
-                if (this.checkCollide(obstacles[i])) {
+                if (this.checkCollide(obstacles[i], true)) {
                     obstacles[i].pt.x += this.ms / 3;
-                    // player.hb.useSmallHB(player.pt, player.w, player.h);
                     for (var j in buildings) {
-                        if (obstacles[i].checkCollide(buildings[j])) {
+                        if (obstacles[i].checkCollide(buildings[j], false)) {
                             obstacles[i].pt.x = this.ms > 0 ? buildings[j].pt.x - obstacles[i].w : buildings[j].pt.x + buildings[j].w;
-                            // obstacles[i].pt.x -= (obstacles[i].w - obstacles[i].w)/2; // for player
                         }
                     }
                     if (obstacles[i].outOfBounds()) {
@@ -974,7 +985,7 @@ var PickUp = /** @class */ (function (_super) {
             var x = getRandomInt(0, canvas.width - w);
             var tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (var i in buildings) {
-                if (tempHB.checkCollide(buildings[i])) {
+                if (tempHB.checkCollide(buildings[i], false)) {
                     badX = true;
                     break;
                 }
@@ -998,7 +1009,7 @@ var PickUp = /** @class */ (function (_super) {
     };
     PickUp.prototype.update = function () {
         this.updateBounce();
-        if (this.checkCollide(player)) {
+        if (this.checkCollide(player, false)) {
             this.action();
             pickUps.splice(pickUps.indexOf(this), 1);
         }

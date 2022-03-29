@@ -158,20 +158,20 @@ function keyUpHandle(e) {
 }
 function clickHandler(event) {
     if (gameScreen == "welcome") {
-        if (cursorHB.checkCollide(directionsButton)) {
+        if (cursorHB.checkCollide(directionsButton, false)) {
             gameScreen = "directions";
         }
-        else if (cursorHB.checkCollide(scoresButton)) {
+        else if (cursorHB.checkCollide(scoresButton, false)) {
             gameScreen = "scores";
         }
         else
             gameScreen = "play";
     }
     else if (gameScreen == "play") {
-        if (cursorHB.checkCollide(previousGameButton)) {
+        if (cursorHB.checkCollide(previousGameButton, false)) {
             gameScreen = "restore";
         }
-        else if (cursorHB.checkCollide(newGameButton)) {
+        else if (cursorHB.checkCollide(newGameButton, false)) {
             gameScreen = "game";
             musicStart();
         }
@@ -181,7 +181,7 @@ function clickHandler(event) {
     else if (gameScreen == "restore") {
         var buttonHit = false;
         for (var i = 0; i < restoreButtons.length; i++) {
-            if (cursorHB.checkCollide(restoreButtons[i])) {
+            if (cursorHB.checkCollide(restoreButtons[i], false)) {
                 if (i == selectedIndex) {
                     var games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
                     restore(games[selectedIndex]);
@@ -199,21 +199,21 @@ function clickHandler(event) {
         reset();
     }
     else if (gameScreen == "game") {
-        if (cursorHB.checkCollide(pauseButton))
+        if (cursorHB.checkCollide(pauseButton, false))
             paused = !paused;
         else if (paused) {
-            if (cursorHB.checkCollide(resumeButton)) {
+            if (cursorHB.checkCollide(resumeButton, false)) {
                 paused = false;
                 sDown = false;
             }
-            else if (cursorHB.checkCollide(saveButton)) {
+            else if (cursorHB.checkCollide(saveButton, false)) {
                 save();
                 saveButton.clicked = 10;
             }
-            else if (cursorHB.checkCollide(quitButton)) {
+            else if (cursorHB.checkCollide(quitButton, false)) {
                 reset();
             }
-            else if (cursorHB.checkCollide(musicButton)) {
+            else if (cursorHB.checkCollide(musicButton, false)) {
                 musicToggle();
             }
         }
@@ -231,7 +231,7 @@ function getMousePos(event) {
 function mouseDownActions() {
     if (gameScreen == "restore") {
         for (var i = 0; i < restoreButtons.length; i++) {
-            if (cursorHB.checkCollide(restoreButtons[i]) && i == selectedIndex) {
+            if (cursorHB.checkCollide(restoreButtons[i], false) && i == selectedIndex) {
                 deleteCount += delta;
                 if (deleteCount > 60) {
                     var games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
@@ -414,25 +414,25 @@ function restore(savedGame) {
 }
 function buttonHover() {
     if (gameScreen == "welcome") {
-        if (cursorHB.checkCollide(directionsButton))
+        if (cursorHB.checkCollide(directionsButton, false))
             directionsButton.clicked = 1;
-        else if (cursorHB.checkCollide(scoresButton))
+        else if (cursorHB.checkCollide(scoresButton, false))
             scoresButton.clicked = 1;
     }
     else if (gameScreen == "play") {
-        if (cursorHB.checkCollide(previousGameButton))
+        if (cursorHB.checkCollide(previousGameButton, false))
             previousGameButton.clicked = 1;
-        else if (cursorHB.checkCollide(newGameButton))
+        else if (cursorHB.checkCollide(newGameButton, false))
             newGameButton.clicked = 1;
     }
     else if (paused) {
-        if (cursorHB.checkCollide(resumeButton))
+        if (cursorHB.checkCollide(resumeButton, false))
             resumeButton.clicked = 1;
-        else if (cursorHB.checkCollide(saveButton))
+        else if (cursorHB.checkCollide(saveButton, false))
             saveButton.clicked = 1;
-        else if (cursorHB.checkCollide(quitButton))
+        else if (cursorHB.checkCollide(quitButton, false))
             quitButton.clicked = 1;
-        else if (cursorHB.checkCollide(musicButton))
+        else if (cursorHB.checkCollide(musicButton, false))
             musicButton.clicked = 1;
     }
 }
