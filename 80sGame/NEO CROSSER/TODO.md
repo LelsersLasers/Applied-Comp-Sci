@@ -1,14 +1,9 @@
 # TODO
 
 # Main ideas
-2.0) Bug test current
 3.0) Redo HBs
-    - Things extend HB or Things.hb = []
-    - Allow hitboxes to be more custom to the class and match art
-    - 'Dynamic HB'
-        - Use normal HB for walls/buildings
-        - Smaller for hit against enemy
-    - - Make Thing extend HB
+    - Bug test
+    - Tweak make sure it all looks good
 4.0) Cleaning
 5.0) Electron
 6.0) Final

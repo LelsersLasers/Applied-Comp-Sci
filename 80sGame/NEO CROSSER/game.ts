@@ -626,8 +626,6 @@ function drawGame() {
         if (!alive) drawGameOver();
     }
     else drawPauseMenu();
-    let obstacles = [...pickUps, ...landSlides, ...cars, ...buildings, ...lasers, ...ufos, player];
-    for (let i in obstacles) obstacles[i].drawOutline("#00ffff", true);
 
     if (backgroundMusic.currentTime < 100) backgroundMusic.currentTime = 100;
 }
