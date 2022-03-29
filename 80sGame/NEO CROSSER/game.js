@@ -652,6 +652,9 @@ function drawGame() {
             lasers[i].update();
         for (var i in notices)
             notices[i].draw();
+        var obstacles = __spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray([], pickUps, true), landSlides, true), cars, true), buildings, true), lasers, true), ufos, true), [player], false);
+        for (var i in obstacles)
+            obstacles[i].hb.draw("#ff0000");
         drawHUD();
         if (!alive)
             drawGameOver();

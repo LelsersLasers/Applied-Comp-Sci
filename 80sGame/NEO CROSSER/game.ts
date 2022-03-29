@@ -632,6 +632,8 @@ function drawGame() {
         }
         for (let i in lasers) lasers[i].update();
         for (let i in notices) notices[i].draw();
+        let obstacles = [...pickUps, ...landSlides, ...cars, ...buildings, ...lasers, ...ufos, player];
+        for (let i in obstacles) obstacles[i].hb.draw("#ff0000");
         drawHUD();
         if (!alive) drawGameOver();
     }
