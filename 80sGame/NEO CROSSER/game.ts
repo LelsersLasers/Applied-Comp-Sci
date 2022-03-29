@@ -111,19 +111,13 @@ function keyUpHandle(e) {
 }
 function clickHandler(event) {
     if (gameScreen == "welcome") {
-        if (cursorHB.checkCollide(directionsButton, false)) {
-            gameScreen = "directions";
-        }
-        else if (cursorHB.checkCollide(scoresButton, false)) {
-            gameScreen = "scores";
-        }
+        if (cursorHB.checkCollide(directionsButton)) gameScreen = "directions";
+        else if (cursorHB.checkCollide(scoresButton)) gameScreen = "scores";
         else gameScreen = "play";
     }
     else if (gameScreen == "play") {
-        if (cursorHB.checkCollide(previousGameButton, false)) {
-            gameScreen = "restore";
-        }
-        else if (cursorHB.checkCollide(newGameButton, false)) {
+        if (cursorHB.checkCollide(previousGameButton)) gameScreen = "restore";
+        else if (cursorHB.checkCollide(newGameButton)) {
             gameScreen = "game";
             musicStart();
         }
@@ -132,7 +126,7 @@ function clickHandler(event) {
     else if (gameScreen == "restore") {
         let buttonHit = false;
         for (let i = 0; i < restoreButtons.length; i++) {
-            if (cursorHB.checkCollide(restoreButtons[i], false)) {
+            if (cursorHB.checkCollide(restoreButtons[i])) {
                 if (i == selectedIndex) {
                     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
                     restore(games[selectedIndex]);
@@ -149,22 +143,18 @@ function clickHandler(event) {
         reset();
     }
     else if (gameScreen == "game") {
-        if (cursorHB.checkCollide(pauseButton, false)) paused = !paused;
+        if (cursorHB.checkCollide(pauseButton)) paused = !paused;
         else if (paused) {
-            if (cursorHB.checkCollide(resumeButton, false)) {
+            if (cursorHB.checkCollide(resumeButton)) {
                 paused = false;
                 sDown = false;
             }
-            else if (cursorHB.checkCollide(saveButton, false)) {
+            else if (cursorHB.checkCollide(saveButton)) {
                 save();
                 saveButton.clicked = 10;
             }
-            else if (cursorHB.checkCollide(quitButton, false)) {
-                reset();
-            }
-            else if (cursorHB.checkCollide(musicButton, false)) {
-                musicToggle();
-            }
+            else if (cursorHB.checkCollide(quitButton)) reset();
+            else if (cursorHB.checkCollide(musicButton)) musicToggle();
         }
     }
     else if (gameScreen == "directions" || gameScreen == "scores") {
@@ -181,7 +171,7 @@ function getMousePos(event) {
 function mouseDownActions() {
     if (gameScreen == "restore") {
         for (let i = 0; i < restoreButtons.length; i++) {
-            if (cursorHB.checkCollide(restoreButtons[i], false) && i == selectedIndex) {
+            if (cursorHB.checkCollide(restoreButtons[i]) && i == selectedIndex) {
                 deleteCount += delta;
                 if (deleteCount > 60) {
                     let games = JSON.parse(localStorage.getItem("NEO CROSSER - Saved Games"));
@@ -386,18 +376,18 @@ function restore(savedGame) {
 
 function buttonHover() {
     if (gameScreen == "welcome") {
-        if (cursorHB.checkCollide(directionsButton, false)) directionsButton.clicked = 1;
-        else if (cursorHB.checkCollide(scoresButton, false)) scoresButton.clicked = 1;
+        if (cursorHB.checkCollide(directionsButton)) directionsButton.clicked = 1;
+        else if (cursorHB.checkCollide(scoresButton)) scoresButton.clicked = 1;
     }
     else if (gameScreen == "play") {
-        if (cursorHB.checkCollide(previousGameButton, false)) previousGameButton.clicked = 1;
-        else if (cursorHB.checkCollide(newGameButton, false)) newGameButton.clicked = 1;
+        if (cursorHB.checkCollide(previousGameButton)) previousGameButton.clicked = 1;
+        else if (cursorHB.checkCollide(newGameButton)) newGameButton.clicked = 1;
     }
     else if (paused) {
-        if (cursorHB.checkCollide(resumeButton, false)) resumeButton.clicked = 1;
-        else if (cursorHB.checkCollide(saveButton, false)) saveButton.clicked = 1;
-        else if (cursorHB.checkCollide(quitButton, false)) quitButton.clicked = 1;
-        else if (cursorHB.checkCollide(musicButton, false)) musicButton.clicked = 1;
+        if (cursorHB.checkCollide(resumeButton)) resumeButton.clicked = 1;
+        else if (cursorHB.checkCollide(saveButton)) saveButton.clicked = 1;
+        else if (cursorHB.checkCollide(quitButton)) quitButton.clicked = 1;
+        else if (cursorHB.checkCollide(musicButton)) musicButton.clicked = 1;
     }
 }
 
@@ -632,12 +622,12 @@ function drawGame() {
         }
         for (let i in lasers) lasers[i].update();
         for (let i in notices) notices[i].draw();
-        let obstacles = [...pickUps, ...landSlides, ...cars, ...buildings, ...lasers, ...ufos, player];
-        for (let i in obstacles) obstacles[i].drawOutline("#ff0000");
         drawHUD();
         if (!alive) drawGameOver();
     }
     else drawPauseMenu();
+    let obstacles = [...pickUps, ...landSlides, ...cars, ...buildings, ...lasers, ...ufos, player];
+    for (let i in obstacles) obstacles[i].drawOutline("#00ffff", true);
 
     if (backgroundMusic.currentTime < 100) backgroundMusic.currentTime = 100;
 }
