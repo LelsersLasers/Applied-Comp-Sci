@@ -52,21 +52,25 @@ var HitBox = /** @class */ (function () {
         this.w = w;
         this.h = h;
     }
+    HitBox.prototype.getHB = function () {
+        return new HitBox(new Vector(this.pt.x, this.pt.y), this.w, this.h);
+    };
     HitBox.prototype.checkCollide = function (boxOther) {
-        return (this.pt.x < boxOther.pt.x + boxOther.w && boxOther.pt.x < this.pt.x + this.w && this.pt.y < boxOther.pt.y + boxOther.h && boxOther.pt.y < this.pt.y + this.h);
+        var thisHB = this.getHB();
+        var otherHB = boxOther.getHB();
+        return (thisHB.pt.x < otherHB.pt.x + otherHB.w
+            && otherHB.pt.x < thisHB.pt.x + thisHB.w
+            && thisHB.pt.y < otherHB.pt.y + otherHB.h
+            && otherHB.pt.y < thisHB.pt.y + thisHB.h);
     };
     HitBox.prototype.outOfBounds = function () {
-        return (this.pt.x < 0 || this.pt.x + this.w > canvas.width);
-    };
-    HitBox.prototype.useSmallHB = function (pt, w, h) {
-        this.pt.x = pt.x + w / 5;
-        this.pt.y = pt.y + h / 10;
-        this.w = w * 3 / 5;
-        this.h = h * 4 / 5;
+        var thisHB = this.getHB();
+        return (thisHB.pt.x < 0 || thisHB.pt.x + thisHB.w > canvas.width);
     };
     HitBox.prototype.drawOutline = function (color) {
+        var thisHB = this.getHB();
         context.strokeStyle = color;
-        context.strokeRect(this.pt.x, this.pt.y, this.w, this.h);
+        context.strokeRect(thisHB.pt.x, thisHB.pt.y, thisHB.w, thisHB.h);
     };
     HitBox.prototype.restore = function (save) {
         this.pt.restore(save.pt);
@@ -294,9 +298,10 @@ var Player = /** @class */ (function (_super) {
         _this.stunProtection = 0;
         _this.spawnProtection = 60 / 5;
         return _this;
-        // this.hb.pt = new Vector(-1, -1); // break reference to this.pt
-        // this.hb.useSmallHB(this.pt, this.w, this.h);
     }
+    Player.prototype.getHB = function () {
+        return new HitBox(new Vector(this.pt.x + this.w / 5, this.pt.y), this.w * 3 / 5, this.h);
+    };
     Player.prototype.moveVertical = function (ms) {
         var obstacles = __spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray([], pickUps, true), landSlides, true), cars, true), buildings, true), lasers, true), bar, true), this.afterImages, true), ufos, true);
         for (var i in obstacles)
@@ -371,7 +376,6 @@ var Player = /** @class */ (function (_super) {
                     this.pt.x += this.msX * this.teleportSpeed;
                     break;
             }
-            // this.hb.useSmallHB(this.pt, this.w, this.h);
             for (var i in buildings) {
                 if (this.checkCollide(buildings[i])) {
                     if (this.lastDir == "w")
@@ -419,7 +423,6 @@ var Player = /** @class */ (function (_super) {
                         this.pt.x += this.msX / moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
                         break;
                 }
-                // this.hb.useSmallHB(this.pt, this.w, this.h);
                 for (var i in buildings) {
                     if (this.checkCollide(buildings[i])) { // if it is touching, undo the last movement
                         if (this.lastDir == "a")
@@ -441,7 +444,6 @@ var Player = /** @class */ (function (_super) {
             this.pt.x = 0;
         else if (this.pt.x + this.w > canvas.width)
             this.pt.x = canvas.width - this.w;
-        // this.hb.useSmallHB(this.pt, this.w, this.h);
     };
     Player.prototype.checkDeath = function (enemy) {
         if (enemy.checkCollide(player)) {
@@ -752,11 +754,12 @@ var Ufo = /** @class */ (function (_super) {
         else {
             _this.move = new Vector(getRandomInt(-12, 12), getRandomInt(3, 5));
         }
-        // this.hb.pt = new Vector(-1, -1); // break reference to this.pt
-        // this.hb.useSmallHB(this.pt, this.w, this.h);
         _this.move.scale(_this.ms);
         return _this;
     }
+    Ufo.prototype.getHB = function () {
+        return new HitBox(new Vector(this.pt.x + this.w / 5, this.pt.y + this.h / 5), this.w * 3 / 5, this.h * 3 / 5);
+    };
     Ufo.prototype.update = function () {
         this.updateStun();
         this.updateAnimation();
@@ -764,7 +767,6 @@ var Ufo = /** @class */ (function (_super) {
             ufos.splice(ufos.indexOf(this), 1);
         else if (this.active) {
             this.pt.apply(this.move);
-            // this.hb.useSmallHB(this.pt, this.w, this.h);
             if (this.outOfBounds())
                 this.move.x *= -1;
             this.updateCanShoot(topScore > softCap * 3 / 4, 100);
@@ -772,7 +774,6 @@ var Ufo = /** @class */ (function (_super) {
         }
     };
     Ufo.prototype.draw = function () {
-        // this.hb.useSmallHB(this.pt, this.w, this.h);
         context.drawImage(texUfo, texSrcUfo[Number(!this.active)][Number(this.canShoot)][this.animation][0], texSrcUfo[Number(!this.active)][Number(this.canShoot)][this.animation][1], 20, 19, this.pt.x, this.pt.y, this.w, this.h);
         this.drawTarget(new Vector(this.pt.x + this.w / 2, this.pt.y + this.h * 8 / 19));
     };
