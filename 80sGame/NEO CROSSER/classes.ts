@@ -681,7 +681,7 @@ class Car extends Enemy {
                 pickUps.push(new PickUp(y, texLifePickUp, 11, 10, () => lives++ ));
             }
 
-            if (Math.random() < 1/25) {
+            if (Math.random() < 1/50) {
                 pickUps.push(new PickUp(y, texCooldownPickUp, 9, 12, () => {
                     qAbility.recharge += 0.05;
                     eAbility.recharge += 0.05;
@@ -689,7 +689,7 @@ class Car extends Enemy {
                 }));
             }
 
-            if (Math.random() < 1/25) {
+            if (Math.random() < 1/50) {
                 pickUps.push(new PickUp(y, texSpeedPickUp, 16, 27, () => {
                     player.msX += player.msXIncrease;
                     player.msY += player.msYIncrease;

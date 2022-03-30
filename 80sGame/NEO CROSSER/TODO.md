@@ -13,8 +13,6 @@
 - Easier around 10k (by a little)
 - Ufos slower later, faster earlier
     - always the same speed?
-- Less pickup spawns
-- Cars slightly faster
 - Teleport distance is independent MS
 - Ufos higher delay between shots
 - Tanks lower delay between shots
@@ -49,7 +47,6 @@ ELECTRON
     - consistent about what pauses
 - restores bugtest
     - restore w/h?
-        - update hb with w/h
     - use super.restore to improve
 - softCap
     - Make sure everything uses it

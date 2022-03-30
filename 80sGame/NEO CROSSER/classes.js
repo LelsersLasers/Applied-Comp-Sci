@@ -720,14 +720,14 @@ var Car = /** @class */ (function (_super) {
                 spawnLife += softCap / 3;
                 pickUps.push(new PickUp(y, texLifePickUp, 11, 10, function () { return lives++; }));
             }
-            if (Math.random() < 1 / 25) {
+            if (Math.random() < 1 / 50) {
                 pickUps.push(new PickUp(y, texCooldownPickUp, 9, 12, function () {
                     qAbility.recharge += 0.05;
                     eAbility.recharge += 0.05;
                     rAbility.recharge += 0.05;
                 }));
             }
-            if (Math.random() < 1 / 25) {
+            if (Math.random() < 1 / 50) {
                 pickUps.push(new PickUp(y, texSpeedPickUp, 16, 27, function () {
                     player.msX += player.msXIncrease;
                     player.msY += player.msYIncrease;
