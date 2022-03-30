@@ -509,7 +509,7 @@ class Enemy extends Thing {
     }
     checkShoot(startPt) {
         if (this.canShoot) {
-            let animationWait = this.getAnimationWait() * 10;
+            let animationWait = this.getAnimationWait() * 5;
             animationWait = animationWait > 0 ? animationWait : this.animationWaitBase * 4;
             if (checkFrame(this.frame - 1, animationWait)) {
                 lasers.push(new Laser(startPt, -1, 60, false));
