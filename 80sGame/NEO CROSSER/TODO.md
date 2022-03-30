@@ -5,7 +5,7 @@
     - Bug test
     - Tweak make sure it all looks good
 5.0) Electron
-4.0) Cleaning
+4.0) Cleaning + Balance
 6.0) Final
 
 # Balance
@@ -23,28 +23,37 @@ Check
 Typescript:
 - to compile: tsc game.ts classes.ts
 - Use types better
+Electron:
+- create node modules: 'npm install'
+- run: 'npm start'
 
-Bugs:
+# Bugs
 - FIXED?: Write scores hitting unexpected ':' when name = '   '
 - FIXED?: Cars getting stuck in walls/buildings
     - (twitching back and forth)
 
-Small Features:
+# Small Features:
 - Display restore touch directions
 - Display use w/s up/down to change the selected save
 - Mouse hover over buttons in restore screen
+- Quit button from welcome screen
 
-Electron:
+# Electron:
 - Figure out how to put it in github
+    - Without deleting node modules and running npm install each time
 - Window refresh
     - location.reload() does not work
     - use instead: 'mainWindow.reload()'
+- 'prompt()' does not work
 - Screen size
     - Does not start in correct demenions
 - Font?
     - Pick more specific font than 'monospace'?
+- Distribute
+    - 'Electron Forge' (see quick start guide)
 
-"Clean" code
+
+# "Clean" code
 - use fractions everywhere
     - prefre x/2 over x * 1/2
 - getName() in game.ts
