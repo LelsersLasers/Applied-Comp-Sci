@@ -36,6 +36,8 @@ mouse hover over buttons in restore screen
 ELECTRON
 
 "Clean" code
+- use fractions everywhere
+    - prefre x/2 over x * 1/2
 - getName() in game.ts
 - LET
     - scope
