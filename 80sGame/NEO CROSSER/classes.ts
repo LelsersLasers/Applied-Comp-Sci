@@ -413,9 +413,6 @@ class Player extends Thing {
                 deathHitSound.play();
                 this.stunProtection = this.spawnProtection = 120 * 0.2;
                 this.stun = this.lastStun = 0;
-                qAbility.timer = qAbility.wait;
-                eAbility.timer = eAbility.wait;
-                rAbility.timer = rAbility.wait;
                 lives--;
                 if (lives <= 0) {
                     livesView.color = "#e37e7b";

@@ -215,7 +215,7 @@ function clickHandler(event) {
     }
     else if (gameScreen == "directions" || gameScreen == "scores") {
         gameScreen = "welcome";
-        localStorage.setItem("firstBoot", "false");
+        localStorage.setItem("NEO CROSSER - First Boot", "false");
     }
 }
 function getMousePos(event) {
@@ -279,14 +279,14 @@ function musicToggle() {
         backgroundMusicPlaying = true;
     }
     musicButton.clicked = 10;
-    localStorage.setItem("playMusic", JSON.stringify(backgroundMusicPlaying));
+    localStorage.setItem("NEO CROSSER - Play Music", JSON.stringify(backgroundMusicPlaying));
 }
 function getName(message) {
-    var name = localStorage.getItem("name") != null ? localStorage.getItem("name") : "";
+    var name = localStorage.getItem("NEO CROSSER - Name") != null ? localStorage.getItem("NEO CROSSER - Name") : "";
     name = prompt(message, name);
     if (name == null)
         name = "N/A";
-    localStorage.setItem("name", name);
+    localStorage.setItem("NEO CROSSER - Name", name);
     name += "   "; // incase they entered less than 3 characters, backfill with spaces
     name = name.substring(0, 3).toUpperCase();
     return name;
@@ -712,7 +712,7 @@ var softCap = 10000;
 var buildingBlockCount = 5;
 var landSlideWait = 10;
 var font = "monospace";
-var gameScreen = localStorage.getItem("firstBoot") == null ? "directions" : "welcome";
+var gameScreen = localStorage.getItem("NEO CROSSER - First Boot") == null ? "directions" : "welcome";
 var paused = false;
 var alive = true;
 var score = 0;
@@ -759,7 +759,7 @@ backgroundMusic.src = "backgroundMusic.mp3";
 var backgroundMusicPlaying = false;
 backgroundMusic.loop = true;
 backgroundMusic.volume = 0.9 / soundOffset;
-var musicShouldPlay = localStorage.getItem("playMusic") != null ? localStorage.getItem("playMusic") : "true";
+var musicShouldPlay = localStorage.getItem("NEO CROSSER - Play Music") != null ? localStorage.getItem("NEO CROSSER - Play Music") : "true";
 var texPlayer = new Image();
 texPlayer.src = "player-10x11-8x8-1spacing.png";
 var texSrcPlayer = [
