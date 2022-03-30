@@ -4,8 +4,8 @@
 3.0) Redo HBs
     - Bug test
     - Tweak make sure it all looks good
-4.0) Cleaning
 5.0) Electron
+4.0) Cleaning
 6.0) Final
 
 # Balance
@@ -61,6 +61,7 @@ ELECTRON
     - what is already global var
 - Remove touch code
     - Delete on restore screen?
+- Make all local storage follow pattern "NEO CROSSER - XXX"
 
 Clarity
 - General colors/hitboxes
