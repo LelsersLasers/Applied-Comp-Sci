@@ -26,6 +26,7 @@ Typescript:
 - Use types better
 
 Bugs:
+- Write scores hitting unexpected ':' when name = '   '
 - FIXED?: Cars getting stuck in walls/buildings
     - (twitching back and forth)
 
@@ -37,6 +38,7 @@ mouse hover over buttons in restore screen
 ELECTRON
 
 "Clean" code
+- getName() in game.ts
 - LET
     - scope
 - stun protection
