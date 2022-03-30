@@ -61,7 +61,6 @@ ELECTRON
     - what is already global var
 - Remove touch code
     - Delete on restore screen?
-- Make all local storage follow pattern "NEO CROSSER - XXX"
 
 Clarity
 - General colors/hitboxes
