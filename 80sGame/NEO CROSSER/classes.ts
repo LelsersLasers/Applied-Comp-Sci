@@ -729,8 +729,7 @@ class Ufo extends Enemy {
         let w = ufoWidth;
         let h = ufoHeight;
         let pt = new Vector(getRandomInt(0, canvas.width - w), y);
-        let ms = topScore/softCap * (canvas.width * canvas.width + canvas.height * canvas.height)/(800 * 800) + 1 * delta;
-        super(pt, w, h, ms);
+        super(pt, w, h, Math.sqrt((canvas.width * canvas.width + canvas.height * canvas.height)/(500000)) * delta);
 
         this.animationWaitBase = 25;
 

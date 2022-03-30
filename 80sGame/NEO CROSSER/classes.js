@@ -562,7 +562,7 @@ var Enemy = /** @class */ (function (_super) {
     };
     Enemy.prototype.checkShoot = function (startPt) {
         if (this.canShoot) {
-            var animationWait = this.getAnimationWait() * 10;
+            var animationWait = this.getAnimationWait() * 5;
             animationWait = animationWait > 0 ? animationWait : this.animationWaitBase * 4;
             if (checkFrame(this.frame - 1, animationWait)) {
                 lasers.push(new Laser(startPt, -1, 60, false));
@@ -767,8 +767,7 @@ var Ufo = /** @class */ (function (_super) {
         var w = ufoWidth;
         var h = ufoHeight;
         var pt = new Vector(getRandomInt(0, canvas.width - w), y);
-        var ms = topScore / softCap * (canvas.width * canvas.width + canvas.height * canvas.height) / (800 * 800) + 1 * delta;
-        _this = _super.call(this, pt, w, h, ms) || this;
+        _this = _super.call(this, pt, w, h, Math.sqrt((canvas.width * canvas.width + canvas.height * canvas.height) / (500000)) * delta) || this;
         _this.animationWaitBase = 25;
         if (getRandomInt(1, 3) == 1) {
             _this.move = new Vector(player.pt.x + player.w / 2 - _this.pt.x - _this.w / 2, player.pt.y + player.h / 2 - _this.pt.y - _this.h / 2); // punish player for not moving

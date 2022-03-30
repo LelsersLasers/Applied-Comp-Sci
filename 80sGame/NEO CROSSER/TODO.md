@@ -11,9 +11,10 @@
 # Balance
 - Harder around 6k
 - Easier around 10k (by a little)
-- Ufos slower later, faster earlier
-    - always the same speed?
+To change
 - Teleport distance is independent MS
+Check
+- Ufos always lways the same speed
 - Ufos higher delay between shots
 - Tanks lower delay between shots
 
