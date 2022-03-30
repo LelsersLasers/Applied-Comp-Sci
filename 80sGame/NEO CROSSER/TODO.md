@@ -26,7 +26,7 @@ Typescript:
 - Use types better
 
 Bugs:
-- Write scores hitting unexpected ':' when name = '   '
+- FIXED?: Write scores hitting unexpected ':' when name = '   '
 - FIXED?: Cars getting stuck in walls/buildings
     - (twitching back and forth)
 

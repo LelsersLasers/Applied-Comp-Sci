@@ -235,7 +235,7 @@ function getName(message) {
     name = prompt(message, name);
     if (name == null) name = "N/A";
     localStorage.setItem("NEO CROSSER - Name", name);
-    name += "   "; // incase they entered less than 3 characters, backfill with spaces
+    name += "   ";
     name = name.substring(0, 3).toUpperCase()
     if (name == "   ") name = "N/A";
     return name;
@@ -257,9 +257,7 @@ function writeScore() {
 }
 
 function getTopScores() {
-    let item = localStorage.getItem("NEO CROSSER - Leader Board")
-    console.log(item);
-    let scores = JSON.parse(item);
+    let scores = JSON.parse(localStorage.getItem("NEO CROSSER - Leader Board"));
     if (scores == null) { // no scores variable in localStorage -> fill with blank values
         scores = [];
         for (let i = 0; i < 10; i++) scores.push("N/A: -1");
