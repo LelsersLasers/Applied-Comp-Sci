@@ -29,12 +29,20 @@ Bugs:
 - FIXED?: Cars getting stuck in walls/buildings
     - (twitching back and forth)
 
-display restore touch directions
-display use w/s up/down to change the selected save
+Small Features:
+- Display restore touch directions
+- Display use w/s up/down to change the selected save
+- Mouse hover over buttons in restore screen
 
-mouse hover over buttons in restore screen
-
-ELECTRON
+Electron:
+- Figure out how to put it in github
+- Window refresh
+    - location.reload() does not work
+    - use instead: 'mainWindow.reload()'
+- Screen size
+    - Does not start in correct demenions
+- Font?
+    - Pick more specific font than 'monospace'?
 
 "Clean" code
 - use fractions everywhere
