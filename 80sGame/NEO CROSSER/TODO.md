@@ -36,7 +36,6 @@ Electron:
 - Display restore touch directions
 - Display use w/s up/down to change the selected save
 - Mouse hover over buttons in restore screen
-- Quit button from welcome screen
 
 # Electron:
 - Figure out how to put it in github
@@ -45,8 +44,12 @@ Electron:
     - location.reload() does not work
     - use instead: 'mainWindow.reload()'
 - 'prompt()' does not work
+    - Use smalltalk instead
 - Screen size
-    - Does not start in correct demenions
+    - Start full screen
+    - No top bar
+    - Quit button from welcome screen
+
 - Font?
     - Pick more specific font than 'monospace'?
 - Distribute
@@ -54,6 +57,8 @@ Electron:
 
 
 # "Clean" code
+- main.js
+    - and other electron setup stuff
 - use fractions everywhere
     - prefre x/2 over x * 1/2
 - getName() in game.ts
