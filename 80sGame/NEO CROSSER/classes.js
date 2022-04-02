@@ -650,7 +650,7 @@ var Car = /** @class */ (function (_super) {
         _this.type = type;
         _this.msIncrease = msIncrease;
         if (_this.hidden)
-            _this.pt.x = -9999;
+            _this.pt.x = canvas.width + 9999;
         return _this;
     }
     Car.prototype.getSmallHB = function () {
@@ -941,6 +941,7 @@ var LandSlide = /** @class */ (function (_super) {
                     for (var j in buildings) {
                         if (obstacles[i].checkCollide(buildings[j])) {
                             obstacles[i].pt.x = this.ms > 0 ? buildings[j].pt.x - obstacles[i].w : buildings[j].pt.x + buildings[j].w;
+                            obstacles[i].pt.x -= obstacles[i].pt.x - obstacles[i].getHB().pt.x; // for player
                         }
                     }
                     if (obstacles[i].outOfBounds()) {

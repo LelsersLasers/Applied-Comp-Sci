@@ -28,6 +28,7 @@ Electron:
 - run: 'npm start'
 
 # Bugs
+- FIXED?: Player 'bouncing' when pushed into building by landslide
 - FIXED?: Write scores hitting unexpected ':' when name = '   '
 - FIXED?: Cars getting stuck in walls/buildings
     - (twitching back and forth)

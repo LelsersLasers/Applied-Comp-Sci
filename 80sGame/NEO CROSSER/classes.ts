@@ -592,7 +592,7 @@ class Car extends Enemy {
         this.offScreen = false;
         this.type = type;
         this.msIncrease = msIncrease;
-        if (this.hidden) this.pt.x = -9999;
+        if (this.hidden) this.pt.x = canvas.width + 9999;
     }
     getSmallHB() {
         switch (this.type) {
@@ -900,6 +900,7 @@ class LandSlide extends Enemy {
                     for (var j in buildings) {
                         if (obstacles[i].checkCollide(buildings[j])) {
                             obstacles[i].pt.x = this.ms > 0 ? buildings[j].pt.x - obstacles[i].w : buildings[j].pt.x + buildings[j].w;
+                            obstacles[i].pt.x -= obstacles[i].pt.x - obstacles[i].getHB().pt.x; // for player
                         }
                     }
                     if (obstacles[i].outOfBounds()) {
