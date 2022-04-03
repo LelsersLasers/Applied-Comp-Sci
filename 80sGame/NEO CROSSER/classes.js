@@ -629,7 +629,7 @@ var Car = /** @class */ (function (_super) {
         var badX = true;
         while (badX) {
             badX = false;
-            var x = getRandomInt(0, canvas.width - w);
+            var x = getRandomDouble(0, canvas.width - w);
             var tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (var i in buildings) {
                 if (tempHB.checkCollide(buildings[i])) {
@@ -766,14 +766,14 @@ var Ufo = /** @class */ (function (_super) {
         var _this = this;
         var w = ufoWidth;
         var h = ufoHeight;
-        var pt = new Vector(getRandomInt(0, canvas.width - w), y);
+        var pt = new Vector(getRandomDouble(0, canvas.width - w), y);
         _this = _super.call(this, pt, w, h, Math.sqrt((canvas.width * canvas.width + canvas.height * canvas.height) / (500000)) * delta) || this;
         _this.animationWaitBase = 25;
         if (getRandomInt(1, 3) == 1) {
             _this.move = new Vector(player.pt.x + player.w / 2 - _this.pt.x - _this.w / 2, player.pt.y + player.h / 2 - _this.pt.y - _this.h / 2); // punish player for not moving
         }
         else {
-            _this.move = new Vector(getRandomInt(-12, 12), getRandomInt(3, 5));
+            _this.move = new Vector(getRandomDouble(-12, 12), getRandomDouble(3, 5));
         }
         _this.move.scale(_this.ms);
         return _this;
@@ -839,7 +839,7 @@ var Building = /** @class */ (function (_super) {
         var badX = true;
         while (badX) {
             badX = false;
-            var x = getRandomInt(0, canvas.width - w);
+            var x = getRandomDouble(0, canvas.width - w);
             var tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (var i in cars) {
                 if (tempHB.checkCollide(cars[i])) {
@@ -991,7 +991,7 @@ var PickUp = /** @class */ (function (_super) {
         var badX = true;
         while (badX) {
             badX = false;
-            var x = getRandomInt(0, canvas.width - w);
+            var x = getRandomDouble(0, canvas.width - w);
             var tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (var i in buildings) {
                 if (tempHB.checkCollide(buildings[i])) {

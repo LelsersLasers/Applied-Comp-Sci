@@ -574,7 +574,7 @@ class Car extends Enemy {
         let badX = true;
         while (badX) {
             badX = false;
-            var x = getRandomInt(0, canvas.width - w);
+            var x = getRandomDouble(0, canvas.width - w);
             let tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (let i in buildings) {
                 if (tempHB.checkCollide(buildings[i])) {
@@ -728,7 +728,7 @@ class Ufo extends Enemy {
     constructor(y) {
         let w = ufoWidth;
         let h = ufoHeight;
-        let pt = new Vector(getRandomInt(0, canvas.width - w), y);
+        let pt = new Vector(getRandomDouble(0, canvas.width - w), y);
         super(pt, w, h, Math.sqrt((canvas.width * canvas.width + canvas.height * canvas.height)/(500000)) * delta);
 
         this.animationWaitBase = 25;
@@ -737,7 +737,7 @@ class Ufo extends Enemy {
             this.move = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2); // punish player for not moving
         }
         else {
-            this.move = new Vector(getRandomInt(-12, 12), getRandomInt(3, 5));
+            this.move = new Vector(getRandomDouble(-12, 12), getRandomDouble(3, 5));
         }
         this.move.scale(this.ms);
     }
@@ -802,7 +802,7 @@ class Building extends Thing {
         let badX = true;
         while (badX) {
             badX = false;
-            var x = getRandomInt(0, canvas.width - w);
+            var x = getRandomDouble(0, canvas.width - w);
             let tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (let i in cars) {
                 if (tempHB.checkCollide(cars[i])) {
@@ -947,7 +947,7 @@ class PickUp extends Thing {
         let badX = true;
         while (badX) {
             badX = false;
-            var x = getRandomInt(0, canvas.width - w);
+            var x = getRandomDouble(0, canvas.width - w);
             let tempHB = new HitBox(new Vector(x - 10, y), w + 20, h);
             for (let i in buildings) {
                 if (tempHB.checkCollide(buildings[i])) {

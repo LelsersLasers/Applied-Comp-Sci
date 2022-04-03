@@ -242,6 +242,9 @@ function reset() {
     writeScore();
     location.reload(); // reloads the webpage
 }
+function getRandomDouble(min, max) {
+    return Math.random() * (max - min) + min;
+}
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -263,7 +266,7 @@ function average(lst) {
     return sum / lst.length;
 }
 function musicStart() {
-    backgroundMusic.currentTime = getRandomInt(100, backgroundMusic.duration);
+    backgroundMusic.currentTime = getRandomDouble(100, backgroundMusic.duration);
     if (musicShouldPlay === "true") {
         backgroundMusic.play();
         backgroundMusicPlaying = true;
@@ -987,7 +990,7 @@ var base = playerLevel - 3 * carHeight;
 var justPlaced = true; // true to skip placing one in the first row
 for (var i = 0; i < 10; i++) {
     var startPosY = base - (1.5 * carHeight * i);
-    var speed = (getRandomInt(700, 900) / 110) * canvas.width * 1 / 6000;
+    var speed = (getRandomDouble(700, 900) / 110) * canvas.width * 1 / 6000;
     speed = getRandomInt(1, 3) == 2 ? -speed : speed;
     cars.push(new Car(startPosY, speed, speed / 100));
     if (Math.random() < buildingBlockCount / 10 && !justPlaced) {
