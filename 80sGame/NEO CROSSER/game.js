@@ -245,11 +245,8 @@ function reset() {
 function getRandomDouble(min, max) {
     return Math.random() * (max - min) + min;
 }
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    var value = Math.floor(Math.random() * (max - min) + min); //The max is exclusive and the min is inclusive
-    return value;
+function getChance(denominator) {
+    return Math.random() < 1 / denominator;
 }
 function radToDeg(rad) {
     return rad * 180 / Math.PI;
@@ -714,7 +711,6 @@ var delta = 1; // delta is relative to 60fps
 var frame = 0;
 var deltas = [];
 var softCap = 10000;
-var buildingBlockCount = 5;
 var landSlideWait = 10;
 var font = "monospace";
 var gameScreen = localStorage.getItem("NEO CROSSER - First Boot") == null ? "directions" : "welcome";
@@ -991,9 +987,9 @@ var justPlaced = true; // true to skip placing one in the first row
 for (var i = 0; i < 10; i++) {
     var startPosY = base - (1.5 * carHeight * i);
     var speed = (getRandomDouble(700, 900) / 110) * canvas.width * 1 / 6000;
-    speed = getRandomInt(1, 3) == 2 ? -speed : speed;
+    speed = getChance(2) ? -speed : speed;
     cars.push(new Car(startPosY, speed, speed / 100));
-    if (Math.random() < buildingBlockCount / 10 && !justPlaced) {
+    if (getChance(2) && !justPlaced) {
         buildings.push(new Building(startPosY));
         justPlaced = true;
     }

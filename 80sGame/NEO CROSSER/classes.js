@@ -527,7 +527,7 @@ var Enemy = /** @class */ (function (_super) {
         var _this = _super.call(this, pt, w, h) || this;
         _this.frame = 0;
         _this.stun = 0;
-        _this.animation = getRandomInt(0, 2);
+        _this.animation = Number(getChance(2));
         _this.animationWaitBase = 30;
         _this.canShoot = false;
         _this.ms = ms;
@@ -641,7 +641,7 @@ var Car = /** @class */ (function (_super) {
         var pt = new Vector(x, y);
         _this = _super.call(this, pt, w, h, ms) || this;
         _this.offScreen = false;
-        _this.hidden = !Boolean(getRandomInt(0, 5));
+        _this.hidden = getChance(5);
         if (type == 1)
             _this.ms *= 7 / 5;
         else if (type == 2)
@@ -701,33 +701,33 @@ var Car = /** @class */ (function (_super) {
             else if (this.type == 2)
                 newMs *= 2;
             cars.push(new Car(y, newMs, this.msIncrease)); // always spawn new car
-            if (Math.random() < ((topScore / (softCap * 4) > 1 / 4 ? 1 / 4 : topScore / (softCap * 3)))) {
+            if (getChance((softCap * 4) / topScore > 4 ? (softCap * 4) / topScore : 4)) {
                 ufos.push(new Ufo(y));
             }
-            if (Math.random() < buildingBlockCount / 10 && !justPlaced) {
+            if (getChance(2) && !justPlaced) {
                 buildings.push(new Building(y - (1.5 * carHeight) * 2));
                 justPlaced = true;
             }
             else
                 justPlaced = false;
-            if (Math.random() < 1 / 15 && landSlideWait < 0) {
+            if (getChance(15) && landSlideWait < 0) {
                 landSlides.push(new LandSlide(y + 1.5 * carHeight));
                 landSlideWait = 10;
             }
             else
                 landSlideWait--;
-            if (Math.random() < (topScore % softCap / 3) / (softCap / 3) && topScore >= spawnLife) {
+            if (getChance((topScore % softCap / 3) / (softCap / 3)) && topScore >= spawnLife) {
                 spawnLife += softCap / 3;
                 pickUps.push(new PickUp(y, texLifePickUp, 11, 10, function () { return lives++; }));
             }
-            if (Math.random() < 1 / 50) {
+            if (getChance(50)) {
                 pickUps.push(new PickUp(y, texCooldownPickUp, 9, 12, function () {
                     qAbility.recharge += 0.05;
                     eAbility.recharge += 0.05;
                     rAbility.recharge += 0.05;
                 }));
             }
-            if (Math.random() < 1 / 50) {
+            if (getChance(50)) {
                 pickUps.push(new PickUp(y, texSpeedPickUp, 16, 27, function () {
                     player.msX += player.msXIncrease;
                     player.msY += player.msYIncrease;
@@ -769,7 +769,7 @@ var Ufo = /** @class */ (function (_super) {
         var pt = new Vector(getRandomDouble(0, canvas.width - w), y);
         _this = _super.call(this, pt, w, h, Math.sqrt((canvas.width * canvas.width + canvas.height * canvas.height) / (500000)) * delta) || this;
         _this.animationWaitBase = 25;
-        if (getRandomInt(1, 3) == 1) {
+        if (getChance(2)) {
             _this.move = new Vector(player.pt.x + player.w / 2 - _this.pt.x - _this.w / 2, player.pt.y + player.h / 2 - _this.pt.y - _this.h / 2); // punish player for not moving
         }
         else {
@@ -834,7 +834,7 @@ var Building = /** @class */ (function (_super) {
         var h = carHeight * 2.5;
         var widthOfOne = (26 * h / 40);
         var maxW = Math.floor((carWidth * 1.5) / widthOfOne);
-        var buildingCount = getRandomInt(1, maxW + 1);
+        var buildingCount = Math.floor(getRandomDouble(1, maxW + 1));
         var w = buildingCount * widthOfOne;
         var badX = true;
         while (badX) {
@@ -853,7 +853,7 @@ var Building = /** @class */ (function (_super) {
         _this.buildings = [];
         _this.buildings = [];
         for (var i = 0; i < buildingCount; i++) {
-            var src = getRandomInt(0, 3);
+            var src = Math.floor(getRandomDouble(0, 3));
             _this.buildings.push(texSrcBuilding[src]);
         }
         _this.widthOfOne = widthOfOne;
@@ -918,7 +918,7 @@ var LandSlide = /** @class */ (function (_super) {
         var w = canvas.width;
         var h = carHeight * 11.5;
         var MSs = [w / 300 * delta, -w / 300 * delta];
-        var dir = getRandomInt(0, 2);
+        var dir = Number(getChance(2));
         var Xs = [0 - w + MSs[0] * -60, canvas.width + MSs[1] * -60];
         _this = _super.call(this, new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + topScore / softCap)) || this;
         landSlideSound.play();

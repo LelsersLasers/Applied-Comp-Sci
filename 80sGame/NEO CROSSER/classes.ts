@@ -474,7 +474,7 @@ class Enemy extends Thing {
     ms;
     frame = 0;
     stun = 0;
-    animation = getRandomInt(0, 2);
+    animation = Number(getChance(2));
     animationWaitBase = 30;
     canShoot = false;
     constructor(pt, w, h, ms) {
@@ -558,7 +558,7 @@ class Enemy extends Thing {
 class Car extends Enemy {
     type; msIncrease;
     offScreen = false;
-    hidden = !Boolean(getRandomInt(0, 5));
+    hidden = getChance(5);
     constructor(y, ms, msIncrease) {
         let rand = Math.random();
         let type = 0;
@@ -660,28 +660,28 @@ class Car extends Enemy {
             else if (this.type == 2) newMs *= 2;
             cars.push(new Car(y, newMs, this.msIncrease)); // always spawn new car
 
-            if (Math.random() < ((topScore/(softCap * 4) > 1/4 ? 1/4 : topScore/(softCap * 3)))) {
+            if (getChance((softCap * 4)/topScore > 4 ? (softCap * 4)/topScore : 4)) {
                 ufos.push(new Ufo(y));
             }
 
-            if (Math.random() < buildingBlockCount/10 && !justPlaced) {
+            if (getChance(2) && !justPlaced) {
                 buildings.push(new Building(y - (1.5 * carHeight) * 2));
                 justPlaced = true;
             }
             else justPlaced = false;
 
-            if (Math.random() < 1/15 && landSlideWait < 0) {
+            if (getChance(15) && landSlideWait < 0) {
                 landSlides.push(new LandSlide(y + 1.5 * carHeight));
                 landSlideWait = 10;
             }
             else landSlideWait--;
 
-            if (Math.random() < (topScore % softCap/3)/(softCap/3) && topScore >= spawnLife) {
+            if (getChance((topScore % softCap/3)/(softCap/3)) && topScore >= spawnLife) {
                 spawnLife += softCap/3;
                 pickUps.push(new PickUp(y, texLifePickUp, 11, 10, () => lives++ ));
             }
 
-            if (Math.random() < 1/50) {
+            if (getChance(50)) {
                 pickUps.push(new PickUp(y, texCooldownPickUp, 9, 12, () => {
                     qAbility.recharge += 0.05;
                     eAbility.recharge += 0.05;
@@ -689,7 +689,7 @@ class Car extends Enemy {
                 }));
             }
 
-            if (Math.random() < 1/50) {
+            if (getChance(50)) {
                 pickUps.push(new PickUp(y, texSpeedPickUp, 16, 27, () => {
                     player.msX += player.msXIncrease;
                     player.msY += player.msYIncrease;
@@ -733,7 +733,7 @@ class Ufo extends Enemy {
 
         this.animationWaitBase = 25;
 
-        if (getRandomInt(1, 3) == 1) {
+        if (getChance(2)) {
             this.move = new Vector(player.pt.x + player.w/2 - this.pt.x - this.w/2, player.pt.y + player.h/2 - this.pt.y - this.h/2); // punish player for not moving
         }
         else {
@@ -796,7 +796,7 @@ class Building extends Thing {
         let h = carHeight * 2.5;
         let widthOfOne = (26 * h/40);
         let maxW = Math.floor((carWidth * 1.5)/widthOfOne);
-        let buildingCount = getRandomInt(1, maxW + 1);
+        let buildingCount = Math.floor(getRandomDouble(1, maxW + 1));
         let w = buildingCount * widthOfOne;
 
         let badX = true;
@@ -816,7 +816,7 @@ class Building extends Thing {
 
         this.buildings = [];
         for (let i = 0; i < buildingCount; i++) {
-            let src = getRandomInt(0, 3);
+            let src = Math.floor(getRandomDouble(0, 3));
             this.buildings.push(texSrcBuilding[src]);
         }
         this.widthOfOne = widthOfOne;
@@ -877,7 +877,7 @@ class LandSlide extends Enemy {
         let h = carHeight * 11.5;
 
         let MSs = [w/300 * delta, -w/300 * delta];
-        let dir = getRandomInt(0, 2);
+        let dir = Number(getChance(2));
         let Xs = [0 - w + MSs[0] * -60, canvas.width + MSs[1] * -60]
 
         super(new Vector(Xs[dir], y), w, h, MSs[dir] * (1 + topScore/softCap));

@@ -193,11 +193,8 @@ function getRandomDouble(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    let value = Math.floor(Math.random() * (max - min) + min); //The max is exclusive and the min is inclusive
-    return value;
+function getChance(denominator) {
+    return Math.random() < 1/denominator;
 }
 
 function radToDeg(rad) {
@@ -695,8 +692,6 @@ var frame = 0;
 var deltas = [];
 
 const softCap = 10000;
-const buildingBlockCount = 5;
-
 var landSlideWait = 10;
 
 const font = "monospace";
@@ -1011,9 +1006,9 @@ var justPlaced = true; // true to skip placing one in the first row
 for (let i = 0; i < 10; i++) {
     let startPosY = base - (1.5 * carHeight * i);
     let speed = (getRandomDouble(700, 900)/110) * canvas.width * 1/6000;
-    speed = getRandomInt(1, 3) == 2 ? -speed : speed;
+    speed = getChance(2) ? -speed : speed;
     cars.push(new Car(startPosY, speed, speed/100));
-    if (Math.random() < buildingBlockCount/10 && !justPlaced) {
+    if (getChance(2) && !justPlaced) {
         buildings.push(new Building(startPosY));
         justPlaced = true;
     }
