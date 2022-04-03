@@ -34,6 +34,9 @@ Electron:
     - (twitching back and forth)
 
 # Small Features:
+- getRandomDouble()
+    - Same as getRandomInt() but not rounded
+    - getRandomInt() = rounded random double
 - Display restore touch directions
 - Display use w/s up/down to change the selected save
 - Mouse hover over buttons in restore screen
@@ -45,12 +48,13 @@ Electron:
     - location.reload() does not work
     - use instead: 'mainWindow.reload()'
 - 'prompt()' does not work
-    - Use smalltalk instead
+    - Use smalltalk instead?
 - Screen size
     - Start full screen
     - No top bar
     - Quit button from welcome screen
-
+- clean main.js
+    - and other electron setup stuff
 - Font?
     - Pick more specific font than 'monospace'?
 - Distribute
@@ -58,11 +62,8 @@ Electron:
 
 
 # "Clean" code
-- main.js
-    - and other electron setup stuff
 - use fractions everywhere
     - prefre x/2 over x * 1/2
-- getName() in game.ts
 - LET
     - scope
 - stun protection
