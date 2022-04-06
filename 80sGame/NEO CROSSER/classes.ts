@@ -10,8 +10,8 @@ class Vector {
     }
     scale(len) {
         var currentLen = Math.sqrt(this.x * this.x + this.y * this.y);
-        this.x = this.x * (len/currentLen);
-        this.y = this.y * (len/currentLen);
+        this.x *= len/currentLen;
+        this.y *= len/currentLen;
     }
     scalar(s) {
         this.x *= s;
@@ -70,9 +70,6 @@ class Thing extends HitBox {
     active = true;
     constructor(pt, w, h) {
         super(pt, w, h);
-        this.pt = pt;
-        this.w = w;
-        this.h = h;
     }
     restore(save) {
         super.restore(save);

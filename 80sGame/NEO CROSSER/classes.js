@@ -33,8 +33,8 @@ var Vector = /** @class */ (function () {
     };
     Vector.prototype.scale = function (len) {
         var currentLen = Math.sqrt(this.x * this.x + this.y * this.y);
-        this.x = this.x * (len / currentLen);
-        this.y = this.y * (len / currentLen);
+        this.x *= len / currentLen;
+        this.y *= len / currentLen;
     };
     Vector.prototype.scalar = function (s) {
         this.x *= s;
@@ -92,9 +92,6 @@ var Thing = /** @class */ (function (_super) {
     function Thing(pt, w, h) {
         var _this = _super.call(this, pt, w, h) || this;
         _this.active = true;
-        _this.pt = pt;
-        _this.w = w;
-        _this.h = h;
         return _this;
     }
     Thing.prototype.restore = function (save) {
