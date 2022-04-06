@@ -34,9 +34,6 @@ Electron:
     - (twitching back and forth)
 
 # Small Features:
-- getRandomDouble()
-    - Same as getRandomInt() but not rounded
-    - getRandomInt() = rounded random double
 - Display restore touch directions
 - Display use w/s up/down to change the selected save
 - Mouse hover over buttons in restore screen
@@ -49,6 +46,7 @@ Electron:
     - use instead: 'mainWindow.reload()'
 - 'prompt()' does not work
     - Use smalltalk instead?
+    - Use SweetAlert2 instead?
 - Screen size
     - Start full screen
     - No top bar
@@ -63,7 +61,7 @@ Electron:
 
 # "Clean" code
 - use fractions everywhere
-    - prefre x/2 over x * 1/2
+    - prefer format: 'x/2' or 'x * 3/4' (not 'x * 1/2' or '3/4 * x')
 - LET
     - scope
 - stun protection

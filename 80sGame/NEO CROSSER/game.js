@@ -982,11 +982,11 @@ var bar = [];
 var landSlides = [];
 var notices = [];
 var pickUps = [];
-var base = playerLevel - 3 * carHeight;
+var base = playerLevel - carHeight * 3;
 var justPlaced = true; // true to skip placing one in the first row
 for (var i = 0; i < 10; i++) {
-    var startPosY = base - (1.5 * carHeight * i);
-    var speed = (getRandomDouble(700, 900) / 110) * canvas.width * 1 / 6000;
+    var startPosY = base - (i * carHeight * 3 / 2);
+    var speed = getRandomDouble(700, 900) * canvas.width * 1 / 600000;
     speed = getChance(2) ? -speed : speed;
     cars.push(new Car(startPosY, speed, speed / 100));
     if (getChance(2) && !justPlaced) {
@@ -997,8 +997,8 @@ for (var i = 0; i < 10; i++) {
         justPlaced = false;
 }
 // to make it look like player is moving
-var barWidth = 3 / 4 * carHeight;
-var barHeight = (barWidth * 11) / 14; // (33/56) * carHeight
+var barWidth = carHeight * 3 / 4;
+var barHeight = barWidth * 11 / 14;
 for (var i = 0; i < canvas.height / barHeight; i++) {
     bar.push(new Block(new Vector(0, i * barHeight), i, barWidth, barHeight));
     bar.push(new Block(new Vector(canvas.width - barWidth, i * barHeight), i, barWidth, barHeight));
