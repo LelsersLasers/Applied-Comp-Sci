@@ -169,7 +169,6 @@ def checkChangeUsername(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
     try:
-        username = request.POST['username']
         password = request.POST['password']
         username1 = request.POST['username1']
         username2 = request.POST['username2']
@@ -178,16 +177,16 @@ def checkChangeUsername(request):
     
     failContext = {
         'error_message': "Error",
-        "a": username,
-        "b": password,
-        "c": username1,
-        "d": username2
+        "a": password,
+        "b": username1,
+        "c": username2
     }
 
-    if username == "" or password == "" or username1 == "" or username2 == "":
+    if password == "" or username1 == "" or username2 == "":
         failContext['error_message'] = "All fields must be filled in"
         return render(request, 'wordle/changeUsername.html', failContext)
 
+    username = request.user.username
     user = authenticate(username=username, password=password)
     if user is None:
         failContext['error_message'] = "Incorrect login info"
@@ -217,7 +216,6 @@ def checkChangeDisplayName(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
     try:
-        username = request.POST['username']
         password = request.POST['password']
         name1 = request.POST['name1']
         name2 = request.POST['name2']
@@ -226,16 +224,16 @@ def checkChangeDisplayName(request):
     
     failContext = {
         'error_message': "Error",
-        "a": username,
-        "b": password,
-        "c": name1,
-        "d": name2
+        "a": password,
+        "b": name1,
+        "c": name2
     }
 
-    if username == "" or password == "" or name1 == "" or name2 == "":
+    if password == "" or name1 == "" or name2 == "":
         failContext['error_message'] = "All fields must be filled in"
         return render(request, 'wordle/changeUsername.html', failContext)
 
+    username = request.user.username
     user = authenticate(username=username, password=password)
     if user is None:
         failContext['error_message'] = "Incorrect login info"
