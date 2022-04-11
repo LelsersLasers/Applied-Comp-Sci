@@ -5,15 +5,6 @@ Launch from rankings page - works
 Confirm the daily/midnight thing works
 - IT DOES NOT
 
-Button from hub 'see my scores'
-    - delete, etc
-
-OTHER:
-- Tourements?
-    - 7 days long, 1 round per day
-    - Custom/challenging rules
-- Custom "lobbies"/rounds/tourements?
-
 Cleaning:
 - HTML templates
     - head/body/title/header/etc

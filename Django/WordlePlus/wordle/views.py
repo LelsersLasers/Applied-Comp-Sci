@@ -330,7 +330,6 @@ def MPReceiveScore(request):
     score = Score(name=cupName, account=acc, guesses=guesses, time=time, sub_date=timezone.now())
     score.save()
     score.word.add(wordObj)
-    # score.save()
     return redirect('wordle:MPHub')
 
 
