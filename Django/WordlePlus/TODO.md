@@ -5,8 +5,6 @@ Launch from rankings page - works
 Confirm the daily/midnight thing works
 - IT DOES NOT
 
-Rankings page many to many is broken
-
 Button from hub 'see my scores'
     - delete, etc
 
@@ -30,3 +28,5 @@ Cleaning:
 - post/get
     - Try/except around all post/etc
 - CSS!
+- Trim dictionary
+    - Make only reasonable words picked

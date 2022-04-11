@@ -320,16 +320,17 @@ def MPReceiveScore(request):
     try:
         cupName = request.POST['cupName'].strip()
         word = request.POST['word'].strip()
-        guesses = request.POST['guesses']
-        time = request.POST['time']
+        guesses = int(request.POST['guesses'])
+        time = int(request.POST['time'])
     except:
         return redirect('wordle:MPHub')
 
     wordObj = Word.objects.get(txt=word)
     acc = Account.objects.get(user=request.user)
     score = Score(name=cupName, account=acc, guesses=guesses, time=time, sub_date=timezone.now())
-    score.word.add(wordObj)
     score.save()
+    score.word.add(wordObj)
+    # score.save()
     return redirect('wordle:MPHub')
 
 
