@@ -3,7 +3,9 @@
 Launch from rankings page - works
 - Avoid "confirm resubmission" message
 Confirm the daily/midnight thing works
-- IT DOES NOT
+
+Redirect localhost/ -> localhost/wordle
+After compiting MP -> rankings not hub
 
 Cleaning:
 - HTML templates

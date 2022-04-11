@@ -293,15 +293,13 @@ def rankings(request):
         return redirect('wordle:MPHub')
 
     scores = list(Score.objects.filter(name=cup).order_by('guesses', 'time'))
-    print(scores)
     if "daily" in cup.lower():
-        tNow = timezone.now()
-        tMidNight = tNow.timestamp() - (tNow.hour * 3600) - (tNow.minute * 60) - tNow.second
+        newScores = []
+        tMidNight = (int(timezone.now().timestamp() // 86400)) * 86400
         for score in scores:
-            print(score.sub_date.timestamp(), tMidNight)
-            if tMidNight > score.sub_date.timestamp():
-                scores.remove(score)
-                print(score)
+            if tMidNight <= int(score.sub_date.timestamp()):
+                newScores.append(score)
+        scores = newScores
     context = {
         'wordLen': wordLen,
         'tries': tries,
