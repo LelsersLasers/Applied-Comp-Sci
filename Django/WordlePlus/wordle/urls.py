@@ -30,6 +30,9 @@ urlpatterns = [
     path('changeDisplayName/', views.changeDisplayName, name='changeDisplayName'),
     # makes sure it works
     path('checkChangeDisplayName/', views.checkChangeDisplayName, name='checkChangeDisplayName'),
+
+    # shows persons scores
+    path('myScores/', views.myScores, name='myScores'),
     
     # back button
     path('backToIndex/', views.backToIndex, name='backToIndex'),

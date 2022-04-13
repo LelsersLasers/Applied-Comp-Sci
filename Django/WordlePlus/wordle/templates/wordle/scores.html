@@ -1,0 +1,26 @@
+<head>
+    <title>Wordle+ Rankings</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Worlde Unlimited Offline Plus +">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'wordle/style.css' %}">
+</head>
+
+<h1>Your Scores</h1>
+
+{% if scores %}
+    <ul>
+    {% for score in scores %}
+        <li>{{ forloop.counter }}) {{ score }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No scores yet!</p>
+{% endif %}
+
+
+<a href="{% url 'wordle:MPHub' %}">
+    <button type="button">
+        Back
+    </button>
+</a>

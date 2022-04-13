@@ -254,6 +254,22 @@ def checkChangeDisplayName(request):
     }
     return render(request, 'wordle/accountSettings.html', context)
 
+
+def myScores(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/wordle")
+    scores = list(Score.objects.filter(account=Account.objects.get(user=request.user)).order_by('name'))
+    newScores = []
+    for score in scores:
+        if score.checkInTimeFrame():
+            newScores.append(score)
+    print("a", newScores)
+    context = {
+        'scores': newScores
+    }
+    return render(request, 'wordle/scores.html', context)
+
+
 def backToIndex(request):
     return HttpResponseRedirect("/wordle")
 
@@ -295,9 +311,8 @@ def rankings(request):
     scores = list(Score.objects.filter(name=cup).order_by('guesses', 'time'))
     if "daily" in cup.lower():
         newScores = []
-        tMidNight = (int(timezone.now().timestamp() // 86400)) * 86400
         for score in scores:
-            if tMidNight <= int(score.sub_date.timestamp()):
+            if score.checkInTimeFrame():
                 newScores.append(score)
         scores = newScores
     context = {
@@ -310,10 +325,10 @@ def rankings(request):
     return render(request, 'wordle/rankings.html', context)
 
 def MPHub(request):
-    if request.user.is_authenticated:
-        return render(request, 'wordle/MPHub.html')
-    return HttpResponseRedirect("/wordle")
-
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/wordle")
+    return render(request, 'wordle/MPHub.html')
+    
 def MPReceiveScore(request):
     try:
         cupName = request.POST['cupName'].strip()

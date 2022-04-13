@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 
@@ -36,4 +37,12 @@ class Score(models.Model):
         wordsTxt = ""
         for word in words:
             wordsTxt += word.txt + " "
-        return "%s - %s) '%s' in %i guesses and %02i:%02i" % (self.sub_date, self.account.display_name, wordsTxt, self.guesses, minutes, sec)
+        wordsTxt = wordsTxt[:-1]
+        return "%s) %s - %s) '%s' in %i guesses and %02i:%02i" % (self.name, self.sub_date, self.account.display_name, wordsTxt, self.guesses, minutes, sec)
+
+
+    def checkInTimeFrame(self):
+        if "daily" in self.name.lower():
+            tMidNight = (int(timezone.now().timestamp() // 86400)) * 86400
+            return tMidNight <= int(self.sub_date.timestamp())
+        return True
