@@ -15,6 +15,9 @@ Cleaning:
     - cup vs name, etc
     - upper case vs lower case letters vs snake_case
         - variables/functions start with lower case letter ('Game()' = bad)
+- Reset database
+    - Rebuilt dictionary
+    - Do after name tweaks
 - Permissions
     - if user.isAuthenticated for all MP stuff
     - Careful when passing things around between pages
