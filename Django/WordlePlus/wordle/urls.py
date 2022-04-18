@@ -4,53 +4,52 @@ from . import views
 app_name = 'wordle'
 urlpatterns = [
     # home/landing page
-    path('wordle/', views.index, name='index'),
-    # Redirect blank page to home page
-    path('', views.blankURLRedirect, name='index'),
+    path('wordle/', views.display_welcome, name='display_welcome'),
+    # Redirect blank url to home page
+    path('', views.redirect_to_welcome, name='redirect_to_welcome'), # TODO: should name be the same?
+    # Redirect to home page
+    path('wordle/back_to_welcome/', views.back_to_welcome, name='back_to_welcome'),
 
     # Signup to create account for MP
-    path('wordle/signup/', views.signup, name='signup'),
+    path('wordle/display_signup_page/', views.display_signup_page, name='display_signup_page'),
     # Checks to make sure signup info is good then creates the account
-    path('wordle/createAccount/', views.createAccount, name='createAccount'),
+    path('wordle/create_account/', views.create_account, name='create_account'),
 
     # Login to already created account
-    path('wordle/loginPage/', views.loginPage, name='loginPage'),
+    path('wordle/display_login_page/', views.display_login_page, name='display_login_page'),
     # Checks/validates the login (then logs them in)
-    path('wordle/checkLogin/', views.checkLogin, name='checkLogin'),
+    path('wordle/check_login/', views.check_login, name='check_login'),
 
     # Logs the user out
-    path('wordle/logoutUser/', views.logoutUser, name='logoutUser'),
+    path('wordle/logout_user/', views.logout_user, name='logout_user'),
     
     # Account settings: change password, display name, or username
-    path('wordle/accountSettings/', views.accountSettings, name='accountSettings'),
+    path('wordle/account_settings/', views.account_settings, name='account_settings'),
     # Change password screen
-    path('wordle/changePassword/', views.changePassword, name='changePassword'),
+    path('wordle/display_change_password/', views.display_change_password, name='display_change_password'),
     # Makes sure all info is good then changes passwords
-    path('wordle/checkChangePassword/', views.checkChangePassword, name='checkChangePassword'),
+    path('wordle/change_password/', views.change_password, name='change_password'),
     # Change username screen
-    path('wordle/changeUsername/', views.changeUsername, name='changeUsername'),
+    path('wordle/display_change_username/', views.display_change_username, name='display_change_username'),
     # Makes sure all info is good then changes username
-    path('wordle/checkChangeUsername/', views.checkChangeUsername, name='checkChangeUsername'),
+    path('wordle/change_username/', views.change_username, name='change_username'),
     # Change display name screen
-    path('wordle/changeDisplayName/', views.changeDisplayName, name='changeDisplayName'),
+    path('wordle/display_change_display_name/', views.display_change_display_name, name='display_change_display_name'),
     # Makes sure all info is good then changes the display name
-    path('wordle/checkChangeDisplayName/', views.checkChangeDisplayName, name='checkChangeDisplayName'),
+    path('wordle/change_display_name/', views.change_display_name, name='change_display_name'),
     
     # Generate word screen for SP
-    path('wordle/SPLauncher/', views.SPLauncher, name='SPLauncher'),
+    path('wordle/display_SP_launcher/', views.display_SP_launcher, name='display_SP_launcher'),
     # The actual wordle game
-    path('wordle/game/<str:mode>', views.displayGame, name='displayGame'),
+    path('wordle/display_game/<str:mode>', views.display_game, name='display_game'),
 
     # 'hub' screen for multiplayer/online options
-    path('wordle/MPHub/', views.MPHub, name='MPHub'),
+    path('wordle/display_MP_Hub/', views.display_MP_Hub, name='display_MP_Hub'),
     # Rankings for a cup
-    path('wordle/rankings/', views.rankings, name='rankings'),
+    path('wordle/display_rankings/', views.display_rankings, name='display_rankings'),
     # After submitting a MP score, save it to DB
-    path('wordle/MPReceiveScore/', views.MPReceiveScore, name='MPReceiveScore'),
+    path('wordle/MP_receive_score/', views.MP_receive_score, name='MP_receive_score'),
 
     # Shows all the scores from the current user
-    path('wordle/myScores/', views.myScores, name='myScores'),
-
-    # Redirect to home page
-    path('wordle/backToIndex/', views.backToIndex, name='backToIndex')
+    path('wordle/display_personal_scores/', views.display_personal_scores, name='display_personal_scores'),
 ]
