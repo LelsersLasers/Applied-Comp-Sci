@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
 
-from .allWords import getWordsOfLen
+from .allWords import getWordsOfLen, getAllWords
 
 
 def blankURLRedirect(request):
