@@ -40,7 +40,7 @@ class Score(models.Model):
         wordsTxt = wordsTxt[:-1]
         return "%s) %s - %s) '%s' in %i guesses and %02i:%02i" % (self.name, self.sub_date, self.account.display_name, wordsTxt, self.guesses, minutes, sec)
 
-    def checkInTimeFrame(self):
+    def check_in_time_frame(self):
         if "daily" in self.cup.lower():
             last_midnight = (int(timezone.now().timestamp() // 86400)) * 86400
             return last_midnight <= int(self.sub_date.timestamp())

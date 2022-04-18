@@ -338581,12 +338581,12 @@ zyzomys
 zyzzogeton
 zyzzyva"""
 
-def getAllWords():
+def get_all_words():
     return words.split("\n")
 
-def getWordsOfLen(length):
+def get_words_of_len(length):
     length = int(length)
-    allWords = getAllWords()
+    allWords = get_all_words()
     newWords = []
     for word in allWords:
         if len(word) == length:

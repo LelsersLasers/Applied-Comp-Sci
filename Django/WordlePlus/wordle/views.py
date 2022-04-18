@@ -8,18 +8,16 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
 
-from .allWords import getWordsOfLen, getAllWords
+from .allWords import get_all_words, get_words_of_len
 
 
-def blankURLRedirect(request):
-    return redirect("wordle:index")
 
-def index(request):
+def display_welcome(request):
     display_name = ""
     if request.user.is_authenticated:
         try:
             display_name = Account.objects.get(user=request.user).display_name
-        except: # incase it is my admin account
+        except: # incase it is my admin account which is User not Account
             display_name = request.user.username
     context = {
         "is_login": request.user.is_authenticated,
@@ -27,20 +25,28 @@ def index(request):
     }
     return render(request, 'wordle/index.html', context)
 
-def signup(request):
+def redirect_to_welcome(request):
+    return redirect("wordle:display_welcome")
+
+def back_to_welcome(request):
+    return HttpResponseRedirect("/wordle")
+
+
+def display_signup_page(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect("/wordle")
     return render(request, 'wordle/signup.html')
 
-def loginPage(request):
-    return render(request, 'wordle/login.html')
-
-def createAccount(request):
+def create_account(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect("/wordle")
     try:
         display_name = request.POST['display']
         username = request.POST['username']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
     except:
-        return redirect('wordle:signup')
+        return redirect('wordle:display_signup_page')
 
     fail_context = {
         'error_message': "Error",
@@ -77,12 +83,20 @@ def createAccount(request):
         login(request, person)
     return HttpResponseRedirect("/wordle")
 
-def checkLogin(request):
+
+def display_login_page(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect("/wordle")
+    return render(request, 'wordle/login.html')
+
+def check_login(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect("/wordle")
     try:
         username = request.POST['username']
         password = request.POST['password']
     except:
-        return redirect('wordle:loginPage')
+        return redirect('wordle:display_login_page')
 
     fail_context = {
         'error_message': "Error",
@@ -102,22 +116,23 @@ def checkLogin(request):
     fail_context['error_message'] = "Login not found"
     return render(request, 'wordle/login.html', fail_context)
 
-def logoutUser(request):
+
+def logout_user(request):
     logout(request)
     return HttpResponseRedirect("/wordle")  
 
 
-def accountSettings(request):
-    if request.user.is_authenticated:
-        return render(request, 'wordle/accountSettings.html')
-    return HttpResponseRedirect("/wordle")
+def account_settings(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/wordle")
+    return render(request, 'wordle/accountSettings.html')
 
-def changePassword(request):
-    if request.user.is_authenticated:
-        return render(request, 'wordle/changePassword.html')
-    return HttpResponseRedirect("/wordle")
+def display_change_password(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/wordle")
+    return render(request, 'wordle/changePassword.html')
 
-def checkChangePassword(request):
+def change_password(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
     try:
@@ -157,12 +172,12 @@ def checkChangePassword(request):
     }
     return render(request, 'wordle/accountSettings.html', context)
     
-def changeUsername(request):
-    if request.user.is_authenticated:
-        return render(request, 'wordle/changeUsername.html')
-    return HttpResponseRedirect("/wordle")
+def display_change_username(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/wordle")
+    return render(request, 'wordle/changeUsername.html')
 
-def checkChangeUsername(request):
+def change_username(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
     try:
@@ -205,12 +220,12 @@ def checkChangeUsername(request):
     }
     return render(request, 'wordle/accountSettings.html', context)
 
-def changeDisplayName(request):
-    if request.user.is_authenticated:
-        return render(request, 'wordle/changeDisplayName.html')
-    return HttpResponseRedirect("/wordle")
+def display_change_display_name(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/wordle")
+    return render(request, 'wordle/changeDisplayName.html')
 
-def checkChangeDisplayName(request):
+def change_display_name(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
     try:
@@ -254,27 +269,10 @@ def checkChangeDisplayName(request):
     return render(request, 'wordle/accountSettings.html', context)
 
 
-def myScores(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect("/wordle")
-    scores = []
-    for score in list(Score.objects.filter(account=Account.objects.get(user=request.user)).order_by('cup')):
-        if score.checkInTimeFrame():
-            scores.append(score)
-    context = {
-        'scores': scores
-    }
-    return render(request, 'wordle/scores.html', context)
-
-
-def backToIndex(request):
-    return HttpResponseRedirect("/wordle")
-
-
-def SPLauncher(request):
+def display_SP_launcher(request):
     return render(request, 'wordle/generateWord.html')
 
-def displayGame(request, mode):
+def display_game(request, mode):
     try:
         word_length = request.POST['wordLenSub']
         tries = request.POST['triesSub']
@@ -282,32 +280,40 @@ def displayGame(request, mode):
         cup = request.POST['cupSub'].strip()
     except:
         if mode == "SP":
-            return redirect('wordle:SPLauncher')
-        return redirect('wordle:MPHub')
+            return redirect('wordle:display_SP_launcher')
+        return redirect('wordle:display_MP_Hub')
 
-    word = getWord(word_length, double_letters)
+    word = get_word(word_length, double_letters)
     context = {
         'word': word,
         'tries': tries,
-        'availableWords': getWordsOfLen(word_length),
+        'availableWords': get_words_of_len(word_length),
         'mode': mode == "SP",
         'cup': cup
     }
     print(context['word'])
     return render(request, 'wordle/game.html', context)
 
-def rankings(request):
+
+def display_MP_Hub(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/wordle")
+    return render(request, 'wordle/MPHub.html')
+
+def display_rankings(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/wordle")
     try:
         word_length = request.POST['wordLenSub']
         tries = request.POST['triesSub']
         double_letters = True if request.POST['doubleLettersSub'] == 'true' else False
         cup = request.POST['cupSub'].strip()
     except:
-        return redirect('wordle:MPHub')
+        return redirect('wordle:display_MP_Hub')
 
     scores = []
     for score in list(Score.objects.filter(cup=cup).order_by('guesses', 'time')):
-        if score.checkInTimeFrame():
+        if score.check_in_time_frame():
             scores.append(score)
 
     context = {
@@ -318,30 +324,40 @@ def rankings(request):
         'scores': scores
     }
     return render(request, 'wordle/rankings.html', context)
-
-def MPHub(request):
+    
+def MP_receive_score(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
-    return render(request, 'wordle/MPHub.html')
-    
-def MPReceiveScore(request):
     try:
         cup = request.POST['cupName'].strip()
         word = request.POST['word'].strip()
         guesses = int(request.POST['guesses'])
         time = int(request.POST['time'])
     except:
-        return redirect('wordle:MPHub')
+        return redirect('wordle:display_MP_Hub')
 
     wordObj = Word.objects.get(txt=word)
     acc = Account.objects.get(user=request.user)
     score = Score(cup=cup, account=acc, guesses=guesses, time=time, sub_date=timezone.now())
     score.save()
     score.word.add(wordObj)
-    return redirect('wordle:MPHub')
+    return redirect('wordle:display_MP_Hub')
 
 
-def getWord(wordLen, doubleLetters):
+def display_personal_scores(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/wordle")
+    scores = []
+    for score in list(Score.objects.filter(account=Account.objects.get(user=request.user)).order_by('cup')):
+        if score.check_in_time_frame():
+            scores.append(score)
+    context = {
+        'scores': scores
+    }
+    return render(request, 'wordle/scores.html', context)
+
+
+def get_word(wordLen, doubleLetters):
     if (not doubleLetters):
         words = Word.objects.filter(length=wordLen, double_letters=False)
     else:
@@ -352,7 +368,7 @@ def getWord(wordLen, doubleLetters):
 # def createDictionary(resetDB):
 #     if resetDB:
 #         Word.objects.all().delete()
-#     words = getAllWords()
+#     words = get_all_words()
 #     i = 0
 #     for word in words:
 #         if not len(Word.objects.filter(txt=word)) > 0:
