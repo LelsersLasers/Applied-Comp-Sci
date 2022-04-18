@@ -8,26 +8,23 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
 
-from .allWords import getAllWords, getWordsOfLen
+from .allWords import getWordsOfLen
 
 
 def blankURLRedirect(request):
     return redirect("wordle:index")
 
-def getDisplayName(request):
+def index(request):
+    display_name = ""
     if request.user.is_authenticated:
         try:
-            return Account.objects.get(user=request.user).display_name
+            display_name = Account.objects.get(user=request.user).display_name
         except: # incase it is my admin account
-            return request.user.username
-    return ""
-
-def index(request):
+            display_name = request.user.username
     context = {
         "is_login": request.user.is_authenticated,
-        "display_name": getDisplayName(request)
+        "display_name": display_name
     }
-
     return render(request, 'wordle/index.html', context)
 
 def signup(request):
@@ -45,7 +42,7 @@ def createAccount(request):
     except:
         return redirect('wordle:signup')
 
-    failContext = {
+    fail_context = {
         'error_message': "Error",
         'a': display_name,
         'b': username,
@@ -53,30 +50,27 @@ def createAccount(request):
         'd': password2
     }
 
-    # TODO: replace the a/b/c/d with a function or something better
-
     if display_name == "" or username == "" or password1 == "" or password2 == "":
-        failContext['error_message'] = "All fields must be filled in"
-        return render(request, 'wordle/signup.html', failContext)
+        fail_context['error_message'] = "All fields must be filled in"
+        return render(request, 'wordle/signup.html', fail_context)
     elif password1 != password2:
-        failContext['error_message'] = "Passwords do not match"
-        return render(request, 'wordle/signup.html', failContext)
+        fail_context['error_message'] = "Passwords do not match"
+        return render(request, 'wordle/signup.html', fail_context)
 
-    accs = Account.objects.all()
-    for acc in accs:
-        if acc.user.username == username:
-            failContext['error_message'] = "That username is already in use"
-            return render(request, 'wordle/signup.html', failContext)
-        elif acc.display_name == display_name:
-            failContext['error_message'] = "That display name is already in use"
-            return render(request, 'wordle/signup.html', failContext)
+    accounts = Account.objects.all()
+    for account in accounts:
+        if account.user.username == username:
+            fail_context['error_message'] = "That username is already in use"
+            return render(request, 'wordle/signup.html', fail_context)
+        elif account.display_name == display_name:
+            fail_context['error_message'] = "That display name is already in use"
+            return render(request, 'wordle/signup.html', fail_context)
 
-    print(isinstance(password1, str))
     user = User.objects.create_user(username=username, password=password1)
     user.save()
 
-    acc = Account(display_name=display_name, user=user)
-    acc.save()
+    account = Account(display_name=display_name, user=user)
+    account.save()
 
     person = authenticate(username=username, password=password1)
     if person is not None:
@@ -90,23 +84,23 @@ def checkLogin(request):
     except:
         return redirect('wordle:loginPage')
 
-    failContext = {
+    fail_context = {
         'error_message': "Error",
         'a': username,
         'b': password
     }
 
     if username == "" or password == "":
-        failContext['error_message'] = "All fields must be filled in"
-        return render(request, 'wordle/login.html', failContext)
+        fail_context['error_message'] = "All fields must be filled in"
+        return render(request, 'wordle/login.html', fail_context)
 
     user = authenticate(username=username, password=password)
     if user is not None:
         login(request, user)
         return HttpResponseRedirect("/wordle")
 
-    failContext['error_message'] = "Login not found"
-    return render(request, 'wordle/login.html', failContext)
+    fail_context['error_message'] = "Login not found"
+    return render(request, 'wordle/login.html', fail_context)
 
 def logoutUser(request):
     logout(request)
@@ -133,7 +127,7 @@ def checkChangePassword(request):
     except:
         return HttpResponseRedirect("/wordle")
     
-    failContext = {
+    fail_context = {
         'error_message': "Error",
         "a": password,
         "b": password1,
@@ -141,17 +135,17 @@ def checkChangePassword(request):
     }
 
     if password == "" or password1 == "" or password2 == "":
-        failContext['error_message'] = "All fields must be filled in"
-        return render(request, 'wordle/changePassword.html', failContext)
+        fail_context['error_message'] = "All fields must be filled in"
+        return render(request, 'wordle/changePassword.html', fail_context)
 
     username = request.user.username
     user = authenticate(username=username, password=password)
     if user is None:
-        failContext['error_message'] = "Incorrect password"
-        return render(request, 'wordle/changePassword.html', failContext)
+        fail_context['error_message'] = "Incorrect old password"
+        return render(request, 'wordle/changePassword.html', fail_context)
     if password1 != password2:
-        failContext['error_message'] = "Passwords do not match"
-        return render(request, 'wordle/changePassword.html', failContext)
+        fail_context['error_message'] = "New passwords do not match"
+        return render(request, 'wordle/changePassword.html', fail_context)
 
     person = User.objects.get(username=username)
     person.set_password(password1)
@@ -178,7 +172,7 @@ def checkChangeUsername(request):
     except:
         return HttpResponseRedirect("/wordle")
     
-    failContext = {
+    fail_context = {
         'error_message': "Error",
         "a": password,
         "b": username1,
@@ -186,20 +180,21 @@ def checkChangeUsername(request):
     }
 
     if password == "" or username1 == "" or username2 == "":
-        failContext['error_message'] = "All fields must be filled in"
-        return render(request, 'wordle/changeUsername.html', failContext)
+        fail_context['error_message'] = "All fields must be filled in"
+        return render(request, 'wordle/changeUsername.html', fail_context)
 
     username = request.user.username
     user = authenticate(username=username, password=password)
     if user is None:
-        failContext['error_message'] = "Incorrect login info"
-        return render(request, 'wordle/changeUsername.html', failContext)
+        fail_context['error_message'] = "Incorrect password"
+        return render(request, 'wordle/changeUsername.html', fail_context)
     if username1 != username2:
-        failContext['error_message'] = "Usernames do not match"
-        return render(request, 'wordle/changeUsername.html', failContext)
+        fail_context['error_message'] = "Usernames do not match"
+        return render(request, 'wordle/changeUsername.html', fail_context)
     if User.objects.filter(username=username1).exists():
-        failContext['error_message'] = "Username already in use"
-        return render(request, 'wordle/changeUsername.html', failContext)
+        fail_context['error_message'] = "Username already in use"
+        return render(request, 'wordle/changeUsername.html', fail_context)
+
     person = User.objects.get(username=username)
     person.username = username1
     person.save()
@@ -220,35 +215,36 @@ def checkChangeDisplayName(request):
         return HttpResponseRedirect("/wordle")
     try:
         password = request.POST['password']
-        name1 = request.POST['name1']
-        name2 = request.POST['name2']
+        display_name1 = request.POST['name1']
+        display_name2 = request.POST['name2']
     except:
         return HttpResponseRedirect("/wordle")
     
-    failContext = {
+    fail_context = {
         'error_message': "Error",
         "a": password,
-        "b": name1,
-        "c": name2
+        "b": display_name1,
+        "c": display_name2
     }
 
-    if password == "" or name1 == "" or name2 == "":
-        failContext['error_message'] = "All fields must be filled in"
-        return render(request, 'wordle/changeUsername.html', failContext)
+    if password == "" or display_name1 == "" or display_name2 == "":
+        fail_context['error_message'] = "All fields must be filled in"
+        return render(request, 'wordle/changeUsername.html', fail_context)
 
     username = request.user.username
     user = authenticate(username=username, password=password)
     if user is None:
-        failContext['error_message'] = "Incorrect login info"
-        return render(request, 'wordle/changeDisplayName.html', failContext)
-    if name1 != name2:
-        failContext['error_message'] = "Display names do not match"
-        return render(request, 'wordle/changeDisplayName.html', failContext)
-    if Account.objects.filter(display_name=name1).exists():
-        failContext['error_message'] = "Display name already in use"
-        return render(request, 'wordle/changeDisplayName.html', failContext)
+        fail_context['error_message'] = "Incorrect password"
+        return render(request, 'wordle/changeDisplayName.html', fail_context)
+    if display_name1 != display_name2:
+        fail_context['error_message'] = "Display names do not match"
+        return render(request, 'wordle/changeDisplayName.html', fail_context)
+    if Account.objects.filter(display_name=display_name1).exists():
+        fail_context['error_message'] = "Display name already in use"
+        return render(request, 'wordle/changeDisplayName.html', fail_context)
+
     person = Account.objects.get(user=User.objects.get(username=username))
-    person.display_name = name1
+    person.display_name = display_name1
     person.save()
     login(request, User.objects.get(username=username))
 
@@ -261,14 +257,12 @@ def checkChangeDisplayName(request):
 def myScores(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
-    scores = list(Score.objects.filter(account=Account.objects.get(user=request.user)).order_by('name'))
-    newScores = []
-    for score in scores:
+    scores = []
+    for score in list(Score.objects.filter(account=Account.objects.get(user=request.user)).order_by('cup')):
         if score.checkInTimeFrame():
-            newScores.append(score)
-    print("a", newScores)
+            scores.append(score)
     context = {
-        'scores': newScores
+        'scores': scores
     }
     return render(request, 'wordle/scores.html', context)
 
@@ -282,20 +276,20 @@ def SPLauncher(request):
 
 def displayGame(request, mode):
     try:
-        wordLen = request.POST['wordLenSub']
+        word_length = request.POST['wordLenSub']
         tries = request.POST['triesSub']
-        doubleLetters = True if request.POST['doubleLettersSub'] == 'true' else False
+        double_letters = True if request.POST['doubleLettersSub'] == 'true' else False
         cup = request.POST['cupSub'].strip()
     except:
         if mode == "SP":
             return redirect('wordle:SPLauncher')
         return redirect('wordle:MPHub')
 
-    word = getWord(wordLen, doubleLetters)
+    word = getWord(word_length, double_letters)
     context = {
         'word': word,
         'tries': tries,
-        'availableWords': getWordsOfLen(wordLen),
+        'availableWords': getWordsOfLen(word_length),
         'mode': mode == "SP",
         'cup': cup
     }
@@ -304,24 +298,22 @@ def displayGame(request, mode):
 
 def rankings(request):
     try:
-        wordLen = request.POST['wordLenSub']
+        word_length = request.POST['wordLenSub']
         tries = request.POST['triesSub']
-        doubleLetters = True if request.POST['doubleLettersSub'] == 'true' else False
+        double_letters = True if request.POST['doubleLettersSub'] == 'true' else False
         cup = request.POST['cupSub'].strip()
     except:
         return redirect('wordle:MPHub')
 
-    scores = list(Score.objects.filter(name=cup).order_by('guesses', 'time'))
-    if "daily" in cup.lower():
-        newScores = []
-        for score in scores:
-            if score.checkInTimeFrame():
-                newScores.append(score)
-        scores = newScores
+    scores = []
+    for score in list(Score.objects.filter(cup=cup).order_by('guesses', 'time')):
+        if score.checkInTimeFrame():
+            scores.append(score)
+
     context = {
-        'wordLen': wordLen,
+        'wordLen': word_length,
         'tries': tries,
-        'doubleLetters': doubleLetters,
+        'doubleLetters': double_letters,
         'cup': cup,
         'scores': scores
     }
@@ -334,7 +326,7 @@ def MPHub(request):
     
 def MPReceiveScore(request):
     try:
-        cupName = request.POST['cupName'].strip()
+        cup = request.POST['cupName'].strip()
         word = request.POST['word'].strip()
         guesses = int(request.POST['guesses'])
         time = int(request.POST['time'])
@@ -343,7 +335,7 @@ def MPReceiveScore(request):
 
     wordObj = Word.objects.get(txt=word)
     acc = Account.objects.get(user=request.user)
-    score = Score(name=cupName, account=acc, guesses=guesses, time=time, sub_date=timezone.now())
+    score = Score(cup=cup, account=acc, guesses=guesses, time=time, sub_date=timezone.now())
     score.save()
     score.word.add(wordObj)
     return redirect('wordle:MPHub')
@@ -351,7 +343,7 @@ def MPReceiveScore(request):
 
 def getWord(wordLen, doubleLetters):
     if (not doubleLetters):
-        words = Word.objects.filter(length=wordLen, doubleLetters=False)
+        words = Word.objects.filter(length=wordLen, double_letters=False)
     else:
         words = Word.objects.filter(length=wordLen)
     return random.choice(words)
@@ -372,7 +364,7 @@ def getWord(wordLen, doubleLetters):
 #                     break
 #                 else:
 #                     letters.append(letter)
-#             w = Word(txt=word.strip(), length=len(word), doubleLetters=doubleLetters)
+#             w = Word(txt=word.strip(), length=len(word), double_letters=doubleLetters)
 #             w.save()
 #             print("%i = %i/%i)  %s" % ((i/len(words) * 100), i, len(words), w))
 #             i = i + 1

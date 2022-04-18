@@ -12,8 +12,8 @@ Cleaning:
     - head/body/title/header/etc
     - Use subtemplates (Template inheritance)
 - Namings
-    - cup vs name, etc
-    - upper case vs lower case letters vs snake_case
+    - cup over name, etc
+    - snake_case for vars and funtions
         - variables/functions start with lower case letter ('Game()' = bad)
 - Reset database
     - Rebuilt dictionary
@@ -21,8 +21,10 @@ Cleaning:
 - Permissions
     - if user.isAuthenticated for all MP stuff
     - Careful when passing things around between pages
+        - Hidden JS fields (so word isn't given away)
 - post/get
     - Try/except around all post/etc
 - CSS!
-- Trim dictionary
+- Dictionary
+    - 2nd dictionary with only common words?
     - Make only reasonable words picked
