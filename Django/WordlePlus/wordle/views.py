@@ -11,6 +11,9 @@ from django.utils import timezone
 from .allWords import getAllWords, getWordsOfLen
 
 
+def blankURLRedirect(request):
+    return redirect("wordle:index")
+
 def getDisplayName(request):
     if request.user.is_authenticated:
         try:
