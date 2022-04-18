@@ -10,15 +10,15 @@ After compiting MP -> rankings not hub
 back_to_welcome() vs redirect_to_welcome()
 
 Cleaning:
-- HTML templates
-    - head/body/title/header/etc
-    - Use subtemplates (Template inheritance)
 - Namings
     - cup over name, etc
     - snake_case for vars and funtions
         - variables/functions start with lower case letter ('Game()' = bad)
-    - fix all js and html names too
+    - fix all js and html names, files too
         - forms, post, js, etc
+- HTML templates
+    - head/body/title/header/etc
+    - Use subtemplates (Template inheritance)
 - Reset database
     - Rebuilt dictionary
     - Do after name tweaks

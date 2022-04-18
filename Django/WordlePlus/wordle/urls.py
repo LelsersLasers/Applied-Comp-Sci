@@ -24,7 +24,7 @@ urlpatterns = [
     path('wordle/logout_user/', views.logout_user, name='logout_user'),
     
     # Account settings: change password, display name, or username
-    path('wordle/account_settings/', views.account_settings, name='account_settings'),
+    path('wordle/display_account_settings/', views.display_account_settings, name='display_account_settings'),
     # Change password screen
     path('wordle/display_change_password/', views.display_change_password, name='display_change_password'),
     # Makes sure all info is good then changes passwords
