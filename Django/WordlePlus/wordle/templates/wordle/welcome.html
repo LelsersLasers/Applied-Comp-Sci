@@ -4,29 +4,30 @@
 <head>
     <title>Wordle+ Home</title>
     <meta charset="utf-8">
-    <meta name="description" content="Worlde Unlimited Offline Plus +">
+    <meta name="description" content="Worlde Unlimited Offline Single Multiplayer play Plus +">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'wordle/style.css' %}">
 </head>
 
+<body>
+    <h1>Greetings Traveler</h1>
 
-<h1>Greetings Traveler</h1>
-
-{% if is_login %}
-    <p>Hello there {{ display_name }}!</p>
-{% endif %}
-
-<h3>Options</h3>
-<ul>
     {% if is_login %}
-        <li><a href="{% url 'wordle:logout_user' %}">Log Out</a></li>
-        <li><a href="{% url 'wordle:display_account_settings' %}">Account Settings</a></li>
-        <li><a href="{% url 'wordle:display_MP_Hub' %}">Multiplayer</a></li>
-    {% else %}
-        <li><a href="{% url 'wordle:display_login_page' %}">Login</a></li>
-        <li><a href="{% url 'wordle:display_signup_page' %}">Sign Up</a></li>
-        <li>Must be logged in to play online!</li>
+        <p>Hello there, {{ display_name }}!</p>
     {% endif %}
-
-    <li><a href="{% url 'wordle:display_SP_launcher' %}">Practice/Single Player Wordle+</a></li>
-</ul>
+    
+    <h3>Options</h3>
+    <ul>
+        {% if is_login %}
+            <li><a href="{% url 'wordle:logout_user' %}">Log Out</a></li>
+            <li><a href="{% url 'wordle:display_account_settings' %}">Account Settings</a></li>
+            <li><a href="{% url 'wordle:display_MP_Hub' %}">Multiplayer</a></li>
+        {% else %}
+            <li><a href="{% url 'wordle:display_login_page' %}">Login</a></li>
+            <li><a href="{% url 'wordle:display_signup_page' %}">Sign Up</a></li>
+            <li>Must be logged in to play online!</li>
+        {% endif %}
+    
+        <li><a href="{% url 'wordle:display_SP_launcher' %}">Practice/Single Player Wordle+</a></li>
+    </ul>
+</body>

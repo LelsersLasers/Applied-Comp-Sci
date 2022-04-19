@@ -1,35 +1,45 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'wordle/style.css' %}">
+<!DOCTYPE html>
+<html charset="UTF-8" lang="en-US">
 
-<form action="{% url 'wordle:check_login' %}" method="post">
-    {% csrf_token %}
-    <fieldset>
-        <legend><h1>Login</h1></legend>
+<head>
+    <title>Wordle+ Home</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Worlde Unlimited Offline Single Multiplayer play Plus +">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'wordle/style.css' %}">
+</head>
 
-        <label for="username">Username:</label>
-        <br />
-        <input type="text" id="username" name="username" value="{% if a %}{{ a }}{% endif %}">
-        <br />
-        
-        <label for="password">Password:</label>
-        <br />
-        <input type="password" id="password" name="password" value="{% if b %}{{ b }}{% endif %}">
-        <br />
+<body>
+    <form action="{% url 'wordle:check_login' %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h1>Login</h1></legend>
 
-        {% if error_message %}
-            <strong>{{ error_message }}</strong>
-        {% endif %}
-        <br />
+            <label for="username">Username:</label>
+            <br />
+            <input type="text" id="username" name="username" value="{% if a %}{{ a }}{% endif %}">
+            <br />
+            
+            <label for="password">Password:</label>
+            <br />
+            <input type="password" id="password" name="password" value="{% if b %}{{ b }}{% endif %}">
+            <br />
 
-    </fieldset>
-    <input type="submit" value="Login" />
-    <a href="{% url 'wordle:display_signup_page' %}">
-        <button type="button">Don't have an account? (Signup)</button>
+            {% if error_message %}
+                <strong>{{ error_message }}</strong>
+            {% endif %}
+            <br />
+
+        </fieldset>
+        <input type="submit" value="Login" />
+        <a href="{% url 'wordle:display_signup_page' %}">
+            <button type="button">Don't have an account? (Signup)</button>
+        </a>
+    </form>
+
+    <a href="{% url 'wordle:back_to_welcome' %}">
+        <button type="button">
+            Back
+        </button>
     </a>
-</form>
-
-<a href="{% url 'wordle:back_to_welcome' %}">
-    <button type="button">
-        Back
-    </button>
-</a>
+</body>

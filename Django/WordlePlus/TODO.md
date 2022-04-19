@@ -14,9 +14,15 @@ Cleaning:
         - variables/functions start with lower case letter ('Game()' = bad)
     - fix all js and html names, files too
         - forms, post, js, etc
-- HTML templates
-    - head/body/title/header/etc
-    - Use subtemplates (Template inheritance)
+- HTML
+    - Templates
+        - head/body/title/header/etc
+        - Use subtemplates (Template inheritance)
+            - top heading
+            - Account settings change pw, username, dn
+            - Login, signup?
+    - Give each one a "full" html
+        - Currently only welcome, login, signup have full correct headings
 - Permissions
     - if user.isAuthenticated for all MP stuff
     - Careful when passing things around between pages
