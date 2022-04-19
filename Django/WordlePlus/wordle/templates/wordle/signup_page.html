@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'wordle/style.css' %}">
 
 
-<form action="{% url 'wordle:createAccount' %}" method="post">
+<form action="{% url 'wordle:create_account' %}" method="post">
     {% csrf_token %}
     <fieldset>
         <legend><h1>Sign Up</h1></legend>
@@ -34,12 +34,12 @@
 
     </fieldset>
     <input type="submit" value="Create Account" />
-    <a href="{% url 'wordle:loginPage' %}">
+    <a href="{% url 'wordle:login_page' %}">
         <button type="button">Already have an account? (Login)</button>
     </a>
 </form>
 
-<a href="{% url 'wordle:backToIndex' %}">
+<a href="{% url 'wordle:back_to_welcome' %}">
     <button type="button">
         Back
     </button>

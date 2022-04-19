@@ -19,12 +19,12 @@
 <h3>Options</h3>
 <ul>
     {% if is_login %}
-        <li><a href="{% url 'wordle:logoutUser' %}">Log Out</a></li>
-        <li><a href="{% url 'wordle:accountSettings' %}">Account Settings</a></li>
-        <li><a href="{% url 'wordle:MPHub' %}">Multiplayer</a></li>
+        <li><a href="{% url 'wordle:logout_user' %}">Log Out</a></li>
+        <li><a href="{% url 'wordle:display_account_settings' %}">Account Settings</a></li>
+        <li><a href="{% url 'wordle:display_MP_Hub' %}">Multiplayer</a></li>
     {% else %}
-        <li><a href="{% url 'wordle:loginPage' %}">Login</a></li>
-        <li><a href="{% url 'wordle:signup' %}">Sign Up</a></li>
+        <li><a href="{% url 'wordle:login_page' %}">Login</a></li>
+        <li><a href="{% url 'wordle:signup_page' %}">Sign Up</a></li>
         <li>Must be logged in to play online!</li>
     {% endif %}
 
