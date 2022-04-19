@@ -1,6 +1,6 @@
 # Applied-Comp-Sci
 
-Personal work for Applied-Comp-Sci (and some other personal projects)
+Personal work for Applied-Comp-Sci (and some other small personal projects)
 
 Note: "LelsersLasers" is my personal github account, and this is my school account
 
