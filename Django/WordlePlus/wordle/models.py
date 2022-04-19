@@ -5,6 +5,7 @@ from django.utils import timezone
 # Create your models here.
 
 class Account(models.Model):
+    # 1 User to 1 Account
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     display_name = models.CharField("Display Name", max_length=200)
 
@@ -21,7 +22,9 @@ class Word(models.Model):
 
 class Score(models.Model):
     cup = models.CharField("Cup Name", max_length=200)
-    word = models.ManyToManyField(Word)
+    # 1 Word to many Scores - a Word can be used in multiple Scores
+    word = models.ForeignKey(Word, on_delete=models.CASCADE)
+    # 1 Account to many Scores - an Account can have many Scores
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     guesses = models.IntegerField("Guesses taken to solve")
     time = models.IntegerField("Time in seconds taken to solve")
@@ -33,12 +36,7 @@ class Score(models.Model):
         while sec > 60:
             minutes += 1
             sec -= 60
-        words = self.word.all()
-        wordsTxt = ""
-        for word in words:
-            wordsTxt += word.txt + " "
-        wordsTxt = wordsTxt[:-1]
-        return "%s) %s - %s) '%s' in %i guesses and %02i:%02i" % (self.name, self.sub_date, self.account.display_name, wordsTxt, self.guesses, minutes, sec)
+        return "%s) %s - %s) '%s' in %i guesses and %02i:%02i" % (self.name, self.sub_date, self.account.display_name, self.word, self.guesses, minutes, sec)
 
     def check_in_time_frame(self):
         if "daily" in self.cup.lower():

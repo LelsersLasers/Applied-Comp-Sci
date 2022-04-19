@@ -4,8 +4,10 @@ Launch from rankings page - works
 - Avoid "confirm resubmission" message
 Confirm the daily/midnight thing works
 
-Redirect localhost/ -> localhost/wordle
 After compiting MP -> rankings not hub
+
+Many to many with score to word?
+- 1 word to many scores
 
 back_to_welcome() vs redirect_to_welcome()
 

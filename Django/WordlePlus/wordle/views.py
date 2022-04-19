@@ -339,9 +339,8 @@ def MP_receive_score(request):
 
     wordObj = Word.objects.get(txt=word)
     acc = Account.objects.get(user=request.user)
-    score = Score(cup=cup, account=acc, guesses=guesses, time=time, sub_date=timezone.now())
+    score = Score(cup=cup, account=acc, word=wordObj, guesses=guesses, time=time, sub_date=timezone.now())
     score.save()
-    score.word.add(wordObj)
     return redirect('wordle:display_MP_Hub')
 
 
