@@ -17,7 +17,7 @@ class Word(models.Model):
     double_letters = models.BooleanField("Does the word have double letters?", default=False)
 
     def __str__(self):
-        return "%i: %s (%s)" % (self.length, self.txt, self.doubleLetters)
+        return "%i: %s (%s)" % (self.length, self.txt, self.double_letters)
 
 class Score(models.Model):
     cup = models.CharField("Cup Name", max_length=200)

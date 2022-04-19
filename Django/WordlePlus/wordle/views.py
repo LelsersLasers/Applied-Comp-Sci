@@ -13,6 +13,7 @@ from .allWords import get_all_words, get_words_of_len
 
 
 def display_welcome(request):
+    # create_dictionary(True)
     display_name = ""
     if request.user.is_authenticated:
         try:
@@ -365,22 +366,22 @@ def get_word(wordLen, doubleLetters):
     return random.choice(words)
     
 
-# def createDictionary(resetDB):
-#     if resetDB:
-#         Word.objects.all().delete()
-#     words = get_all_words()
-#     i = 0
-#     for word in words:
-#         if not len(Word.objects.filter(txt=word)) > 0:
-#             doubleLetters = False
-#             letters = []
-#             for letter in word:
-#                 if letter in letters:
-#                     doubleLetters = True
-#                     break
-#                 else:
-#                     letters.append(letter)
-#             w = Word(txt=word.strip(), length=len(word), double_letters=doubleLetters)
-#             w.save()
-#             print("%i = %i/%i)  %s" % ((i/len(words) * 100), i, len(words), w))
-#             i = i + 1
+def create_dictionary(resetDB):
+    if resetDB:
+        Word.objects.all().delete()
+    words = get_all_words()
+    i = 0
+    for word in words:
+        if not len(Word.objects.filter(txt=word)) > 0:
+            double_letters = False
+            letters = []
+            for letter in word:
+                if letter in letters:
+                    double_letters = True
+                    break
+                else:
+                    letters.append(letter)
+            w = Word(txt=word.strip(), length=len(word), double_letters=double_letters)
+            w.save()
+            print("%i = %i/%i)  %s" % ((i/len(words) * 100), i, len(words), w))
+            i = i + 1
