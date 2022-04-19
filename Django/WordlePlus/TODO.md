@@ -5,8 +5,7 @@ Avoid "confirm resubmission" message
 
 After compiting MP -> rankings not hub
 
-Finish
-Many to many with score to word
+Finish: Many to many with score to word
 
 Cleaning:
 - Namings
