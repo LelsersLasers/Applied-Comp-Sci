@@ -20,7 +20,6 @@ Scoring: Least amout of gueses, tie breaker is time
         <dd>6 tries</dd>
         <dd>5 letters long</dd>
         <dd>Double letters not allowed</dd>
-        <dd>1 word</dd>
         <dd>
             <a onclick="Launch('rankings', 5, 6, false, '6x5')">
                 View rankings
@@ -31,7 +30,6 @@ Scoring: Least amout of gueses, tie breaker is time
         <dd>Infinite tries</dd>
         <dd>5 letters long</dd>
         <dd>Double letters allowed</dd>
-        <dd>1 word</dd>
         <dd>
             <a onclick="Launch('rankings', 5, 0, true, '0x5')">
                 View rankings
@@ -42,7 +40,6 @@ Scoring: Least amout of gueses, tie breaker is time
         <dd>6 tries</dd>
         <dd>5 letters long</dd>
         <dd>Double letters not allowed</dd>
-        <dd>1 word</dd>
         <dd>Scoreboard resets daily!</dd>
         <dd>
             <a onclick="Launch('rankings', 5, 10, false, '10x5 daily')">
@@ -51,19 +48,19 @@ Scoring: Least amout of gueses, tie breaker is time
         </dd>
 </dl>
 
-<a href="{% url 'wordle:myScores' %}">
+<a href="{% url 'wordle:display_personal_scores' %}">
     <button type="button">
         View my scores
     </button>
 </a>
 
-<a href="{% url 'wordle:backToIndex' %}">
+<a href="{% url 'wordle:back_to_welcome' %}">
     <button type="button">
         Back
     </button>
 </a>
 
-<form id="gameForm" action="{% url 'wordle:displayGame' 'MP' %}" method="post" hidden>
+<form id="gameForm" action="{% url 'wordle:display_game' 'MP' %}" method="post" hidden>
     {% csrf_token %}
     <input type="hidden" id="gameWordLenSub" name="wordLenSub" value="" />
     <input type="hidden" id="gameTriesSub" name="triesSub" value="" />
@@ -71,7 +68,7 @@ Scoring: Least amout of gueses, tie breaker is time
     <input type="hidden" id="gameCupSub" name="cupSub" value="" />
 </form>
 
-<form id="rankingsForm" action="{% url 'wordle:rankings' %}" method="post" hidden>
+<form id="rankingsForm" action="{% url 'wordle:display_rankings' %}" method="post" hidden>
     {% csrf_token %}
     <input type="hidden" id="rankingsWordLenSub" name="wordLenSub" value="" />
     <input type="hidden" id="rankingsTriesSub" name="triesSub" value="" />

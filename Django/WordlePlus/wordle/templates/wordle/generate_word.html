@@ -32,13 +32,13 @@
     Start!
 </button>
 <br />
-<a href="{% url 'wordle:backToIndex' %}">
+<a href="{% url 'wordle:back_to_welcome' %}">
     <button type="button">
         Back
     </button>
 </a>
 
-<form id="wordGen" action="{% url 'wordle:displayGame' 'SP' %}" method="post" hidden>
+<form id="wordGen" action="{% url 'wordle:display_game' 'SP' %}" method="post" hidden>
     {% csrf_token %}
     <input type="hidden" id="wordLenSub" name="wordLenSub" value="" />
     <input type="hidden" id="triesSub" name="triesSub" value="" />

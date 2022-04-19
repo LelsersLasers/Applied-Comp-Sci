@@ -35,10 +35,10 @@
     {% if mode %}
         <div class="row">
             <button id="showWord" type="button" onclick="showWord()">Show Word</button>
-            <a href="{% url 'wordle:SPLauncher' %}">
+            <a href="{% url 'wordle:display_SP_launcher' %}">
                 <button type="button">New Word</button>
             </a>
-            <a href="{% url 'wordle:backToIndex' %}">
+            <a href="{% url 'wordle:back_to_welcome' %}">
                 <button type="button">
                     Back
                 </button>
@@ -48,12 +48,12 @@
         <button id="MPSubmitButton" type="button" onclick="sendScore()" hidden>
             Submit Score
         </button>
-        <a id="MPBackButton" href="{% url 'wordle:MPHub' %}">
+        <a id="MPBackButton" href="{% url 'wordle:display_MP_Hub' %}">
             <button type="button">
                 Back
             </button>
         </a>
-        <form id="MPSubmit" action="{% url 'wordle:MPReceiveScore' %}" method="post" hidden>
+        <form id="MPSubmit" action="{% url 'wordle:MP_receive_score' %}" method="post" hidden>
             {% csrf_token %}
             <input type="hidden" id="cupName" name="cupName" value="" />
             <input type="hidden" id="word" name="word" value="" />
