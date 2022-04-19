@@ -13,7 +13,7 @@ from .allWords import get_all_words, get_words_of_len
 
 
 def display_welcome(request):
-    # create_dictionary(True)
+    # create_dictionary(False)
     display_name = ""
     if request.user.is_authenticated:
         try:
@@ -25,9 +25,6 @@ def display_welcome(request):
         "display_name": display_name
     }
     return render(request, 'wordle/welcome.html', context)
-
-def redirect_to_welcome(request):
-    return redirect("wordle:display_welcome")
 
 def back_to_welcome(request):
     return HttpResponseRedirect("/wordle")

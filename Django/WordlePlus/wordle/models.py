@@ -36,7 +36,7 @@ class Score(models.Model):
         while sec > 60:
             minutes += 1
             sec -= 60
-        return "%s) %s - %s) '%s' in %i guesses and %02i:%02i" % (self.name, self.sub_date, self.account.display_name, self.word, self.guesses, minutes, sec)
+        return "%s) %s - %s) '%s' in %i guesses and %02i:%02i" % (self.cup, self.sub_date, self.account.display_name, self.word, self.guesses, minutes, sec)
 
     def check_in_time_frame(self):
         if "daily" in self.cup.lower():

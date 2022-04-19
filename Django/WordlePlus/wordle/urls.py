@@ -6,7 +6,7 @@ urlpatterns = [
     # home/landing page
     path('wordle/', views.display_welcome, name='display_welcome'),
     # Redirect blank url to home page
-    path('', views.redirect_to_welcome, name='redirect_to_welcome'), # TODO: should name be the same?
+    path('', views.back_to_welcome, name='back_to_welcome'), # TODO: should name be the same?
     # Redirect to home page
     path('wordle/back_to_welcome/', views.back_to_welcome, name='back_to_welcome'),
 
