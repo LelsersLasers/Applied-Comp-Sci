@@ -23,8 +23,8 @@
         <li><a href="{% url 'wordle:display_account_settings' %}">Account Settings</a></li>
         <li><a href="{% url 'wordle:display_MP_Hub' %}">Multiplayer</a></li>
     {% else %}
-        <li><a href="{% url 'wordle:login_page' %}">Login</a></li>
-        <li><a href="{% url 'wordle:signup_page' %}">Sign Up</a></li>
+        <li><a href="{% url 'wordle:display_login_page' %}">Login</a></li>
+        <li><a href="{% url 'wordle:display_signup_page' %}">Sign Up</a></li>
         <li>Must be logged in to play online!</li>
     {% endif %}
 
