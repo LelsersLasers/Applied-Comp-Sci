@@ -12,27 +12,39 @@
     <h3>Modes</h3>
     Scoring: Least amout of gueses, tie breaker is time
     <dl>
-        <dt><a onclick="Launch('game', 5, 6, false, '6x5')">6x5</a></dt>
+        <dt>
+            <a onclick="Launch('game', 5, 6, false, '6x5')">
+                <button type="button">6x5</button>
+            </a>
+        </dt>
             <dd>Random word</dd>
             <dd>6 tries</dd>
             <dd>5 letters long</dd>
             <dd>Double letters not allowed</dd>
             <dd>
                 <a onclick="Launch('rankings', 5, 6, false, '6x5')">
-                    View rankings
+                    <button type="button">View rankings</button>
                 </a>
             </dd>
-        <dt><a onclick="Launch('game', 5, 0, true, '0x5')">&#8734;x5</a></dt>
+        <dt>
+            <a onclick="Launch('game', 5, 0, true, '0x5')">
+                <button type="button">&#8734;x5</button>
+            </a>
+        </dt>
             <dd>Random word</dd>
             <dd>Infinite tries</dd>
             <dd>5 letters long</dd>
             <dd>Double letters allowed</dd>
             <dd>
                 <a onclick="Launch('rankings', 5, 0, true, '0x5')">
-                    View rankings
+                    <button type="button">View rankings</button>
                 </a>
             </dd>
-        <dt><a onclick="Launch('game', 5, 10, false, '10x5 daily')">10x5 DAILY</a></dt>
+        <dt>
+            <a onclick="Launch('game', 5, 10, false, '10x5 daily')">
+                <button type="button">10x5 DAILY</button>
+            </a>
+        </dt>
             <dd>Random word</dd>
             <dd>6 tries</dd>
             <dd>5 letters long</dd>
@@ -41,10 +53,14 @@
             <dd>Scoreboard resets daily!</dd>
             <dd>
                 <a onclick="Launch('rankings', 5, 10, false, '10x5 daily')">
-                    View rankings
+                    <button type="button">View rankings</button>
                 </a>
             </dd>
-        <dt><a onclick="Launch('game', 7, 7, true, '7x7 daily')">7x7 DAILY</a></dt>
+        <dt>
+            <a onclick="Launch('game', 7, 7, true, '7x7 daily')">
+                <button type="button">7x7 DAILY</button>
+            </a>
+        </dt>
             <dd>Random word</dd>
             <dd>6 tries</dd>
             <dd>5 letters long</dd>
@@ -53,7 +69,7 @@
             <dd>Scoreboard resets daily!</dd>
             <dd>
                 <a onclick="Launch('rankings', 7, 7, true, '7x7 daily')">
-                    View rankings
+                    <button type="button">View rankings</button>
                 </a>
             </dd>
     </dl>
