@@ -225,6 +225,12 @@ def display_game(request, mode):
             return redirect('wordle:display_SP_launcher')
         return redirect('wordle:display_MP_Hub')
 
+    # if they already did the daily cup
+    if "daily" in cup:
+        for score in list(Score.objects.filter(account=Account.objects.get(user=request.user)).filter(cup=cup).order_by('cup')):
+            if score.check_in_time_frame():
+                return redirect('wordle:display_MP_Hub') 
+
     word = get_word(word_length, double_letters)
     context = {
         'word': word,

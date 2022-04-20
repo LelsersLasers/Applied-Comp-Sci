@@ -7,7 +7,8 @@ Make sure redirects work correctly (and url looks good)
 - EX: after setting change
 After compiting MP -> rankings not hub
 
-Can only do daily cups once
+Visual clarity when you are denied from daily cup
+- denied b/c you already did it
 
 Cleaning:
 - Namings
