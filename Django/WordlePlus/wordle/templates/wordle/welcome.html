@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html charset="UTF-8" lang="en-US">
+{% extends "wordle/base.html" %}
 
-<head>
-    <title>Wordle+ Home</title>
-    <meta charset="utf-8">
-    <meta name="description" content="Worlde Unlimited Offline Single Multiplayer play Plus +">
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'wordle/style.css' %}">
-</head>
+{% block title %}Wordle+ Home{% endblock %}
 
-<body>
+{% block body %}
     <h1>Greetings Traveler</h1>
 
     {% if is_login %}
@@ -30,4 +23,4 @@
     
         <li><a href="{% url 'wordle:display_SP_launcher' %}">Practice/Single Player Wordle+</a></li>
     </ul>
-</body>
+{% endblock %}
