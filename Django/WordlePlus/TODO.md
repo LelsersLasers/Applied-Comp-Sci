@@ -1,16 +1,14 @@
-# Wordle+
+# Todo for Wordle+
 
-Avoid "confirm resubmission" message
-- Launch from rankings page - works
+- Avoid "confirm resubmission" message?
+- Make sure redirects work correctly (and url looks good)
+    - EX: after setting change
+- After compiting MP -> rankings not hub
+- Visual clarity when you are denied from daily cup
+    - denied b/c you already did it
+- Hide html/JS inputs
 
-Make sure redirects work correctly (and url looks good)
-- EX: after setting change
-After compiting MP -> rankings not hub
-
-Visual clarity when you are denied from daily cup
-- denied b/c you already did it
-
-Cleaning:
+# Cleaning:
 - Namings
     - cup over name, etc
     - snake_case for vars and funtions
