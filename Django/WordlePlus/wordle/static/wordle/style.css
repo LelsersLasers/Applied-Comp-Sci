@@ -1,3 +1,42 @@
+body {
+    color: #2E3440;
+    background-color: #ECEFF4;
+}
+
+a, a:hover, a:focus, a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
 h1 {
-    border: 1px solid red;
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
+.noFormatList {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.center {
+    margin: 0 auto;
+}
+
+.centerText {
+    text-align: center;
+}
+
+.highlight {
+    width: 60%;
+    margin: 0 auto;
+}
+
+/* .highlight:hover {
+    color: #ECEFF4;
+    background-color: #2E3440;
+} */
+
+.blue {
+    border: 1px solid blue;
 }

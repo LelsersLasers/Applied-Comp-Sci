@@ -1,5 +1,6 @@
 # Todo for Wordle+
 
+- Disable favicon.ico
 - Avoid "confirm resubmission" message?
 - Make sure redirects work correctly (and url looks good)
     - EX: after setting change
