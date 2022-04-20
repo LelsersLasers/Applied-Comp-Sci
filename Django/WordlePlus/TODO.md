@@ -3,9 +3,9 @@
 Avoid "confirm resubmission" message
 - Launch from rankings page - works
 
+Make sure redirects work correctly (and url looks good)
+- EX: after setting change
 After compiting MP -> rankings not hub
-
-Finish: Many to many with score to word
 
 Cleaning:
 - Namings
@@ -16,13 +16,6 @@ Cleaning:
         - forms, post, js, etc
 - HTML
     - Templates
-        - head/body/title/header/etc
-        - Use subtemplates (Template inheritance)
-            - top heading
-            - Account settings change pw, username, dn
-            - Login, signup?
-    - Give each one a "full" html
-        - Currently only welcome, login, signup have full correct headings
 - Permissions
     - if user.isAuthenticated for all MP stuff
     - Careful when passing things around between pages

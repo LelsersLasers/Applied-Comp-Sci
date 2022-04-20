@@ -27,16 +27,12 @@ urlpatterns = [
     path('wordle/display_account_settings/', views.display_account_settings, name='display_account_settings'),
     # Change password screen
     path('wordle/display_change_password/', views.display_change_password, name='display_change_password'),
-    # Makes sure all info is good then changes passwords
-    path('wordle/change_password/', views.change_password, name='change_password'),
     # Change username screen
     path('wordle/display_change_username/', views.display_change_username, name='display_change_username'),
-    # Makes sure all info is good then changes username
-    path('wordle/change_username/', views.change_username, name='change_username'),
     # Change display name screen
     path('wordle/display_change_display_name/', views.display_change_display_name, name='display_change_display_name'),
-    # Makes sure all info is good then changes the display name
-    path('wordle/change_display_name/', views.change_display_name, name='change_display_name'),
+    # Makes sure all the info is good/valid then makes the account/user setting change
+    path('wordle/change_setting/<str:setting>', views.change_setting, name='change_setting'),
     
     # Generate word screen for SP
     path('wordle/display_SP_launcher/', views.display_SP_launcher, name='display_SP_launcher'),
