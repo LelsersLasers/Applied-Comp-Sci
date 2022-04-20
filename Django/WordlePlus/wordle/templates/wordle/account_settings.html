@@ -1,27 +1,33 @@
-<a href="{% url 'wordle:display_change_password' %}">
-    <button type="button">
-        Change Password
-    </button>
-</a>
+{% extends "wordle/base.html" %}
 
-<a href="{% url 'wordle:display_change_username' %}">
-    <button type="button">
-        Change Username
-    </button>
-</a>
+{% block title %}Wordle+ Account Settings{% endblock %}
 
-<a href="{% url 'wordle:display_change_display_name' %}">
-    <button type="button">
-        Change Display Name
-    </button>
-</a>
+{% block body %}
+    <a href="{% url 'wordle:display_change_password' %}">
+        <button type="button">
+            Change Password
+        </button>
+    </a>
 
-<a href="{% url 'wordle:back_to_welcome' %}">
-    <button type="button">
-        Back
-    </button>
-</a>
+    <a href="{% url 'wordle:display_change_username' %}">
+        <button type="button">
+            Change Username
+        </button>
+    </a>
 
-{% if sucess %}
-    <strong>{{ sucess }}</strong>
-{% endif %}
+    <a href="{% url 'wordle:display_change_display_name' %}">
+        <button type="button">
+            Change Display Name
+        </button>
+    </a>
+
+    <a href="{% url 'wordle:back_to_welcome' %}">
+        <button type="button">
+            Back
+        </button>
+    </a>
+
+    {% if sucess %}
+        <strong>{{ sucess }}</strong>
+    {% endif %}
+{% endblock %}

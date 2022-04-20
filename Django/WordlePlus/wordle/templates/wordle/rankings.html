@@ -1,38 +1,35 @@
+{% extends "wordle/base.html" %}
 
-<head>
-    <title>Wordle+ Rankings</title>
-    <meta charset="utf-8">
-    <meta name="description" content="Worlde Unlimited Offline Plus +">
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'wordle/style.css' %}">
-</head>
+{% block title %}Wordle+ Rankings{% endblock %}
 
-<h1>Wordle+ Rankings {{ cup }}</h1>
+{% block body %}
+    <h1>Wordle+ Rankings {{ cup }}</h1>
 
-{% if scores %}
-    <ul>
-    {% for score in scores %}
-        <li>{{ forloop.counter }}) {{ score }}</li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No scores yet!</p>
-{% endif %}
-<a onclick="document.getElementById('wordGen').submit()">
-    <button type="button">
-        Launch {{ cup }}
-    </button>
-</a>
-<a href="{% url 'wordle:display_MP_Hub' %}">
-    <button type="button">
-        Back
-    </button>
-</a>
+    {% if scores %}
+        <ul>
+        {% for score in scores %}
+            <li>{{ forloop.counter }}) {{ score }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No scores yet!</p>
+    {% endif %}
+    <a onclick="document.getElementById('wordGen').submit()">
+        <button type="button">
+            Launch {{ cup }}
+        </button>
+    </a>
+    <a href="{% url 'wordle:display_MP_Hub' %}">
+        <button type="button">
+            Back
+        </button>
+    </a>
 
-<form id="wordGen" action="{% url 'wordle:display_game' 'MP' %}" method="post" hidden>
-    {% csrf_token %}
-    <input type="hidden" id="wordLenSub" name="wordLenSub" value="{{ wordLen }}" />
-    <input type="hidden" id="triesSub" name="triesSub" value="{{ tries }}" />
-    <input type="hidden" id="doubleLettersSub" name="doubleLettersSub" value="{{ doubleLetters }}" />
-    <input type="hidden" id="cupSub" name="cupSub" value="{{ cup }}" />
-</form>
+    <form id="wordGen" action="{% url 'wordle:display_game' 'MP' %}" method="post" hidden>
+        {% csrf_token %}
+        <input type="hidden" id="wordLenSub" name="wordLenSub" value="{{ wordLen }}" />
+        <input type="hidden" id="triesSub" name="triesSub" value="{{ tries }}" />
+        <input type="hidden" id="doubleLettersSub" name="doubleLettersSub" value="{{ doubleLetters }}" />
+        <input type="hidden" id="cupSub" name="cupSub" value="{{ cup }}" />
+    </form>
+{% endblock %}

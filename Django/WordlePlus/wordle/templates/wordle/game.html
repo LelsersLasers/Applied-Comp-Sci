@@ -1,21 +1,25 @@
-<!DOCTYPE html>
-<html charset="UTF-8" lang="en-US">
+{% extends "wordle/base.html" %}
 
-<head>
+{% block title %}
     {% if mode %}
-        <title>Wordle+ SP</title>
+        Wordle+ SP
     {% else %}
-        <title>Wordle+ MP {{ cup }}</title>
+        Wordle+ MP {{ cup }}
     {% endif %}
-    <meta charset="utf-8">
-    <meta name="description" content="Worlde Unlimited Plus +">
+{% endblock %}
+
+{% block style %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'wordle/game.css' %}">
+{% endblock %}
+
+{% block js %}
+    {% load static %}
     <script defer src="{% static 'wordle/game.js' %}"></script>
-</head>
+{% endblock %}
 
+{% block body %}
 <body onload="setupGame()">
-
     <input id="cupIn" type="hidden" name="cupIn" value="{{ cup }} " />
     <input id="wordTxtIn" type="hidden" name="wordTxt" value="{{ word.txt }} " />
     <input id="lengthIn" type="hidden" name="length" value="{{ word.length }}" />
@@ -61,8 +65,5 @@
             <input type="hidden" id="time" name="time" value="" />
         </form>
     {% endif %}
-
 </body>
-
-
-</html>
+{% endblock %}

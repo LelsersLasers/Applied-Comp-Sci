@@ -1,77 +1,75 @@
-<!DOCTYPE html>
-<html charset="UTF-8" lang="en-US">
+{% extends "wordle/base.html" %}
 
-<head>
-    <title>Wordle+ MP</title>
-    <meta charset="utf-8">
-    <meta name="description" content="Worlde Unlimited Offline Plus +">
+{% block title %}Wordle+ MP Hub{% endblock %}
+{% block js %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'wordle/style.css' %}">
     <script defer src="{% static 'wordle/MPLauncher.js' %}"></script>
-</head>
+{% endblock %}
 
-<h1>Multiplayer Hub</h1>
+{% block body %}
+    <h1>Multiplayer Hub</h1>
 
-<h3>Modes</h3>
-Scoring: Least amout of gueses, tie breaker is time
-<dl>
-    <dt><a onclick="Launch('game', 5, 6, false, '6x5')">6x5</a></dt>
-        <dd>Random word</dd>
-        <dd>6 tries</dd>
-        <dd>5 letters long</dd>
-        <dd>Double letters not allowed</dd>
-        <dd>
-            <a onclick="Launch('rankings', 5, 6, false, '6x5')">
-                View rankings
-            </a>
-        </dd>
-    <dt><a onclick="Launch('game', 5, 0, true, '0x5')">&#8734;x5</a></dt>
-        <dd>Random word</dd>
-        <dd>Infinite tries</dd>
-        <dd>5 letters long</dd>
-        <dd>Double letters allowed</dd>
-        <dd>
-            <a onclick="Launch('rankings', 5, 0, true, '0x5')">
-                View rankings
-            </a>
-        </dd>
-    <dt><a onclick="Launch('game', 5, 10, false, '10x5 daily')">10x5 DAILY</a></dt>
-        <dd>Random word</dd>
-        <dd>6 tries</dd>
-        <dd>5 letters long</dd>
-        <dd>Double letters not allowed</dd>
-        <dd>Scoreboard resets daily!</dd>
-        <dd>
-            <a onclick="Launch('rankings', 5, 10, false, '10x5 daily')">
-                View rankings
-            </a>
-        </dd>
-</dl>
+    <h3>Modes</h3>
+    Scoring: Least amout of gueses, tie breaker is time
+    <dl>
+        <dt><a onclick="Launch('game', 5, 6, false, '6x5')">6x5</a></dt>
+            <dd>Random word</dd>
+            <dd>6 tries</dd>
+            <dd>5 letters long</dd>
+            <dd>Double letters not allowed</dd>
+            <dd>
+                <a onclick="Launch('rankings', 5, 6, false, '6x5')">
+                    View rankings
+                </a>
+            </dd>
+        <dt><a onclick="Launch('game', 5, 0, true, '0x5')">&#8734;x5</a></dt>
+            <dd>Random word</dd>
+            <dd>Infinite tries</dd>
+            <dd>5 letters long</dd>
+            <dd>Double letters allowed</dd>
+            <dd>
+                <a onclick="Launch('rankings', 5, 0, true, '0x5')">
+                    View rankings
+                </a>
+            </dd>
+        <dt><a onclick="Launch('game', 5, 10, false, '10x5 daily')">10x5 DAILY</a></dt>
+            <dd>Random word</dd>
+            <dd>6 tries</dd>
+            <dd>5 letters long</dd>
+            <dd>Double letters not allowed</dd>
+            <dd>Scoreboard resets daily!</dd>
+            <dd>
+                <a onclick="Launch('rankings', 5, 10, false, '10x5 daily')">
+                    View rankings
+                </a>
+            </dd>
+    </dl>
 
-<a href="{% url 'wordle:display_personal_scores' %}">
-    <button type="button">
-        View my scores
-    </button>
-</a>
+    <a href="{% url 'wordle:display_personal_scores' %}">
+        <button type="button">
+            View my scores
+        </button>
+    </a>
 
-<a href="{% url 'wordle:back_to_welcome' %}">
-    <button type="button">
-        Back
-    </button>
-</a>
+    <a href="{% url 'wordle:back_to_welcome' %}">
+        <button type="button">
+            Back
+        </button>
+    </a>
 
-<form id="gameForm" action="{% url 'wordle:display_game' 'MP' %}" method="post" hidden>
-    {% csrf_token %}
-    <input type="hidden" id="gameWordLenSub" name="wordLenSub" value="" />
-    <input type="hidden" id="gameTriesSub" name="triesSub" value="" />
-    <input type="hidden" id="gameDoubleLettersSub" name="doubleLettersSub" value="" />
-    <input type="hidden" id="gameCupSub" name="cupSub" value="" />
-</form>
+    <form id="gameForm" action="{% url 'wordle:display_game' 'MP' %}" method="post" hidden>
+        {% csrf_token %}
+        <input type="hidden" id="gameWordLenSub" name="wordLenSub" value="" />
+        <input type="hidden" id="gameTriesSub" name="triesSub" value="" />
+        <input type="hidden" id="gameDoubleLettersSub" name="doubleLettersSub" value="" />
+        <input type="hidden" id="gameCupSub" name="cupSub" value="" />
+    </form>
 
-<form id="rankingsForm" action="{% url 'wordle:display_rankings' %}" method="post" hidden>
-    {% csrf_token %}
-    <input type="hidden" id="rankingsWordLenSub" name="wordLenSub" value="" />
-    <input type="hidden" id="rankingsTriesSub" name="triesSub" value="" />
-    <input type="hidden" id="rankingsDoubleLettersSub" name="doubleLettersSub" value="" />
-    <input type="hidden" id="rankingsCupSub" name="cupSub" value="" />
-</form>
+    <form id="rankingsForm" action="{% url 'wordle:display_rankings' %}" method="post" hidden>
+        {% csrf_token %}
+        <input type="hidden" id="rankingsWordLenSub" name="wordLenSub" value="" />
+        <input type="hidden" id="rankingsTriesSub" name="triesSub" value="" />
+        <input type="hidden" id="rankingsDoubleLettersSub" name="doubleLettersSub" value="" />
+        <input type="hidden" id="rankingsCupSub" name="cupSub" value="" />
+    </form>
+{% endblock %}

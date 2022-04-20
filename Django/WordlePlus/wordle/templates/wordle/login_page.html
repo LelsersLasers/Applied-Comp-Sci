@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html charset="UTF-8" lang="en-US">
+{% extends "wordle/base.html" %}
 
-<head>
-    <title>Wordle+ Home</title>
-    <meta charset="utf-8">
-    <meta name="description" content="Worlde Unlimited Offline Single Multiplayer play Plus +">
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'wordle/style.css' %}">
-</head>
+{% block title %}Wordle+ Login{% endblock %}
 
-<body>
+{% block body %}
     <form action="{% url 'wordle:check_login' %}" method="post">
         {% csrf_token %}
         <fieldset>
@@ -42,4 +35,4 @@
             Back
         </button>
     </a>
-</body>
+{% endblock %}
