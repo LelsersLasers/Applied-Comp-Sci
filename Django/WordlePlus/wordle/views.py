@@ -210,6 +210,7 @@ def change_setting(request, setting):
     }
     return render(request, 'wordle/account_settings.html', context)
 
+
 def display_SP_launcher(request):
     return render(request, 'wordle/generate_word.html')
 
