@@ -3,46 +3,51 @@
 {% block title %}Wordle+ Signup{% endblock %}
 
 {% block body %}
-    <form action="{% url 'wordle:create_account' %}" method="post">
+    <form id="content" class="centerText blue" action="{% url 'wordle:create_account' %}" method="post">
         {% csrf_token %}
-        <fieldset>
-            <legend><h1>Sign Up</h1></legend>
+        <h2>
+            Wordle<sup>+</sup>
+        </h2>
 
-            <label for="display">Display name:</label>
-            <br />
-            <input type="text" id="display" name="display" value="{% if a %}{{ a }}{% endif %}" />
-            <br />
+        <h1 id="mainHeader">Sign Up</h1>
 
-            <label for="username">Username:</label>
-            <br />
-            <input type="text" id="username" name="username" value="{% if b %}{{ b }}{% endif %}">
-            <br />
+        <label for="display">Display name:</label>
+        <br />
+        <input type="text" id="display" name="display" value="{% if a %}{{ a }}{% endif %}" />
+        <br />
 
-            <label for="password1">Password:</label>
-            <br />
-            <input type="password" id="password1" name="password1" value="{% if c %}{{ c }}{% endif %}">
-            <br />
-            
-            <label for="password2">Repeat password:</label>
-            <br />
-            <input type="password" id="password2" name="password2" value="{% if d %}{{ d }}{% endif %}">
-            <br />
+        <label for="username">Username:</label>
+        <br />
+        <input type="text" id="username" name="username" value="{% if b %}{{ b }}{% endif %}">
+        <br />
 
-            {% if error_message %}
-                <strong>{{ error_message }}</strong>
-            {% endif %}
-            <br />
+        <label for="password1">Password:</label>
+        <br />
+        <input type="password" id="password1" name="password1" value="{% if c %}{{ c }}{% endif %}">
+        <br />
+        
+        <label for="password2">Repeat password:</label>
+        <br />
+        <input type="password" id="password2" name="password2" value="{% if d %}{{ d }}{% endif %}">
+        <br />
 
-        </fieldset>
-        <input type="submit" value="Create Account" />
+        {% if error_message %}
+            <strong>{{ error_message }}</strong>
+        {% endif %}
+        <br />
+
+        <button type="submit">
+            Create Account
+        </button>
+        <br />
+
         <a href="{% url 'wordle:display_login_page' %}">
-            <button type="button">Already have an account? (Login)</button>
+            <button class="smallButton" type="button">Already have an account? (Login)</button>
+        </a>
+        <a href="{% url 'wordle:back_to_welcome' %}">
+            <button class="smallButton" type="button">
+                Back
+            </button>
         </a>
     </form>
-
-    <a href="{% url 'wordle:back_to_welcome' %}">
-        <button type="button">
-            Back
-        </button>
-    </a>
 {% endblock %}

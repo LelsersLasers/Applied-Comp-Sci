@@ -16,8 +16,8 @@
         {% if is_login %}
             <h4>Welcome, {{ display_name }}!</h4>
         {% else %}
-            <h4>Greetings traveler.</h4>
-            <p class="highlight">
+            <h4 id="smallHeader">Greetings traveler.</h4>
+            <p id="mainText" class="highlight">
                 Welcome to Wordle<sup>+</sup>, the best place for all your Wordle desires.
                 Here you can play normal Worlde, choose custom rules (like 7 letters
                 long and infinite tries), or play in ranked global online tournaments.
@@ -63,7 +63,7 @@
                         </div>
                     </a>
                 </li>
-                <li>Must be logged in to play online!</li>
+                <li class="colors3">Must be logged in to play online!</li>
             {% endif %}
             <li>
                 <a href="{% url 'wordle:display_SP_launcher' %}">

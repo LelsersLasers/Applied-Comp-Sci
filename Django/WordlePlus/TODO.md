@@ -15,9 +15,11 @@
         - forms, post, js, etc
     - Make sure everything is spellled right
         - "sucess"
+    - Wordle+ -> Wordle<sup>+</sup>
 - HTML
     - Templates
-- - Make sure redirects work correctly (and url looks good)
+- Make sure redirects work correctly (and url looks good)
+    - check_login,etc
 - Permissions
     - if user.isAuthenticated for all MP stuff
     - Careful when passing things around between pages

@@ -1,7 +1,8 @@
 :root {
-    --c1: #3B4252;
+    --c1: #434C5E;
     --c2: #ECEFF4;
     --c3: #8FBCBB;
+    --c4: #2E3440;
 }
 
 body {
@@ -15,10 +16,55 @@ a, a:hover, a:focus, a:active {
     color: inherit;
 }
 
-h1 {
+
+input {
+    padding: 0.8em 1em;
+    box-sizing: border-box;
+    border: none;
+    background-color: var(--c2);
+    color: var(--c1);
+}
+
+input:focus {
+    color: var(--c4);
+}
+
+h1, h2 {
     color: var(--c2);
     padding-top: 0px;
     margin-top: 0px;
+}
+
+button {
+    border: none;
+    padding: 0.8em 1em;
+    font-size: 0.75em;
+    background-color: var(--c1);
+    color: var(--c2);
+    cursor: pointer;
+}
+
+.smallButton {
+    background-color: var(--c2);
+    color: var(--c1);
+    margin-top: 0.8em;
+    font-size: 0.55em;
+}
+
+#smallHeader {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+#mainText {
+    font-size: 95%;
+    margin-bottom: 1em;
+}
+
+#mainHeader {
+    color: var(--c1);
 }
 
 .noFormatList {
@@ -54,7 +100,7 @@ h1 {
 }
 
 .colors1 {
-    color: #2E3440;
+    color: var(--c1);
     background-color: var(--c3);
 }
 
@@ -63,6 +109,11 @@ h1 {
     background-color: var(--c1);
 }
 
-.blue {
-    border: 1px solid red   ;
+.colors3 {
+    color: var(--c4);
+    background-color: var(--c3);
 }
+
+/* .blue {
+    border: 1px solid red   ;
+} */
