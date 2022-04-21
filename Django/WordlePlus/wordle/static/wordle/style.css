@@ -5,7 +5,7 @@
 }
 
 body {
-    color: var(--c1);
+    color: var(--c2);
     font-size: 130%;
     background-color: var(--c1);
 }
@@ -36,6 +36,7 @@ h1 {
 }
 
 #content {
+    color: var(--c1);
     background-color: var(--c3);
     width: 60%;
     margin: 0;
@@ -63,5 +64,5 @@ h1 {
 }
 
 .blue {
-    border: 1px solid red;
+    border: 1px solid red   ;
 }

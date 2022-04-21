@@ -1,11 +1,7 @@
 # Todo for Wordle+
 
 - Avoid "confirm resubmission" message?
-- Make sure redirects work correctly (and url looks good)
-    - EX: after setting change
 - After compiting MP -> rankings not hub
-- Visual clarity when you are denied from daily cup
-    - denied b/c you already did it
 - CSS
 - Hide html/JS inputs
 - Keyboard shown in game
@@ -17,12 +13,15 @@
         - variables/functions start with lower case letter ('Game()' = bad)
     - fix all js/html form names
         - forms, post, js, etc
+    - Make sure everything is spellled right
+        - "sucess"
 - HTML
     - Templates
+- - Make sure redirects work correctly (and url looks good)
 - Permissions
     - if user.isAuthenticated for all MP stuff
     - Careful when passing things around between pages
-        - Hidden JS fields (so word isn't given away)
+        - +Hidden JS fields (so word isn't given away)
 - post/get
     - Try/except around all post/etc
 - Clean urls/paths

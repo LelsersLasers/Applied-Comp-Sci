@@ -9,6 +9,10 @@
 {% block body %}
     <h1>Multiplayer Hub</h1>
 
+    {% if message %}
+        <strong>{{ message }}</strong>
+    {% endif %}
+
     <h3>Modes</h3>
     Scoring: Least amout of gueses, tie breaker is time
     <dl>

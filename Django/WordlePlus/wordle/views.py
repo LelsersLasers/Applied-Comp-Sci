@@ -122,7 +122,11 @@ def logout_user(request):
 def display_account_settings(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
-    return render(request, 'wordle/account_settings.html')
+    context = {
+        "sucess": request.session.get('sucess', None)
+    }
+    request.session.pop('sucess', None)
+    return render(request, 'wordle/account_settings.html', context)
 
 def display_change_password(request):
     if not request.user.is_authenticated:
@@ -205,10 +209,9 @@ def change_setting(request, setting):
             person.save()
             login(request, person)
     
-    context = {
-        'sucess': setting + " changed"
-    }
-    return render(request, 'wordle/account_settings.html', context)
+    request.session['sucess'] = setting + " changed"
+    return redirect("wordle:display_account_settings")
+    # return render(request, 'wordle/account_settings.html', context)
 
 
 def display_SP_launcher(request):
@@ -229,6 +232,7 @@ def display_game(request, mode):
     if "daily" in cup:
         for score in list(Score.objects.filter(account=Account.objects.get(user=request.user)).filter(cup=cup).order_by('cup')):
             if score.check_in_time_frame():
+                request.session['message'] = "You can only attempt a daily cup once per day!"
                 return redirect('wordle:display_MP_Hub') 
 
     word = get_word(word_length, double_letters)
@@ -246,7 +250,11 @@ def display_game(request, mode):
 def display_MP_Hub(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
-    return render(request, 'wordle/MP_Hub.html')
+    context = {
+        "message": request.session.get('message', None)
+    }
+    request.session.pop('message', None)
+    return render(request, 'wordle/MP_Hub.html', context)
 
 def display_rankings(request):
     if not request.user.is_authenticated:
