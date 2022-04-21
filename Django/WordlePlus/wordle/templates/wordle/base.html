@@ -5,6 +5,8 @@
     <title>{% block title %}Wordle+{% endblock %}</title>
     <meta charset="utf-8">
     <meta name="description" content="worlde unlimited fffline single multiplayer play plus +">
+    {% load static %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'wordle/favicon.ico' %}"/>
     {% block style %}
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'wordle/style.css' %}">

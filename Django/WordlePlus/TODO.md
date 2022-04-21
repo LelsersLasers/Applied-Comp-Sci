@@ -1,6 +1,5 @@
 # Todo for Wordle+
 
-- Disable favicon.ico
 - Avoid "confirm resubmission" message?
 - Make sure redirects work correctly (and url looks good)
     - EX: after setting change
@@ -9,6 +8,7 @@
     - denied b/c you already did it
 - CSS
 - Hide html/JS inputs
+- Keyboard shown in game
 
 # Cleaning:
 - Namings
