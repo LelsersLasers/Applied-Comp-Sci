@@ -7,6 +7,7 @@
 - After compiting MP -> rankings not hub
 - Visual clarity when you are denied from daily cup
     - denied b/c you already did it
+- CSS
 - Hide html/JS inputs
 
 # Cleaning:
@@ -14,7 +15,7 @@
     - cup over name, etc
     - snake_case for vars and funtions
         - variables/functions start with lower case letter ('Game()' = bad)
-    - fix all js and html names, files too
+    - fix all js/html form names
         - forms, post, js, etc
 - HTML
     - Templates
@@ -26,7 +27,7 @@
     - Try/except around all post/etc
 - Clean urls/paths
     - Maybe instead of 'wordle/rankings' -> 'wordle/rankings/{{ cup }}>'
-- CSS?
+- CSS
 - Dictionary?
     - 2nd dictionary with only common words?
     - Make only reasonable words picked

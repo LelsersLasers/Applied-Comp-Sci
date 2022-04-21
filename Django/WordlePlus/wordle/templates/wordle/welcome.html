@@ -2,6 +2,11 @@
 
 {% block title %}Wordle+ Home{% endblock %}
 
+{% block js %}
+    {% load static %}
+    <script defer src="{% static 'wordle/hover.js' %}"></script>
+{% endblock %}
+
 {% block body %}
     <div id="content" class="centerText blue">
         <h1>Greetings Traveler</h1>
@@ -12,19 +17,51 @@
         
         <ul class="noFormatList blue">
             {% if is_login %}
-                <li><a href="{% url 'wordle:logout_user' %}">Log Out</a></li>
                 <li>
-                    <div class="highlight blue">
-                        <a href="{% url 'wordle:display_account_settings' %}">Account Settings</a>
-                    </div>
+                    <a href="{% url 'wordle:logout_user' %}">
+                        <div id="hover1" class="highlight colors1 blue" onmouseenter="hover('hover1', true)" onmouseleave="hover('hover1', false)">
+                            Log Out
+                        </div>
+                    </a>
                 </li>
-                <li><a href="{% url 'wordle:display_MP_Hub' %}">Multiplayer</a></li>
+                <li>
+                    <a class="" href="{% url 'wordle:display_account_settings' %}">
+                        <div id="hover2" class="highlight colors1 blue" onmouseenter="hover('hover2', true)" onmouseleave="hover('hover2', false)">
+                            Account Settings
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'wordle:display_MP_Hub' %}">
+                        <div id="hover3" class="highlight colors1 blue" onmouseenter="hover('hover3', true)" onmouseleave="hover('hover3', false)">
+                            Multiplayer
+                        </div>
+                    </a>
+                </li>
             {% else %}
-                <li><a href="{% url 'wordle:display_login_page' %}">Login</a></li>
-                <li><a href="{% url 'wordle:display_signup_page' %}">Sign Up</a></li>
+                <li>
+                    <a href="{% url 'wordle:display_login_page' %}">
+                        <div id="hover4" class="highlight colors1 blue" onmouseenter="hover('hover4', true)" onmouseleave="hover('hover4', false)">
+                            Login
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'wordle:display_signup_page' %}">
+                        <div id="hover5" class="highlight colors1 blue" onmouseenter="hover('hover5', true)" onmouseleave="hover('hover5', false)">
+                            Signup
+                        </div>
+                    </a>
+                </li>
                 <li>Must be logged in to play online!</li>
             {% endif %}
-            <li><a href="{% url 'wordle:display_SP_launcher' %}">Practice/Single Player Wordle+</a></li>
+            <li>
+                <a href="{% url 'wordle:display_SP_launcher' %}">
+                    <div id="hover6" class="highlight colors1 blue" onmouseenter="hover('hover6', true)" onmouseleave="hover('hover6', false)">
+                        Practice/Single Player Wordle+
+                    </div>
+                </a>
+            </li>
         </ul>
     </div>
 {% endblock %}

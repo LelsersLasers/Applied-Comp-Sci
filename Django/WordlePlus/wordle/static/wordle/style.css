@@ -27,15 +27,31 @@ h1 {
     text-align: center;
 }
 
+#content {
+    width: 60%;
+    margin: 0;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+}
+
 .highlight {
     width: 60%;
     margin: 0 auto;
 }
 
-/* .highlight:hover {
+.colors1 {
+    color: #2E3440;
+    background-color: #ECEFF4;
+}
+
+.colors2 {
     color: #ECEFF4;
     background-color: #2E3440;
-} */
+}
 
 .blue {
     border: 1px solid blue;
