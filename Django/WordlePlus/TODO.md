@@ -1,4 +1,4 @@
-# Todo for Wordle+
+# Todo for Wordle<sup>+</sup>
 
 - Avoid "confirm resubmission" message?
 - After compiting MP -> rankings not hub

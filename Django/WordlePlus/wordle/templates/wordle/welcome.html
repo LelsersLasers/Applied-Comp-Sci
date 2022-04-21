@@ -1,6 +1,6 @@
 {% extends "wordle/base.html" %}
 
-{% block title %}Wordle+ Home{% endblock %}
+{% block title %}Wordle Home{% endblock %}
 
 {% block js %}
     {% load static %}
@@ -9,14 +9,16 @@
 
 {% block body %}
     <div id="content" class="centerText blue">
-        <h1>Wordle+</h1>
+        <h1>
+            Wordle<sup>+</sup>
+        </h1>
 
         {% if is_login %}
             <h4>Welcome, {{ display_name }}!</h4>
         {% else %}
             <h4>Greetings traveler.</h4>
             <p class="highlight">
-                Welcome to Wordle+, the best place for all your Wordle desires.
+                Welcome to Wordle<sup>+</sup>, the best place for all your Wordle desires.
                 Here you can play normal Worlde, choose custom rules (like 7 letters
                 long and infinite tries), or play in ranked global online tournaments.
                 Signing up is free forever and you can play as much as you want.
@@ -66,7 +68,7 @@
             <li>
                 <a href="{% url 'wordle:display_SP_launcher' %}">
                     <div id="hover6" class="highlight colors1 blue" onmouseenter="hover('hover6', true)" onmouseleave="hover('hover6', false)">
-                        Practice/Single Player Wordle+
+                        Practice/Single Player Wordle<sup>+</sup>
                     </div>
                 </a>
             </li>
