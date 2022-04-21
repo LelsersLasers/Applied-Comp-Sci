@@ -28,6 +28,7 @@
 - Clean urls/paths
     - Maybe instead of 'wordle/rankings' -> 'wordle/rankings/{{ cup }}>'
 - CSS
+    - Dynamic
 - Dictionary?
     - 2nd dictionary with only common words?
     - Make only reasonable words picked
