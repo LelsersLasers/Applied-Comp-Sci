@@ -1,5 +1,7 @@
 # Todo for Wordle<sup>+</sup>
 
+When to check isAuthenticated and not needed
+
 - Avoid "confirm resubmission" message?
 - After compiting MP -> rankings not hub
 - CSS

@@ -139,12 +139,14 @@ def display_account_settings(request):
 def display_change_setting(request, setting):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
+    if setting not in ["Password", "Username", "Display Name"]:
+        return redirect("wordle:display_account_settings")
     context = request.session.get('context', {
         'setting': setting,
         'type': "password" if setting == "Password" else "text"
     })
     request.session.pop('context', None)
-    return render(request, 'wordle/change_account_setting.html', context)
+    return render(request, 'wordle/change_setting.html', context)
 
 def change_setting(request, setting):
     if not request.user.is_authenticated:
@@ -153,6 +155,8 @@ def change_setting(request, setting):
         password = request.POST['password']
         value1 = request.POST[setting + '1']
         value2 = request.POST[setting + '2']
+        # Side effect: checks if setting is Password, Username, or Display Name
+        # if randomly changing the setting in the url -> won't POST -> throw error
     except:
         return redirect("wordle:display_account_settings")
 
@@ -212,7 +216,7 @@ def change_setting(request, setting):
 
 
 def display_SP_launcher(request):
-    return render(request, 'wordle/generate_word.html')
+    return render(request, 'wordle/SP_launcher.html')
 
 def display_game(request, mode):
     try:
@@ -234,9 +238,9 @@ def display_game(request, mode):
 
     word = get_word(word_length, double_letters)
     context = {
+        'availableWords': get_words_of_len(word_length),
         'word': word,
         'tries': tries,
-        'availableWords': get_words_of_len(word_length),
         'mode': mode == "SP",
         'cup': cup
     }
@@ -306,11 +310,11 @@ def display_personal_scores(request):
     context = {
         'scores': scores
     }
-    return render(request, 'wordle/scores.html', context)
+    return render(request, 'wordle/personal_scores.html', context)
 
 
-def get_word(wordLen, doubleLetters):
-    if (not doubleLetters):
+def get_word(wordLen, double_letters):
+    if (not double_letters):
         words = Word.objects.filter(length=wordLen, double_letters=False)
     else:
         words = Word.objects.filter(length=wordLen)
