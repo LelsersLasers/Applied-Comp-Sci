@@ -1,6 +1,6 @@
 {% extends "wordle/base.html" %}
 
-{% block title %}Wordle Home{% endblock %}
+{% block title %}Wordle+ Home{% endblock %}
 
 {% block js %}
     {% load static %}
@@ -17,6 +17,7 @@
             <h4>Welcome, {{ display_name }}!</h4>
         {% else %}
             <h4 id="smallHeader">Greetings traveler.</h4>
+            <hr class="highlight" />
             <p id="mainText" class="highlight">
                 Welcome to Wordle<sup>+</sup>, the best place for all your Wordle desires.
                 Here you can play normal Worlde, choose custom rules (like 7 letters
@@ -24,7 +25,10 @@
                 Signing up is free forever and you can play as much as you want.
             </p>
         {% endif %}
-        
+
+        <hr class="highlight" />
+        <br />
+
         <ul class="noFormatList blue">
             {% if is_login %}
                 <li>

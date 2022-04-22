@@ -23,10 +23,12 @@ input {
     border: none;
     background-color: var(--c2);
     color: var(--c1);
+    border-radius: 7px;
 }
 
 input:focus {
     color: var(--c4);
+    outline: 2px solid var(--c1);
 }
 
 h1, h2 {
@@ -60,7 +62,7 @@ button {
 
 #mainText {
     font-size: 95%;
-    margin-bottom: 1em;
+    text-align: left;
 }
 
 #mainHeader {
@@ -105,7 +107,7 @@ button {
 }
 
 .colors2 {
-    color: var(--c3);
+    color: var(--c2);
     background-color: var(--c1);
 }
 
