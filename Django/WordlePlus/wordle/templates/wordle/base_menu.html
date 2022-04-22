@@ -1,0 +1,23 @@
+{% extends "wordle/base.html" %}
+
+{% block body %}
+    <div id="content" class="centerText blue">
+        <h2>
+            Wordle<sup>+</sup>
+        </h2>
+
+        <h1 id="mainHeader">{% block header %}Welcome{% endblock %}</h1>
+
+        {% block content %}
+        
+        {% endblock %}
+
+        {% block back_button %}
+            <a href="{% url 'wordle:back_to_welcome' %}">
+                <button class="smallButton" type="button">
+                    Back
+                </button>
+            </a>
+        {% endblock %}
+    </div>
+{% endblock %}

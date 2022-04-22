@@ -1,17 +1,16 @@
-{% extends "wordle/base.html" %}
+{% extends "wordle/base_menu.html" %}
 
 {% block title %}
     Wordle+ Change {{ setting }}
 {% endblock %}
 
-{% block body %}
-    <form id="content" class="centerText blue" action="{% url 'wordle:change_setting' setting %}" method="post">
-        {% csrf_token %}
-        <h2>
-            Wordle<sup>+</sup>
-        </h2>
+{% block header %}
+    Change {{ setting }}
+{% endblock %}
 
-        <h1 id="mainHeader">Change {{ setting }}</h1>
+{% block content %}
+    <form action="{% url 'wordle:change_setting' setting %}" method="post">
+        {% csrf_token %}
             
         <label for="password">Current Password:</label>
         <br />
@@ -37,12 +36,13 @@
             Login
         </button>
         <br />
-
-        <a href="{% url 'wordle:display_account_settings' %}">
-            <button class="smallButton" type="button">
-                Back
-            </button>
-        </a>
     </form>
+{% endblock %}
 
+{% block back_button %}
+    <a href="{% url 'wordle:display_account_settings' %}">
+        <button class="smallButton" type="button">
+            Back
+        </button>
+    </a>
 {% endblock %}

@@ -6,6 +6,8 @@ Show password visiable next to all password fields
 
 Change base template to include some of the cssed stuff
     - Back button, main content, etc, etc
+    - Seperate css file for different pages?
+        - Base, welcome.css, game.css, mp.css
 
 - Avoid "confirm resubmission" message?
 - After compiting MP -> rankings not hub

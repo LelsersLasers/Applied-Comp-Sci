@@ -1,53 +1,42 @@
-{% extends "wordle/base.html" %}
+{% extends "wordle/base_menu.html" %}
 
 {% block title %}Wordle+ SP Launcher{% endblock %}
+
 {% block js %}
     {% load static %}
     <script defer src="{% static 'wordle/createWord.js' %}"></script>
 {% endblock %}
 
-{% block body %}
-    <div id="content" class="centerText blue">
-        <h2>
-            Wordle<sup>+</sup>
-        </h2>
+{% block header %}Single Player{% endblock %}
 
-        <h1 id="mainHeader">Single Player</h1>
+{% block content %}
+    <label for="wordLen">Word Length (3-10)</label>
+    <br />
+    <input type="number" id="wordLen" name="wordLen" min="3" value="5" />
+    <br />
 
-        <label for="wordLen">Word Length (3-10)</label>
-        <br />
-        <input type="number" id="wordLen" name="wordLen" min="3" value="5" />
-        <br />
+    <label for="tries">Guesses (0 = unlimited)</label>
+    <br />
+    <input type="numbers" id="tries" name="tries" min="0" value="6" />
+    <br />
 
-        <label for="tries">Guesses (0 = unlimited)</label>
-        <br />
-        <input type="numbers" id="tries" name="tries" min="0" value="6" />
-        <br />
+    <br />
+    <label for="doubleLetters">Allow Double Letters?</label>
+    <br />
+    <input type="checkbox" id="doubleLetters" name="doubleLetters" onclick="toggle()" checked />
+    <br />
 
-        <br />
-        <label for="doubleLetters">Allow Double Letters?</label>
-        <br />
-        <input type="checkbox" id="doubleLetters" name="doubleLetters" onclick="toggle()" checked />
-        <br />
-
-        <br />
-        <button type="button" onclick="SPCreateWord()" autofocus>
-            Start!
-        </button>
-        <br />
-
-        <a href="{% url 'wordle:back_to_welcome' %}">
-            <button class="smallButton" type="button">
-                Back
-            </button>
-        </a>
-    </div>
-
-    <form id="wordGen" action="{% url 'wordle:display_game' 'SP' %}" method="post" hidden>
-        {% csrf_token %}
-        <input type="hidden" id="wordLenSub" name="wordLenSub" value="" />
-        <input type="hidden" id="triesSub" name="triesSub" value="" />
-        <input type="hidden" id="doubleLettersSub" name="doubleLettersSub" value="" />
-        <input type="hidden" id="cupSub" name="cupSub" value="SP" />
-    </form>
+    <br />
+    <button type="button" onclick="SPCreateWord()" autofocus>
+        Start!
+    </button>
+    <br />
 {% endblock %}
+
+<form id="wordGen" action="{% url 'wordle:display_game' 'SP' %}" method="post" hidden>
+    {% csrf_token %}
+    <input type="hidden" id="wordLenSub" name="wordLenSub" value="" />
+    <input type="hidden" id="triesSub" name="triesSub" value="" />
+    <input type="hidden" id="doubleLettersSub" name="doubleLettersSub" value="" />
+    <input type="hidden" id="cupSub" name="cupSub" value="SP" />
+</form>

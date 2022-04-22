@@ -1,15 +1,12 @@
-{% extends "wordle/base.html" %}
+{% extends "wordle/base_menu.html" %}
 
 {% block title %}Wordle+ Login{% endblock %}
 
-{% block body %}
-    <form id="content" class="centerText blue" action="{% url 'wordle:check_login' %}" method="post">
-        {% csrf_token %}
-        <h2>
-            Wordle<sup>+</sup>
-        </h2>
+{% block header %}Login{% endblock %}
 
-        <h1 id="mainHeader">Login</h1>
+{% block content %}
+    <form action="{% url 'wordle:check_login' %}" method="post">
+        {% csrf_token %}
 
         <label for="username">Username</label>
         <br />
@@ -34,10 +31,6 @@
         <a href="{% url 'wordle:display_signup_page' %}">
             <button class="smallButton" type="button">Don't have an account? (Signup)</button>
         </a>
-        <a href="{% url 'wordle:back_to_welcome' %}">
-            <button class="smallButton" type="button">
-                Back
-            </button>
-        </a>
-    </form>
 {% endblock %}
+    </form> 
+<!-- Put </form> outside of block to include the back button from base_menu.htm in form -->
