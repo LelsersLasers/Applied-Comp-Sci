@@ -13,11 +13,21 @@ so it makes more sense to just make them the defaults -->
 
 {% block content %}
     {% if scores %}
-        <ul>
+        {% if ranked %}
+            <ol>
+        {% else %}
+            <ul>
+        {% endif %}
+
         {% for score in scores %}
             <li>{{ score }}</li>
         {% endfor %}
-        </ul>
+        
+        {% if ranked %}
+            </ol>
+        {% else %}
+            </ul>
+        {% endif %}
     {% else %}
         <p>No scores yet!</p>
     {% endif %}

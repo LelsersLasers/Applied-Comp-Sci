@@ -31,12 +31,28 @@ class Score(models.Model):
     sub_date = models.DateTimeField("Date Submitted")
 
     def __str__(self):
-        sec = self.time
+        seconds = self.time
         minutes = 0
-        while sec > 60:
+        while seconds > 60:
             minutes += 1
-            sec -= 60
-        return "%s) %s - %s) '%s' in %i guesses and %02i:%02i" % (self.cup, self.sub_date, self.account.display_name, self.word, self.guesses, minutes, sec)
+            seconds -= 60
+        return "%s) %s - %s) '%s' in %i guesses and %02i:%02i" % (self.cup, self.sub_date, self.account.display_name, self.word, self.guesses, minutes, seconds)
+
+    def get_rankings_str(self):
+        seconds = self.time
+        minutes = 0
+        while seconds > 60:
+            minutes += 1
+            seconds -= 60
+        return "%s) '%s' in %i guesses and %02i:%02i" % (self.account.display_name, self.word.txt, self.guesses, minutes, seconds)
+
+    def get_personal_score_str(self):
+        seconds = self.time
+        minutes = 0
+        while seconds > 60:
+            minutes += 1
+            seconds -= 60
+        return "%s) '%s' in %i guesses and %02i:%02i" % (self.cup, self.word.txt, self.guesses, minutes, seconds)
 
     def check_in_time_frame(self):
         if "daily" in self.cup.lower():

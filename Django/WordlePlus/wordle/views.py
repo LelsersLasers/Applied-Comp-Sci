@@ -271,14 +271,15 @@ def display_rankings(request):
     scores = []
     for score in list(Score.objects.filter(cup=cup).order_by('guesses', 'time')):
         if score.check_in_time_frame():
-            scores.append(score)
+            scores.append(score.get_rankings_str())
 
     context = {
         'wordLen': word_length,
         'tries': tries,
         'doubleLetters': double_letters,
         'cup': cup,
-        'scores': scores
+        'scores': scores,
+        'ranked': True
     }
     return render(request, 'wordle/rankings.html', context)
     
@@ -306,9 +307,10 @@ def display_personal_scores(request):
     scores = []
     for score in list(Score.objects.filter(account=Account.objects.get(user=request.user)).order_by('cup')):
         if score.check_in_time_frame():
-            scores.append(score)
+            scores.append(score.get_personal_score_str())
     context = {
-        'scores': scores
+        'scores': scores,
+        'ranked': False
     }
     return render(request, 'wordle/base_rankings.html', context)
 
