@@ -1,94 +1,100 @@
-{% extends "wordle/base.html" %}
+{% extends "wordle/base_menu.html" %}
 
 {% block title %}Wordle+ MP Hub{% endblock %}
+
+{% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'wordle/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'wordle/MP.css' %}">
+{% endblock %}
+
 {% block js %}
     {% load static %}
     <script defer src="{% static 'wordle/MPLauncher.js' %}"></script>
 {% endblock %}
 
-{% block body %}
-    <h1>Multiplayer Hub</h1>
+{% block header %}Multiplayer Hub{% endblock %}
 
+{% block content %}
     {% if message %}
         <strong>{{ message }}</strong>
     {% endif %}
 
     <h3>Modes</h3>
-    Scoring: Least amout of gueses, tie breaker is time
-    <dl>
-        <dt>
+    <p>Scoring: Least amout of gueses, tie breaker is time</p>
+
+    <ul id="noFormatList" class="blue">
+        <li>
             <a onclick="Launch('game', 5, 6, false, '6x5')">
-                <button type="button">6x5</button>
+                <button class="wideButton" type="button">6x5</button>
             </a>
-        </dt>
-            <dd>Random word</dd>
-            <dd>6 tries</dd>
-            <dd>5 letters long</dd>
-            <dd>Double letters not allowed</dd>
-            <dd>
-                <a onclick="Launch('rankings', 5, 6, false, '6x5')">
-                    <button type="button">View rankings</button>
-                </a>
-            </dd>
-        <dt>
+        </li>
+        <li>6 tries</li>
+        <li>5 letters long</li>
+        <li>Double letters not allowed</li>
+        <li>
+            <a onclick="Launch('rankings', 5, 6, false, '6x5')">
+                <button type="button">View rankings</button>
+            </a>
+        </li>
+        <br />
+
+        <li>
             <a onclick="Launch('game', 5, 0, true, '0x5')">
-                <button type="button">&#8734;x5</button>
+                <button class="wideButton" type="button">&#8734;x5</button>
             </a>
-        </dt>
-            <dd>Random word</dd>
-            <dd>Infinite tries</dd>
-            <dd>5 letters long</dd>
-            <dd>Double letters allowed</dd>
-            <dd>
-                <a onclick="Launch('rankings', 5, 0, true, '0x5')">
-                    <button type="button">View rankings</button>
-                </a>
-            </dd>
-        <dt>
+        </li>
+        <li>Infinite tries</li>
+        <li>5 letters long</li>
+        <li>Double letters allowed</li>
+        <li>
+            <a onclick="Launch('rankings', 5, 0, true, '0x5')">
+                <button type="button">View rankings</button>
+            </a>
+        </li>
+        <br />
+
+        <li>
             <a onclick="Launch('game', 5, 10, false, '10x5 daily')">
-                <button type="button">10x5 DAILY</button>
+                <button class="wideButton" type="button">10x5 DAILY</button>
             </a>
-        </dt>
-            <dd>Random word</dd>
-            <dd>6 tries</dd>
-            <dd>5 letters long</dd>
-            <dd>Double letters not allowed</dd>
-            <dd>1 try per day!</dd>
-            <dd>Scoreboard resets daily!</dd>
-            <dd>
-                <a onclick="Launch('rankings', 5, 10, false, '10x5 daily')">
-                    <button type="button">View rankings</button>
-                </a>
-            </dd>
-        <dt>
+        </li>
+        <li>6 tries</li>
+        <li>5 letters long</li>
+        <li>Double letters not allowed</li>
+        <li>1 try per day!</li>
+        <li>Scoreboard resets daily!</li>
+        <li>
+            <a onclick="Launch('rankings', 5, 10, false, '10x5 daily')">
+                <button type="button">View rankings</button>
+            </a>
+        </li>
+        <br />
+
+        <li>
             <a onclick="Launch('game', 7, 7, true, '7x7 daily')">
-                <button type="button">7x7 DAILY</button>
+                <button class="wideButton" type="button">7x7 DAILY</button>
             </a>
-        </dt>
-            <dd>Random word</dd>
-            <dd>6 tries</dd>
-            <dd>5 letters long</dd>
-            <dd>Double letters allowed</dd>
-            <dd>1 try per day!</dd>
-            <dd>Scoreboard resets daily!</dd>
-            <dd>
-                <a onclick="Launch('rankings', 7, 7, true, '7x7 daily')">
-                    <button type="button">View rankings</button>
-                </a>
-            </dd>
-    </dl>
+        </li>
+        <li>6 tries</li>
+        <li>5 letters long</li>
+        <li>Double letters allowed</li>
+        <li>1 try per day!</li>
+        <li>Scoreboard resets daily!</li>
+        <li>
+            <a onclick="Launch('rankings', 7, 7, true, '7x7 daily')">
+                <button type="button">View rankings</button>
+            </a>
+        </li>
+        <br />
+    </ul>
 
     <a href="{% url 'wordle:display_personal_scores' %}">
-        <button type="button">
+        <button id="personalScores" type="button">
             View my scores
         </button>
     </a>
-
-    <a href="{% url 'wordle:back_to_welcome' %}">
-        <button type="button">
-            Back
-        </button>
-    </a>
+    <br />
 
     <form id="gameForm" action="{% url 'wordle:display_game' 'MP' %}" method="post" hidden>
         {% csrf_token %}

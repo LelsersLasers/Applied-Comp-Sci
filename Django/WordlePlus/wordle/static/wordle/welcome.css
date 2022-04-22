@@ -9,12 +9,6 @@
     font-size: 95%;
 }
 
-#noFormatList {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
 .highlight {
     width: 60%;
     margin: 0 auto;

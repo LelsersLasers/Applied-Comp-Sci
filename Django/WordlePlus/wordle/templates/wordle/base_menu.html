@@ -8,9 +8,7 @@
 
         <h1 id="mainHeader">{% block header %}Welcome{% endblock %}</h1>
 
-        {% block content %}
-        
-        {% endblock %}
+        {% block content %}{% endblock %}
 
         {% block back_button %}
             <a href="{% url 'wordle:back_to_welcome' %}">

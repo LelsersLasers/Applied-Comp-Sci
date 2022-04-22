@@ -50,6 +50,12 @@ button {
     color: var(--c1);
 }
 
+#noFormatList {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
 .smallButton {
     background-color: var(--c4);
     color: var(--c1);
