@@ -1,6 +1,8 @@
 var doubleLetters = true;
 
-function toggle() {doubleLetters = !doubleLetters;}
+function toggle() {
+    doubleLetters = !doubleLetters;
+}
 
 function SPCreateWord() {
     wordLen = document.getElementById("wordLen").value;

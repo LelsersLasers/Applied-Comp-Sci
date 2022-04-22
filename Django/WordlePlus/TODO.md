@@ -1,10 +1,11 @@
 # Todo for Wordle<sup>+</sup>
 
-Change favicon.ico colors
-
 When to check isAuthenticated and not needed
 
 Show password visiable next to all password fields
+
+Change base template to include some of the cssed stuff
+    - Back button, main content, etc, etc
 
 - Avoid "confirm resubmission" message?
 - After compiting MP -> rankings not hub
