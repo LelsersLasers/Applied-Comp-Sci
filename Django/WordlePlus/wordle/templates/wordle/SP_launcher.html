@@ -31,12 +31,12 @@
         Start!
     </button>
     <br />
-{% endblock %}
 
-<form id="wordGen" action="{% url 'wordle:display_game' 'SP' %}" method="post" hidden>
-    {% csrf_token %}
-    <input type="hidden" id="wordLenSub" name="wordLenSub" value="" />
-    <input type="hidden" id="triesSub" name="triesSub" value="" />
-    <input type="hidden" id="doubleLettersSub" name="doubleLettersSub" value="" />
-    <input type="hidden" id="cupSub" name="cupSub" value="SP" />
-</form>
+    <form id="wordGen" action="{% url 'wordle:display_game' 'SP' %}" method="post" hidden>
+        {% csrf_token %}
+        <input type="hidden" id="wordLenSub" name="wordLenSub" value="" />
+        <input type="hidden" id="triesSub" name="triesSub" value="" />
+        <input type="hidden" id="doubleLettersSub" name="doubleLettersSub" value="" />
+        <input type="hidden" id="cupSub" name="cupSub" value="SP" />
+    </form>
+{% endblock %}
