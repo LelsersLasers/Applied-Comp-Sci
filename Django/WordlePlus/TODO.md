@@ -9,6 +9,8 @@ Change base template to include some of the cssed stuff
     - Seperate css file for different pages?
         - Base, welcome.css, game.css, mp.css
 
+Game colors based on css classes not inline styling
+
 - Avoid "confirm resubmission" message?
 - After compiting MP -> rankings not hub
 - CSS
