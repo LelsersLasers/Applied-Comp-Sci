@@ -2,6 +2,12 @@
 
 {% block title %}Wordle+ Rankings{% endblock %}
 
+{% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'wordle/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'wordle/rankings.css' %}">
+{% endblock %}
+
 {% block body %}
     <h1>Wordle<sup>+</sup> Rankings {{ cup }}</h1>
 

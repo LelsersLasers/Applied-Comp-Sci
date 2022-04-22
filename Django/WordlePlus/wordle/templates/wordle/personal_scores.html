@@ -2,6 +2,12 @@
 
 {% block title %}Wordle+ Your Scores{% endblock %}
 
+{% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'wordle/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'wordle/rankings.css' %}">
+{% endblock %}
+
 {% block header %}Your Scores{% endblock %}
 
 {% block content %}
@@ -14,4 +20,12 @@
     {% else %}
         <p>No scores yet!</p>
     {% endif %}
+{% endblock %}
+
+{% block back_button %}
+    <a href="{% url 'wordle:display_MP_hub' %}">
+        <button class="smallButton" type="button">
+            Back
+        </button>
+    </a>
 {% endblock %}
