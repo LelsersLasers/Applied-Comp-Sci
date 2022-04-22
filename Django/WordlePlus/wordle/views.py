@@ -227,14 +227,14 @@ def display_game(request, mode):
     except:
         if mode == "SP":
             return redirect('wordle:display_SP_launcher')
-        return redirect('wordle:display_MP_Hub')
+        return redirect('wordle:display_MP_hub')
 
     # if they already did the daily cup
     if "daily" in cup:
         for score in list(Score.objects.filter(account=Account.objects.get(user=request.user)).filter(cup=cup).order_by('cup')):
             if score.check_in_time_frame():
                 request.session['message'] = "You can only attempt a daily cup once per day!"
-                return redirect('wordle:display_MP_Hub') 
+                return redirect('wordle:display_MP_hub') 
 
     word = get_word(word_length, double_letters)
     context = {
@@ -248,14 +248,14 @@ def display_game(request, mode):
     return render(request, 'wordle/game.html', context)
 
 
-def display_MP_Hub(request):
+def display_MP_hub(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
     context = {
         "message": request.session.get('message', None)
     }
     request.session.pop('message', None)
-    return render(request, 'wordle/MP_Hub.html', context)
+    return render(request, 'wordle/MP_hub.html', context)
 
 def display_rankings(request):
     if not request.user.is_authenticated:
@@ -266,7 +266,7 @@ def display_rankings(request):
         double_letters = True if request.POST['doubleLettersSub'] == 'true' else False
         cup = request.POST['cupSub'].strip()
     except:
-        return redirect('wordle:display_MP_Hub')
+        return redirect('wordle:display_MP_hub')
 
     scores = []
     for score in list(Score.objects.filter(cup=cup).order_by('guesses', 'time')):
@@ -291,13 +291,13 @@ def MP_receive_score(request):
         guesses = int(request.POST['guesses'])
         time = int(request.POST['time'])
     except:
-        return redirect('wordle:display_MP_Hub')
+        return redirect('wordle:display_MP_hub')
 
     wordObj = Word.objects.get(txt=word)
     acc = Account.objects.get(user=request.user)
     score = Score(cup=cup, account=acc, word=wordObj, guesses=guesses, time=time, sub_date=timezone.now())
     score.save()
-    return redirect('wordle:display_MP_Hub')
+    return redirect('wordle:display_MP_hub')
 
 
 def display_personal_scores(request):
