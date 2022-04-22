@@ -1,5 +1,11 @@
 to exit virtual env:
 deactive
+
 to start virtual env:
-work on
+work on django
+
+to start server on localhost (on port 8000):
 py manage.py runserver
+
+to start server online (LAN) (on port 8000):
+python manage.py runserver 0.0.0.0:8000
