@@ -8,17 +8,17 @@
         <h2>
             Wordle<sup>+</sup>
         </h2>
-        
+
         <h1 id="mainHeader">Login</h1>
 
         <label for="username">Username</label>
         <br />
-        <input type="text" id="username" name="username" value="{% if a %}{{ a }}{% endif %}" autofocus>
+        <input type="text" id="username" name="username" value="{{ a }}" autofocus>
         <br />
         
         <label for="password">Password</label>
         <br />
-        <input type="password" id="password" name="password" value="{% if b %}{{ b }}{% endif %}">
+        <input type="password" id="password" name="password" value="{{ b }}">
         <br />
 
         {% if error_message %}
@@ -30,6 +30,7 @@
             Login
         </button>
         <br />
+
         <a href="{% url 'wordle:display_signup_page' %}">
             <button class="smallButton" type="button">Don't have an account? (Signup)</button>
         </a>

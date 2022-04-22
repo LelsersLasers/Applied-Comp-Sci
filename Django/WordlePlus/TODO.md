@@ -2,6 +2,12 @@
 
 - Avoid "confirm resubmission" message?
 - After compiting MP -> rankings not hub
+- Make sure redirects work correctly (and url looks good) -> use request.session
+    - check_login, etc
+    - Everywhere with fail_context
+    - only "display_" returns a html page
+        - Everything else redirect
+        - Every template can only be returned by 1 function
 - CSS
 - Hide html/JS inputs
 - Keyboard shown in game
@@ -18,16 +24,16 @@
     - Wordle+ -> Wordle<sup>+</sup>
 - HTML
     - Templates
-- Make sure redirects work correctly (and url looks good)
-    - check_login,etc
 - Permissions
     - if user.isAuthenticated for all MP stuff
     - Careful when passing things around between pages
         - +Hidden JS fields (so word isn't given away)
-- post/get
-    - Try/except around all post/etc
+    - post/get
+        - Try/except around all post/etc
+    - "Auto back path" on fail of post/get or authentication
 - Clean urls/paths
     - Maybe instead of 'wordle/rankings' -> 'wordle/rankings/{{ cup }}>'
+    - remove the "display_"
 - CSS
     - Dynamic
 - Dictionary?

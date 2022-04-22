@@ -12,17 +12,17 @@
             
             <label for="password">Current Password:</label>
             <br />
-            <input type="password" id="password" name="password" value="{% if a %}{{ a }}{% endif %}">
+            <input type="password" id="password" name="password" value="{{ a }}">
             <br />
 
             <label for="{{ setting }}1">New {{ setting }}:</label>
             <br />
-            <input type="{{ type }}" id="{{ setting }}1" name="{{ setting }}1" value="{% if b %}{{ b }}{% endif %}">
+            <input type="{{ type }}" id="{{ setting }}1" name="{{ setting }}1" value="{{ b }}">
             <br />
             
             <label for="{{ setting }}2">Repeat New {{ setting }}:</label>
             <br />
-            <input type="{{ type }}" id="{{ setting }}2" name="{{ setting }}2" value="{% if c %}{{ c }}{% endif %}">
+            <input type="{{ type }}" id="{{ setting }}2" name="{{ setting }}2" value="{{ c }}">
             <br />
 
             {% if error_message %}

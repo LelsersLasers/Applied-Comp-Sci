@@ -3,19 +3,19 @@
 {% block title %}Wordle+ Account Settings{% endblock %}
 
 {% block body %}
-    <a href="{% url 'wordle:display_change_password' %}">
+    <a href="{% url 'wordle:display_change_setting' 'Password' %}">
         <button type="button">
             Change Password
         </button>
     </a>
 
-    <a href="{% url 'wordle:display_change_username' %}">
+    <a href="{% url 'wordle:display_change_setting' 'Username' %}">
         <button type="button">
             Change Username
         </button>
     </a>
 
-    <a href="{% url 'wordle:display_change_display_name' %}">
+    <a href="{% url 'wordle:display_change_setting' 'Display Name' %}">
         <button type="button">
             Change Display Name
         </button>

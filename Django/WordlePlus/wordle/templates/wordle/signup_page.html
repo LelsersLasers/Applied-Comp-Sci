@@ -13,22 +13,22 @@
 
         <label for="display">Display name:</label>
         <br />
-        <input type="text" id="display" name="display" value="{% if a %}{{ a }}{% endif %}" />
+        <input type="text" id="display" name="display" value="{{ a }}" autofocus/>
         <br />
 
         <label for="username">Username:</label>
         <br />
-        <input type="text" id="username" name="username" value="{% if b %}{{ b }}{% endif %}">
+        <input type="text" id="username" name="username" value="{{ b }}">
         <br />
 
         <label for="password1">Password:</label>
         <br />
-        <input type="password" id="password1" name="password1" value="{% if c %}{{ c }}{% endif %}">
+        <input type="password" id="password1" name="password1" value="{{ c }}">
         <br />
         
         <label for="password2">Repeat password:</label>
         <br />
-        <input type="password" id="password2" name="password2" value="{% if d %}{{ d }}{% endif %}">
+        <input type="password" id="password2" name="password2" value="{{ d }}">
         <br />
 
         {% if error_message %}

@@ -25,12 +25,8 @@ urlpatterns = [
     
     # Account settings: change password, display name, or username
     path('wordle/display_account_settings/', views.display_account_settings, name='display_account_settings'),
-    # Change password screen
-    path('wordle/display_change_password/', views.display_change_password, name='display_change_password'),
-    # Change username screen
-    path('wordle/display_change_username/', views.display_change_username, name='display_change_username'),
-    # Change display name screen
-    path('wordle/display_change_display_name/', views.display_change_display_name, name='display_change_display_name'),
+    # The screen where you input new values for either password, display name, or username
+    path('wordle/display_change_setting/<str:setting>', views.display_change_setting, name='display_change_setting'),
     # Makes sure all the info is good/valid then makes the account/user setting change
     path('wordle/change_setting/<str:setting>', views.change_setting, name='change_setting'),
     

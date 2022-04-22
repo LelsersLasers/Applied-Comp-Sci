@@ -32,7 +32,9 @@ def back_to_welcome(request):
 def display_signup_page(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
-    return render(request, 'wordle/signup_page.html')
+    context = request.session.get('context', {})
+    request.session.pop('context', None)
+    return render(request, 'wordle/signup_page.html', context)
 
 def create_account(request):
     if request.user.is_authenticated:
@@ -55,19 +57,23 @@ def create_account(request):
 
     if display_name == "" or username == "" or password1 == "" or password2 == "":
         fail_context['error_message'] = "All fields must be filled in"
-        return render(request, 'wordle/signup_page.html', fail_context)
+        request.session['context'] = fail_context
+        return redirect('wordle:display_signup_page')
     elif password1 != password2:
         fail_context['error_message'] = "Passwords do not match"
-        return render(request, 'wordle/signup_page.html', fail_context)
+        request.session['context'] = fail_context
+        return redirect('wordle:display_signup_page')
 
     accounts = Account.objects.all()
     for account in accounts:
         if account.user.username == username:
             fail_context['error_message'] = "That username is already in use"
-            return render(request, 'wordle/signup_page.html', fail_context)
+            request.session['context'] = fail_context
+            return redirect('wordle:display_signup_page')
         elif account.display_name == display_name:
             fail_context['error_message'] = "That display name is already in use"
-            return render(request, 'wordle/signup_page.html', fail_context)
+            request.session['context'] = fail_context
+            return redirect('wordle:display_signup_page')
 
     user = User.objects.create_user(username=username, password=password1)
     user.save()
@@ -84,7 +90,9 @@ def create_account(request):
 def display_login_page(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
-    return render(request, 'wordle/login_page.html')
+    context = request.session.get('context', {})
+    request.session.pop('context', None)
+    return render(request, 'wordle/login_page.html', context)
 
 def check_login(request):
     if request.user.is_authenticated:
@@ -103,7 +111,8 @@ def check_login(request):
 
     if username == "" or password == "":
         fail_context['error_message'] = "All fields must be filled in"
-        return render(request, 'wordle/login_page.html', fail_context)
+        request.session['context'] = fail_context
+        return redirect('wordle:display_login_page')
 
     user = authenticate(username=username, password=password)
     if user is not None:
@@ -111,7 +120,8 @@ def check_login(request):
         return HttpResponseRedirect("/wordle")
 
     fail_context['error_message'] = "Login not found"
-    return render(request, 'wordle/login_page.html', fail_context)
+    request.session['context'] = fail_context
+    return redirect('wordle:display_login_page')
 
 
 def logout_user(request):
@@ -122,37 +132,18 @@ def logout_user(request):
 def display_account_settings(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
-    context = {
-        "sucess": request.session.get('sucess', None)
-    }
-    request.session.pop('sucess', None)
+    context = request.session.get('context', {})
+    request.session.pop('context', None)
     return render(request, 'wordle/account_settings.html', context)
 
-def display_change_password(request):
+def display_change_setting(request, setting):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
-    context = {
-        'setting': "Password",
-        'type': "password"
-    }
-    return render(request, 'wordle/change_account_setting.html', context)
-
-def display_change_username(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect("/wordle")
-    context = {
-        'setting': "Username",
-        'type': "text"
-    }
-    return render(request, 'wordle/change_account_setting.html', context)
-
-def display_change_display_name(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect("/wordle")
-    context = {
-        'setting': "Display Name",
-        'type': "text"
-    }
+    context = request.session.get('context', {
+        'setting': setting,
+        'type': "password" if setting == "Password" else "text"
+    })
+    request.session.pop('context', None)
     return render(request, 'wordle/change_account_setting.html', context)
 
 def change_setting(request, setting):
@@ -163,7 +154,7 @@ def change_setting(request, setting):
         value1 = request.POST[setting + '1']
         value2 = request.POST[setting + '2']
     except:
-        return HttpResponseRedirect("/wordle")
+        return redirect("wordle:display_account_settings")
 
     fail_context = {
         'error_message': "Error",
@@ -176,22 +167,26 @@ def change_setting(request, setting):
 
     if password == "" or value1 == "" or value2 == "":
         fail_context['error_message'] = "All fields must be filled in"
-        return render(request, 'wordle/change_account_setting.html', fail_context)
+        request.session['context'] = fail_context
+        return redirect('wordle:display_change_setting', setting)
 
     username = request.user.username
     user = authenticate(username=username, password=password)
     if user is None:
         fail_context['error_message'] = "Incorrect password"
-        return render(request, 'wordle/change_account_setting.html', fail_context)
+        request.session['context'] = fail_context
+        return redirect('wordle:display_change_setting', setting)
     if value1 != value2:
         fail_context['error_message'] = "New values do not match"
-        return render(request, 'wordle/change_account_setting.html', fail_context)
+        request.session['context'] = fail_context
+        return redirect('wordle:display_change_setting', setting)
 
     
     if setting == "Display Name":
         if Account.objects.filter(display_name=value1).exists():
             fail_context['error_message'] = "Display name already in use"
-            return render(request, 'wordle/change_account_setting.html', fail_context)
+            request.session['context'] = fail_context
+            return redirect('wordle:display_change_setting', setting)
         person = Account.objects.get(user=User.objects.get(username=username))
         person.display_name = value1
         person.save()
@@ -202,16 +197,18 @@ def change_setting(request, setting):
             person.save()
             login(request, person)
         else:
-            if User.objects.filter(usernamename=value1).exists():
+            if User.objects.filter(username=value1).exists():
                 fail_context['error_message'] = "Username already in use"
-                return render(request, 'wordle/change_account_setting.html', fail_context)
+                request.session['context'] = fail_context
+                return redirect('wordle:display_change_setting', setting)
             person.username = value1
             person.save()
             login(request, person)
     
-    request.session['sucess'] = setting + " changed"
+    request.session['context'] = {
+        'sucess': setting + " changed"
+    }
     return redirect("wordle:display_account_settings")
-    # return render(request, 'wordle/account_settings.html', context)
 
 
 def display_SP_launcher(request):
