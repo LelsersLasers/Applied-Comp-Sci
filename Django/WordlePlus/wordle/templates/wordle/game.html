@@ -10,6 +10,7 @@
 
 {% block style %}
     {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'wordle/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'wordle/game.css' %}">
 {% endblock %}
 
@@ -19,7 +20,7 @@
 {% endblock %}
 
 {% block body %}
-<body onload="setupGame()">
+<body class="centerText" onload="setupGame()">
     <input id="cupIn" type="hidden" name="cupIn" value="{{ cup }} " />
     <input id="wordTxtIn" type="hidden" name="wordTxt" value="{{ word.txt }} " />
     <input id="lengthIn" type="hidden" name="length" value="{{ word.length }}" />
@@ -37,13 +38,15 @@
     <p id="info"></p>
 
     {% if mode %}
-        <div class="row">
+        <div>
             <button id="showWord" type="button" onclick="showWord()">Show Word</button>
             <a href="{% url 'wordle:display_SP_launcher' %}">
                 <button type="button">New Word</button>
             </a>
+            <br />
+
             <a href="{% url 'wordle:back_to_welcome' %}">
-                <button type="button">
+                <button class="smallButton" type="button">
                     Back
                 </button>
             </a>
@@ -52,11 +55,14 @@
         <button id="MPSubmitButton" type="button" onclick="sendScore()" hidden>
             Submit Score
         </button>
+        <br />
+
         <a id="MPBackButton" href="{% url 'wordle:display_MP_Hub' %}">
-            <button type="button">
+            <button class="smallButton" type="button">
                 Back
             </button>
         </a>
+
         <form id="MPSubmit" action="{% url 'wordle:MP_receive_score' %}" method="post" hidden>
             {% csrf_token %}
             <input type="hidden" id="cupName" name="cupName" value="" />

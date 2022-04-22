@@ -9,10 +9,6 @@
     font-size: 95%;
 }
 
-#mainHeader {
-    color: var(--c1);
-}
-
 #noFormatList {
     list-style-type: none;
     margin: 0;

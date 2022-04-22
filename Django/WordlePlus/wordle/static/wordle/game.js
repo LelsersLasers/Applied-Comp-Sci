@@ -83,23 +83,15 @@ function draw() {
     for (var i = 0; i < tries; i++) {
         let txt = "";
         for (var j = 0; j < wordLen; j++) {
-            color = "white";
-            if (stat[i][j] == 1) color = "yellow";
-            else if (stat[i][j] == 2) color = "green";
+            colorStyle = "default";
+            if (stat[i][j] == 1) colorStyle = "yellow";
+            else if (stat[i][j] == 2) colorStyle = "green";
             else if (i == guessPos[0]) {
-                if (guessPos[1] == wordLen && j == 4) color = "lightgrey";
-                else if (guessPos[1] == j) color = "lightgrey";
+                if (guessPos[1] == wordLen && j == 4) colorStyle = "selected";
+                else if (guessPos[1] == j) colorStyle = "selected";
             }
-            else if (stat[i][j] == -1) {
-                color = "grey; color: white"
-            }
-            if (guesses[i][j] != "" && stat[i][j] == 0) {
-                color += "; border: 1px solid black";
-            }
-
-            txt += "<div class='box' id='" + i + "-" + j
-                +"' style='background: " + color + "'>"
-                + guesses[i][j] + "</div>";
+            txt += "<div class='box " + colorStyle + "' id='" + i + "-" + j +"'>"
+            + guesses[i][j] + "</div>";
         }
         main.innerHTML += "<div class='row' id='row" + i + "'> " + txt + "</div>";
     }
@@ -114,7 +106,7 @@ function draw() {
         }
         if (seconds < 10) seconds = "0" + seconds;
         if (minutes < 10) minutes = "0" + minutes;
-        document.getElementById("info").innerHTML = "YOU WON!\nGuesses: " + guessPos[0] + "\nTime Taken: " + minutes + ":" + seconds;
+        document.getElementById("info").innerHTML = "YOU WON!\nGuesses: " + guessPos[0] + ", time taken: " + minutes + ":" + seconds;
         if (document.getElementById("cupIn").value.trim() != "SP") {
             document.getElementById("MPSubmitButton").removeAttribute("hidden");
             document.getElementById("MPBackButton").setAttribute("hidden", "");

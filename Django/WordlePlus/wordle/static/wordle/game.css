@@ -1,3 +1,9 @@
+:root {
+    --c5: #8ec07c;
+    --c6: #83a598;
+    --c7: #fbf1c7;
+}
+
 .row {
     display: flex;
     flex-direction: row;
@@ -5,7 +11,8 @@
 }
 
 .box {
-    border: 1px solid lightgrey;
+    border: 2px solid var(--c2);
+    color: var(--c3);
     width: 50px;
     height: 50px;
     line-height: 50px;
@@ -14,6 +21,33 @@
     font-size: 45px;
 }
 
+.default {
+    background-color: var(--c2);
+}
+
+.green {
+    background-color: var(--c5);
+    border: 2px solid var(--c5);
+}
+
+.yellow {
+    background-color: var(--c6);
+    border: 2px solid var(--c6);
+}
+
+.selected {
+    background-color: var(--c7);
+    border: 2px solid var(--c4);
+}
+
 h1, p {
     text-align: center;
+}
+
+button {
+    border: 2px solid var(--c2);
+}
+
+.smallButton {
+    border: none;
 }

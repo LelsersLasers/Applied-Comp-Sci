@@ -43,6 +43,11 @@ button {
     background-color: var(--c1);
     color: var(--c2);
     cursor: pointer;
+    border-radius: 7px;
+}
+
+#mainHeader {
+    color: var(--c1);
 }
 
 .smallButton {
