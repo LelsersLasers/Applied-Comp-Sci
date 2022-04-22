@@ -36,7 +36,7 @@ urlpatterns = [
     path('wordle/display_game/<str:mode>', views.display_game, name='display_game'),
 
     # 'hub' screen for multiplayer/online options
-    path('wordle/display_MP_Hub/', views.display_MP_hub, name='display_MP_Hub'),
+    path('wordle/display_MP_hub/', views.display_MP_hub, name='display_MP_hub'),
     # Rankings for a cup
     path('wordle/display_rankings/', views.display_rankings, name='display_rankings'),
     # After submitting a MP score, save it to DB
