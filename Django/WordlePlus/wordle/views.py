@@ -310,7 +310,7 @@ def display_personal_scores(request):
     context = {
         'scores': scores
     }
-    return render(request, 'wordle/personal_scores.html', context)
+    return render(request, 'wordle/base_rankings.html', context)
 
 
 def get_word(wordLen, double_letters):
