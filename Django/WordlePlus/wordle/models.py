@@ -30,29 +30,25 @@ class Score(models.Model):
     time = models.IntegerField("Time in seconds taken to solve")
     sub_date = models.DateTimeField("Date Submitted")
 
+    def get_secs_and_mins(self):
+        secs = self.time
+        mins = 0
+        while secs > 60:
+            mins += 1
+            secs -= 60
+        return secs, mins
+
     def __str__(self):
-        seconds = self.time
-        minutes = 0
-        while seconds > 60:
-            minutes += 1
-            seconds -= 60
-        return "%s) %s - %s) '%s' in %i guesses and %02i:%02i" % (self.cup, self.sub_date, self.account.display_name, self.word, self.guesses, minutes, seconds)
+        secs, mins = self.get_secs_and_mins()
+        return "%s) %s - %s) '%s' in %i guesses and %02i:%02i" % (self.cup, self.sub_date, self.account.display_name, self.word, self.guesses, secs, mins)
 
     def get_rankings_str(self):
-        seconds = self.time
-        minutes = 0
-        while seconds > 60:
-            minutes += 1
-            seconds -= 60
-        return "%s) '%s' in %i guesses and %02i:%02i" % (self.account.display_name, self.word.txt, self.guesses, minutes, seconds)
+        secs, mins = self.get_secs_and_mins()
+        return "%s) '%s' in %i guesses and %02i:%02i" % (self.account.display_name, self.word.txt, self.guesses, secs, mins)
 
     def get_personal_score_str(self):
-        seconds = self.time
-        minutes = 0
-        while seconds > 60:
-            minutes += 1
-            seconds -= 60
-        return "%s) '%s' in %i guesses and %02i:%02i" % (self.cup, self.word.txt, self.guesses, minutes, seconds)
+        secs, mins = self.get_secs_and_mins()
+        return "%s) '%s' in %i guesses and %02i:%02i" % (self.cup, self.word.txt, self.guesses, secs, mins)
 
     def check_in_time_frame(self):
         if "daily" in self.cup.lower():
