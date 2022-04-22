@@ -3,31 +3,40 @@
 {% block title %}Wordle+ Account Settings{% endblock %}
 
 {% block body %}
-    <a href="{% url 'wordle:display_change_setting' 'Password' %}">
-        <button type="button">
-            Change Password
-        </button>
-    </a>
+    <div id="content" class="centerText blue">
+        <h2>
+            Wordle<sup>+</sup>
+        </h2>
 
-    <a href="{% url 'wordle:display_change_setting' 'Username' %}">
-        <button type="button">
-            Change Username
-        </button>
-    </a>
+        <h1 id="mainHeader">Account Settings</h1>
 
-    <a href="{% url 'wordle:display_change_setting' 'Display Name' %}">
-        <button type="button">
-            Change Display Name
-        </button>
-    </a>
+        <a href="{% url 'wordle:display_change_setting' 'Password' %}">
+            <button type="button">
+                Change Password
+            </button>
+        </a>
 
-    <a href="{% url 'wordle:back_to_welcome' %}">
-        <button type="button">
-            Back
-        </button>
-    </a>
+        <a href="{% url 'wordle:display_change_setting' 'Username' %}">
+            <button type="button">
+                Change Username
+            </button>
+        </a>
 
-    {% if sucess %}
-        <strong>{{ sucess }}</strong>
-    {% endif %}
+        <a href="{% url 'wordle:display_change_setting' 'Display Name' %}">
+            <button type="button">
+                Change Display Name
+            </button>
+        </a>
+        <br />
+
+        <a href="{% url 'wordle:back_to_welcome' %}">
+            <button class="smallButton" type="button">
+                Back
+            </button>
+        </a>
+
+        {% if sucess %}
+            <strong>{{ sucess }}</strong>
+        {% endif %}
+    </div>
 {% endblock %}

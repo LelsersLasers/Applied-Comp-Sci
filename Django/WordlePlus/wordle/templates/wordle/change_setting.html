@@ -5,38 +5,44 @@
 {% endblock %}
 
 {% block body %}
-    <form action="{% url 'wordle:change_setting' setting %}" method="post">
+    <form id="content" class="centerText blue" action="{% url 'wordle:change_setting' setting %}" method="post">
         {% csrf_token %}
-        <fieldset>
-            <legend><h1>Change {{ setting }}</h1></legend>
+        <h2>
+            Wordle<sup>+</sup>
+        </h2>
+
+        <h1 id="mainHeader">Change {{ setting }}</h1>
             
-            <label for="password">Current Password:</label>
-            <br />
-            <input type="password" id="password" name="password" value="{{ a }}">
-            <br />
+        <label for="password">Current Password:</label>
+        <br />
+        <input type="password" id="password" name="password" value="{{ a }}">
+        <br />
 
-            <label for="{{ setting }}1">New {{ setting }}:</label>
-            <br />
-            <input type="{{ type }}" id="{{ setting }}1" name="{{ setting }}1" value="{{ b }}">
-            <br />
-            
-            <label for="{{ setting }}2">Repeat New {{ setting }}:</label>
-            <br />
-            <input type="{{ type }}" id="{{ setting }}2" name="{{ setting }}2" value="{{ c }}">
-            <br />
+        <label for="{{ setting }}1">New {{ setting }}:</label>
+        <br />
+        <input type="{{ type }}" id="{{ setting }}1" name="{{ setting }}1" value="{{ b }}">
+        <br />
+        
+        <label for="{{ setting }}2">Repeat New {{ setting }}:</label>
+        <br />
+        <input type="{{ type }}" id="{{ setting }}2" name="{{ setting }}2" value="{{ c }}">
+        <br />
 
-            {% if error_message %}
-                <strong>{{ error_message }}</strong>
-            {% endif %}
-            <br />
+        {% if error_message %}
+            <strong>{{ error_message }}</strong>
+        {% endif %}
+        <br />
 
-        </fieldset>
-        <input type="submit" value="Change {{ setting }}" />
+        <button type="submit">
+            Login
+        </button>
+        <br />
+
+        <a href="{% url 'wordle:display_account_settings' %}">
+            <button class="smallButton" type="button">
+                Back
+            </button>
+        </a>
     </form>
 
-    <a href="{% url 'wordle:display_account_settings' %}">
-        <button type="button">
-            Back
-        </button>
-    </a>
 {% endblock %}
