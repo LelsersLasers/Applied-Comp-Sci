@@ -1,8 +1,8 @@
 :root {
-    --c1: #434C5E;
-    --c2: #ECEFF4;
-    --c3: #8FBCBB;
-    --c4: #2E3440;
+    --c1: #282828;
+    --c2: #ebdbb2;
+    --c3: #7c6f64;
+    --c4: #928374;
 }
 
 body {
@@ -21,13 +21,12 @@ input {
     padding: 0.8em 1em;
     box-sizing: border-box;
     border: none;
-    background-color: var(--c2);
-    color: var(--c1);
+    background-color: var(--c4);
+    color: var(--c2);
     border-radius: 7px;
 }
 
 input:focus {
-    color: var(--c4);
     outline: 2px solid var(--c1);
 }
 
@@ -47,7 +46,7 @@ button {
 }
 
 .smallButton {
-    background-color: var(--c2);
+    background-color: var(--c4);
     color: var(--c1);
     margin-top: 0.8em;
     font-size: 0.55em;
@@ -62,7 +61,6 @@ button {
 
 #mainText {
     font-size: 95%;
-    text-align: left;
 }
 
 #mainHeader {
