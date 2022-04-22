@@ -1,10 +1,10 @@
-{% extends "wordle/base.html" %}
+{% extends "wordle/base_menu.html" %}
 
-{% block title %}Wordle+ Home{% endblock %}
+{% block title %}Wordle+ Your Scores{% endblock %}
 
-{% block body %}
-    <h1>Your Scores</h1>
+{% block header %}Your Scores{% endblock %}
 
+{% block content %}
     {% if scores %}
         <ul>
         {% for score in scores %}
@@ -14,11 +14,4 @@
     {% else %}
         <p>No scores yet!</p>
     {% endif %}
-
-
-    <a href="{% url 'wordle:display_MP_Hub' %}">
-        <button type="button">
-            Back
-        </button>
-    </a>
 {% endblock %}
