@@ -36,19 +36,22 @@ class Score(models.Model):
         while secs > 60:
             mins += 1
             secs -= 60
-        return secs, mins
+        return "%02i:%02i" % (mins, secs)
+
+    def get_guesses_str(self):
+        string = "guess"
+        if self.guesses != 1:
+            string += "es"
+        return "%i %s" % (self.guesses, string)
 
     def __str__(self):
-        secs, mins = self.get_secs_and_mins()
-        return "%s) %s - %s) '%s' in %i guesses and %02i:%02i" % (self.cup, self.sub_date, self.account.display_name, self.word, self.guesses, secs, mins)
+        return "%s) %s - %s) '%s' in %s and %s" % (self.cup, self.sub_date, self.account.display_name, self.word, self.get_guesses_str(), self.get_secs_and_mins())
 
     def get_rankings_str(self):
-        secs, mins = self.get_secs_and_mins()
-        return "%s) '%s' in %i guesses and %02i:%02i" % (self.account.display_name, self.word.txt, self.guesses, secs, mins)
+        return "%s) '%s' in %s and %s" % (self.account.display_name, self.word.txt, self.get_guesses_str(), self.get_secs_and_mins())
 
     def get_personal_score_str(self):
-        secs, mins = self.get_secs_and_mins()
-        return "%s) '%s' in %i guesses and %02i:%02i" % (self.cup, self.word.txt, self.guesses, secs, mins)
+        return "%s) '%s' in %s and %s" % (self.cup, self.word.txt, self.get_guesses_str(), self.get_secs_and_mins())
 
     def check_in_time_frame(self):
         if "daily" in self.cup.lower():

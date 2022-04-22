@@ -305,7 +305,7 @@ def display_personal_scores(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
     scores = []
-    for score in list(Score.objects.filter(account=Account.objects.get(user=request.user)).order_by('cup')):
+    for score in list(Score.objects.filter(account=Account.objects.get(user=request.user)).order_by('cup', 'guesses', 'time')):
         if score.check_in_time_frame():
             scores.append(score.get_personal_score_str())
     context = {
