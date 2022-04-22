@@ -2,6 +2,12 @@
 
 {% block title %}Wordle+ Home{% endblock %}
 
+{% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'wordle/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'wordle/welcome.css' %}">
+{% endblock %}
+
 {% block js %}
     {% load static %}
     <script defer src="{% static 'wordle/hover.js' %}"></script>
@@ -29,7 +35,7 @@
         <hr class="highlight" />
         <br />
 
-        <ul class="noFormatList blue">
+        <ul id="noFormatList">
             {% if is_login %}
                 <li>
                     <a href="{% url 'wordle:logout_user' %}">
