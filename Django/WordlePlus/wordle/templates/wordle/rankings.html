@@ -1,25 +1,11 @@
-{% extends "wordle/base_menu.html" %}
+{% extends "wordle/base_rankings.html" %}
 
 {% block title %}Wordle+ {{ cup }} Rankings{% endblock %}
-
-{% block style %}
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'wordle/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'wordle/rankings.css' %}">
-{% endblock %}
 
 {% block header %}{{ cup }} Rankings{% endblock %}
 
 {% block content %}
-    {% if scores %}
-        <ul>
-        {% for score in scores %}
-            <li>{{ forloop.counter }}) {{ score }}</li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No scores yet!</p>
-    {% endif %}
+    {{ block.super }}
     <a onclick="document.getElementById('wordGen').submit()">
         <button type="button">
             Launch {{ cup }}
@@ -34,12 +20,4 @@
         <input type="hidden" id="doubleLettersSub" name="doubleLettersSub" value="{{ doubleLetters }}" />
         <input type="hidden" id="cupSub" name="cupSub" value="{{ cup }}" />
     </form>
-{% endblock %}
-
-{% block back_button %}
-    <a href="{% url 'wordle:display_MP_hub' %}">
-        <button class="smallButton" type="button">
-            Back
-        </button>
-    </a>
 {% endblock %}

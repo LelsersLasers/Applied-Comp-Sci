@@ -1,0 +1,27 @@
+{% extends "wordle/base_menu.html" %}
+
+{% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'wordle/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'wordle/rankings.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% if scores %}
+        <ul>
+        {% for score in scores %}
+            <li>{{ score }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No scores yet!</p>
+    {% endif %}
+{% endblock %}
+
+{% block back_button %}
+    <a href="{% url 'wordle:display_MP_hub' %}">
+        <button class="smallButton" type="button">
+            Back
+        </button>
+    </a>
+{% endblock %}

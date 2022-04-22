@@ -4,10 +4,8 @@ When to check isAuthenticated and not needed
 
 Show password visiable next to all password fields
 
-Change base template to include some of the cssed stuff
-    - Back button, main content, etc, etc
-    - Seperate css file for different pages?
-        - Base, welcome.css, game.css, mp.css
+Templates
+- block.super
 
 Cleaning Score.__str__
 
