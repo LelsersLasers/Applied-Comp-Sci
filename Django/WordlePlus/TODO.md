@@ -7,13 +7,15 @@ Show password visiable next to all password fields
 Templates
 - block.super
 
-Cleaning Score.__str__
-
 - Avoid "confirm resubmission" message?
 - After compiting MP -> rankings not hub
 - CSS
 - Hide html/JS inputs
-- Keyboard shown in game
+- Phone support
+    - Keyboard shown in game
+    - Dynamic CSS/layouts
+- Prepare for full release
+    - HTTPS, debug mode off, etc
 
 # Cleaning:
 - Namings
