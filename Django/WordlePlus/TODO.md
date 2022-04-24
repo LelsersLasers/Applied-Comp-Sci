@@ -14,12 +14,15 @@ Templates
 - Avoid "confirm resubmission" message?
 - After compiting MP -> rankings not hub
 - CSS
+    - Make sure rankings look fine when there are a lot of them
 - Hide html/JS inputs
 - Phone support
     - Keyboard shown in game
     - Dynamic CSS/layouts
 - Prepare for full release
     - HTTPS, debug mode off, etc
+- 2nd dictionary with only common words
+    - 75% chance from that list, 25% from all?
 
 # Cleaning:
 - Namings
@@ -32,7 +35,7 @@ Templates
         - "sucess"
     - Wordle+ -> Wordle<sup>+</sup>
 - HTML
-    - Templates
+    - Templates (inheritance)
 - Permissions
     - if user.isAuthenticated for all MP stuff
     - Careful when passing things around between pages
@@ -49,8 +52,6 @@ Templates
             - Every template can only be returned by 1 function
 - CSS
     - Dynamic
-- Dictionary?
-    - 2nd dictionary with only common words?
-    - Make only reasonable words picked
+    - Inheritance matches templates?
 - Reset database
-    - Rebuilt dictionary
+    - (Rebuilt dictionary)
