@@ -11,10 +11,11 @@ Show password visiable next to all password fields
 Templates
 - block.super
 
+Other:
 - Avoid "confirm resubmission" message?
-- After compiting MP -> rankings not hub
 - CSS
     - Make sure rankings look fine when there are a lot of them
+    - Personal rankings seperated by mini headers per cup
 - Hide html/JS inputs
 - Phone support
     - Keyboard shown in game

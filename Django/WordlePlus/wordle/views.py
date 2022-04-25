@@ -242,7 +242,8 @@ def display_game(request, mode):
         'word': word,
         'tries': tries,
         'mode': mode == "SP",
-        'cup': cup
+        'cup': cup,
+        'doubleLetters': double_letters
     }
     print(context['word'])
     return render(request, 'wordle/game.html', context)
@@ -266,8 +267,14 @@ def display_rankings(request):
         double_letters = True if request.POST['doubleLettersSub'] == 'true' else False
         cup = request.POST['cupSub'].strip()
     except:
-        return redirect('wordle:display_MP_hub')
-
+        if request.session.get('POST') == None:
+            return redirect('wordle:display_MP_hub')
+        word_length = request.session.get('POST')['wordLenSub']
+        tries = request.session.get('POST')['triesSub']
+        double_letters = request.session.get('POST')['doubleLettersSub']
+        cup = request.session.get('POST')['cupSub']
+        # Don't pop, so they can go back and it will show this same page
+            
     scores = []
     for score in list(Score.objects.filter(cup=cup).order_by('guesses', 'time')):
         if score.check_in_time_frame():
@@ -291,6 +298,8 @@ def MP_receive_score(request):
         word = request.POST['word'].strip()
         guesses = int(request.POST['guesses'])
         time = int(request.POST['time'])
+        double_letters = True if request.POST['doubleLettersSub'] == 'true' else False
+        tries = request.POST['triesSub']
     except:
         return redirect('wordle:display_MP_hub')
 
@@ -298,7 +307,14 @@ def MP_receive_score(request):
     acc = Account.objects.get(user=request.user)
     score = Score(cup=cup, account=acc, word=wordObj, guesses=guesses, time=time, sub_date=timezone.now())
     score.save()
-    return redirect('wordle:display_MP_hub')
+
+    request.session['POST'] = {
+        'wordLenSub': len(word),
+        'triesSub': tries,
+        'doubleLettersSub': double_letters,
+        'cupSub': cup
+    }
+    return redirect('wordle:display_rankings')
 
 
 def display_personal_scores(request):
