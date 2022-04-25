@@ -1,16 +1,9 @@
 # Todo for Wordle<sup>+</sup>
 
-"/>" ending for inputs
-
 Verify midnight thing works
-
-In game CSS
-
-When to check isAuthenticated and not needed
 
 Templates
 - block.super
-    - (for css, js especially)
 
 Other:
 - Avoid "confirm resubmission" message?
@@ -18,9 +11,6 @@ Other:
     - Make sure rankings look fine when there are a lot of them
     - Personal rankings seperated by mini headers per cup
 - Hide html/JS inputs
-- Phone support
-    - Keyboard shown in game
-    - Dynamic CSS/layouts
 - Prepare for full release
     - HTTPS, debug mode off, etc
 - 2nd dictionary with only common words
@@ -45,6 +35,7 @@ Other:
     - post/get
         - Try/except around all post/etc
     - "Auto back path" on fail of post/get or authentication
+    - When to check isAuthenticated and not needed
 - Clean urls/paths
     - Maybe instead of 'wordle/rankings' -> 'wordle/rankings/{{ cup }}>'
     - remove the "display_"
@@ -57,3 +48,6 @@ Other:
     - Inheritance matches templates?
 - Reset database
     - (Rebuilt dictionary)
+- Phone support?
+    - Keyboard shown in game
+    - Dynamic CSS/layouts
