@@ -1,3 +1,7 @@
+hr {
+    border: 2px solid var(--c1);
+}
+
 #smallHeader {
     margin-top: 0px;
     margin-bottom: 0px;
@@ -7,6 +11,8 @@
 
 #mainText {
     font-size: 95%;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
 }
 
 .highlight {
@@ -27,4 +33,10 @@
 .colors3 {
     color: var(--c4);
     background-color: var(--c3);
+}
+
+@media (max-width: 550px) and (orientation: portrait) {
+    .highlight {
+        width: 100%;
+    }
 }
