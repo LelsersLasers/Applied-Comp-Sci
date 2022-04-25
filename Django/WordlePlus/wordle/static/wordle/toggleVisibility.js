@@ -1,5 +1,5 @@
-function toggleVisibility() {
-    input = document.getElementById("password");
+function toggleVisibility(idNumber) {
+    input = document.getElementById("password" + idNumber);
     button = document.getElementById("togglePassword");
     if (input.getAttribute("type") == "password"){
         input.setAttribute("type", "text");

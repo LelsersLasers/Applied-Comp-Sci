@@ -8,8 +8,6 @@ In game CSS
 
 When to check isAuthenticated and not needed
 
-Show password visiable next to all password fields
-
 Templates
 - block.super
     - (for css, js especially)
