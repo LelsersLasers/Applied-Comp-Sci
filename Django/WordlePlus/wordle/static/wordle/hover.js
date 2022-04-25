@@ -1,4 +1,3 @@
-
 function hover(id, hoverState) {
     let element = document.getElementById(id);
     if (hoverState) {

@@ -9,8 +9,8 @@
 {% endblock %}
 
 {% block style %}
+    {{ block.super }}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'wordle/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'wordle/game.css' %}">
 {% endblock %}
 

@@ -1,5 +1,7 @@
 # Todo for Wordle<sup>+</sup>
 
+"/>" ending for inputs
+
 Verify midnight thing works
 
 In game CSS
@@ -10,6 +12,7 @@ Show password visiable next to all password fields
 
 Templates
 - block.super
+    - (for css, js especially)
 
 Other:
 - Avoid "confirm resubmission" message?

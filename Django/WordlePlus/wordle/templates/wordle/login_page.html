@@ -2,6 +2,11 @@
 
 {% block title %}Wordle+ Login{% endblock %}
 
+{% block js %}
+    {% load static %}
+    <script defer src="{% static 'wordle/toggleVisibility.js' %}"></script>
+{% endblock %}
+
 {% block header %}Login{% endblock %}
 
 {% block content %}
@@ -16,6 +21,11 @@
         <label for="password">Password</label>
         <br />
         <input type="password" id="password" name="password" value="{{ b }}">
+        <a id="togglePassword" onclick="toggleVisibility()">
+            <i class="toggleVisable">
+                <s>(O)</s>
+            </i>
+        </a>
         <br />
 
         {% if error_message %}
