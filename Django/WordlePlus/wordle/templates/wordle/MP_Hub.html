@@ -3,8 +3,8 @@
 {% block title %}Wordle+ MP Hub{% endblock %}
 
 {% block style %}
+    {{ block.super }}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'wordle/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'wordle/MP_hub.css' %}">
 {% endblock %}
 

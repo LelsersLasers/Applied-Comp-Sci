@@ -6,8 +6,8 @@ so it makes more sense to just make them the defaults -->
 {% block header %}Your Scores{% endblock %}
 
 {% block style %}
+    {{ block.super }}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'wordle/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'wordle/rankings.css' %}">
 {% endblock %}
 
