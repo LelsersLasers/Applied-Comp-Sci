@@ -233,7 +233,9 @@ def display_game(request, mode):
     if "daily" in cup:
         for score in list(Score.objects.filter(account=Account.objects.get(user=request.user)).filter(cup=cup).order_by('cup')):
             if score.check_in_time_frame():
-                request.session['message'] = "You can only attempt a daily cup once per day!"
+                request.session['context'] = {
+                    "message": "You can only attempt a daily cup once per day!"
+                }
                 return redirect('wordle:display_MP_hub') 
 
     word = get_word(word_length, double_letters)
@@ -252,10 +254,8 @@ def display_game(request, mode):
 def display_MP_hub(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
-    context = {
-        "message": request.session.get('message', None)
-    }
-    request.session.pop('message', None)
+    context = request.session.get('context', {})
+    request.session.pop('context', None)
     return render(request, 'wordle/MP_hub.html', context)
 
 def display_rankings(request):
