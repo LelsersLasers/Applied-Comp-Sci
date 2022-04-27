@@ -2,9 +2,11 @@
 
 Rebuild dictionary (for common words)
 
-Verify midnight thing works
+Verify:
+- midnight thing works
+- common word thingy works
 
-Templates
+Templates:
 - block.super
 
 Other:
@@ -17,10 +19,11 @@ Other:
 - Hide html/JS inputs
 - Prepare for full release
     - HTTPS, debug mode off, etc
-- 2nd dictionary with only common words
-    - 75% chance from that list, 25% from all?
+- Phone support?
+    - Keyboard shown in game
+    - Dynamic CSS/layouts
 
-# Cleaning:
+Cleaning:
 - Namings
     - cup over name, etc
     - snake_case for vars and funtions
@@ -52,6 +55,3 @@ Other:
     - Inheritance matches templates?
 - Reset database
     - (Rebuilt dictionary)
-- Phone support?
-    - Keyboard shown in game
-    - Dynamic CSS/layouts
