@@ -35,8 +35,8 @@ hr {
     background-color: var(--c3);
 }
 
-@media (max-width: 550px) and (orientation: portrait) {
+/* @media (max-width: 550px) and (orientation: portrait) {
     .highlight {
         width: 100%;
     }
-}
+} */
