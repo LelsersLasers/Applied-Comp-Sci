@@ -1,5 +1,7 @@
 # Todo for Wordle<sup>+</sup>
 
+Rebuild dictionary (for common words)
+
 Verify midnight thing works
 
 Templates
@@ -8,6 +10,8 @@ Templates
 Other:
 - Avoid "confirm resubmission" message?
 - CSS
+    - in game css
+        - different color for when wrong
     - Make sure rankings look fine when there are a lot of them
     - Personal rankings seperated by mini headers per cup
 - Hide html/JS inputs

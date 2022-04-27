@@ -16,9 +16,10 @@ class Word(models.Model):
     txt = models.CharField("Word", max_length=200)
     length = models.IntegerField("Length")
     double_letters = models.BooleanField("Does the word have double letters?", default=False)
+    common = models.BooleanField("Is it a (sort of) common word?", default=False)
 
     def __str__(self):
-        return "%i: %s (%s)" % (self.length, self.txt, self.double_letters)
+        return "%i: %s (dl: %s, common: %s)" % (self.length, self.txt, self.double_letters, self.common)
 
 class Score(models.Model):
     cup = models.CharField("Cup Name", max_length=200)

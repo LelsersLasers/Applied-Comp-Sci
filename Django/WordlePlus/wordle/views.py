@@ -8,11 +8,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
 
-from .allWords import get_all_words, get_words_of_len
+from .allWords import get_all_words, get_words_of_len, get_common_words
 
 
 
 def display_welcome(request):
+    create_dictionary(True)
     display_name = ""
     if request.user.is_authenticated:
         try:
@@ -223,6 +224,7 @@ def display_game(request, mode):
         word_length = request.POST['wordLenSub']
         tries = request.POST['triesSub']
         double_letters = True if request.POST['doubleLettersSub'] == 'true' else False
+        common = True if request.POST['commonSub'] == 'true' else False
         cup = request.POST['cupSub'].strip()
     except:
         if mode == "SP":
@@ -238,14 +240,15 @@ def display_game(request, mode):
                 }
                 return redirect('wordle:display_MP_hub') 
 
-    word = get_word(word_length, double_letters)
+    word = get_word(word_length, double_letters, common)
     context = {
         'availableWords': get_words_of_len(word_length),
         'word': word,
         'tries': tries,
         'mode': mode == "SP",
         'cup': cup,
-        'doubleLetters': double_letters
+        'doubleLetters': double_letters,
+        'common': common
     }
     print(context['word'])
     return render(request, 'wordle/game.html', context)
@@ -265,6 +268,7 @@ def display_rankings(request):
         word_length = request.POST['wordLenSub']
         tries = request.POST['triesSub']
         double_letters = True if request.POST['doubleLettersSub'] == 'true' else False
+        common = True if request.POST['commonSub'] == 'true' else False
         cup = request.POST['cupSub'].strip()
     except:
         if request.session.get('POST') == None:
@@ -272,8 +276,10 @@ def display_rankings(request):
         word_length = request.session.get('POST')['wordLenSub']
         tries = request.session.get('POST')['triesSub']
         double_letters = request.session.get('POST')['doubleLettersSub']
+        common = request.session.get('POST')['commonSub']
         cup = request.session.get('POST')['cupSub']
         # Don't pop, so they can go back and it will show this same page
+
             
     scores = []
     for score in list(Score.objects.filter(cup=cup).order_by('guesses', 'time')):
@@ -284,6 +290,7 @@ def display_rankings(request):
         'wordLen': word_length,
         'tries': tries,
         'doubleLetters': double_letters,
+        'common': common,
         'cup': cup,
         'scores': scores,
         'ranked': True
@@ -299,6 +306,7 @@ def MP_receive_score(request):
         guesses = int(request.POST['guesses'])
         time = int(request.POST['time'])
         double_letters = True if request.POST['doubleLettersSub'] == 'true' else False
+        common = True if request.POST['commonSub'] == 'true' else False
         tries = request.POST['triesSub']
     except:
         return redirect('wordle:display_MP_hub')
@@ -312,6 +320,7 @@ def MP_receive_score(request):
         'wordLenSub': len(word),
         'triesSub': tries,
         'doubleLettersSub': double_letters,
+        'commonSub': common,
         'cupSub': cup
     }
     return redirect('wordle:display_rankings')
@@ -331,30 +340,33 @@ def display_personal_scores(request):
     return render(request, 'wordle/base_rankings.html', context)
 
 
-def get_word(wordLen, double_letters):
-    if (not double_letters):
+def get_word(wordLen, double_letters, common):
+    if not double_letters:
         words = Word.objects.filter(length=wordLen, double_letters=False)
     else:
         words = Word.objects.filter(length=wordLen)
+    if common:
+        words = words.filter(common=True)
     return random.choice(words)
     
 
-# def create_dictionary(resetDB):
-#     if resetDB:
-#         Word.objects.all().delete()
-#     words = get_all_words()
-# #     i = 0
-# #     for word in words:
-#         if not len(Word.objects.filter(txt=word)) > 0:
-#             double_letters = False
-#             letters = []
-#             for letter in word:
-#                 if letter in letters:
-#                     double_letters = True
-#                     break
-#                 else:
-#                     letters.append(letter)
-#             w = Word(txt=word.strip(), length=len(word), double_letters=double_letters)
-#             w.save()
-#             print("%i = %i/%i)  %s" % ((i/len(words) * 100), i, len(words), w))
-#             i = i + 1
+def create_dictionary(resetDB):
+    if resetDB:
+        Word.objects.all().delete()
+    common_words = get_common_words()
+    words = get_all_words()
+    i = 0
+    for word in words:
+        if not len(Word.objects.filter(txt=word)) > 0:
+            double_letters = False
+            letters = []
+            for letter in word:
+                if letter in letters:
+                    double_letters = True
+                    break
+                else:
+                    letters.append(letter)
+            w = Word(txt=word.strip(), length=len(word), double_letters=double_letters, common=word in common_words)
+            w.save()
+            print("%i = %i/%i)  %s" % ((i/len(words) * 100), i, len(words), w))
+            i = i + 1
