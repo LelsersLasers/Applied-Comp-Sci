@@ -21,6 +21,13 @@ class Word(models.Model):
     def __str__(self):
         return "%i: %s (dl: %s, common: %s)" % (self.length, self.txt, self.double_letters, self.common)
 
+    def encode(self):
+        alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+        encoded = ""
+        for letter in self.txt:
+            encoded += str(alphabet.index(letter)) + "-"
+        return encoded[:-1]
+
 class Score(models.Model):
     cup = models.CharField("Cup Name", max_length=200)
     # 1 Word to many Scores - a Word can be used in multiple Scores
