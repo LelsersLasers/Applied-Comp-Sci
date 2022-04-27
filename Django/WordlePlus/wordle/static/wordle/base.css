@@ -31,6 +31,11 @@ input:focus {
     outline: 2px solid var(--c1);
 }
 
+input[type="checkbox"] {
+    outline: none !important;
+    cursor: pointer;
+}
+
 h1, h2 {
     color: var(--c2);
     padding-top: 0px;
