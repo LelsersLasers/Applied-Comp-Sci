@@ -11,6 +11,7 @@ var guesses;
 var stat;
 
 var state = "game";
+var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
 var guessPos = [0, 0];
 
@@ -18,7 +19,6 @@ document.addEventListener("keydown", keyDownHandler, false);
 
 function keyDownHandler(e) {
     if (state == "game") {
-        alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
         if (e.key == "Backspace") {
             guesses[guessPos[0]][guessPos[1] - 1] = "";
             if (guessPos[1] > 0) guessPos[1]--;
@@ -119,7 +119,7 @@ function draw() {
 
 function sendScore() {
     document.getElementById("cupName").value = document.getElementById("cupIn").value;
-    document.getElementById("word").value = document.getElementById("wordTxtIn").value;
+    document.getElementById("word").value = word;
     document.getElementById("guesses").value = guessPos[0];
     document.getElementById("time").value = takenTime;
     document.getElementById("MPSubmit").submit();
@@ -132,8 +132,17 @@ function showWord() {
     }
 }
 
+function decodeWord(word) {
+    let str = "";
+    let items = word.trim().split("-");
+    for (i in items) {
+        str += alphabet[items[i]]
+    }
+    return str;
+}
+
 function setupGame() {
-    word = document.getElementById("wordTxtIn").value;
+    word = decodeWord(document.getElementById("wordTxtIn").value);
     wordLen = document.getElementById("lengthIn").value;
     tries = document.getElementById("triesIn").value;
     

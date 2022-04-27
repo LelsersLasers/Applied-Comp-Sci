@@ -22,8 +22,8 @@
 {% block body %}
 <body class="centerText" onload="setupGame()">
     <input id="cupIn" type="hidden" name="cupIn" value="{{ cup }} " />
-    <input id="wordTxtIn" type="hidden" name="wordTxt" value="{{ word.txt }} " />
-    <input id="lengthIn" type="hidden" name="length" value="{{ word.length }}" />
+    <input id="wordTxtIn" type="hidden" name="wordTxt" value="{{ encoded_word }} " />
+    <input id="lengthIn" type="hidden" name="length" value="{{ word_length }}" />
     <input id="triesIn" type="hidden" name="tries" value="{{ tries }}" />
     <input id="availableWordsIn" type="hidden" name="availableWords" value="{{ availableWords }}" />
 

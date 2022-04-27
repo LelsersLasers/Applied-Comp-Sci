@@ -219,6 +219,13 @@ def change_setting(request, setting):
 def display_SP_launcher(request):
     return render(request, 'wordle/SP_launcher.html')
 
+def encode_word(word):
+    alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    encoded = ""
+    for letter in word:
+        encoded += str(alphabet.index(letter)) + "-"
+    return encoded[:-1]
+
 def display_game(request, mode):
     try:
         word_length = request.POST['wordLenSub']
@@ -243,14 +250,15 @@ def display_game(request, mode):
     word = get_word(word_length, double_letters, common)
     context = {
         'availableWords': get_words_of_len(word_length),
-        'word': word,
+        'word_length': word.length,
+        'encoded_word': encode_word(word.txt),
         'tries': tries,
         'mode': mode == "SP",
         'cup': cup,
         'doubleLetters': double_letters,
         'common': common
     }
-    print(context['word'])
+    print(context['encoded_word'])
     return render(request, 'wordle/game.html', context)
 
 
