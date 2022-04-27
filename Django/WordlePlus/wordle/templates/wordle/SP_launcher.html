@@ -23,7 +23,12 @@
     <br />
     <label for="doubleLetters">Allow Double Letters?</label>
     <br />
-    <input type="checkbox" id="doubleLetters" name="doubleLetters" onclick="toggle()" checked />
+    <input type="checkbox" id="doubleLetters" name="doubleLetters" onclick="toggleDoubleLetters()" checked />
+    <br />
+
+    <label for="doubleLetters">Only Common(ish) Words?</label>
+    <br />
+    <input type="checkbox" id="common" name="common" onclick="toggleCommon()" />
     <br />
 
     <br />
@@ -37,6 +42,7 @@
         <input type="hidden" id="wordLenSub" name="wordLenSub" value="" />
         <input type="hidden" id="triesSub" name="triesSub" value="" />
         <input type="hidden" id="doubleLettersSub" name="doubleLettersSub" value="" />
+        <input type="hidden" id="commonSub" name="commonSub" value="" />
         <input type="hidden" id="cupSub" name="cupSub" value="SP" />
     </form>
 {% endblock %}
