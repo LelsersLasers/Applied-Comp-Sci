@@ -224,7 +224,7 @@ def display_game(request, mode):
     try:
         word_length = request.POST['wordLenSub']
         tries = request.POST['triesSub']
-        double_letters = True if request.POST['doubleLettersSub'] == 'true' else False
+        double_letters = request.POST['doubleLettersSub'] == 'true'
         cup = request.POST['cupSub'].strip()
         # common is True always for MP, short cuirut the request.POST if MP
         common = mode == "MP" or request.POST['commonSub'] == 'true'
@@ -269,7 +269,7 @@ def display_rankings(request):
     try:
         word_length = request.POST['wordLenSub']
         tries = request.POST['triesSub']
-        double_letters = True if request.POST['doubleLettersSub'] == 'true' else False
+        double_letters = request.POST['doubleLettersSub'] == 'true'
         cup = request.POST['cupSub'].strip()
     except:
         if request.session.get('POST') == None:
@@ -304,7 +304,7 @@ def MP_receive_score(request):
         word = request.POST['word'].strip()
         guesses = int(request.POST['guesses'])
         time = int(request.POST['time'])
-        double_letters = True if request.POST['doubleLettersSub'] == 'true' else False
+        double_letters = request.POST['doubleLettersSub'] == 'true'
         tries = request.POST['triesSub']
     except:
         return redirect('wordle:display_MP_hub')
