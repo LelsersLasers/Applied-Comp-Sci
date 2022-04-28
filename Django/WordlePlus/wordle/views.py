@@ -212,7 +212,7 @@ def change_setting(request, setting):
             login(request, person)
     
     request.session['context'] = {
-        'sucess': setting + " changed"
+        'success': setting + " changed"
     }
     return redirect("wordle:display_account_settings")
 

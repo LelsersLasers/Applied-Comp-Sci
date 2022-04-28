@@ -14,7 +14,7 @@ Other:
 - Avoid "confirm resubmission" message?
 - CSS
     - in game css
-        - different color for when wrong
+        - different color for when completelywrong?
     - Make sure rankings look fine when there are a lot of them
     - Personal rankings seperated by mini headers per cup
 - Hide html/JS inputs
@@ -32,7 +32,6 @@ Cleaning:
     - fix all js/html form names
         - forms, post, js, etc
     - Make sure everything is spellled right
-        - "sucess"
     - Wordle+ -> Wordle<sup>+</sup>
 - HTML
     - Templates (inheritance)
@@ -52,7 +51,7 @@ Cleaning:
             - Everything else redirect
             - Every template can only be returned by 1 function
 - CSS
-    - Dynamic
+    - Dynamic?
     - Inheritance matches templates?
 - Reset database
     - (Rebuilt dictionary)
