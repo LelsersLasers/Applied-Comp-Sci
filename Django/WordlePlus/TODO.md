@@ -4,8 +4,6 @@ Rebuild dictionary (for common words)
 
 Verify:
 - midnight thing works
-- common word thingy works
-    - Maybe always pick from commonISH words?
 
 Templates:
 - block.super
@@ -14,7 +12,7 @@ Other:
 - Avoid "confirm resubmission" message?
 - CSS
     - in game css
-        - different color for when completelywrong?
+        - make it look good
     - Make sure rankings look fine when there are a lot of them
     - Personal rankings seperated by mini headers per cup
 - Hide html/JS inputs

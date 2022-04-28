@@ -1,6 +1,6 @@
 :root {
     --c5: #8ec07c;
-    --c6: #83a598;
+    --c6: #d79921;
     --c7: #fbf1c7;
 }
 
@@ -33,6 +33,10 @@
 .yellow {
     background-color: var(--c6);
     border: 2px solid var(--c6);
+}
+
+.wrong {
+    color: var(--c2);
 }
 
 .selected {
