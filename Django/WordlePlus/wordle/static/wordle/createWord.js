@@ -1,5 +1,5 @@
 var doubleLetters = true;
-var common = false;
+var common = true;
 
 function toggleDoubleLetters() {
     doubleLetters = !doubleLetters;
