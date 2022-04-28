@@ -1,12 +1,9 @@
-var doubleLetters = true;
-var common = true;
+var checkboxes = [true, true]
 
-function toggleDoubleLetters() {
-    doubleLetters = !doubleLetters;
-}
-
-function toggleCommon() {
-    common = !common;
+function toggle(id) {
+    console.log(id);
+    checkboxes[id] = !checkboxes[id];
+    console.log(checkboxes);
 }
 
 
@@ -17,8 +14,8 @@ function SPCreateWord() {
         if (tries <= 100) {
             document.getElementById("wordLenSub").value = wordLen;
             document.getElementById("triesSub").value = tries;
-            document.getElementById("doubleLettersSub").value = doubleLetters;
-            document.getElementById("commonSub").value = common;
+            document.getElementById("doubleLettersSub").value = checkboxes[0];
+            document.getElementById("commonSub").value = checkboxes[0];
             document.getElementById("wordGen").submit();
         }
     }
