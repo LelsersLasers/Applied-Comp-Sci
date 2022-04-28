@@ -27,7 +27,6 @@ function keyDownHandler(e) {
         if (guessPos[1] >= wordLen) {
             if (e.key == "Enter") {
                 let guessWord = guesses[guessPos[0]].join("").toLowerCase();
-                // if (availableWords.includes(guessWord.)) {
                 if (search(guessWord)) {
                     guessPos[1] = 0;
                     let match = 0;
@@ -132,18 +131,8 @@ function showWord() {
     }
 }
 
-function decodeWord(word) {
-    let str = "";
-    let items = word.trim().split("-");
-    if (alphabet[0] != "z") alphabet.reverse()
-    for (i in items) {
-        str += alphabet[items[i]]
-    }
-    return str;
-}
-
 function setupGame() {
-    word = decodeWord(document.getElementById("wordTxtIn").value);
+    word = atob(document.getElementById("wordTxtIn").value.trim().split("'")[1]);
     wordLen = document.getElementById("lengthIn").value;
     tries = document.getElementById("triesIn").value;
     

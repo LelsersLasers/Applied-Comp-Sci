@@ -1,5 +1,6 @@
 import random
 from numpy import double
+import base64
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -244,14 +245,14 @@ def display_game(request, mode):
     context = {
         'availableWords': get_words_of_len(word_length),
         'word_length': word.length,
-        'encoded_word': word.encode(),
+        'encoded_word': base64.b64encode(word.txt.encode()),
         'tries': tries,
         'mode': mode == "SP",
         'cup': cup,
         'doubleLetters': double_letters,
         'common': common
     }
-    print(context['encoded_word'])
+    print("WORD: \"%s\" -> \"%s\"" % (context['encoded_word'], word.txt))
     return render(request, 'wordle/game.html', context)
 
 

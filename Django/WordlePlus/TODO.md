@@ -5,6 +5,7 @@ Rebuild dictionary (for common words)
 Verify:
 - midnight thing works
 - common word thingy works
+    - Maybe always pick from commonISH words?
 
 Templates:
 - block.super
