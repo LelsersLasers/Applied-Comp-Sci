@@ -135,6 +135,7 @@ function showWord() {
 function decodeWord(word) {
     let str = "";
     let items = word.trim().split("-");
+    if (alphabet[0] != "z") alphabet.reverse()
     for (i in items) {
         str += alphabet[items[i]]
     }
