@@ -5,21 +5,11 @@ Rebuild dictionary (with new common words)
 Verify:
 - midnight thing works
 
-- Templates:
-    - block.super
+Check that I have all requirements -> start list below
+
+
 - Avoid "confirm resubmission" message?
-- CSS
-    - in game css
-        - make it look good
-    - Make sure rankings look fine when there are a lot of them
-    - Personal rankings seperated by mini headers per cup
-    - Dynamic??
 - Hide html/JS inputs
-- Prepare for full release
-    - HTTPS, debug mode off, etc
-- Phone support?
-    - Keyboard shown in game
-    - Dynamic CSS/layouts
 - Namings
     - cup over name, etc
     - snake_case for vars and funtions
@@ -35,6 +25,8 @@ Verify:
         - Try/except around all post/etc
     - "Auto back path" on fail of post/get or authentication
     - When to check isAuthenticated and not needed
+- Templates:
+    - block.super
 - Clean urls/paths
     - remove the "display_"
     - Maybe instead of 'wordle/rankings' -> 'wordle/rankings/{{ cup }}>'
@@ -42,5 +34,17 @@ Verify:
         - only "display_" returns a html page
             - Everything else redirect
             - Every template can only be returned by 1 function
-- Reset database
-    - (Rebuilt dictionary)
+- CSS
+    - in game css
+        - make it look good
+    - Make sure rankings look fine when there are a lot of them
+    - Personal rankings seperated by mini headers per cup
+    - Dynamic??
+- Prepare for full release
+    - HTTPS, debug mode off, etc
+    - min.js?
+    - Reset database
+        - (Rebuilt dictionary)
+- Phone support?
+    - Keyboard shown in game
+    - Dynamic CSS/layouts
