@@ -1,9 +1,7 @@
 var checkboxes = [true, true]
 
 function toggle(id) {
-    console.log(id);
     checkboxes[id] = !checkboxes[id];
-    console.log(checkboxes);
 }
 
 
@@ -15,7 +13,7 @@ function SPCreateWord() {
             document.getElementById("wordLenSub").value = wordLen;
             document.getElementById("triesSub").value = tries;
             document.getElementById("doubleLettersSub").value = checkboxes[0];
-            document.getElementById("commonSub").value = checkboxes[0];
+            document.getElementById("commonSub").value = checkboxes[1];
             document.getElementById("wordGen").submit();
         }
     }
