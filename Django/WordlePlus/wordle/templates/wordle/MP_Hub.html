@@ -25,68 +25,64 @@
 
     <ul id="noFormatList" class="blue">
         <li>
-            <a onclick="Launch('game', 5, 6, false, true, '6x5')">
+            <a onclick="Launch('game', 5, 6, false, '6x5')">
                 <button class="wideButton" type="button">6x5</button>
             </a>
         </li>
         <li>6 tries</li>
         <li>5 letters long</li>
         <li>Double letters not allowed</li>
-        <li>Common(ish) words only</li>
         <li>
-            <a onclick="Launch('rankings', 5, 6, false, true, '6x5')">
+            <a onclick="Launch('rankings', 5, 6, false, '6x5')">
                 <button type="button">View rankings</button>
             </a>
         </li>
         <br />
 
         <li>
-            <a onclick="Launch('game', 5, 0, true, false, '0x5')">
+            <a onclick="Launch('game', 5, 0, true, '0x5')">
                 <button class="wideButton" type="button">&#8734;x5</button>
             </a>
         </li>
         <li>Infinite tries</li>
         <li>5 letters long</li>
         <li>Double letters allowed</li>
-        <li>Any word could be used!</li>
         <li>
-            <a onclick="Launch('rankings', 5, 0, true, false, '0x5')">
+            <a onclick="Launch('rankings', 5, 0, true, '0x5')">
                 <button type="button">View rankings</button>
             </a>
         </li>
         <br />
 
         <li>
-            <a onclick="Launch('game', 5, 10, false, false, '10x5 daily')">
+            <a onclick="Launch('game', 5, 10, false, '10x5 daily')">
                 <button class="wideButton" type="button">10x5 daily</button>
             </a>
         </li>
         <li>10 tries</li>
         <li>5 letters long</li>
         <li>Double letters not allowed</li>
-        <li>Any word could be used!</li>
         <li>1 try per day!</li>
         <li>Scoreboard resets daily!</li>
         <li>
-            <a onclick="Launch('rankings', 5, 10, false, false, '10x5 daily')">
+            <a onclick="Launch('rankings', 5, 10, false, '10x5 daily')">
                 <button type="button">View rankings</button>
             </a>
         </li>
         <br />
 
         <li>
-            <a onclick="Launch('game', 7, 7, true, false, '7x7 daily')">
+            <a onclick="Launch('game', 7, 7, true, '7x7 daily')">
                 <button class="wideButton" type="button">7x7 daily</button>
             </a>
         </li>
         <li>7 tries</li>
         <li>7 letters long</li>
         <li>Double letters allowed</li>
-        <li>Any word could be used!</li>
         <li>1 try per day!</li>
         <li>Scoreboard resets daily!</li>
         <li>
-            <a onclick="Launch('rankings', 7, 7, true, false, '7x7 daily')">
+            <a onclick="Launch('rankings', 7, 7, true, '7x7 daily')">
                 <button type="button">View rankings</button>
             </a>
         </li>
@@ -105,7 +101,6 @@
         <input type="hidden" id="gameWordLenSub" name="wordLenSub" value="" />
         <input type="hidden" id="gameTriesSub" name="triesSub" value="" />
         <input type="hidden" id="gameDoubleLettersSub" name="doubleLettersSub" value="" />
-        <input type="hidden" id="gameCommonSub" name="commonSub" value="" />
         <input type="hidden" id="gameCupSub" name="cupSub" value="" />
     </form>
 
@@ -114,7 +109,6 @@
         <input type="hidden" id="rankingsWordLenSub" name="wordLenSub" value="" />
         <input type="hidden" id="rankingsTriesSub" name="triesSub" value="" />
         <input type="hidden" id="rankingsDoubleLettersSub" name="doubleLettersSub" value="" />
-        <input type="hidden" id="rankingsCommonSub" name="commonSub" value="" />
         <input type="hidden" id="rankingsCupSub" name="cupSub" value="" />
     </form>
 {% endblock %}
