@@ -1,7 +1,5 @@
 # Todo for Wordle<sup>+</sup>
 
-Rebuild dictionary (with new common words)
-
 Verify:
 - midnight thing works
 

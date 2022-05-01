@@ -14,12 +14,11 @@ from .allWords import get_all_words, get_words_of_len, get_common_words
 
 
 def display_welcome(request):
-    # create_dictionary(True)
     display_name = ""
     if request.user.is_authenticated:
         try:
             display_name = Account.objects.get(user=request.user).display_name
-        except: # incase it is my admin account which is User not Account
+        except: # incase it is admin account which is User not Account
             display_name = request.user.username
     context = {
         "is_login": request.user.is_authenticated,
