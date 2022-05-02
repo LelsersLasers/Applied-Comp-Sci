@@ -87,8 +87,7 @@ function draw() {
             else if (stat[i][j] == 2) colorStyle = "green";
             else if (stat[i][j] == -1) colorStyle = "wrong";
             else if (i == guessPos[0]) {
-                if (guessPos[1] == wordLen && j == 4) colorStyle = "selected";
-                else if (guessPos[1] == j) colorStyle = "selected";
+                if (guessPos[1] == j || (guessPos[1] == wordLen && j == wordLen - 1)) colorStyle = "selected";
             }
             txt += "<div class='box " + colorStyle + "' id='" + i + "-" + j +"'>"
             + guesses[i][j] + "</div>";
