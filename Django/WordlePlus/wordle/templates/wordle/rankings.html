@@ -7,7 +7,7 @@
 {% block scoresBlock %}
 <ol>
     {% for score in scores %}
-        <li>{{ score }}</li>
+        <li>{{ score.get_rankings_str }}</li>
     {% endfor %}
 </ol>
 {% endblock %}

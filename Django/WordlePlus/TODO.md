@@ -7,10 +7,9 @@ Changes:
 - Avoid "confirm resubmission" message?
 - Hide html/JS inputs
 - CSS
+    - Make sure rankings look fine when there are a lot of them
     - in game css
         - make it look good
-    - Make sure rankings look fine when there are a lot of them
-    - Personal rankings seperated by mini headers per cup
     - Dynamic??
 - Prepare for full release
     - HTTPS, debug mode off, etc

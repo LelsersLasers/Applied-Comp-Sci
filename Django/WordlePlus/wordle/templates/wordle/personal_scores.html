@@ -5,9 +5,12 @@
 {% block header %}Your Scores{% endblock %}
 
 {% block scoresBlock %}
-<ul>
-    {% for score in scores %}
-        <li>{{ score }}</li>
-    {% endfor %}
-</ul>
+{% for cupScores in scores %}
+    <h3>{{ cupScores.0.cup }}</h3>
+    <ul>
+        {% for score in cupScores %}
+            <li>{{ score.get_personal_score_str }}</li>
+        {% endfor %}
+    </ul>
+{% endfor %}
 {% endblock %}

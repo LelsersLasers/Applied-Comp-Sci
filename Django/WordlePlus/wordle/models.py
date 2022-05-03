@@ -52,7 +52,7 @@ class Score(models.Model):
         return "%s) '%s' in %s and %s" % (self.account.display_name, self.word.txt, self.get_guesses_str(), self.get_secs_and_mins())
 
     def get_personal_score_str(self):
-        return "%s) '%s' in %s and %s" % (self.cup, self.word.txt, self.get_guesses_str(), self.get_secs_and_mins())
+        return "'%s' in %s and %s" % (self.word.txt, self.get_guesses_str(), self.get_secs_and_mins())
 
     def check_in_time_frame(self):
         if "daily" in self.cup.lower():

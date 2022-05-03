@@ -283,7 +283,7 @@ def display_rankings(request):
     scores = []
     for score in list(Score.objects.filter(cup=cup).order_by('guesses', 'time')):
         if score.check_in_time_frame():
-            scores.append(score.get_rankings_str())
+            scores.append(score)
 
     context = {
         'wordLen': word_length,
@@ -324,12 +324,22 @@ def MP_receive_score(request):
 def display_personal_scores(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/wordle")
-    scores = []
-    for score in list(Score.objects.filter(account=Account.objects.get(user=request.user)).order_by('cup', 'guesses', 'time')):
-        if score.check_in_time_frame():
-            scores.append(score.get_personal_score_str())
+    cups = []
+    scores = list(Score.objects.filter(account=Account.objects.get(user=request.user)).order_by('cup', 'guesses', 'time'))
+    if len(scores) != 0:
+        current_cup = scores[0].cup
+        cup_scores = []
+        for score in scores:
+            if score.check_in_time_frame():
+                if score.cup == current_cup:
+                    cup_scores.append(score)
+                else:
+                    cups.append(cup_scores)
+                    cup_scores = [score]
+                    current_cup = score.cup
+        cups.append(cup_scores)
     context = {
-        'scores': scores
+        'scores': cups
     }
     return render(request, 'wordle/personal_scores.html', context)
 
