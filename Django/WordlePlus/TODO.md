@@ -17,12 +17,10 @@ Check that I have all requirements -> start list below
     - Wordle+ -> Wordle<sup>+</sup>
 - Permissions
     - if user.isAuthenticated for all MP stuff
-    - Careful when passing things around between pages
-        - +Hidden JS fields (so word isn't given away)
+        - When to check isAuthenticated and when is it not needed
     - post/get
         - Try/except around all post/etc
     - "Auto back path" on fail of post/get or authentication
-    - When to check isAuthenticated and when is it not needed
 - Templates:
     - block.super
 - CSS
@@ -34,6 +32,7 @@ Check that I have all requirements -> start list below
 - Prepare for full release
     - HTTPS, debug mode off, etc
     - min.js?
+    - 404/page not found/user entered bad url
     - Reset database
         - (Rebuilt dictionary)
 - Phone support?
