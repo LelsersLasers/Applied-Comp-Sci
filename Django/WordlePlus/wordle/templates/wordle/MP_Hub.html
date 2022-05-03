@@ -25,15 +25,32 @@
 
     <ul id="noFormatList" class="blue">
         <li>
-            <a onclick="Launch('game', 5, 6, false, '6x5')">
-                <button class="wideButton" type="button">6x5</button>
+            <a onclick="Launch('game', 5, 6, false, '6x5 daily')">
+                <button class="wideButton" type="button">6x5 daily</button>
             </a>
         </li>
         <li>6 tries</li>
         <li>5 letters long</li>
         <li>Double letters not allowed</li>
+        <li>1 try per day!</li>
+        <li>Scoreboard resets daily!</li>
         <li>
-            <a onclick="Launch('rankings', 5, 6, false, '6x5')">
+            <a onclick="Launch('rankings', 5, 6, false, '6x5 daily')">
+                <button type="button">View rankings</button>
+            </a>
+        </li>
+        <br />
+        
+        <li>
+            <a onclick="Launch('game', 5, 10, false, '10x5')">
+                <button class="wideButton" type="button">10x5</button>
+            </a>
+        </li>
+        <li>10 tries</li>
+        <li>5 letters long</li>
+        <li>Double letters not allowed</li>
+        <li>
+            <a onclick="Launch('rankings', 5, 10, false, '10x5')">
                 <button type="button">View rankings</button>
             </a>
         </li>
@@ -49,23 +66,6 @@
         <li>Double letters allowed</li>
         <li>
             <a onclick="Launch('rankings', 5, 0, true, '0x5')">
-                <button type="button">View rankings</button>
-            </a>
-        </li>
-        <br />
-
-        <li>
-            <a onclick="Launch('game', 5, 10, false, '10x5 daily')">
-                <button class="wideButton" type="button">10x5 daily</button>
-            </a>
-        </li>
-        <li>10 tries</li>
-        <li>5 letters long</li>
-        <li>Double letters not allowed</li>
-        <li>1 try per day!</li>
-        <li>Scoreboard resets daily!</li>
-        <li>
-            <a onclick="Launch('rankings', 5, 10, false, '10x5 daily')">
                 <button type="button">View rankings</button>
             </a>
         </li>
