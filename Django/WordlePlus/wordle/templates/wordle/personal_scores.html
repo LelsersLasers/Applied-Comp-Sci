@@ -1,0 +1,13 @@
+{% extends "wordle/base_rankings.html" %}
+
+{% block title %}Wordle+ Your Scores{% endblock %} 
+
+{% block header %}Your Scores{% endblock %}
+
+{% block scoresBlock %}
+<ul>
+    {% for score in scores %}
+        <li>{{ score }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

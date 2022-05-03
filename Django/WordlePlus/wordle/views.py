@@ -290,8 +290,7 @@ def display_rankings(request):
         'tries': tries,
         'doubleLetters': double_letters,
         'cup': cup,
-        'scores': scores,
-        'ranked': True
+        'scores': scores
     }
     return render(request, 'wordle/rankings.html', context)
     
@@ -330,10 +329,9 @@ def display_personal_scores(request):
         if score.check_in_time_frame():
             scores.append(score.get_personal_score_str())
     context = {
-        'scores': scores,
-        'ranked': False
+        'scores': scores
     }
-    return render(request, 'wordle/base_rankings.html', context)
+    return render(request, 'wordle/personal_scores.html', context)
 
 
 def get_word(wordLen, double_letters, common):

@@ -1,10 +1,5 @@
 {% extends "wordle/base_menu.html" %}
 
-<!-- Because the making an html for personal scores woukd only have these 2 lines
-so it makes more sense to just make them the defaults -->
-{% block title %}Wordle+ Your Scores{% endblock %} 
-{% block header %}Your Scores{% endblock %}
-
 {% block style %}
     {{ block.super }}
     {% load static %}
@@ -13,21 +8,7 @@ so it makes more sense to just make them the defaults -->
 
 {% block content %}
     {% if scores %}
-        {% if ranked %}
-            <ol>
-        {% else %}
-            <ul>
-        {% endif %}
-
-        {% for score in scores %}
-            <li>{{ score }}</li>
-        {% endfor %}
-        
-        {% if ranked %}
-            </ol>
-        {% else %}
-            </ul>
-        {% endif %}
+        {% block scoresBlock %}{% endblock %}
     {% else %}
         <p>No scores yet!</p>
     {% endif %}

@@ -4,6 +4,14 @@
 
 {% block header %}{{ cup }} Rankings{% endblock %}
 
+{% block scoresBlock %}
+<ol>
+    {% for score in scores %}
+        <li>{{ score }}</li>
+    {% endfor %}
+</ol>
+{% endblock %}
+
 {% block content %}
     {{ block.super }}
     <a onclick="document.getElementById('wordGen').submit()">
