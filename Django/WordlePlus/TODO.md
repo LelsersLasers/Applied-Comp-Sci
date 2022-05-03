@@ -22,16 +22,9 @@ Check that I have all requirements -> start list below
     - post/get
         - Try/except around all post/etc
     - "Auto back path" on fail of post/get or authentication
-    - When to check isAuthenticated and not needed
+    - When to check isAuthenticated and when is it not needed
 - Templates:
     - block.super
-- Clean urls/paths
-    - remove the "display_"
-    - Maybe instead of 'wordle/rankings' -> 'wordle/rankings/{{ cup }}>'
-    - Make sure redirects work correctly (and url looks good) -> use request.session
-        - only "display_" returns a html page
-            - Everything else redirect
-            - Every template can only be returned by 1 function
 - CSS
     - in game css
         - make it look good
