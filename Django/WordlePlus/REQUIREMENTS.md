@@ -23,7 +23,12 @@
 7) Wordle
     - Fulling functioning Wordle game
     - Customizable Settings
-        - Word length, number of guesses, word difficulty (common, double letters)
+        - Word length
+        - Number of guesses (can do unlimited)
+        - Word difficulty (common, double letters)
+    - Multiplayer
+        - Different options
+        - Daily cups reset at midnight
 8) Template inheritance
     - Base view
         - General look/feel

@@ -3,26 +3,9 @@
 Verify:
 - midnight thing works
 
-Check that I have all requirements -> start list below
-
-
+Changes:
 - Avoid "confirm resubmission" message?
 - Hide html/JS inputs
-- Namings
-    - cup over name, etc
-    - snake_case for vars and funtions
-    - fix all js/html form names
-        - forms, post, js, etc
-    - Make sure everything is spellled right
-    - Wordle+ -> Wordle<sup>+</sup>
-- Permissions
-    - if user.isAuthenticated for all MP stuff
-        - When to check isAuthenticated and when is it not needed
-    - post/get
-        - Try/except around all post/etc
-    - "Auto back path" on fail of post/get or authentication
-- Templates:
-    - block.super
 - CSS
     - in game css
         - make it look good
@@ -38,3 +21,20 @@ Check that I have all requirements -> start list below
 - Phone support?
     - Keyboard shown in game
     - Dynamic CSS/layouts
+
+Cleaning:
+- Namings
+    - cup over name, etc
+    - snake_case for vars and funtions
+    - fix all js/html form names
+        - forms, post, js, etc
+    - Make sure everything is spellled right
+    - Wordle+ -> Wordle<sup>+</sup>
+- Permissions
+    - if user.isAuthenticated for all MP stuff
+        - When to check isAuthenticated and when is it not needed
+    - post/get
+        - Try/except around all post/etc
+    - "Auto back path" on fail of post/get or authentication
+- Templates:
+    - block.super
