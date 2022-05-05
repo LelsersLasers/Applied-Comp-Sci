@@ -4,13 +4,15 @@ Verify:
 - midnight thing works
 
 Changes:
-- CSS - Dynamic??
 - Prepare for full release
-    - HTTPS, debug mode off, etc
+    - HTTPS
+    - Debug mode off
+    - Secret key
+    - Error pages (404, etc)
     - min.js?
-    - 404/page not found/user entered bad url
     - Reset database
         - (Rebuilt dictionary)
+- CSS - Dynamic??
 - Phone support?
     - Keyboard shown in game
     - Dynamic CSS/layouts
