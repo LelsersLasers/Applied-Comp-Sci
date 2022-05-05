@@ -4,10 +4,7 @@ Verify:
 - midnight thing works
 
 Changes:
-- CSS
-    - in game css
-        - make it look good
-    - Dynamic??
+- CSS - Dynamic??
 - Prepare for full release
     - HTTPS, debug mode off, etc
     - min.js?
