@@ -5,6 +5,10 @@
     --c4: #928374;
 }
 
+hr {
+    border: 2px solid var(--c1);
+}
+
 body {
     color: var(--c2);
     font-size: 130%;

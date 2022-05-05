@@ -4,8 +4,6 @@ Verify:
 - midnight thing works
 
 Changes:
-- Avoid "confirm resubmission" message?
-- Hide html/JS inputs
 - CSS
     - Make sure rankings look fine when there are a lot of them
     - in game css
@@ -22,6 +20,8 @@ Changes:
     - Dynamic CSS/layouts
 
 Cleaning:
+- Avoid "confirm resubmission" message?
+- Hide html/JS inputs
 - Namings
     - cup over name, etc
     - snake_case for vars and funtions

@@ -5,6 +5,7 @@
 {% block header %}Your Scores{% endblock %}
 
 {% block scoresBlock %}
+<hr />
 {% for cupScores in scores %}
     <h3>{{ cupScores.0.cup }}</h3>
     <ul>
@@ -12,5 +13,6 @@
             <li>{{ score.get_personal_score_str }}</li>
         {% endfor %}
     </ul>
+    <hr />
 {% endfor %}
 {% endblock %}
