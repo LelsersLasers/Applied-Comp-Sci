@@ -5,7 +5,6 @@ Verify:
 
 Changes:
 - CSS
-    - Make sure rankings look fine when there are a lot of them
     - in game css
         - make it look good
     - Dynamic??

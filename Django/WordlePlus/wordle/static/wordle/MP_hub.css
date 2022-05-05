@@ -4,8 +4,6 @@ body {
 }
 
 #content {
-    color: var(--c1);
-    background-color: var(--c3);
     width: 90%;
     margin: 0;
     padding-top: 2%;
