@@ -8,10 +8,19 @@
     <link rel="stylesheet" type="text/css" href="{% static 'wordle/welcome.css' %}">
 {% endblock %}
 
-{% block js %}
-    {% load static %}
-    <script defer src="{% static 'wordle/hover.js' %}"></script>
-{% endblock %}
+<!-- <script defer>
+    function hover(id, hoverState) {
+        let element = document.getElementById(id);
+        if (hoverState) {
+            element.classList.remove("colors1");
+            element.classList.add("colors2");
+        }
+        else {
+            element.classList.remove("colors2");
+            element.classList.add("colors1");
+        }
+    }
+</script> -->
 
 {% block body %}
     <div id="content" class="centerText blue">
