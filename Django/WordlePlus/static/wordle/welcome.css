@@ -1,0 +1,38 @@
+#smallHeader {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+#mainText {
+    font-size: 95%;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+}
+
+.highlight {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.colors1 {
+    color: var(--c1);
+    background-color: var(--c3);
+}
+
+.colors2 {
+    color: var(--c2);
+    background-color: var(--c1);
+}
+
+.colors3 {
+    color: var(--c4);
+    background-color: var(--c3);
+}
+
+/* @media (max-width: 550px) and (orientation: portrait) {
+    .highlight {
+        width: 100%;
+    }
+} */
