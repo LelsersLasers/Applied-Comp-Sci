@@ -1,1 +1,12 @@
-<h1>page not found</h1>
+{% extends "wordle/base_menu.html" %}
+
+{% block title %}Wordle+ 404{% endblock %}
+
+{% block header %}404: Page Not Found{% endblock %}
+
+{% block content %}
+    <p>
+        The page you are looking for does not exist;
+        check the url, did you mistype?
+    </p>
+{% endblock %}

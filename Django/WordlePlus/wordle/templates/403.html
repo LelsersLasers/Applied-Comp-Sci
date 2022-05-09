@@ -1,3 +1,11 @@
-<!-- HTTP Forbidden -->
+{% extends "wordle/base_menu.html" %}
 
-<h1>forbidden</h1>
+{% block title %}Wordle+ 403{% endblock %}
+
+{% block header %}404: Forbidden{% endblock %}
+
+{% block content %}
+    <p>
+        You are not supposed to be doing this!
+    </p>
+{% endblock %}

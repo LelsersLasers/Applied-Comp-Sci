@@ -9,7 +9,6 @@ Changes:
     - HTTPS
     - Debug mode off
     - Secret key
-    - Error pages (404, etc)
     - min.js?
     - (python manage.py check --deploy)
     - Reset database

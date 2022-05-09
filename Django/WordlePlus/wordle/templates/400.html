@@ -1,3 +1,12 @@
-<!-- Bad Request -->
+{% extends "wordle/base_menu.html" %}
 
-<h1>Bad request</h1>
+{% block title %}Wordle+ 400{% endblock %}
+
+{% block header %}400: Bad Request{% endblock %}
+
+{% block content %}
+    <p>
+        I think you have sent a bad request,
+        did you touch something you weren't supposed to?
+    </p>
+{% endblock %}

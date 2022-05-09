@@ -41,9 +41,10 @@
     - Mostly matches the template inheritance
 10) Small touches
     - Password visibility toggle
-    - Doesn't crash if you navigate incorrectly
+    - Doesn't crash if you navigate incorrectly/with incorrect permissions
         - Try/except around POST
         - Makes sure you are authenticated
+    - Error pages: 400/403/404/500
     - Clarity
         - When you have already done a daily cup
         - When you successfully change a setting

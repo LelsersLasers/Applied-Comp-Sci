@@ -1,3 +1,11 @@
-<!-- Server Error -->
+{% extends "wordle/base_menu.html" %}
 
-<h1>error</h1>
+{% block title %}Wordle+ 500{% endblock %}
+
+{% block header %}500: Server Error{% endblock %}
+
+{% block content %}
+    <p>
+        Something has gone wrong, likely on my end.
+    </p>
+{% endblock %}
