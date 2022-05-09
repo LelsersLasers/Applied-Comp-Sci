@@ -3,11 +3,10 @@
 Verify:
 - midnight thing works
 
-
 Changes:
 - Prepare for full release
-    - HTTPS
     - Debug mode off
+    - HTTPS
     - Secret key
     - min.js?
     - (python manage.py check --deploy)
@@ -27,7 +26,7 @@ Cleaning:
     - snake_case for vars and funtions
     - fix all js/html form names
         - forms, post, js, etc
-    - Make sure everything is spellled right
+    - Make sure everything is spelled right
     - Wordle+ -> Wordle<sup>+</sup>
 - Permissions
     - if user.isAuthenticated for all MP stuff
@@ -36,4 +35,4 @@ Cleaning:
         - Try/except around all post/etc
     - "Auto back path" on fail of post/get or authentication
 - Templates:
-    - block.super
+    - Use block.super
