@@ -6,15 +6,12 @@ Verify:
 
 Changes:
 - Prepare for full release
-    - PUT JS CSS IN HTML
-        - Redo template inheratance
-        - favico ico?
     - HTTPS
     - Debug mode off
     - Secret key
     - Error pages (404, etc)
     - min.js?
-    - (python manage.py check --deploy¶)
+    - (python manage.py check --deploy)
     - Reset database
         - (Rebuilt dictionary)
 - Apache for static?
