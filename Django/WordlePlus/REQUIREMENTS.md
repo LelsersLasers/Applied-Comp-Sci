@@ -41,7 +41,7 @@
     - Mostly matches the template inheritance
 10) Small touches
     - Password visibility toggle
-    - Doesn't crash if you navigate incorrectly/with incorrect permissions
+    - Doesn't crash/404/etc if you navigate incorrectly/with incorrect permissions
         - Try/except around POST
         - Makes sure you are authenticated
     - Error pages: 400/403/404/500
