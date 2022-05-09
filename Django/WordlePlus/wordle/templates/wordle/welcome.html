@@ -2,25 +2,59 @@
 
 {% block title %}Wordle+ Home{% endblock %}
 
-{% block style %}
-    {{ block.super }}
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'wordle/welcome.css' %}">
+{% block js %}
+<script defer>
+function hover(id, hoverState) {
+    let element = document.getElementById(id);
+    if (hoverState) {
+        element.classList.remove("colors1");
+        element.classList.add("colors2");
+    }
+    else {
+        element.classList.remove("colors2");
+        element.classList.add("colors1");
+    }
+}
+</script>
 {% endblock %}
 
-<!-- <script defer>
-    function hover(id, hoverState) {
-        let element = document.getElementById(id);
-        if (hoverState) {
-            element.classList.remove("colors1");
-            element.classList.add("colors2");
-        }
-        else {
-            element.classList.remove("colors2");
-            element.classList.add("colors1");
-        }
-    }
-</script> -->
+{% block style %}
+{{ block.super }}
+<style>
+#smallHeader {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+#mainText {
+    font-size: 95%;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+}
+
+.highlight {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.colors1 {
+    color: var(--c1);
+    background-color: var(--c3);
+}
+
+.colors2 {
+    color: var(--c2);
+    background-color: var(--c1);
+}
+
+.colors3 {
+    color: var(--c4);
+    background-color: var(--c3);
+}
+</style>
+{% endblock %}
 
 {% block body %}
     <div id="content" class="centerText blue">

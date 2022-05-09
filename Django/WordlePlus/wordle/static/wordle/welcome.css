@@ -30,9 +30,3 @@
     color: var(--c4);
     background-color: var(--c3);
 }
-
-/* @media (max-width: 550px) and (orientation: portrait) {
-    .highlight {
-        width: 100%;
-    }
-} */

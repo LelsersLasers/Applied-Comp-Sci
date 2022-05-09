@@ -103,15 +103,6 @@ button {
     color: var(--c4);
 }
 
-/* @media (max-width: 750px) and (orientation: portrait) {
-    #content {
-        width: 100% !important;
-        height: 80vh;
-        padding-top: 20vh;
-        padding-bottom: 0;
-    }
-} */
-
 /* .blue {
     border: 1px solid blue;
 } */
