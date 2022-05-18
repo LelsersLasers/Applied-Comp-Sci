@@ -9,8 +9,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
 
-from .allWords import get_all_words, get_words_of_len, get_common_words
-
 
 def display_welcome(request):
     display_name = ""
@@ -240,9 +238,9 @@ def display_game(request, mode):
                 }
                 return redirect("wordle:display_MP_hub")
 
-    word = get_word(word_length, double_letters, common)
+    word, words = get_word(word_length, double_letters, common)
     context = {
-        "availableWords": get_words_of_len(word_length),
+        "availableWords": words,
         "word_length": word.length,
         "encoded_word": base64.b64encode(word.txt.encode()),
         "tries": tries,
@@ -352,7 +350,7 @@ def display_personal_scores(request):
     context = {"scores": cups}
     return render(request, "wordle/personal_scores.html", context)
 
-
+# returns a random word with specified options, and the list of words as strs
 def get_word(wordLen, double_letters, common):
     if not double_letters:
         words = Word.objects.filter(length=wordLen, double_letters=False)
@@ -360,18 +358,23 @@ def get_word(wordLen, double_letters, common):
         words = Word.objects.filter(length=wordLen)
     if common:
         words = words.filter(common=True)
-    return random.choice(words)
+    str_list = []
+    for word in words:
+        str_list.append(word.txt)
+    return random.choice(words), str_list
 
 
+# from .allWords import get_all_words, get_common_words
 # def create_dictionary(resetDB):
 #     if resetDB:
 #         Word.objects.all().delete()
 #     common_words = get_common_words()
-#     words = get_all_words() + common_words
-#     words = sorted(words)
+#     all_words = get_all_words()
 #     i = 0
-#     for word in words:
-#         if not len(Word.objects.filter(txt=word)) > 0:
+#     for word in all_words:
+#         if (
+#             not len(Word.objects.filter(txt=word)) > 0
+#         ):  # just incase there was a duplicate
 #             double_letters = False
 #             letters = []
 #             for letter in word:
@@ -380,7 +383,14 @@ def get_word(wordLen, double_letters, common):
 #                     break
 #                 else:
 #                     letters.append(letter)
-#             w = Word(txt=word.strip(), length=len(word), double_letters=double_letters, common=word in common_words)
+#             w = Word(
+#                 txt=word.strip(),
+#                 length=len(word),
+#                 double_letters=double_letters,
+#                 common=word in common_words,
+#             )
 #             w.save()
-#             print("%i = %i/%i)  %s" % ((i/len(words) * 100), i, len(words), w))
+#             print(
+#                 "%i = %i/%i)  %s" % ((i / len(all_words) * 100), i, len(all_words), w)
+#             )
 #             i = i + 1
