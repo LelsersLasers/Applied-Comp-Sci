@@ -358,7 +358,8 @@ def get_word(wordLen, double_letters, common):
 #     if resetDB:
 #         Word.objects.all().delete()
 #     common_words = get_common_words()
-#     words = get_all_words()
+#     words = get_all_words() + common_words
+#     words = sorted(words)
 #     i = 0
 #     for word in words:
 #         if not len(Word.objects.filter(txt=word)) > 0:
