@@ -251,7 +251,7 @@ def display_game(request, mode):
         'cup': cup,
         'doubleLetters': double_letters
     }
-    print("WORD: \"%s\" -> \"%s\"" % (context['encoded_word'], word.txt))
+    print("WORD: %s" % word.txt)
     return render(request, 'wordle/game.html', context)
 
 
