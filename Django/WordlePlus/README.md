@@ -1,4 +1,4 @@
-# Wordle<sup>+</sup> (core features)
+# Wordle<sup>+</sup>: Core Features
 
 1) Models
     - Account, Word, Score
@@ -29,23 +29,32 @@
     - Multiplayer
         - Different options
         - Daily cups reset at midnight
-8) Template inheritance
-    - Base view
-        - General look/feel
-    - Base for menus
-        - Small centered context
-    - Base for rankings page
-        - Uses template language to display different formatted lists
-9) CSS
-    - Rather minimal/static
-    - Mostly matches the template inheritance
-10) Small touches
+    - Word passed as base64 so it is harder to cheat
+8) Template inheritance + CSS + JS
+    - Base views:
+        - Base: general look/feel
+        - Menus: centered context
+        - Rankings:
+    - the CSS is rather minimal/static
+    - CSS and JS in the HTML, matching the inheritance
+        - Often uses block.super to have multi-level inheritance
+9) Small touches
     - Password visibility toggle
     - Doesn't crash/404/etc if you navigate incorrectly/with incorrect permissions
         - Try/except around POST
         - Makes sure you are authenticated
-    - Error pages: 400/403/404/500
+    - Error pages for 400/403/404/500
     - Clarity
         - When you have already done a daily cup
         - When you successfully change a setting
         - When you enter incorrect/incomplete data into a form
+10) Running online at http://64.98.192.41:8000/wordle/
+    - Should be fully functional
+    - Uses just django to run!
+        - CSS and JS are within the template inheritance
+        - The image was converted into base64 so it could be put directly in the HTML
+    - It should be firewalled away from the rest of my wifi
+        - Please don't hack it or me or anything
+    - NOTE: Don't put an actual password in its not secure
+        - It uses http (not https)
+        - But it will not harm your computer
