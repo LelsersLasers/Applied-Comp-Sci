@@ -1,5 +1,13 @@
-# Wordle<sup>+</sup>: Core Features
+# Wordle<sup>+</sup>
 
+![Welcome Page]()
+![Single Player Word Creation]()
+![Game]()
+![Multiplayer Hub]()
+![Multiplayer Rankings]()
+![View Personal Scores]()
+
+# Core Features/Assignment Requirements
 1) Models
     - Account, Word, Score
 2) Relationships
