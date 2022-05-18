@@ -1,6 +1,6 @@
 # Wordle<sup>+</sup>
 <h2>
-All types of Wordle! From online globally ranked cups to custom rules to the original Wordle, this site has it all!
+    All types of Wordle! From online globally ranked cups to custom rules to the original Wordle, this site has it all!
 </h2>
 
 Welcome Page
