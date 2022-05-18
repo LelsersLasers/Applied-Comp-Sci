@@ -1,11 +1,25 @@
 # Wordle<sup>+</sup>
+<h2>
+All types of Wordle! From online globally ranked cups to custom rules to the original Wordle, this site has it all!
+</h2>
 
-![Welcome Page]()
-![Single Player Word Creation]()
-![Game]()
-![Multiplayer Hub]()
-![Multiplayer Rankings]()
-![View Personal Scores]()
+Welcome Page
+![Welcome Page](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/welcome.PNG)
+
+Single Player Word Creation
+![Single Player Word Creation](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/SP_launcher.PNG)
+
+Actual Game
+![Actual Game](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/game.PNG)
+
+Multiplayer Hub
+![Multiplayer Hub](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/MP_hub.PNG)
+
+Global Multiplayer Rankings
+![Global Multiplayer Rankings](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/MP_rankings.PNG)
+
+View Personal Scores
+![View Personal Scores](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/personal_scores.PNG)
 
 # Core Features/Assignment Requirements
 1) Models
