@@ -3,7 +3,7 @@ from numpy import double
 import base64
 
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from .models import Account, Word, Score
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
