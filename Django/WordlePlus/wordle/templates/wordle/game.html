@@ -187,6 +187,8 @@ function draw() {
         colorStyles = ["default", "yellow", "green", "wrong"];
         txt += "<div class='box " + colorStyles[usedLetters[i]] + "' id='key" + alphabet[i] + "' onclick='alphabetKey(\"key" + alphabet[i] + "\")'>" + alphabet[i].toUpperCase() + "</div>";
     }
+    txt += "<div class='box selected' id='keyenter' onclick='alphabetKey(\"keyenter\")'>Enter</div>";
+    txt += "<div class='box selected' id='keybackspace' onclick='alphabetKey(\"keybackspace\")'>Backspace</div>";
     main.innerHTML += "<div class='row' id='usedLetters'>" + txt + "</div>";
     if (state == "lost") document.getElementById("info").innerHTML = "You lost! The correct word was: " + word;
     else if (state == "won") {
