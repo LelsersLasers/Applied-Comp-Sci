@@ -4,7 +4,7 @@ Changes
 - In game
     - List of used letters
         - Make into keyboard shape
-        - Usable on phone
+        - Usable on phone (enter key, backspace key)
     - If there is only 1 of a letter, don't color the second the letter
         - Color priority: green > left most
 

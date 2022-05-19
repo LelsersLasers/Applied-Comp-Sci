@@ -93,6 +93,13 @@ var guessPos = [0, 0];
 
 document.addEventListener("keydown", keyDownHandler, false);
 
+function alphabetKey(id) {
+    let e = {
+        'key': document.getElementById(id).innerHTML,
+    }
+    keyDownHandler(e);
+}
+
 function keyDownHandler(e) {
     if (state == "game") {
         if (e.key == "Backspace") {
@@ -178,8 +185,7 @@ function draw() {
     let txt = "";
     for (let i in alphabet) {
         colorStyles = ["default", "yellow", "green", "wrong"];
-        txt += "<div class='box " + colorStyles[usedLetters[i]] + "' id='" + i + "'>"
-            + alphabet[i].toUpperCase() + "</div>";
+        txt += "<div class='box " + colorStyles[usedLetters[i]] + "' id='key" + alphabet[i] + "' onclick='alphabetKey(\"key" + alphabet[i] + "\")'>" + alphabet[i].toUpperCase() + "</div>";
     }
     main.innerHTML += "<div class='row' id='usedLetters'>" + txt + "</div>";
     if (state == "lost") document.getElementById("info").innerHTML = "You lost! The correct word was: " + word;
