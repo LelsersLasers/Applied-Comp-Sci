@@ -91,8 +91,10 @@
 <script defer>
 var word;
 var availableWords = [];
+
 var startTime;
 var takenTime;
+var guessNumber = 0;
 
 var wordLen;
 var tries;
@@ -101,12 +103,10 @@ var infiniteTries = false;
 var guesses;
 var stat;
 var usedLetters;
+var guessPos = [0, 0];
 
 var state = "game";
 var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-
-var guessPos = [0, 0];
-
 document.addEventListener("keydown", keyDownHandler, false);
 
 function alphabetKey(id) {
@@ -125,21 +125,17 @@ function keyDownHandler(e) {
         }
         if (guessPos[1] >= wordLen) {
             if (e.key == "Enter") {
-                let guessWord = guesses[guessPos[0]].join("").toLowerCase();
-                if (search(guessWord)) {
+                if (search(guesses[guessPos[0]].join("").toLowerCase())) {
                     guessLetters = word.toUpperCase().split("");
-                    guessPos[1] = 0;
-                    let match = 0;
                     for (let i = 0; i < wordLen; i++) {
                         if (guesses[guessPos[0]][i] == word.charAt(i).toUpperCase()) {
                             stat[guessPos[0]][i] = 2;
-                            match++;
                             usedLetters[alphabet.indexOf(guesses[guessPos[0]][i].toLowerCase())] = 2;
                             guessLetters.splice(guessLetters.indexOf(guesses[guessPos[0]][i]), 1);
                         }
                     }
                     for (let i = 0; i < wordLen; i++) {
-                        if (word.toUpperCase().split("").includes(guesses[guessPos[0]][i]) && guessLetters.indexOf(guesses[guessPos[0]][i]) != -1) {
+                        if (guessLetters.indexOf(guesses[guessPos[0]][i]) != -1) {
                             if (stat[guessPos[0]][i] < 1) stat[guessPos[0]][i] = 1;
                             if (usedLetters[alphabet.indexOf(guesses[guessPos[0]][i].toLowerCase())] < 1) {
                                 usedLetters[alphabet.indexOf(guesses[guessPos[0]][i].toLowerCase())] = 1;
@@ -153,20 +149,21 @@ function keyDownHandler(e) {
                             }
                         }
                     }
-                    if (match == wordLen) {
+                    if (guesses[guessPos[0]].join("").toLowerCase() == word) {
                         state = "won";
+                        guessNumber = guessPos[0] + 1;
                         guessPos = [-1, -1];
                     }
                     else if (guessPos[0] >= tries - 1 && !infiniteTries) state = "lost";
-                    guessPos[0]++;
-
-                    if (infiniteTries && state == "game") {
+                    else if (infiniteTries) {
                         tries++;
                         guesses.push([]);
                         for (let j = 0; j < wordLen; j++) guesses[guesses.length - 1].push("");
                         stat.push([]);
                         for (let j = 0; j < wordLen; j++) stat[stat.length - 1].push(0);
                     }
+                    guessPos[0]++;
+                    guessPos[1] = 0;
                     document.getElementById("info").innerHTML = "";
                 }
                 else document.getElementById("info").innerHTML = "Guesses must be words";
@@ -194,27 +191,25 @@ function draw() {
             else if (i == guessPos[0]) {
                 if (guessPos[1] == j || (guessPos[1] == wordLen && j == wordLen - 1)) colorStyle = "selected";
             }
-            txt += "<div class='box " + colorStyle + "' id='" + i + "-" + j +"'>"
-                + guesses[i][j] + "</div>";
+            txt += "<div class='box " + colorStyle + "' id='" + i + "-" + j +"'>" + guesses[i][j] + "</div>";
         }
         main.innerHTML += "<div class='row' id='row" + i + "'> " + txt + "</div>";
     }
+
+    main.innerHTML += "<br />";
+
     let rows = [
         "qwertyuiop".split(""),
         "asdfghjkl".split(""),
         "zxcvbnm".split(""),
     ];
     let colorStyles = ["default", "yellow", "green", "wrong"];
-
-    main.innerHTML += "<br />";
-
     for (let r in rows) {
         let txt = "";
         for (let i in rows[r]) {
             let idx = alphabet.indexOf(rows[r][i]);
             color = colorStyles[usedLetters[idx]];
-            txt += "<div class='key box " + color + "' id='key" + rows[r][i]
-                + "' onclick='alphabetKey(\"key" + rows[r][i] + "\")'>" + rows[r][i].toUpperCase() + "</div>";
+            txt += "<div class='key box " + color + "' id='key" + rows[r][i] + "' onclick='alphabetKey(\"key" + rows[r][i] + "\")'>" + rows[r][i].toUpperCase() + "</div>";
         }
         main.innerHTML += "<div class='row' id='keyboard" + r + "'>" + txt + "</div>";
     }
@@ -223,7 +218,6 @@ function draw() {
     txt += "<div class='actionKey key box' id='keyenter' onclick='alphabetKey(\"keyenter\")'>Enter</div>";
     txt += "<div class='actionKey key box' id='keydelete' onclick='alphabetKey(\"keydelete\")'>Delete</div>";
     main.innerHTML += "<div class='row' id='keyboard3'>" + txt + "</div>";
-
 
     if (state == "lost") document.getElementById("info").innerHTML = "You lost! The correct word was: " + word;
     else if (state == "won") {
@@ -236,7 +230,7 @@ function draw() {
         }
         if (seconds < 10) seconds = "0" + seconds;
         if (minutes < 10) minutes = "0" + minutes;
-        document.getElementById("info").innerHTML = "YOU WON! Guesses: " + guessPos[0] + ", time taken: " + minutes + ":" + seconds;
+        document.getElementById("info").innerHTML = "YOU WON! Guesses: " + guessNumber + ", time taken: " + minutes + ":" + seconds;
         if (document.getElementById("cupIn").value.trim() != "SP") {
             document.getElementById("MPSubmitButton").removeAttribute("hidden");
             document.getElementById("MPBackButton").setAttribute("hidden", "");
@@ -254,10 +248,8 @@ function sendScore() {
 }
 
 function showWord() {
-    if (state != "won") {
-        state = "lost";
-        document.getElementById("info").innerHTML = "You lost! The correct word was: " + word;
-    }
+    state = "lost";
+    document.getElementById("info").innerHTML = "You lost! The correct word was: " + word;
 }
 
 function setupGame() {
