@@ -137,11 +137,16 @@ function keyDownHandler(e) {
                         }
                         else {
                             if (stat[guessPos[0]][i] < 1) stat[guessPos[0]][i] = -1;
-                            if (usedLetters[alphabet.indexOf(guesses[guessPos[0]][i].toLowerCase())] < 1) usedLetters[alphabet.indexOf(guesses[guessPos[0]][i].toLowerCase())] = -1;
+                            if (usedLetters[alphabet.indexOf(guesses[guessPos[0]][i].toLowerCase())] < 1) {
+                                usedLetters[alphabet.indexOf(guesses[guessPos[0]][i].toLowerCase())] = -1;
+                            }
                         }
                     }
                     console.log(guessLetters);
-                    if (match == wordLen) state = "won";
+                    if (match == wordLen) {
+                        state = "won";
+                        guessPos = [-1, -1];
+                    }
                     else if (guessPos[0] >= tries - 1 && !infiniteTries) state = "lost";
                     guessPos[0]++;
 
@@ -154,9 +159,7 @@ function keyDownHandler(e) {
                     }
                     document.getElementById("info").innerHTML = "";
                 }
-                else {
-                    document.getElementById("info").innerHTML = "Guesses must be words";
-                }
+                else document.getElementById("info").innerHTML = "Guesses must be words";
             }
         }
         else if (alphabet.includes(e.key.toLowerCase())) {
