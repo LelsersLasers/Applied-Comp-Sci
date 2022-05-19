@@ -44,6 +44,9 @@ View Personal Scores
     - And other various places
 7) Wordle
     - Fulling functioning Wordle game
+        - Color highlighting for wrong, right, and in word
+            - Also highlights the on screen keyboard
+        - Works the same way as the real Wordle (with the double letters, etc)
     - Customizable Settings
         - Word length
         - Number of guesses (can do unlimited)
@@ -57,12 +60,18 @@ View Personal Scores
         - Base: general look/feel
         - Menus: centered context
         - Rankings:
-    - the CSS is rather minimal/static
+    - The CSS is rather minimal/static
     - CSS and JS in the HTML, matching the inheritance
         - Often uses block.super to have multi-level inheritance
-9) Small touches
+9) Mobile friendly
+    - Mostly designed for computer
+        - The CSS/styles might be a bit small on mobile
+    - All navigation buttons can be used by touch
+    - All text inputs bring up the virtual keyboard when on moblie
+    - Wordle keyboard is full featured and works as well as a normal keyboard
+10) Small touches
     - Password visibility toggle
-    - Doesn't crash/404/etc if you navigate incorrectly/with incorrect permissions
+    - Doesn't crash/etc if you navigate incorrectly/with incorrect permissions
         - Try/except around POST
         - Makes sure you are authenticated
     - Error pages for 400/403/404/500
@@ -70,13 +79,13 @@ View Personal Scores
         - When you have already done a daily cup
         - When you successfully change a setting
         - When you enter incorrect/incomplete data into a form
-10) Running online at <http://64.98.192.41:8000/wordle/>
+11) Running online at <http://64.98.192.41:8000/wordle/>
     - Should be fully functional
     - Uses just django to run!
         - CSS and JS are within the template inheritance
         - The image was converted into base64 so it could be put directly in the HTML
     - It should be firewalled away from the rest of my wifi
-        - Please don't hack it or me or anything
+        - But still please don't hack it or me or anything
     - NOTE: Don't put an actual password in its not secure
         - It uses http (not https)
         - But it will not harm your computer

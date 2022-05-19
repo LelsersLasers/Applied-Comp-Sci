@@ -1,9 +1,7 @@
 # Todo for Wordle<sup>+</sup>
 
 Changes
-- In game
-    - clean the code
-    - tweak sizing and spacing
+- update README photos ingame
 
 Prepare for full release
 - Firewall server away from wifi
