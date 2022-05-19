@@ -9,7 +9,7 @@ Welcome Page
 Single Player Word Creation
 ![Single Player Word Creation](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/SP_launcher.PNG)
 
-Actual Game
+Actual Game - (note: I am terrible at this game)
 ![Actual Game](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/game.PNG)
 
 Multiplayer Hub

@@ -35,7 +35,7 @@ urlpatterns = [
     # The actual wordle game
     path('wordle/game/<str:mode>', views.display_game, name='display_game'),
 
-    # 'hub' screen for multiplayer/online options
+    # 'Hub' screen for multiplayer/online options
     path('wordle/MP_hub/', views.display_MP_hub, name='display_MP_hub'),
     # Rankings for a cup
     path('wordle/rankings/', views.display_rankings, name='display_rankings'),
