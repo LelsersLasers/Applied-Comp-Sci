@@ -3,14 +3,14 @@
     All types of Wordle! From online globally ranked cups to custom rules to the original Wordle, this site has it all!
 </h2>
 
+Actual Game - (note: I am terrible at this game)
+![Actual Game](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/game.PNG)
+
 Welcome Page
 ![Welcome Page](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/welcome.PNG)
 
 Single Player Word Creation
 ![Single Player Word Creation](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/SP_launcher.PNG)
-
-Actual Game - (note: I am terrible at this game)
-![Actual Game](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/game.PNG)
 
 Multiplayer Hub
 ![Multiplayer Hub](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/MP_hub.PNG)
