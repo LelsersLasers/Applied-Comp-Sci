@@ -63,7 +63,7 @@ View Personal Scores
     - The CSS is rather minimal/static
     - CSS and JS in the HTML, matching the inheritance
         - Often uses block.super to have multi-level inheritance
-9) Mobile friendly
+9) Mobile "friendly"
     - Mostly designed for computer
         - The CSS/styles might be a bit small on mobile
     - All navigation buttons can be used by touch
