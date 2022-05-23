@@ -11,6 +11,7 @@ from django.utils import timezone
 
 
 def display_welcome(request):
+    create_dictionary(True)
     display_name = ""
     if request.user.is_authenticated:
         try:
@@ -364,33 +365,33 @@ def get_word(wordLen, double_letters, common):
     return random.choice(words), str_list
 
 
-# from .allWords import get_all_words, get_common_words
-# def create_dictionary(resetDB):
-#     if resetDB:
-#         Word.objects.all().delete()
-#     common_words = get_common_words()
-#     all_words = get_all_words()
-#     i = 0
-#     for word in all_words:
-#         if (
-#             not len(Word.objects.filter(txt=word)) > 0
-#         ):  # just incase there was a duplicate
-#             double_letters = False
-#             letters = []
-#             for letter in word:
-#                 if letter in letters:
-#                     double_letters = True
-#                     break
-#                 else:
-#                     letters.append(letter)
-#             w = Word(
-#                 txt=word.strip(),
-#                 length=len(word),
-#                 double_letters=double_letters,
-#                 common=word in common_words,
-#             )
-#             w.save()
-#             print(
-#                 "%i = %i/%i)  %s" % ((i / len(all_words) * 100), i, len(all_words), w)
-#             )
-#             i = i + 1
+from .allWords import get_all_words, get_common_words
+def create_dictionary(resetDB):
+    if resetDB:
+        Word.objects.all().delete()
+    common_words = get_common_words()
+    all_words = get_all_words()
+    i = 0
+    for word in all_words:
+        if (
+            not len(Word.objects.filter(txt=word)) > 0
+        ):  # just incase there was a duplicate
+            double_letters = False
+            letters = []
+            for letter in word:
+                if letter in letters:
+                    double_letters = True
+                    break
+                else:
+                    letters.append(letter)
+            w = Word(
+                txt=word.strip(),
+                length=len(word),
+                double_letters=double_letters,
+                common=word in common_words,
+            )
+            w.save()
+            print(
+                "%i = %i/%i)  %s" % ((i / len(all_words) * 100), i, len(all_words), w)
+            )
+            i = i + 1
