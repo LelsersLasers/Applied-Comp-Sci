@@ -10,16 +10,17 @@ def get_words():
             user_input = input("Only common words [y/n]? ")
             choice = user_input[0].lower()
             if choice == "y":
-                return allWords.get_all_words()
-            return allWords.get_common_words()
+                return allWords.get_common_words()
+            return allWords.get_all_words()
         except:
             print("Hint: enter 'y' or 'n'")
 
 
 def input_word_len():
+    print("How many letters are in the word?")
     while True:
         try:
-            user_input = input("Word Length: ")
+            user_input = input("Length: ")
             num = int(user_input)
             assert(num > 0)
             return num
@@ -27,61 +28,63 @@ def input_word_len():
             print("Hint: enter a positive number!")
 
 def input_green_letters():
+    print("Enter letters that you know the position of (aka the 'green' letters).")
+    print("First enter the letter, hit [enter] then enter the position of the letter where 1 is the first letter.")
     letters = []
     while True:
         try:
-            user_input = input("Enter a known letter (aka green in game) ('0' once all know letters are know): ")
-            if user_input[0] == "0":
+            user_input = input("Letter (leave blank to continue): ")
+            if len(user_input) == 0:
                 return letters
             letter = user_input.lower()[0]
-            user_input = input("Enter the location of the letter (1 for if its the first letter): ")
+            user_input = input("Position: ")
             idx = int(user_input)
             assert(idx > 0)
             letters.append([letter, idx - 1])
+            print("")
         except:
-            print("Hint: you are doing something wrong")
+            print("Hint: you are doing something wrong (maybe read the directions?)")
 
 def input_yellow_letters():
+    print("Enter letters that you are are in the word (aka the 'yellow' letters).")
     letters = []
     while True:
         try:
-            user_input = input("Enter a sort of known letter (aka yellow in game) ('0' once all know letters are know): ")
-            if user_input[0] == "0":
+            user_input = input("Letter (leave blank to continue): ")
+            if len(user_input) == 0:
                 return letters
             letter = user_input.lower()[0]
             letters.append(letter)
         except:
-            print("Hint: you are doing something wrong")
+            print("Hint: you are doing something wrong (maybe read the directions?)")
 
 def only_neg(old, new):
     if not old:
         return old
     return new
 
-
-def main():
-
-    print("START")
-    
-    txt = "Welcome to the wordle helper!"
+def bold_text(txt):
     print("#" * (len(txt) + 4))
     print("# " + txt + " #")
     print("#" * (len(txt) + 4))
-    print("\n")
 
-    words = get_words()
-    print("\n")
+
+def main():
+
+    print("\nSTARTING...\n")
     
+    bold_text("Welcome to the wordle helper!")
+    
+    print("\n") 
+    words = get_words()
+    print("\n") 
     word_len = input_word_len()
     print("\n")
-    
     green_letters = input_green_letters()
     print("\n")
-    
     yellow_letters = input_yellow_letters()
-    print("\n")
-    
 
+    print("\nSEARCHING...")
     possible_words = []
     for word in words:
         good = len(word) == word_len
@@ -97,6 +100,12 @@ def main():
                 good = False
         if good:
             possible_words.append(word)
-            print(word)
+    print("FINISHED SEARCHING...\n")
+
+    bold_text("Possible Words:")
+    for i in range(len(possible_words)):
+        print("%i) %s" % (i + 1, possible_words[i]))
+
+    print("\nPROGRAM EXITING...\n")
 
 main()
