@@ -2,3 +2,4 @@
 
 Prepare for full release
 - Firewall server away from wifi
+- reset DB/scores
