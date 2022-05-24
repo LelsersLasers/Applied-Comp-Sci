@@ -87,14 +87,14 @@ def run(word_len, words, double_letters):
     possible_words = []
     for word in words:
         good = len(word) == word_len and not (not double_letters and has_double_letters(word))
-        # letter_lst = list(word)
+        for dl in dark_letters: good = good and dl not in word
+        letter_lst = list(word)
         for gl in green_letters:
-            try: good = only_neg(good, word[gl[1]] == gl[0])
+            try:
+                if word[gl[1]] == gl[0]: letter_lst.remove(gl[0])
+                else: good = False
             except: continue
-        for yl in yellow_letters:
-            good = only_neg(good, yl in word)
-        for dl in dark_letters:
-            good = only_neg(good, dl not in word)
+        for yl in yellow_letters: good = good and yl in letter_lst
         if good: possible_words.append(word)
     print("FINISHED SEARCHING...\n")
 
