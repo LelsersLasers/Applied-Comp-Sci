@@ -6,6 +6,9 @@
 Actual Game - (note: I am terrible at this game)
 ![Actual Game](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/game.PNG)
 
+Helper Tool
+![Helper Tool](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/helper_tool.jpg)
+
 Welcome Page
 ![Welcome Page](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/welcome.PNG)
 
@@ -89,3 +92,8 @@ View Personal Scores
     - NOTE: Don't put an actual password in its not secure
         - It uses http (not https)
         - But it will not harm your computer
+12) Helper tool
+    - In the 'wordle' folder that this file is in
+    - Must be in the same folder as 'allWords.py'
+    - You can enter info to help you narrow down the final word
+    - See pictures above
