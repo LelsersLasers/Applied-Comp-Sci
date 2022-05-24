@@ -47,8 +47,8 @@ def input_green_letters():
         except:
             print("Hint: you are doing something wrong (maybe read the directions?)")
 
-def input_yellow_letters():
-    print("Enter letters that you are are in the word (aka the 'yellow' letters).")
+def input_letters(prompt):
+    print(prompt)
     letters = []
     while True:
         try:
@@ -92,7 +92,10 @@ def main():
     print("\n")
     green_letters = input_green_letters()
     print("\n")
-    yellow_letters = input_yellow_letters()
+    yellow_letters = input_letters("Enter letters that you are are in the word (aka the 'yellow' letters).")
+    print("\n")
+    dark_letters = input_letters("Enter letters that are not in the word.")
+
 
     print("\nSEARCHING...")
     possible_words = []
@@ -104,6 +107,8 @@ def main():
             except: continue
         for yl in yellow_letters:
             good = only_neg(good, yl in word)
+        for dl in dark_letters:
+            good = only_neg(good, dl not in word)
         if good: possible_words.append(word)
     print("FINISHED SEARCHING...\n")
 
