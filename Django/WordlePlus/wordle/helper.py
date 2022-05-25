@@ -144,7 +144,7 @@ def run(word_len, words, double_letters):
         letter_str = ""
         for letter in no_dups:
             letter_str += "%s, " % letter
-        letter_str = letter_str[:-2] + "\n"
+        letter_str = letter_str[:-2]
         print(letter_str)
     else:
         print("No words found. Did you mis-type or incorrectly enter information?")
