@@ -1,7 +1,8 @@
 # Todo for Wordle<sup>+</sup>
 
 helper.py
-- Rank best words also by green chance
+- Improve word ranking system?
+    - Tweak "weights"?
 - Crop/improve image
 
 Prepare for full release

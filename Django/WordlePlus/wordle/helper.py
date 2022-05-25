@@ -149,11 +149,16 @@ def run(word_len, words, double_letters, letter_counts):
 
 
 def calc_letter_counts(word_len, words, double_letters):
-    letter_counts = [0] * len(alphabet)
+    letter_counts = []
+    for i in range(len(alphabet)):
+        temp = [0] * word_len
+        letter_counts.append([0, temp])
+
     for word in words:
         if is_good_word(word, word_len, double_letters, [], [], [])[0]:
-            for letter in word:
-                letter_counts[alphabet.index(letter)] += 1
+            for i in range(len(word)):
+                letter_counts[alphabet.index(word[i])][0] += 1
+                letter_counts[alphabet.index(word[i])][1][i] += 1
     return letter_counts
 
 
@@ -163,8 +168,11 @@ def calc_possible_words(words, word_len, double_letters, gls, yls, dls, letter_c
         good_word = is_good_word(word, word_len, double_letters, gls, yls, dls)
         if good_word[0]:
             score = 0
-            for letter in word:
-                score += letter_counts[alphabet.index(letter)]
+            for i in range(len(word)):
+                score += letter_counts[alphabet.index(word[i])][0] * 2
+                score += letter_counts[alphabet.index(word[i])][1][i]
+            if has_double_letters(word):
+                score *= 3/4
             word_scores.append([word, good_word[1], score])
     for i in range(len(word_scores)):
         for j in range(len(word_scores) - i - 1):
@@ -173,7 +181,7 @@ def calc_possible_words(words, word_len, double_letters, gls, yls, dls, letter_c
     return word_scores
 
 
-def calc_best_starting_word(word_len, words, double_letters, letter_counts):
+def calc_best_starting_word(word_len, words, letter_counts):
     print("\nSTARTING CALCULATIONS...")
     word_scores = calc_possible_words(words, word_len, False, [], [], [], letter_counts)
     print("CALCULATIONS DONE...\n")
@@ -198,9 +206,7 @@ def main():
         "Would you like to know the best starting word [Y/n]? "
     )
     if want_best_word:
-        best_starting_word = calc_best_starting_word(
-            word_len, words, double_letters, letter_counts
-        )
+        best_starting_word = calc_best_starting_word(word_len, words, letter_counts)
         bold_text("Best starting word: %s" % best_starting_word[0].upper())
 
     running = True
