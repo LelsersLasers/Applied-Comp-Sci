@@ -11,7 +11,6 @@ from django.utils import timezone
 
 
 def display_welcome(request):
-    create_dictionary(True)
     display_name = ""
     if request.user.is_authenticated:
         try:
@@ -351,6 +350,7 @@ def display_personal_scores(request):
     context = {"scores": cups}
     return render(request, "wordle/personal_scores.html", context)
 
+
 # returns a random word with specified options, and the list of words as strs
 def get_word(wordLen, double_letters, common):
     if not double_letters:
@@ -365,6 +365,7 @@ def get_word(wordLen, double_letters, common):
     return random.choice(words), str_list
 
 
+"""
 from .allWords import get_all_words, get_common_words
 def create_dictionary(resetDB):
     if resetDB:
@@ -395,3 +396,4 @@ def create_dictionary(resetDB):
                 "%i = %i/%i)  %s" % ((i / len(all_words) * 100), i, len(all_words), w)
             )
             i = i + 1
+"""
