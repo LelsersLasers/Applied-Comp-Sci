@@ -366,9 +366,8 @@ def get_word(wordLen, double_letters, common):
 
 """
 from .allWords import get_all_words, get_common_words
-def create_dictionary(resetDB):
-    if resetDB:
-        Word.objects.all().delete()
+def create_dictionary():
+    Word.objects.all().delete()
     common_words = get_common_words()
     all_words = get_all_words()
     i = 0
