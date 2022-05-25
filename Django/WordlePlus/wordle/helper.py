@@ -1,7 +1,10 @@
 import allWords
 
 
-alphabet = list("abcdefghijklmnopqrstuvwxyz")
+ALPHABET = list("abcdefghijklmnopqrstuvwxyz")
+YELLOW_WEIGHT = 2
+GREEN_WEIGHT = 1
+DOUBLE_LETTER_WEIGHT = 3 / 4
 
 
 def get_words():
@@ -27,7 +30,7 @@ def input_word_len():
         try:
             user_input = input("Length: ")
             num = int(user_input)
-            assert num > 0 and num <= len(alphabet)
+            assert num > 0 and num <= len(ALPHABET)
             return num
         except:
             print("Hint: enter a positive number!")
@@ -45,7 +48,7 @@ def input_green_letters(word_len):
             if len(user_input) == 0:
                 return letters
             letter = user_input.lower()[0]
-            assert letter in alphabet
+            assert letter in ALPHABET
             user_input = input("Position: ")
             idx = int(user_input)
             assert idx > 0 and idx <= word_len
@@ -62,7 +65,7 @@ def input_letters(prompt):
         user_input = input("Letters (ex: 'dia' without the ''s): ")
         letters_input = user_input.lower()
         for letter in letters_input:
-            assert letter in alphabet
+            assert letter in ALPHABET
             letters.append(letter)
         return letters
     except:
@@ -150,15 +153,15 @@ def run(word_len, words, double_letters, letter_counts):
 
 def calc_letter_counts(word_len, words, double_letters):
     letter_counts = []
-    for i in range(len(alphabet)):
+    for i in range(len(ALPHABET)):
         temp = [0] * word_len
         letter_counts.append([0, temp])
 
     for word in words:
         if is_good_word(word, word_len, double_letters, [], [], [])[0]:
             for i in range(len(word)):
-                letter_counts[alphabet.index(word[i])][0] += 1
-                letter_counts[alphabet.index(word[i])][1][i] += 1
+                letter_counts[ALPHABET.index(word[i])][0] += 1
+                letter_counts[ALPHABET.index(word[i])][1][i] += 1
     return letter_counts
 
 
@@ -169,10 +172,10 @@ def calc_possible_words(words, word_len, double_letters, gls, yls, dls, letter_c
         if good_word[0]:
             score = 0
             for i in range(len(word)):
-                score += letter_counts[alphabet.index(word[i])][0] * 2
-                score += letter_counts[alphabet.index(word[i])][1][i]
+                score += letter_counts[ALPHABET.index(word[i])][0] * YELLOW_WEIGHT
+                score += letter_counts[ALPHABET.index(word[i])][1][i] * GREEN_WEIGHT
             if has_double_letters(word):
-                score *= 3/4
+                score *= DOUBLE_LETTER_WEIGHT
             word_scores.append([word, good_word[1], score])
     for i in range(len(word_scores)):
         for j in range(len(word_scores) - i - 1):
