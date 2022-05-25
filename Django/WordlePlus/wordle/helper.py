@@ -7,8 +7,8 @@ alphabet = list("abcdefghijklmnopqrstuvwxyz")
 def get_words():
     only_common = input_yes_or_no("Only common words [Y/n]? ")
     if only_common:
-        return allWords.get_all_words()
-    return allWords.get_common_words()
+        return allWords.get_common_words()
+    return allWords.get_all_words()
 
 
 def input_yes_or_no(prompt):
