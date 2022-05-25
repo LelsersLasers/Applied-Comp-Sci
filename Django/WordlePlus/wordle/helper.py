@@ -84,45 +84,62 @@ def bold_text(txt):
     print("# " + txt + " #")
     print("#" * (len(txt) + 4))
 
+def is_good_word(word, word_len, double_letters, gls, yls, dls):
+    if len(word) != word_len or (not double_letters and has_double_letters(word)):
+        if len(word) == word_len:
+            print("1 - %s" % word)
+        if not(not double_letters and has_double_letters(word)):
+            print("2 - %s" % word)
+        return False
+    for dl in dls:
+        if dl in word:
+            return False
+    letter_lst = list(word)
+    for gl in gls:
+        try:
+            if word[gl[1]] == gl[0]:
+                letter_lst.remove(gl[0])
+            else:
+                return False
+        except:
+            continue
+    for yl in yls:
+        if yl in letter_lst:
+            letter_lst.remove(yl)
+        else:
+            return False
+
 
 def run(word_len, words, double_letters):
     print("\nENTER INFORMATION...\n")
 
-    green_letters = input_green_letters()
+    gls = input_green_letters()
     print("\n")
-    yellow_letters = input_letters(
+    yls = input_letters(
         "Enter letters that you are are in the word (aka the 'yellow' letters)."
     )
     print("\n")
-    dark_letters = input_letters("Enter letters that are not in the word.")
+    dls = input_letters("Enter letters that are not in the word.")
 
     print("\nSEARCHING...")
     possible_words = []
     for word in words:
-        good = len(word) == word_len and not (
-            not double_letters and has_double_letters(word)
-        )
-        for dl in dark_letters:
-            good = good and dl not in word
-        letter_lst = list(word)
-        for gl in green_letters:
-            try:
-                if word[gl[1]] == gl[0]:
-                    letter_lst.remove(gl[0])
-                else:
-                    good = False
-            except:
-                continue
-        for yl in yellow_letters:
-            good = good and yl in letter_lst
-        if good:
-            possible_words.append(word)
+        if is_good_word(word, word_len, double_letters, gls, yls, dls):
+            possible_words.append([word, letter_lst])
     print("FINISHED SEARCHING...\n")
 
     bold_text("Possible Words:")
     if len(possible_words) > 0:
+        extra_letters = []
         for i in range(len(possible_words)):
-            print("%i) %s" % (i + 1, possible_words[i]))
+            print("%i) %s" % (i + 1, possible_words[i][0]))
+            extra_letters += possible_words[i][1]
+        
+        no_dups = []
+        for letter in extra_letters:
+            if letter not in no_dups:
+                no_dups.append(letter)
+        bold_text(no_dups)
     else:
         print("No words found. Did you mis-type or incorrectly enter information?")
 
