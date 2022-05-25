@@ -21,6 +21,9 @@ To play: visit <strong><http://64.98.192.41:8000/wordle/></strong> and enjoy!
 
 ![Actual Game](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/game.PNG)
 
+Helper Tool
+![Helper Tool](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/helper_tool.jpg)
+
 Welcome Page
 ![Welcome Page](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/welcome.PNG)
 
