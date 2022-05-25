@@ -27,7 +27,7 @@ def input_word_len():
         try:
             user_input = input("Length: ")
             num = int(user_input)
-            assert num > 0
+            assert num > 0 and num <= len(alphabet)
             return num
         except:
             print("Hint: enter a positive number!")
@@ -105,16 +105,6 @@ def is_good_word(word, word_len, double_letters, gls, yls, dls):
     return True, letter_lst
 
 
-def calc_possible_words(words, word_len, double_letters, gls, yls, dls):
-    possible_words = []
-    for word in words:
-        word = word.lower()
-        good_word = is_good_word(word, word_len, double_letters, gls, yls, dls)
-        if good_word[0]:
-            possible_words.append([word, good_word[1]])
-    return possible_words
-
-
 def run(word_len, words, double_letters):
     print("\nENTER INFORMATION...\n")
 
@@ -155,6 +145,44 @@ def run(word_len, words, double_letters):
         print("No words found. Did you mis-type or incorrectly enter information?")
 
 
+def calc_possible_words(words, word_len, double_letters, gls, yls, dls):
+    possible_words = []
+    for word in words:
+        good_word = is_good_word(word, word_len, double_letters, gls, yls, dls)
+        if good_word[0]:
+            possible_words.append([word, good_word[1]])
+    return possible_words
+
+
+def best_starting_word(word_len, words, double_letters):
+    print("\nSTARTING CALCULATIONS...")
+
+    letter_counts = [0] * len(alphabet)
+    for word in words:
+        if is_good_word(word, word_len, double_letters, [], [], [])[0]:
+            for letter in word:
+                letter_counts[alphabet.index(letter)] += 1
+    print("FINISHED COUNTING LETTERS...")
+
+    word_scores = []
+    for word in words:
+        if is_good_word(word, word_len, False, [], [], [])[0]:
+            score = 0
+            for letter in word:
+                score += letter_counts[alphabet.index(letter)]
+            word_scores.append([word, score])
+            print("%s) %i" % (word, score))
+    print("FINISHED SCORING WORDS...")
+
+    print("STARTING SORTING...")
+    for i in range(len(word_scores)):
+        for j in range(len(word_scores) - i - 1):
+            if word_scores[j][1] > word_scores[j + 1][1]:
+                word_scores[j], word_scores[j + 1] = word_scores[j + 1], word_scores[j]
+    print("CALCULATIONS DONE...\n")
+    print(word_scores)
+
+
 def main():
     print("\nPROGRAM STARTING...\n")
     bold_text("Welcome to the wordle helper!")
@@ -165,6 +193,8 @@ def main():
     words = get_words()
     print("\n")
     double_letters = input_yes_or_no("Could there be double letters [Y/n]? ")
+
+    # best_starting_word(word_len, words, double_letters)
 
     running = True
     while running:
