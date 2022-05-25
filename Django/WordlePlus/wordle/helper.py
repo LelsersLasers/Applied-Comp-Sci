@@ -105,6 +105,16 @@ def is_good_word(word, word_len, double_letters, gls, yls, dls):
     return True, letter_lst
 
 
+def calc_possible_words(words, word_len, double_letters, gls, yls, dls):
+    possible_words = []
+    for word in words:
+        word = word.lower()
+        good_word = is_good_word(word, word_len, double_letters, gls, yls, dls)
+        if good_word[0]:
+            possible_words.append([word, good_word[1]])
+    return possible_words
+
+
 def run(word_len, words, double_letters):
     print("\nENTER INFORMATION...\n")
 
@@ -117,12 +127,7 @@ def run(word_len, words, double_letters):
     dls = input_letters("Enter letters that are not in the word.")
 
     print("\nSEARCHING...")
-    possible_words = []
-    for word in words:
-        word = word.lower()
-        good_word = is_good_word(word, word_len, double_letters, gls, yls, dls)
-        if good_word[0]:
-            possible_words.append([word, good_word[1]])
+    possible_words = calc_possible_words(words, word_len, double_letters, gls, yls, dls)
     print("FINISHED SEARCHING...\n")
 
     if len(possible_words) == 1:
