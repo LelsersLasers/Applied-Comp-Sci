@@ -33,7 +33,7 @@ def input_word_len():
             print("Hint: enter a positive number!")
 
 
-def input_green_letters():
+def input_green_letters(word_len):
     print("Enter letters that you know the position of (aka the 'green' letters).")
     print(
         "First enter the letter, hit [enter] then enter the position of the letter where 1 is the first letter."
@@ -48,7 +48,7 @@ def input_green_letters():
             assert letter in alphabet
             user_input = input("Position: ")
             idx = int(user_input)
-            assert idx > 0
+            assert idx > 0 and idx <= word_len
             letters.append([letter, idx - 1])
             print("")
         except:
@@ -84,36 +84,31 @@ def bold_text(txt):
     print("# " + txt + " #")
     print("#" * (len(txt) + 4))
 
+
 def is_good_word(word, word_len, double_letters, gls, yls, dls):
+    letter_lst = list(word)
     if len(word) != word_len or (not double_letters and has_double_letters(word)):
-        if len(word) == word_len:
-            print("1 - %s" % word)
-        if not(not double_letters and has_double_letters(word)):
-            print("2 - %s" % word)
-        return False
+        return False, letter_lst
     for dl in dls:
         if dl in word:
-            return False
-    letter_lst = list(word)
+            return False, letter_lst
     for gl in gls:
-        try:
-            if word[gl[1]] == gl[0]:
-                letter_lst.remove(gl[0])
-            else:
-                return False
-        except:
-            continue
+        if word[gl[1]] == gl[0]:
+            letter_lst.remove(gl[0])
+        else:
+            return False, letter_lst
     for yl in yls:
         if yl in letter_lst:
             letter_lst.remove(yl)
         else:
-            return False
+            return False, letter_lst
+    return True, letter_lst
 
 
 def run(word_len, words, double_letters):
     print("\nENTER INFORMATION...\n")
 
-    gls = input_green_letters()
+    gls = input_green_letters(word_len)
     print("\n")
     yls = input_letters(
         "Enter letters that you are are in the word (aka the 'yellow' letters)."
@@ -124,22 +119,33 @@ def run(word_len, words, double_letters):
     print("\nSEARCHING...")
     possible_words = []
     for word in words:
-        if is_good_word(word, word_len, double_letters, gls, yls, dls):
-            possible_words.append([word, letter_lst])
+        word = word.lower()
+        good_word = is_good_word(word, word_len, double_letters, gls, yls, dls)
+        if good_word[0]:
+            possible_words.append([word, good_word[1]])
     print("FINISHED SEARCHING...\n")
 
-    bold_text("Possible Words:")
-    if len(possible_words) > 0:
+    if len(possible_words) == 1:
+        bold_text("The word is:\n%s" % possible_words[0])
+    elif len(possible_words) > 0:
+        bold_text("Possible Words:")
         extra_letters = []
         for i in range(len(possible_words)):
             print("%i) %s" % (i + 1, possible_words[i][0]))
             extra_letters += possible_words[i][1]
-        
+
         no_dups = []
         for letter in extra_letters:
             if letter not in no_dups:
                 no_dups.append(letter)
-        bold_text(no_dups)
+        no_dups.sort()
+
+        print("\nLetters worth finding out more (the white/unused letters):")
+        letter_str = ""
+        for letter in no_dups:
+            letter_str += "%s, " % letter
+        letter_str = letter_str[:-2] + "\n"
+        print(letter_str)
     else:
         print("No words found. Did you mis-type or incorrectly enter information?")
 
