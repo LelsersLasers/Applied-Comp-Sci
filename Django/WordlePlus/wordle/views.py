@@ -353,10 +353,9 @@ def display_personal_scores(request):
 
 # returns a random word with specified options, and the list of words as strs
 def get_word(wordLen, double_letters, common):
+    words = Word.objects.filter(length=wordLen)
     if not double_letters:
-        words = Word.objects.filter(length=wordLen, double_letters=False)
-    else:
-        words = Word.objects.filter(length=wordLen)
+        words = Word.objects.filter(double_letters=False)
     if common:
         words = words.filter(common=True)
     str_list = []
