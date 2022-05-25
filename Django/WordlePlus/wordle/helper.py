@@ -89,9 +89,6 @@ def is_good_word(word, word_len, double_letters, gls, yls, dls):
     letter_lst = list(word)
     if len(word) != word_len or (not double_letters and has_double_letters(word)):
         return False, letter_lst
-    for dl in dls:
-        if dl in word:
-            return False, letter_lst
     for gl in gls:
         if word[gl[1]] == gl[0]:
             letter_lst.remove(gl[0])
@@ -101,6 +98,9 @@ def is_good_word(word, word_len, double_letters, gls, yls, dls):
         if yl in letter_lst:
             letter_lst.remove(yl)
         else:
+            return False, letter_lst
+    for dl in dls:
+        if dl in letter_lst:
             return False, letter_lst
     return True, letter_lst
 
@@ -131,7 +131,7 @@ def run(word_len, words, double_letters):
     print("FINISHED SEARCHING...\n")
 
     if len(possible_words) == 1:
-        bold_text("The word is:\n%s" % possible_words[0])
+        bold_text("The word is: %s" % possible_words[0][0])
     elif len(possible_words) > 0:
         bold_text("Possible Words:")
         extra_letters = []
