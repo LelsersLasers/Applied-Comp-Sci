@@ -154,7 +154,7 @@ def calc_possible_words(words, word_len, double_letters, gls, yls, dls):
     return possible_words
 
 
-def best_starting_word(word_len, words, double_letters):
+def calc_best_starting_word(word_len, words, double_letters):
     print("\nSTARTING CALCULATIONS...")
 
     letter_counts = [0] * len(alphabet)
@@ -171,16 +171,15 @@ def best_starting_word(word_len, words, double_letters):
             for letter in word:
                 score += letter_counts[alphabet.index(letter)]
             word_scores.append([word, score])
-            print("%s) %i" % (word, score))
     print("FINISHED SCORING WORDS...")
 
     print("STARTING SORTING...")
     for i in range(len(word_scores)):
         for j in range(len(word_scores) - i - 1):
-            if word_scores[j][1] > word_scores[j + 1][1]:
+            if word_scores[j][1] < word_scores[j + 1][1]:
                 word_scores[j], word_scores[j + 1] = word_scores[j + 1], word_scores[j]
     print("CALCULATIONS DONE...\n")
-    print(word_scores)
+    return word_scores[0]
 
 
 def main():
@@ -194,7 +193,10 @@ def main():
     print("\n")
     double_letters = input_yes_or_no("Could there be double letters [Y/n]? ")
 
-    # best_starting_word(word_len, words, double_letters)
+    print("\n")
+    want_best_word = input_yes_or_no("Would you like to know the best starting word [Y/n]? ")
+    best_starting_word = calc_best_starting_word(word_len, words, double_letters)
+    bold_text("Best starting word: %s" % best_starting_word)
 
     running = True
     while running:
