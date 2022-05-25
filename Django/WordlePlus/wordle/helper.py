@@ -58,16 +58,15 @@ def input_green_letters():
 def input_letters(prompt):
     print(prompt)
     letters = []
-    while True:
-        try:
-            user_input = input("Letter (leave blank to continue): ")
-            if len(user_input) == 0:
-                return letters
-            letter = user_input.lower()[0]
+    try:
+        user_input = input("Letters (ex: 'dia' without the ''s): ")
+        letters_input = user_input.lower()
+        for letter in letters_input:
             assert letter in alphabet
             letters.append(letter)
-        except:
-            print("Hint: you are doing something wrong (enter only letters)")
+        return letters
+    except:
+        print("Hint: you are doing something wrong (enter only letters)")
 
 
 def has_double_letters(word):
