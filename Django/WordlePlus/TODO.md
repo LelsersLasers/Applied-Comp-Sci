@@ -1,6 +1,8 @@
 # Todo for Wordle<sup>+</sup>
 
 helper.py
+- Improve the "add info" part?
+	- Possible remove
 - Improve word ranking system?
     - Tweak "weights"?
 - Crop/improve image
