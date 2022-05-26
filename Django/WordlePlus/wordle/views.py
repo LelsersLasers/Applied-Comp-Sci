@@ -355,7 +355,7 @@ def display_personal_scores(request):
 def get_word(wordLen, double_letters, common):
     words = Word.objects.filter(length=wordLen)
     if not double_letters:
-        words = Word.objects.filter(double_letters=False)
+        words = words.filter(double_letters=False)
     if common:
         words = words.filter(common=True)
     str_list = []

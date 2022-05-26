@@ -2,9 +2,12 @@
 
 helper.py
 - Improve the "add info" part?
-	- Possible remove
+- Improve the yellow letters:
+    - Enter where they are not
 - Improve word ranking system?
     - Tweak "weights"?
+    - Tweak double letter system
+        - Weight = #ofWordsWithDL/#words
 - Crop/improve image
 - SOARE
     - rebuild dictionary
@@ -12,4 +15,6 @@ helper.py
 
 Prepare for full release
 - Firewall server away from wifi
+- Update code:
+    - Filtering is incorrect - fixed on Main, not on server
 - reset DB/scores
