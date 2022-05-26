@@ -6,10 +6,10 @@ helper.py
 - Crop/improve image
 - SOARE
     - rebuild dictionary
-    - why does soare not get recongized/scored?
 
 Prepare for full release
 - Firewall server away from wifi
 - Update code:
     - Filtering is incorrect - fixed on Main, not on server
-- reset DB/scores
+- rebuild dictionary?
+    - set DB/scores

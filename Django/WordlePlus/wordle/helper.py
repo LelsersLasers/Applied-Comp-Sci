@@ -1,4 +1,3 @@
-from numpy import save
 import allWords
 
 
@@ -75,12 +74,14 @@ def input_green_letters(word_len, gls):
 
 def input_yellow_letters(word_len):
     print("Enter letters that you are are in the word (aka the 'yellow' letters).")
-    print("First enter the letter, hit [enter] then enter the positions where the letter is not of the letter where 1 is the first letter.")
-    print("""
-Example:
-Letter (leave blank to continue): r
-Position(s) where it is not: 1 3
-""")
+    print(
+        "First enter the letter, hit [enter] then enter the positions where the letter is not of the letter where 1 is the first letter."
+    )
+    print(
+""" Example:
+    Letter (leave blank to continue): r
+    Position(s) where it is not: 1 3\n"""
+    )
     yls = []
     while True:
         try:
@@ -241,6 +242,7 @@ def calc_best_starting_word(word_len, words, letter_counts):
     word_scores = calc_possible_words(words, word_len, False, [], [], [], letter_counts)
     print("CALCULATIONS DONE...\n")
     return word_scores[0]
+
 
 def calc_double_letter_weight(words):
     double_letter_words = 0
