@@ -6,8 +6,6 @@ helper.py
     - Enter where they are not
 - Improve word ranking system?
     - Tweak "weights"?
-    - Tweak double letter system
-        - Weight = #ofWordsWithDL/#words
 - Crop/improve image
 - SOARE
     - rebuild dictionary

@@ -4,7 +4,7 @@ import allWords
 ALPHABET = list("abcdefghijklmnopqrstuvwxyz")
 YELLOW_WEIGHT = 3
 GREEN_WEIGHT = 1
-DOUBLE_LETTER_WEIGHT = 3 / 4
+DOUBLE_LETTER_WEIGHT = -1
 
 
 def get_words():
@@ -217,6 +217,12 @@ def calc_best_starting_word(word_len, words, letter_counts):
     
     return word_scores[0]
 
+def calc_double_letter_weight(words):
+    double_letter_words = 0
+    for word in words:
+        double_letter_words += has_double_letters(word)
+    return double_letter_words / len(words)
+
 
 def main():
     print("\nPROGRAM STARTING...\n")
@@ -228,6 +234,9 @@ def main():
     words = get_words()
     print("\n")
     double_letters = input_yes_or_no("Could there be double letters [Y/n]? ")
+
+    if double_letters:
+        DOUBLE_LETTER_WEIGHT = calc_double_letter_weight(words)
 
     letter_counts = calc_letter_counts(word_len, words, double_letters)
 
