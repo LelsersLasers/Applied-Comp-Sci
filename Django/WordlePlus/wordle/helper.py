@@ -1,8 +1,9 @@
+from numpy import save
 import allWords
 
 
 ALPHABET = list("abcdefghijklmnopqrstuvwxyz")
-YELLOW_WEIGHT = 3
+YELLOW_WEIGHT = 4
 GREEN_WEIGHT = 1
 DOUBLE_LETTER_WEIGHT = -1
 
@@ -24,20 +25,6 @@ def input_yes_or_no(prompt):
     return True
 
 
-def input_continue():
-    try:
-        user_input = input(
-            "Would you like to [A]dd on to previous info, [r]estart, or [e]xit? "
-        )
-        if user_input[0].lower() == "r":
-            return "restart"
-        elif user_input[0].lower() == "e":
-            return "exit"
-    except:
-        pass
-    return "add"
-
-
 def input_word_len():
     print("How many letters are in the word?")
     while True:
@@ -50,31 +37,52 @@ def input_word_len():
             print("Hint: enter a positive number!")
 
 
-def input_green_letters(word_len):
+def input_green_letters(word_len, gls):
     print("Enter letters that you know the position of (aka the 'green' letters).")
+    if len(gls) > 0:
+        saved_letters = ""
+        for i in range(word_len):
+            letter_to_add = "?"
+            for j in range(len(gls)):
+                if i == gls[j][1]:
+                    letter_to_add = gls[j][0].upper()
+                    break
+            saved_letters += letter_to_add
+        print("Current saved green letters: '%s'" % saved_letters)
+        keep_gls = input_yes_or_no(
+            "Would you like to add on to/keep last enter green letters [Y/n]? "
+        )
+        if not keep_gls:
+            gls = []
     print(
         "First enter the letter, hit [enter] then enter the position of the letter where 1 is the first letter."
     )
-    letters = []
     while True:
         try:
             user_input = input("Letter (leave blank to continue): ")
             if len(user_input) == 0:
-                return letters
+                return gls
             letter = user_input.lower()[0]
             assert letter in ALPHABET
             user_input = input("Position: ")
             idx = int(user_input)
             assert idx > 0 and idx <= word_len
-            letters.append([letter, idx - 1])
+            gls.append([letter, idx - 1])
             print("")
         except:
             print("Hint: you are doing something wrong (maybe read the directions?)")
 
 
-def input_letters(prompt):
+def input_letters(prompt, letters):
     print(prompt)
-    letters = []
+    if len(letters) > 0:
+        saved_letters = ", ".join(letters)
+        print("Current saved letters that not in the word: '%s'" % saved_letters)
+        keep_letters = input_yes_or_no(
+            "Would you like to add on to/keep last entered letters that are not in the word [Y/n]? "
+        )
+        if not keep_letters:
+            letters = []
     try:
         user_input = input("Letters (ex: 'dia' without the ''s): ")
         letters_input = user_input.lower()
@@ -134,13 +142,13 @@ def remove_dups(lst):
 def run(word_len, words, double_letters, letter_counts, gls, yls, dls):
     print("\nENTER INFORMATION...\n")
 
-    gls += input_green_letters(word_len)
+    gls = input_green_letters(word_len, gls)
     print("\n")
-    yls += input_letters(
-        "Enter letters that you are are in the word (aka the 'yellow' letters)."
+    yls = input_letters(
+        "Enter letters that you are are in the word (aka the 'yellow' letters).", []
     )
     print("\n")
-    dls += input_letters("Enter letters that are not in the word.")
+    dls = input_letters("Enter letters that are not in the word.", dls)
 
     print("\nSEARCHING...")
     possible_words = calc_possible_words(
@@ -150,7 +158,6 @@ def run(word_len, words, double_letters, letter_counts, gls, yls, dls):
 
     if len(possible_words) == 1:
         bold_text("The word is: %s" % possible_words[0][0])
-        return False
     elif len(possible_words) > 0:
         bold_text("Possible Words:")
 
@@ -161,14 +168,10 @@ def run(word_len, words, double_letters, letter_counts, gls, yls, dls):
 
         extra_letters = remove_dups(extra_letters)
         print("\nLetters worth finding out more (the white/unused letters):")
-        letter_str = ""
-        for letter in extra_letters:
-            letter_str += "%s, " % letter
-        letter_str = letter_str[:-2]
+        letter_str = ", ".join(extra_letters)
         print(letter_str)
     else:
         print("No words found. Did you mis-type or incorrectly enter information?")
-    return True
 
 
 def calc_letter_counts(word_len, words, double_letters):
@@ -214,7 +217,6 @@ def calc_best_starting_word(word_len, words, letter_counts):
     for i in range(len(word_scores)):
         if word_scores[i][0] in ["crane", "taser", "soare", "arose", "adieu", "audio"]:
             print("%i) %s" % (i, word_scores[i][0]))
-    
     return word_scores[0]
 
 def calc_double_letter_weight(words):
@@ -254,16 +256,9 @@ def main():
 
     running = True
     while running:
-        running = run(word_len, words, double_letters, letter_counts, gls, yls, dls)
+        run(word_len, words, double_letters, letter_counts, gls, yls, dls)
         print("\n")
-
-        if running:
-            loop_status = input_continue()
-            running = loop_status != "exit"
-            if loop_status == "restart":
-                gls = []
-                yls = []
-                dls = []
+        running = input_yes_or_no("Run again [Y/n]? ")
 
     print("\nPROGRAM EXITING...\n")
 
