@@ -1,9 +1,6 @@
 # Todo for Wordle<sup>+</sup>
 
 helper.py
-- Improve the "add info" part?
-- Improve the yellow letters:
-    - Enter where they are not
 - Improve word ranking system?
     - Tweak "weights"?
 - Crop/improve image

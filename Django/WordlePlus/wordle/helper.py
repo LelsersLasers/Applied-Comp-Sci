@@ -73,23 +73,52 @@ def input_green_letters(word_len, gls):
             print("Hint: you are doing something wrong (maybe read the directions?)")
 
 
-def input_letters(prompt, letters):
+def input_yellow_letters(word_len):
+    print("Enter letters that you are are in the word (aka the 'yellow' letters).")
+    print("First enter the letter, hit [enter] then enter the positions where the letter is not of the letter where 1 is the first letter.")
+    print("""
+Example:
+Letter (leave blank to continue): r
+Position(s) where it is not: 1 3
+""")
+    yls = []
+    while True:
+        try:
+            user_input = input("Letter (leave blank to continue): ")
+            if len(user_input) == 0:
+                return yls
+            letter = user_input.lower()[0]
+            assert letter in ALPHABET
+            user_input = input("Position(s) where it is not: ")
+            positions = user_input.split(" ")
+            idxs = []
+            for pos in positions:
+                idx = int(pos)
+                assert idx > 0 and idx <= word_len
+                idxs.append(idx - 1)
+            yls.append([letter, idxs])
+            print("")
+        except:
+            print("Hint: you are doing something wrong (maybe read the directions?)")
+
+
+def input_dark_letters(prompt, dls):
     print(prompt)
-    if len(letters) > 0:
-        saved_letters = ", ".join(letters)
-        print("Current saved letters that not in the word: '%s'" % saved_letters)
+    if len(dls) > 0:
+        saved_dls = ", ".join(dls)
+        print("Current saved letters that not in the word: '%s'" % saved_dls)
         keep_letters = input_yes_or_no(
             "Would you like to add on to/keep last entered letters that are not in the word [Y/n]? "
         )
         if not keep_letters:
-            letters = []
+            dls = []
     try:
         user_input = input("Letters (ex: 'dia' without the ''s): ")
         letters_input = user_input.lower()
         for letter in letters_input:
             assert letter in ALPHABET
-            letters.append(letter)
-        return letters
+            dls.append(letter)
+        return dls
     except:
         print("Hint: you are doing something wrong (enter only letters)")
 
@@ -120,10 +149,12 @@ def is_good_word(word, word_len, double_letters, gls, yls, dls):
         else:
             return False, letter_lst
     for yl in yls:
-        if yl in letter_lst:
-            letter_lst.remove(yl)
-        else:
+        if yl[0] not in letter_lst:
             return False, letter_lst
+        for idx in yl[1]:
+            if word[idx] == yl[0]:
+                return False, letter_lst
+        letter_lst.remove(yl[0])
     for dl in dls:
         if dl in letter_lst:
             return False, letter_lst
@@ -144,11 +175,9 @@ def run(word_len, words, double_letters, letter_counts, gls, yls, dls):
 
     gls = input_green_letters(word_len, gls)
     print("\n")
-    yls = input_letters(
-        "Enter letters that you are are in the word (aka the 'yellow' letters).", []
-    )
+    yls = input_yellow_letters(word_len)
     print("\n")
-    dls = input_letters("Enter letters that are not in the word.", dls)
+    dls = input_dark_letters("Enter letters that are not in the word.", dls)
 
     print("\nSEARCHING...")
     possible_words = calc_possible_words(
@@ -211,12 +240,6 @@ def calc_best_starting_word(word_len, words, letter_counts):
     print("\nSTARTING CALCULATIONS...")
     word_scores = calc_possible_words(words, word_len, False, [], [], [], letter_counts)
     print("CALCULATIONS DONE...\n")
-
-    # TODO: remove these block/print statements
-    print(word_scores[::-1])
-    for i in range(len(word_scores)):
-        if word_scores[i][0] in ["crane", "taser", "soare", "arose", "adieu", "audio"]:
-            print("%i) %s" % (i, word_scores[i][0]))
     return word_scores[0]
 
 def calc_double_letter_weight(words):
