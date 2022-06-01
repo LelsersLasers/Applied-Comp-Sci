@@ -7,9 +7,48 @@ GREEN_WEIGHT = 1
 DOUBLE_LETTER_WEIGHT = -1
 
 
-def get_words():
+def remove_dups(lst):
+    no_dups = []
+    for e in lst:
+        if e not in no_dups:
+            no_dups.append(e)
+    no_dups.sort()
+    return no_dups
+
+
+def has_double_letters(word):
+    letters = []
+    for letter in word:
+        if letter in letters:
+            return True
+        else:
+            letters.append(letter)
+    return False
+
+
+def filter_words(words, word_len, double_letters):
+    filtered_words = []
+    for word in words:
+        if len(word) == word_len and not (
+            not double_letters and has_double_letters(word)
+        ):
+            filtered_words.append(word)
+    return filtered_words
+
+
+def bold_text(txt):
+    print("#" * (len(txt) + 4))
+    print("# " + txt + " #")
+    print("#" * (len(txt) + 4))
+
+
+def get_words(word_len):
     only_common = input_yes_or_no("Only common words [Y/n]? ")
     if only_common:
+        if word_len == 5:
+            not_only_wordle = input_yes_or_no("Use more than only offical Wordle answer words [Y/n]? ")
+            if not not_only_wordle:
+                return allWords.get_wordle_words()
         return allWords.get_common_words()
     return allWords.get_all_words()
 
@@ -78,7 +117,7 @@ def input_yellow_letters(word_len):
         "First enter the letter, hit [enter] then enter the positions where the letter is not of the letter where 1 is the first letter."
     )
     print(
-""" Example:
+        """ Example:
     Letter (leave blank to continue): r
     Position(s) where it is not: 1 3\n"""
     )
@@ -124,26 +163,8 @@ def input_dark_letters(prompt, dls):
         print("Hint: you are doing something wrong (enter only letters)")
 
 
-def has_double_letters(word):
-    letters = []
-    for letter in word:
-        if letter in letters:
-            return True
-        else:
-            letters.append(letter)
-    return False
-
-
-def bold_text(txt):
-    print("#" * (len(txt) + 4))
-    print("# " + txt + " #")
-    print("#" * (len(txt) + 4))
-
-
-def is_good_word(word, word_len, double_letters, gls, yls, dls):
+def is_good_word(word, gls, yls, dls):
     letter_lst = list(word)
-    if len(word) != word_len or (not double_letters and has_double_letters(word)):
-        return False, letter_lst
     for gl in gls:
         if word[gl[1]] == gl[0]:
             letter_lst.remove(gl[0])
@@ -162,28 +183,17 @@ def is_good_word(word, word_len, double_letters, gls, yls, dls):
     return True, letter_lst
 
 
-def remove_dups(lst):
-    no_dups = []
-    for e in lst:
-        if e not in no_dups:
-            no_dups.append(e)
-    no_dups.sort()
-    return no_dups
-
-
-def run(word_len, words, double_letters, letter_counts, gls, yls, dls):
+def run(words, letter_counts, gls, yls, dls):
     print("\nENTER INFORMATION...\n")
 
-    gls = input_green_letters(word_len, gls)
+    gls = input_green_letters(len(words[0]), gls)
     print("\n")
-    yls = input_yellow_letters(word_len)
+    yls = input_yellow_letters(len(words[0]))
     print("\n")
     dls = input_dark_letters("Enter letters that are not in the word.", dls)
 
     print("\nSEARCHING...")
-    possible_words = calc_possible_words(
-        words, word_len, double_letters, gls, yls, dls, letter_counts
-    )
+    possible_words = calc_possible_words(words, gls, yls, dls, letter_counts)
     print("FINISHED SEARCHING...\n")
 
     if len(possible_words) == 1:
@@ -204,24 +214,23 @@ def run(word_len, words, double_letters, letter_counts, gls, yls, dls):
         print("No words found. Did you mis-type or incorrectly enter information?")
 
 
-def calc_letter_counts(word_len, words, double_letters):
+def calc_letter_counts(words):
     letter_counts = []
     for i in range(len(ALPHABET)):
-        temp = [0] * word_len
+        temp = [0] * len(words[0])
         letter_counts.append([0, temp])
 
     for word in words:
-        if is_good_word(word, word_len, double_letters, [], [], [])[0]:
-            for i in range(len(word)):
-                letter_counts[ALPHABET.index(word[i])][0] += 1
-                letter_counts[ALPHABET.index(word[i])][1][i] += 1
+        for i in range(len(word)):
+            letter_counts[ALPHABET.index(word[i])][0] += 1
+            letter_counts[ALPHABET.index(word[i])][1][i] += 1
     return letter_counts
 
 
-def calc_possible_words(words, word_len, double_letters, gls, yls, dls, letter_counts):
+def calc_possible_words(words, gls, yls, dls, letter_counts):
     word_scores = []
     for word in words:
-        good_word = is_good_word(word, word_len, double_letters, gls, yls, dls)
+        good_word = is_good_word(word, gls, yls, dls)
         if good_word[0]:
             score = 0
             for i in range(len(word)):
@@ -230,16 +239,14 @@ def calc_possible_words(words, word_len, double_letters, gls, yls, dls, letter_c
             if has_double_letters(word):
                 score *= DOUBLE_LETTER_WEIGHT
             word_scores.append([word, good_word[1], score])
-    for i in range(len(word_scores)):
-        for j in range(len(word_scores) - i - 1):
-            if word_scores[j][2] < word_scores[j + 1][2]:
-                word_scores[j], word_scores[j + 1] = word_scores[j + 1], word_scores[j]
+    word_scores.sort(key=lambda x: x[2], reverse=True)
     return word_scores
 
 
-def calc_best_starting_word(word_len, words, letter_counts):
+def calc_best_starting_word(words, letter_counts):
     print("\nSTARTING CALCULATIONS...")
-    word_scores = calc_possible_words(words, word_len, False, [], [], [], letter_counts)
+    words = filter_words(words, len(words[0]), False)
+    word_scores = calc_possible_words(words, [], [], [], letter_counts)
     print("CALCULATIONS DONE...\n")
     return word_scores[0]
 
@@ -258,21 +265,23 @@ def main():
     print("\n")
     word_len = input_word_len()
     print("\n")
-    words = get_words()
+    words = get_words(word_len)
     print("\n")
     double_letters = input_yes_or_no("Could there be double letters [Y/n]? ")
+
+    words = filter_words(words, word_len, double_letters)
 
     if double_letters:
         DOUBLE_LETTER_WEIGHT = calc_double_letter_weight(words)
 
-    letter_counts = calc_letter_counts(word_len, words, double_letters)
+    letter_counts = calc_letter_counts(words)
 
     print("\n")
     want_best_word = input_yes_or_no(
         "Would you like to know the best starting word [Y/n]? "
     )
     if want_best_word:
-        best_starting_word = calc_best_starting_word(word_len, words, letter_counts)
+        best_starting_word = calc_best_starting_word(words, letter_counts)
         bold_text("Best starting word: %s" % best_starting_word[0].upper())
 
     gls = []
@@ -281,7 +290,7 @@ def main():
 
     running = True
     while running:
-        run(word_len, words, double_letters, letter_counts, gls, yls, dls)
+        run(words, letter_counts, gls, yls, dls)
         print("\n")
         running = input_yes_or_no("Run again [Y/n]? ")
 
