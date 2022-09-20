@@ -434,8 +434,9 @@ function buttonHover() {
 function setDelta() {
     t1 = performance.now();
     var lastDelta = (t1 - t0) / (1000 / 60);
-    if (frame > 20 && lastDelta < 2 * average(deltas))
+    if (frame > 20)
         deltas.push(lastDelta); // protect against alt-tab
+    deltas = deltas.slice(-10);
     delta = average(deltas);
     t0 = performance.now();
     frame++;

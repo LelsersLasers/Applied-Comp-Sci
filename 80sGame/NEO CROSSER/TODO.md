@@ -59,7 +59,6 @@ Electron:
 - Delta time
     - Make sure it works
     - Make sure everything uses it
-    - TAKE AVERAGE OF LAST 5 FRAMES ONLY
 - Pause menu
     - consistent about what pauses
 - restores bugtest
@@ -99,7 +98,6 @@ Possible addition features:
     - on screen change size
 - efficeny: only check things that make sense
     - LoS doesn't need to check all buildings, etc
-    - Delta time on just last 5 frames
 - Settings Screen
     - toggle ufos
         - and if they can shoot
