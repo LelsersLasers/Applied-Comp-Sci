@@ -472,17 +472,14 @@ function drawDirections() {
 
 	var txts = [];
 	txts.push("Use 'wasd' to move. Don't get hit by cars.");
-	txts.push("(You can also touch the w/a/s/d buttons in the bottom right.)")
 	txts.push("Also you can't run through the buildings.");
 	txts.push("Cars also can't go through the buildings.");
 	txts.push("You also have 3 abilities:");
 	txts.push("Q which teleports a short distance,");
 	txts.push("E which increases your speed (press again to turn off), and");
 	txts.push("R which fires a laser in every direction.");
-	txts.push("(Abilites can be actived with their respective key,");
-	txts.push("or by tapping the icon in the bottom left.)")
 	txts.push("Goal: Go as far up as possible.")
-	txts.push("Touch button in top right (or press Esc) to show the pause menu.")
+	txts.push("Click button in top right (or press Esc) to show the pause menu.")
 	txts.push("From the pause menu you can toggle the music, save, or quit.")
 
 	context.fillStyle = "#ffffff";

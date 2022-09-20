@@ -1,11 +1,9 @@
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
 };
 var wDown = false;
 var sDown = false;
@@ -500,17 +498,14 @@ function drawDirections() {
     context.fillText("Touch to Go Back", canvas.width / 2, base + carHeight);
     var txts = [];
     txts.push("Use 'wasd' to move. Don't get hit by cars.");
-    txts.push("(You can also touch the w/a/s/d buttons in the bottom right.)");
     txts.push("Also you can't run through the buildings.");
     txts.push("Cars also can't go through the buildings.");
     txts.push("You also have 3 abilities:");
     txts.push("Q which teleports a short distance,");
     txts.push("E which increases your speed (press again to turn off), and");
     txts.push("R which fires a laser in every direction.");
-    txts.push("(Abilites can be actived with their respective key,");
-    txts.push("or by tapping the icon in the bottom left.)");
     txts.push("Goal: Go as far up as possible.");
-    txts.push("Touch button in top right (or press Esc) to show the pause menu.");
+    txts.push("Click button in top right (or press Esc) to show the pause menu.");
     txts.push("From the pause menu you can toggle the music, save, or quit.");
     context.fillStyle = "#ffffff";
     context.font = carHeight * 5 / 12 + "px  " + font;
@@ -583,7 +578,7 @@ function drawHUDDirections() {
 }
 function drawPauseMenu() {
     player.draw();
-    var obstacles = __spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray([], pickUps, true), landSlides, true), cars, true), ufos, true), buildings, true), lasers, true);
+    var obstacles = __spreadArrays(pickUps, landSlides, cars, ufos, buildings, lasers);
     for (var i in obstacles)
         obstacles[i].draw();
     drawHUD();
@@ -638,7 +633,7 @@ function drawGame() {
         player.draw();
         for (var i in buildings)
             buildings[i].draw();
-        var enemies = __spreadArray(__spreadArray([], cars, true), ufos, true);
+        var enemies = __spreadArrays(cars, ufos);
         for (var i in enemies) {
             enemies[i].update();
             enemies[i].draw();
@@ -893,7 +888,7 @@ var texBar = new Image();
 texBar.src = "arrow-14x11-1x2-1spacing.png";
 var texSrcBar = [
     [0, 0],
-    [0, 12], // yellow
+    [0, 12],
 ];
 var texBuilding = new Image();
 texBuilding.src = "building-26x40-3x1-1spacing.png";

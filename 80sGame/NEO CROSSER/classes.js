@@ -6,21 +6,17 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
 };
 var Vector = /** @class */ (function () {
     function Vector(x, y) {
@@ -244,7 +240,7 @@ var Laser = /** @class */ (function (_super) {
         if (this.pt.x < -this.ms || this.pt.x > canvas.width + this.ms || (this.pt.y > cars[0].pt.y && this.pt.y > canvas.height) || this.pt.y < -carHeight) {
             lasers.splice(lasers.indexOf(this), 1);
         }
-        var enemies = this.friendly ? __spreadArray(__spreadArray([], cars, true), ufos, true) : [player];
+        var enemies = this.friendly ? __spreadArrays(cars, ufos) : [player];
         for (var i in enemies) {
             if (this.checkCollide(enemies[i], !this.friendly)) {
                 enemies[i].active = false;
@@ -308,7 +304,7 @@ var Player = /** @class */ (function (_super) {
         return new HitBox(new Vector(this.pt.x + this.w / 5, this.pt.y), this.w * 3 / 5, this.h);
     };
     Player.prototype.moveVertical = function (ms) {
-        var obstacles = __spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray([], pickUps, true), landSlides, true), cars, true), buildings, true), lasers, true), bar, true), this.afterImages, true), ufos, true);
+        var obstacles = __spreadArrays(pickUps, landSlides, cars, buildings, lasers, bar, this.afterImages, ufos);
         for (var i in obstacles)
             obstacles[i].pt.y += ms * (eAbility.active ? this.sprintSpeed : 1);
         for (var i in pickUps)
@@ -931,7 +927,7 @@ var LandSlide = /** @class */ (function (_super) {
         else {
             this.updateAnimation();
             this.pt.x += this.ms;
-            var obstacles = __spreadArray(__spreadArray(__spreadArray([], pickUps, true), cars, true), [player], false);
+            var obstacles = __spreadArrays(pickUps, cars, [player]);
             for (var i in obstacles) {
                 if (this.checkCollide(obstacles[i])) {
                     obstacles[i].pt.x += this.ms / 3;
