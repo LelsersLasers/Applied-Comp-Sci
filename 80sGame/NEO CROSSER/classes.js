@@ -29,8 +29,10 @@ var Vector = /** @class */ (function () {
     };
     Vector.prototype.scale = function (len) {
         var currentLen = Math.sqrt(this.x * this.x + this.y * this.y);
-        this.x *= len / currentLen;
-        this.y *= len / currentLen;
+        if (currentLen != 0) {
+            this.x *= len / currentLen;
+            this.y *= len / currentLen;
+        }
     };
     Vector.prototype.scalar = function (s) {
         this.x *= s;
@@ -410,30 +412,35 @@ var Player = /** @class */ (function (_super) {
         if (alive && this.active) {
             if (wDown || sDown || aDown || dDown) {
                 this.frame += delta;
-                switch (this.lastDir) {
-                    case "w":
-                        this.moveVertical(this.msY / moveWait * delta);
-                        break;
-                    case "s":
-                        this.moveVertical(-this.msY / moveWait * delta);
-                        break;
-                    case "a":
-                        this.pt.x -= this.msX / moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
-                        break;
-                    case "d":
-                        this.pt.x += this.msX / moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
-                        break;
-                }
+                // switch (this.lastDir) {
+                // 	case "w":
+                // 		this.moveVertical(this.msY/moveWait * delta);
+                // 		break;
+                // 	case "s":
+                // 		this.moveVertical(-this.msY/moveWait * delta);
+                // 		break;
+                // 	case "a":
+                // 		this.pt.x -= this.msX/moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
+                // 		break;
+                // 	case "d":
+                // 		this.pt.x += this.msX/moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
+                // 		break;
+                // }
+                var moveVec = new Vector(0, 0);
+                if (wDown)
+                    moveVec.y += 1;
+                if (sDown)
+                    moveVec.y -= 1;
+                if (aDown)
+                    moveVec.x -= 1;
+                if (dDown)
+                    moveVec.x += 1;
+                moveVec.scale(1);
+                this.actuallyMove(moveVec);
                 for (var i in buildings) {
                     if (this.checkCollide(buildings[i], true)) { // if it is touching, undo the last movement
-                        if (this.lastDir == "a")
-                            this.pt.x += this.msX / moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
-                        else if (this.lastDir == "d")
-                            this.pt.x -= this.msX / moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
-                        else if (this.lastDir == "w")
-                            this.moveVertical(-this.msY / moveWait * delta);
-                        else if (this.lastDir == "s")
-                            this.moveVertical(this.msY / moveWait * delta);
+                        moveVec.scalar(-1);
+                        this.actuallyMove(moveVec);
                         break;
                     }
                 }
@@ -445,6 +452,10 @@ var Player = /** @class */ (function (_super) {
             this.pt.x = 0;
         else if (this.pt.x + this.w > canvas.width)
             this.pt.x = canvas.width - this.w;
+    };
+    Player.prototype.actuallyMove = function (moveVec) {
+        this.pt.x += moveVec.x * this.msX / moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
+        this.moveVertical(moveVec.y * this.msY / moveWait * delta);
     };
     Player.prototype.checkDeath = function (enemy) {
         if (enemy.checkCollide(player, true)) {
