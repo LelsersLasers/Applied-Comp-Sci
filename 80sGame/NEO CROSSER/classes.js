@@ -412,20 +412,6 @@ var Player = /** @class */ (function (_super) {
         if (alive && this.active) {
             if (wDown || sDown || aDown || dDown) {
                 this.frame += delta;
-                // switch (this.lastDir) {
-                // 	case "w":
-                // 		this.moveVertical(this.msY/moveWait * delta);
-                // 		break;
-                // 	case "s":
-                // 		this.moveVertical(-this.msY/moveWait * delta);
-                // 		break;
-                // 	case "a":
-                // 		this.pt.x -= this.msX/moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
-                // 		break;
-                // 	case "d":
-                // 		this.pt.x += this.msX/moveWait * (eAbility.active ? this.sprintSpeed : 1) * delta;
-                // 		break;
-                // }
                 var moveVec = new Vector(0, 0);
                 if (wDown)
                     moveVec.y += 1;

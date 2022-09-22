@@ -4,7 +4,7 @@ html {
 }
 
 canvas {
-    border: 4px solid black;
+    border: 4px solid #EBCB8B;
     margin: 0;
     position: absolute;
     top: 50%;

@@ -658,8 +658,12 @@ function setUpContext() {
 	console.log("Window is %d by %d", window.innerWidth, window.innerHeight);
 	// Get the canvas, set the width and height from the window
 	canvas = document.getElementById("mainCanvas");
-	canvas.width = window.innerWidth - 20;
-	canvas.height = window.innerHeight - 20;
+
+	let maxW = window.innerWidth - 20;
+	let maxH = window.innerHeight - 20;
+
+	canvas.width = Math.min(maxW, maxH * 9/7);
+	canvas.height = Math.min(maxH, maxW * 7/9);
 
 	canvas.onmousedown = () => mouseDown = true;
 	canvas.onmouseup = () => mouseDown = false;

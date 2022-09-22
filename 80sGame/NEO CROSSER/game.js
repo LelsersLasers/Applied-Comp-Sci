@@ -682,8 +682,12 @@ function setUpContext() {
     console.log("Window is %d by %d", window.innerWidth, window.innerHeight);
     // Get the canvas, set the width and height from the window
     canvas = document.getElementById("mainCanvas");
-    canvas.width = window.innerWidth - 20;
-    canvas.height = window.innerHeight - 20;
+    var maxW = window.innerWidth - 20;
+    var maxH = window.innerHeight - 20;
+    // let width = std::cmp::min(self.size.width, (self.size.height * 16) / 9);
+    // let height = std::cmp::min(self.size.height, (self.size.width * 9) / 16);
+    canvas.width = Math.min(maxW, maxH * 9 / 7);
+    canvas.height = Math.min(maxH, maxW * 7 / 9);
     canvas.onmousedown = function () { return mouseDown = true; };
     canvas.onmouseup = function () { return mouseDown = false; };
     // Set up the context for the animation
