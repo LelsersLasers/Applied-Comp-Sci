@@ -75,7 +75,7 @@ function keyDownHandle(e) {
             if (gameScreen == "game")
                 paused = !paused;
             break;
-        case "p":
+        case "c":
             if (gameScreen == "play")
                 gameScreen = "restore";
             break;
@@ -446,14 +446,14 @@ function drawWelcome() {
     context.fillText("NEO CROSSER", canvas.width / 2, canvas.height * 1 / 3);
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
     context.font = carHeight / 2 + "px " + font;
-    context.fillText("Touch to Start", canvas.width / 2, canvas.height * 1 / 3 + carHeight);
+    context.fillText("Click to Start", canvas.width / 2, canvas.height * 1 / 3 + carHeight);
     directionsButton.draw();
     scoresButton.draw();
 }
 function drawPlayMenu() {
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
     context.font = carHeight / 2 + "px " + font;
-    context.fillText("Touch to Go Back", canvas.width / 2, canvas.height * 1 / 4 + carHeight);
+    context.fillText("Click to Go Back", canvas.width / 2, canvas.height * 1 / 4 + carHeight);
     previousGameButton.draw();
     newGameButton.draw();
 }
@@ -477,14 +477,14 @@ function drawRestoreMenu() {
         }
         restoreButtons[i].draw();
     }
-    context.font = carHeight * 3 / 4 + "px " + font;
+    context.font = carHeight / 2 + "px " + font;
     context.fillStyle = "#000000";
     context.fillRect(0, 0, canvas.width, canvas.height * 1 / 4 - carHeight / 4);
     context.fillStyle = "#ffffff";
-    context.fillText("Press X to Delete, Enter to Resume", canvas.width / 2, canvas.height * 1 / 4 - carHeight * 1.8);
-    context.font = carHeight / 2 + "px " + font;
+    context.fillText("Press X to Delete, Enter to Start from Checkpoint", canvas.width / 2, canvas.height * 1 / 4 - carHeight * 1.8);
+    context.font = carHeight / 3 + "px " + font;
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
-    context.fillText("Touch to Go Back (or Y)", canvas.width / 2, canvas.height * 1 / 4 - carHeight);
+    context.fillText("Click to Go Back (or Y)", canvas.width / 2, canvas.height * 1 / 4 - carHeight);
     if (mouseDown)
         mouseDownActions();
 }
@@ -495,18 +495,21 @@ function drawDirections() {
     context.fillText("Directions", canvas.width / 2, base);
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
     context.font = carHeight / 2 + "px " + font;
-    context.fillText("Touch to Go Back", canvas.width / 2, base + carHeight);
+    context.fillText("Click to Go Back", canvas.width / 2, base + carHeight);
     var txts = [];
-    txts.push("Use 'wasd' to move. Don't get hit by cars.");
-    txts.push("Also you can't run through the buildings.");
-    txts.push("Cars also can't go through the buildings.");
+    txts.push("Use 'WASD' or the arrow keys to move.");
+    txts.push("Don't get hit by cars, ufos, or tanks.");
+    txts.push("You can't run through buildings.");
+    txts.push("Cars (and tanks) also can't go through the buildings.");
     txts.push("You also have 3 abilities:");
-    txts.push("Q which teleports a short distance,");
+    txts.push("Q which teleports you a short distance,");
     txts.push("E which increases your speed (press again to turn off), and");
     txts.push("R which fires a laser in every direction.");
+    txts.push("Lasers only temporarily stun, they do not kill.");
     txts.push("Goal: Go as far up as possible.");
     txts.push("Click button in top right (or press Esc) to show the pause menu.");
-    txts.push("From the pause menu you can toggle the music, save, or quit.");
+    txts.push("From the pause menu you can toggle the music,");
+    txts.push("create a checkpoint, or quit.");
     context.fillStyle = "#ffffff";
     context.font = carHeight * 5 / 12 + "px  " + font;
     for (var i = 0; i < txts.length; i++)
@@ -519,7 +522,7 @@ function drawScores() {
     context.fillText("Top Scores", canvas.width / 2, base);
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
     context.font = carHeight / 2 + "px " + font;
-    context.fillText("Touch to Go Back", canvas.width / 2, base + carHeight);
+    context.fillText("Click to Go Back", canvas.width / 2, base + carHeight);
     context.font = carHeight * 5 / 12 + "px " + font;
     var scores = getTopScores();
     var txts = [];
@@ -560,7 +563,7 @@ function drawGameOver() {
     context.fillText("Game Over", canvas.width / 2, canvas.height / 2);
     context.fillStyle = "rgba(255,255,255," + textOpacity + ")";
     context.font = carHeight / 2 + "px " + font;
-    context.fillText("Touch to Exit", canvas.width / 2, canvas.height / 2 + carHeight);
+    context.fillText("Click to Return to the Main Menu", canvas.width / 2, canvas.height / 2 + carHeight);
     context.textBaseline = "middle";
 }
 function drawHUDDirections() {
@@ -684,8 +687,6 @@ function setUpContext() {
     canvas = document.getElementById("mainCanvas");
     var maxW = window.innerWidth - 20;
     var maxH = window.innerHeight - 20;
-    // let width = std::cmp::min(self.size.width, (self.size.height * 16) / 9);
-    // let height = std::cmp::min(self.size.height, (self.size.width * 9) / 16);
     canvas.width = Math.min(maxW, maxH * 9 / 7);
     canvas.height = Math.min(maxH, maxW * 7 / 9);
     canvas.onmousedown = function () { return mouseDown = true; };
@@ -946,7 +947,7 @@ var scoreView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5)
 var livesView = new GameTxt(new Vector(carHeight, playerLevel + carHeight * 3.5), "#5e94d1", -1, carHeight / 3, "");
 context.font = carHeight * 1 / 2 + "px " + font;
 var pauseWidth = 0;
-var txts = ["[R]esume", "[S]ave", "[Q]uit Without Saving", "Toggle [M]usic", "Resume [P]revious Game", "New [G]ame"];
+var txts = ["[R]esume", "[S]ave", "[Q]uit Without Saving", "Toggle [M]usic", "Start from [C]heckpoint", "New [G]ame"];
 for (var i in txts) {
     if (context.measureText(txts[i]).width > pauseWidth) {
         pauseWidth = context.measureText(txts[i]).width;
@@ -957,7 +958,7 @@ var resumeButton = new ButtonMenu(new Vector(canvas.width / 2 - pauseWidth / 2, 
 var saveButton = new ButtonMenu(new Vector(canvas.width / 2 - pauseWidth / 2, canvas.height / 2 - (carHeight * 3 / 4 + spacer * 2) / 2 - spacer), pauseWidth, carHeight * 3 / 4 + spacer * 2, "[S]ave", carHeight * 1 / 2);
 var quitButton = new ButtonMenu(new Vector(canvas.width / 2 - pauseWidth / 2, canvas.height / 2 + (carHeight * 3 / 4 + spacer * 2) / 2 + spacer), pauseWidth, carHeight * 3 / 4 + spacer * 2, "[Q]uit Without Saving", carHeight * 1 / 2);
 var musicButton = new ButtonMenu(new Vector(canvas.width / 2 - pauseWidth / 2, canvas.height / 2 + (carHeight * 3 / 4 + spacer * 2) * 3 / 2 + spacer * 3), pauseWidth, carHeight * 3 / 4 + spacer * 2, "Toggle [M]usic", carHeight * 1 / 2);
-var previousGameButton = new ButtonMenu(new Vector(canvas.width / 2 - pauseWidth / 2, canvas.height / 2 - (carHeight * 3 / 4 + 20) / 2 - spacer), pauseWidth, carHeight * 3 / 4 + spacer * 2, "Resume [P]revious Game", carHeight * 1 / 2);
+var previousGameButton = new ButtonMenu(new Vector(canvas.width / 2 - pauseWidth / 2, canvas.height / 2 - (carHeight * 3 / 4 + 20) / 2 - spacer), pauseWidth, carHeight * 3 / 4 + spacer * 2, "Start from [C]heckpoint", carHeight * 1 / 2);
 var newGameButton = new ButtonMenu(new Vector(canvas.width / 2 - pauseWidth / 2, canvas.height / 2 + (carHeight * 3 / 4 + 20) / 2 + spacer), pauseWidth, carHeight * 3 / 4 + spacer * 2, "New [G]ame", carHeight * 1 / 2);
 var restoreButtons = [];
 var deleteCount = 0;
