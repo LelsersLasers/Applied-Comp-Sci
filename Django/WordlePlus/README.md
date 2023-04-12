@@ -82,7 +82,7 @@ View Personal Scores
         - When you have already done a daily cup
         - When you successfully change a setting
         - When you enter incorrect/incomplete data into a form
-11) Running online at <http://64.98.192.41:8000/wordle/>
+11) Running online at <http://64.98.192.13:8000/wordle/>
     - Should be fully functional
     - Uses just django to run!
         - CSS and JS are within the template inheritance
