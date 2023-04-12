@@ -17,7 +17,7 @@ Note: "LelsersLasers" is my personal github account, and this ("Lord-Lelsers") i
     All types of Wordle! From online globally ranked cups to custom rules to the original Wordle, this site has it all!
 </h2>
 
-To play: visit <strong><http://64.98.192.41:8000/wordle/></strong> and enjoy!
+To play: visit <strong><http://64.98.192.13:8000/wordle/></strong> and enjoy!
 
 ![Actual Game](https://github.com/Lord-Lelsers/Applied-Comp-Sci/raw/main/Django/WordlePlus/showcase/game.PNG)
 
