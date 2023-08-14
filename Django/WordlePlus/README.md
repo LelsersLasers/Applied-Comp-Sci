@@ -57,7 +57,7 @@ View Personal Scores
     - Multiplayer
         - Different options
         - Daily cups reset at midnight
-    - Word passed as base64 so it is harder to cheat
+    - Word passed to frontend as base64 so it is harder to cheat
 8) Template inheritance + CSS + JS
     - Base views:
         - Base: general look/feel
@@ -69,6 +69,7 @@ View Personal Scores
 9) Mobile "friendly"
     - Mostly designed for computer
         - The CSS/styles might be a bit small on mobile
+        - PLEASE VIEW WITHOUT AN IFRAME!
     - All navigation buttons can be used by touch
     - All text inputs bring up the virtual keyboard when on moblie
     - Wordle keyboard is full featured and works as well as a normal keyboard
@@ -84,16 +85,9 @@ View Personal Scores
         - When you enter incorrect/incomplete data into a form
 11) Running online at <http://lelserslasers.pythonanywhere.com/wordle/>
     - Should be fully functional
-    - Uses just django to run!
+    - Uses just django to run without any relience on static files!
         - CSS and JS are within the template inheritance
         - The image was converted into base64 so it could be put directly in the HTML
-    - It should be firewalled away from the rest of my wifi
-        - But still please don't hack it or me or anything
-    - NOTE: Don't put an actual password in its not secure
-        - It uses http (not https)
-        - But it will not harm your computer
 12) Helper tool
-    - In the 'wordle' folder that this file is in
-    - Must be in the same folder as 'allWords.py'
     - You can enter info to help you narrow down the final word
-    - See pictures above
+    - See pictures or <https://github.com/LelsersLasers/NewYorkTimesWordGameHelpers/>
